@@ -1,7 +1,7 @@
 package stellarnear.yfa_dealer;
 
-
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -9,7 +9,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
-import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +16,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-public class ListSpell extends android.app.Application {
+public class ListSpell extends AppCompatActivity {
 
-
+    private Context mContext;
     public List<Spell> AllSpells = new ArrayList<Spell>();
-
-
-    public ListSpell(){
-
+    public ListSpell(Context mC){
+        mContext=mC;
     //construire la liste complete regarder xml parser
 
         try {
-            InputStream is = getAssets().open("spells.xml");
+            InputStream is = mContext.getAssets().open("spells.xml");
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -37,7 +34,7 @@ public class ListSpell extends android.app.Application {
             Element element=doc.getDocumentElement();
             element.normalize();
 
-            NodeList nList = doc.getElementsByTagName("employee");
+            NodeList nList = doc.getElementsByTagName("spell");
 
             for (int i=0; i<nList.getLength(); i++) {
 
@@ -59,9 +56,6 @@ public class ListSpell extends android.app.Application {
 
         } catch (Exception e) {e.printStackTrace();}
 
-
-
-
     }
 
     public String getValue(String tag, Element element) {
@@ -70,11 +64,11 @@ public class ListSpell extends android.app.Application {
         return node.getNodeValue();
     }
 
-    public List<Spell> SelectRank(int rank){
+    public List<Spell> selectRank(int rank){
         List<Spell> sel_list = new ArrayList<Spell>();
 
         for(Spell spell : AllSpells){
-            if (spell.getRank == rank) {
+            if (spell.getRank() == rank) {
                 sel_list.add(spell);
             }
         }

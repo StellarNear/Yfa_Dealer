@@ -29,6 +29,9 @@ public class Spell {
     public Integer getRank(){
         return this.rank;
     }
+    public String getName(){
+        return this.Name;
+    }
         // methode de meta magie up les dès etc
         //methode pour recup les nom aussi
 

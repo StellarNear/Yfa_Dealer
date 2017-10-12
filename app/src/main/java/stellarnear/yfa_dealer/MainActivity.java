@@ -16,6 +16,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -43,34 +46,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void buildSpellsLists() {
+    public void buildSpellsLists() {
 
+        ListSpell ListSpell = new ListSpell(getApplicationContext());
+        List<Spell> rank_list = new ArrayList<Spell>();
+        Integer [] all_GridIds={R.id.grid1,R.id.grid2,R.id.grid3,R.id.grid4,R.id.grid5};
+        for (int r=1;r<=all_GridIds.length;r++){
+            rank_list=ListSpell.selectRank(r);
+            for(Spell spell : rank_list){
+                addSpell(spell.getName(),all_GridIds[r-1]);
+            }
+        }
 
-        //faire une liste des ID grille
-        //construrie la liste all spell
-        //appelle dans une boucle de la grille x et de la lsite x
-
-
-        Integer Grid1Id=R.id.grid1;
-        addSpell("Projéctile magique",Grid1Id);
-        addSpell("Mains brûlantes",Grid1Id);
-        addSpell("Rayon affaiblissant",Grid1Id);
-        addSpell("Restauration de Cadavre",Grid1Id);
-        addSpell("Contact Glacial",Grid1Id);
-
-        Integer Grid2Id= R.id.grid2;
-        addSpell("Main spectral",Grid2Id);
-        addSpell("Simulacre de Vie",Grid2Id);
-        addSpell("Souffle de feu",Grid2Id);
-        addSpell("Ténèbre",Grid2Id);
-        addSpell("Sphère de feu",Grid2Id);
-
-        Integer Grid3Id= R.id.grid3;
-        addSpell("Eclair",Grid3Id);
-        addSpell("Mur de vent",Grid3Id);
-        addSpell("Boule de feu",Grid3Id);
-        addSpell("Baiser du vampire",Grid3Id);
-        addSpell("Vol de soins",Grid3Id);
 
     }
 
@@ -96,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addSpell(String Name,Integer GridId) {
+    public void addSpell(String Name,Integer GridId) {
         LinearLayout grid= (LinearLayout) this.findViewById(GridId);
         CheckBox spell=new CheckBox(getApplicationContext());
         spell.setText(Name);
