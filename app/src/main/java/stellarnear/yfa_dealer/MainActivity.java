@@ -57,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 addSpell(spell.getName(),all_GridIds[r-1]);
             }
         }
-
-
+        
     }
 
     @Override
