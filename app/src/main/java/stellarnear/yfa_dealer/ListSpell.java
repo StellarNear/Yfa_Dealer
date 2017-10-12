@@ -20,7 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ListSpell extends android.app.Application {
 
 
-    private List<Spell> AllSpells = new ArrayList<Spell>();
+    public List<Spell> AllSpells = new ArrayList<Spell>();
 
 
     public ListSpell(){
@@ -64,18 +64,18 @@ public class ListSpell extends android.app.Application {
 
     }
 
-    private static String getValue(String tag, Element element) {
+    public String getValue(String tag, Element element) {
         NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
         Node node = nodeList.item(0);
         return node.getNodeValue();
     }
 
-    private static List<Spell> SelectRank(List<Spell> AllSpells,int rank){
+    public List<Spell> SelectRank(int rank){
         List<Spell> sel_list = new ArrayList<Spell>();
 
-        for(int i=0;i<AllSpells.size();i++){
-            if (AllSpells[i].getRank == rank) {
-                sel_list.add(AllSpells[i]);
+        for(Spell spell : AllSpells){
+            if (spell.getRank == rank) {
+                sel_list.add(spell);
             }
         }
         return sel_list;
