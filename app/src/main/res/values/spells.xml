@@ -9,7 +9,7 @@
         <name>"boule de feu"</name>
         <rank>1</rank>
         <damage>"4d9"</damage>
-        <type>"fire"</type>
+        <type>"fire1"</type>
     </spell>
 
 
