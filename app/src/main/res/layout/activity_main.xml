@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="stellarnear.yfa_dealer.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/tier1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="Tier 1"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_anchor="@id/toolbar"
+        app:layout_anchorGravity="bottom" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/tier1"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/grid1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            ></LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tier2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="Tier 2"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_anchor="@id/grid1"
+        app:layout_anchorGravity="bottom" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/tier2"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/grid2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            ></LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tier3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="Tier 3"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_anchor="@id/grid2"
+        app:layout_anchorGravity="bottom" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/tier3"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/grid3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            ></LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tier4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="Tier 4"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_anchor="@id/grid3"
+        app:layout_anchorGravity="bottom" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/tier4"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/grid4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            ></LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tier5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="Tier 5"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_anchor="@id/grid4"
+        app:layout_anchorGravity="bottom" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/tier4"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/grid5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            ></LinearLayout>
+    </HorizontalScrollView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>
