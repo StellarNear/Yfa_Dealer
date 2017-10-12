@@ -20,6 +20,7 @@ public class Spell {
         }
 
         // methode de meta magie up les dès etc
+        //methode pour recup les nom aussi
 
 }
 
