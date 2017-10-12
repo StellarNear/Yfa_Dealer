@@ -1,17 +1,29 @@
 <resources>
     <spell>
-        <name>"eclair de givre"</name>
+        <Name>"boule de feu</Name>
+        <dice_type>d6</dice_type>
+        <n_dice>4</n_dice>
+        <dmg_type>feu</dmg_type>
+        <descr>boule de feu rayon 6m</descr>
+        <DD>16</DD>
+        <RM>1</RM>
+        <Save_type>ref</Save_type>
+        <Save_val>14</Save_val>
         <rank>1</rank>
-        <damage>"40d6"</damage>
     </spell>
 
     <spell>
-        <name>"boule de feu"</name>
-        <rank>1</rank>
-        <damage>"4d9"</damage>
-        <type>"fire1"</type>
+        <Name></Name>
+        <dice_type></dice_type>
+        <n_dice></n_dice>
+        <dmg_type></dmg_type>
+        <descr></descr>
+        <DD></DD>
+        <RM></RM>
+        <Save_type></Save_type>
+        <Save_val></Save_val>
+        <rank></rank>
     </spell>
-
 
 
 </resources>
