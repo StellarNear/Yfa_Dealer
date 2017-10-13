@@ -1,56 +1,19 @@
 <?xml version="1.0"?>
 <records>
     <spell>
-        <Name>boule de feu</Name>
+        <name>boule de feu</name>
+        <descr>boule de feu rayon 6m</descr>
         <dice_type>d6</dice_type>
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
-        <descr>boule de feu rayon 6m</descr>
-        <DD>16</DD>
-        <RM>1</RM>
-        <Save_type>ref</Save_type>
-        <Save_val>14</Save_val>
+        <range>9m</range>
+        <cast_time>action simple</cast_time>
+        <duration></duration>
+        <compo>V,G,M</compo>
+        <dd>16</dd>
+        <rm>1</rm>
+        <save_type>ref</Save_type>
+        <save_val>14</Save_val>
         <rank>1</rank>
     </spell>
-
-    <spell>
-        <Name>éclair de givre</Name>
-        <dice_type>d4</dice_type>
-        <n_dice>6</n_dice>
-        <dmg_type>froid</dmg_type>
-        <descr>ca fait froid</descr>
-        <DD>17</DD>
-        <RM>0</RM>
-        <Save_type>ref</Save_type>
-        <Save_val>15</Save_val>
-        <rank>1</rank>
-    </spell>
-
-    <spell>
-        <Name>éclair de foudre</Name>
-        <dice_type>d10</dice_type>
-        <n_dice>2</n_dice>
-        <dmg_type>foudre</dmg_type>
-        <descr>ca fait foudre</descr>
-        <DD>17</DD>
-        <RM>0</RM>
-        <Save_type>ref</Save_type>
-        <Save_val>15</Save_val>
-        <rank>1</rank>
-    </spell>
-
-    <spell>
-        <Name>éclair de supérieur</Name>
-        <dice_type>d10</dice_type>
-        <n_dice>6</n_dice>
-        <dmg_type>physique</dmg_type>
-        <descr>ca fait mal</descr>
-        <DD>18</DD>
-        <RM>0</RM>
-        <Save_type>vig</Save_type>
-        <Save_val>18</Save_val>
-        <rank>2</rank>
-    </spell>
-
-
 </records>
