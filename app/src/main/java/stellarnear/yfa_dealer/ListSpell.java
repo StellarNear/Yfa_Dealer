@@ -41,16 +41,20 @@ public class ListSpell extends AppCompatActivity {
                 Node node = nList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
-                    AllSpells.add(new Spell(getValue("Name",element2),
-                            getValue("dice_type",element2),
-                            getValue("n_dice",element2),
-                            getValue("dmg_type",element2),
-                            getValue("descr",element2),
-                            Integer.parseInt(getValue("DD",element2)),
-                            Boolean.parseBoolean(getValue("RM",element2)),
-                            getValue("Save_type",element2),
-                            Integer.parseInt(getValue("Save_val",element2)),
-                            Integer.parseInt(getValue("rank",element2))));
+                    AllSpells.add(new Spell(getValue("name",element2),
+                                            getValue("descr",element2),
+                                            getValue("dice_type",element2),
+                                            Integer.parseInt(getValue("n_dice",element2)),
+                                            getValue("dmg_type",element2),
+                                            getValue("range",element2),
+                                            getValue("cast_time",element2),
+                                            getValue("duration",element2),
+                                            getValue("compo",element2),
+                                            Integer.parseInt(getValue("dd",element2)),
+                                            Boolean.parseBoolean(getValue("rm",element2)),
+                                            getValue("save_type",element2),
+                                            Integer.parseInt(getValue("save_val",element2)),
+                                            Integer.parseInt(getValue("rank",element2))));
                 }
             }
 

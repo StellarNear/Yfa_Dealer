@@ -1,8 +1,6 @@
 package stellarnear.yfa_dealer;
 
-import java.io.Serializable;
-
-public class Spell implements Serializable {
+public class Spell {
 
 
     private String Name;
@@ -36,6 +34,7 @@ public class Spell implements Serializable {
     }
         // methode de meta magie up les dès etc
         //methode pour recup les nom aussi
+
 }
 
 
