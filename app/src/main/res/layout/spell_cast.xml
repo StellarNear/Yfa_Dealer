@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:id="@+id/page1"
+    android:id="@+id/page2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="stellarnear.yfa_dealer.MainActivity">
+    tools:context="stellarnear.yfa_dealer.SpellCast">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -22,32 +22,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <LinearLayout
-        android:id="@+id/linear1"
+        android:id="@+id/linear2"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:textAlignment="center"
-        android:gravity="bottom"
-        app:layout_anchor="@id/toolbar"
+        app:layout_anchor="@id/toolbar2"
         app:layout_anchorGravity="bottom"
-    ></LinearLayout>
-
-
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-
-
+        ></LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
