@@ -2,7 +2,7 @@
 <records>
     <spell>
         <name>boule de feu</name>
-        <descr>boule de feu rayon 6m</descr>
+        <descr>boule de feu rayon 6m qui va très loin et qui fait tres mal es-ce que ce texte est assez long je pense que oui  lol ...</descr>
         <dice_type>d6</dice_type>
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>

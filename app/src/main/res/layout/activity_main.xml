@@ -26,21 +26,20 @@
     </android.support.design.widget.AppBarLayout>
 
 
-
-
     <TextView
         android:id="@+id/Titre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:background="@android:color/black"
         android:text="Liste des sorts"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="25sp"
         app:layout_anchor="@+id/toolbar"
-        app:layout_anchorGravity="bottom"
-        android:layout_gravity="bottom"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"/>
+        app:layout_anchorGravity="bottom" />
 
         <LinearLayout
             android:id="@+id/linear1"
