@@ -2,34 +2,59 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:transitionName="transition"
 
     android:id="@+id/page2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="stellarnear.yfa_dealer.SpellCast">
+    tools:context="stellarnear.yfa_dealer.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/bar2"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
+
+
+
+    <TextView
+        android:id="@+id/Titre2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lançement des sorts"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        app:layout_anchor="@+id/toolbar2"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"/>
+
+
     <LinearLayout
         android:id="@+id/linear2"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
-        app:layout_anchor="@id/toolbar2"
+        app:layout_anchor="@+id/Titre2"
         app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="80dp"
         ></LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

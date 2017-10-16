@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
             TextView Tier= new TextView(this);
             Tier.setText("Tier "+i);
-            Tier.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+            Tier.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             Tier.setTextColor(Color.BLACK);
             Tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             Tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 sel_list.add(spell);
             }
         }
-        Intent intent = new Intent(getApplicationContext(), SpellCast.class);
+        Intent intent = new Intent(getApplicationContext(), SpellCastActivity.class);
         intent.putExtra("selected_spells", (Serializable) sel_list);
         startActivity(intent);
     }

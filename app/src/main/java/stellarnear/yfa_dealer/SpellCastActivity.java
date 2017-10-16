@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Utilisateur on 15/10/2017.
  */
 
-public class SpellCast extends AppCompatActivity {
+public class SpellCastActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +26,23 @@ public class SpellCast extends AppCompatActivity {
         setContentView(R.layout.spell_cast);
         Toolbar toolbar2 = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar2);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar2.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBackPressed();
+            }
+        });
 
         Intent i = getIntent();
         List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
+        View h_sep = new View(this);
+        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
+        h_sep.setBackgroundColor(Color.GRAY);
+        page2.addView(h_sep);
 
         for (Spell spell : selected_spells) {
             TextView Spell_Title = new TextView(this);
@@ -42,6 +54,7 @@ public class SpellCast extends AppCompatActivity {
             page2.addView(Spell_Title);
         }
     }
+
 
 
 
