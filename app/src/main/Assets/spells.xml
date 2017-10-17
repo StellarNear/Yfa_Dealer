@@ -7,11 +7,11 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
-        <rm>1</rm>
+        <rm>true</rm>
         <save_type>ref</save_type>
         <save_val>14</save_val>
         <rank>1</rank>
@@ -22,13 +22,13 @@
         <descr>boule de givre rayon 6m</descr>
         <dice_type>d6</dice_type>
         <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
+        <dmg_type>froid</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
-        <rm>1</rm>
+        <rm>false</rm>
         <save_type>ref</save_type>
         <save_val>14</save_val>
         <rank>1</rank>
@@ -39,13 +39,13 @@
         <descr>boule de feu rayon 6m</descr>
         <dice_type>d6</dice_type>
         <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
+        <dmg_type>foudre</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
-        <rm>1</rm>
+        <rm>true</rm>
         <save_type>ref</save_type>
         <save_val>14</save_val>
         <rank>1</rank>
@@ -56,9 +56,9 @@
         <descr>boule de feu rayon 6m</descr>
         <dice_type>d6</dice_type>
         <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
+        <dmg_type>rien</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -75,7 +75,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -92,7 +92,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -109,7 +109,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -126,7 +126,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -143,7 +143,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -160,7 +160,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -177,7 +177,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>
@@ -194,7 +194,7 @@
         <n_dice>4</n_dice>
         <dmg_type>feu</dmg_type>
         <range>9m</range>
-        <cast_time>action simple</cast_time>
+        <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
         <dd>16</dd>

@@ -12,7 +12,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -57,12 +60,18 @@ public class SpellCastActivity extends AppCompatActivity {
 
         for (final Spell spell : selected_spells) {
             TextView Spell_Title = new TextView(this);
-            Spell_Title.setText(spell.getName());
-            Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-            Spell_Title.setTextColor(Color.BLACK);
             Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
+            SpannableString titre=  new SpannableString(titre_texte);
+            titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
+            titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
+            titre.setSpan(new ForegroundColorSpan(Color.GRAY),spell.getName().length(),titre_texte.length(), 0);// set color2
+
+            Spell_Title.setText(titre);
             page2.addView(Spell_Title);
+
             View h_sep = new View(this);
             h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
             h_sep.setBackgroundColor(Color.GRAY);
@@ -102,10 +111,13 @@ public class SpellCastActivity extends AppCompatActivity {
             lol.setTextColor(Color.BLACK);
             fragment2.addView(lol);
 
+            //construction fragement 1
+
             final TextView descri = new TextView(this);
             descri.setText(spell.getDescr());
             descri.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             descri.setSingleLine(true);
+            descri.setTextColor(Color.DKGRAY);
             descri.setHorizontalFadingEdgeEnabled(true);
             descri.postDelayed(new Runnable() {
                 @Override
@@ -115,6 +127,30 @@ public class SpellCastActivity extends AppCompatActivity {
             }, 3000);
             descri.setMarqueeRepeatLimit(-1);
             fragment1.addView(descri);
+
+            TextView ligne_1 = new TextView(this) ;
+            ligne_1.setText("Dégats : "+spell.getN_dice()+spell.getDice_typ() +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange());
+            ligne_1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            ligne_1.setTextColor(Color.GRAY);
+            //ligne_1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            fragment1.addView(ligne_1);
+
+            TextView ligne_2 = new TextView(this) ;
+            ligne_2.setText("Compos : "+spell.getCompo() +", Cast : "+ spell.getCast_tim()+ ", Durée : "+spell.getDuration());
+            ligne_2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            ligne_2.setTextColor(Color.GRAY);
+            //ligne_2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            fragment1.addView(ligne_2);
+
+            TextView ligne_3 = new TextView(this) ;
+            ligne_3.setText("RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ spell.getSave_type()+"("+spell.getSave_val()+")"+ ", DD : "+spell.getDD());
+            ligne_3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            ligne_3.setTextColor(Color.GRAY);
+            //ligne_3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            fragment1.addView(ligne_3);
 
 
             SeekBar cast_slide = new SeekBar(this);
@@ -163,15 +199,6 @@ public class SpellCastActivity extends AppCompatActivity {
             h_sep2.setBackgroundColor(Color.GRAY);
             page2.addView(h_sep2);
 
-            /*
-            cast_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-                }
-            });
-            */
 
 
         }
