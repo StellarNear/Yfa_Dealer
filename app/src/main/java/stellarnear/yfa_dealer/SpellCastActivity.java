@@ -1,11 +1,15 @@
 package stellarnear.yfa_dealer;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -19,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
@@ -50,7 +55,7 @@ public class SpellCastActivity extends AppCompatActivity {
         List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
-        for (Spell spell : selected_spells) {
+        for (final Spell spell : selected_spells) {
             TextView Spell_Title = new TextView(this);
             Spell_Title.setText(spell.getName());
             Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
@@ -86,6 +91,7 @@ public class SpellCastActivity extends AppCompatActivity {
             page2.addView(panel);
 
             LinearLayout fragment1= new LinearLayout(this);
+            fragment1.setOrientation(LinearLayout.VERTICAL);
             fragment1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment1);
             LinearLayout fragment2= new LinearLayout(this);
@@ -110,30 +116,62 @@ public class SpellCastActivity extends AppCompatActivity {
             descri.setMarqueeRepeatLimit(-1);
             fragment1.addView(descri);
 
-            FloatingActionButton cast_button = new FloatingActionButton(this);
-            int buttonId = View.generateViewId();
-            cast_button.setId(buttonId);
-            //cast_button.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            fragment1.addView(cast_button);
 
+            SeekBar cast_slide = new SeekBar(this);
+            cast_slide.setMax(100);
+            cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_black_24dp));
+            cast_slide.setDrawingCacheBackgroundColor(Color.GRAY);
+            fragment1.addView(cast_slide);
+            cast_slide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            //dans le switch mettre tout les choix de meta magie descriptif du sort etc
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    if (seekBar.getProgress() > 75) {
+                        seekBar.setProgress(100);
+                        switch_page(panel);
+                        View view = (View) findViewById(R.id.page2);
+                        Snackbar.make(view, "Lancement du sort : "+spell.getName(), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else {
+                        seekBar.setProgress(0);
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,
+                                              boolean fromUser) {
+                    if(progress>75){
+                        seekBar.setThumb(getDrawable(R.drawable.ic_wb_sunny_black_24dp));
+                        seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
+                    } else {
+                        seekBar.setThumb(getDrawable(R.drawable.ic_play_circle_filled_black_24dp));
+                        seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.black));
+                    }
+
+                }
+            });
+
+            //dans le switchview mettre tout les choix de meta magie descriptif du sort etc
 
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
             h_sep2.setBackgroundColor(Color.GRAY);
             page2.addView(h_sep2);
 
+            /*
             cast_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    switch_page(panel);
 
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
                 }
             });
+            */
 
 
         }
