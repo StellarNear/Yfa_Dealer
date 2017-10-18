@@ -48,31 +48,21 @@ public class SpellCastActivity extends AppCompatActivity {
         setContentView(R.layout.spell_cast);
         Toolbar toolbar2 = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar2);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);                  //back button
         toolbar2.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 onBackPressed();
             }
         });
 
         Intent i = getIntent();
-        List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");
+        List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
         for (final Spell spell : selected_spells) {
             final TextView Spell_Title = new TextView(this);
-            Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
-            SpannableString titre=  new SpannableString(titre_texte);
-            titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
-            titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
-            titre.setSpan(new ForegroundColorSpan(Color.GRAY),spell.getName().length(),titre_texte.length(), 0);// set color2
-
-            Spell_Title.setText(titre);
+            makeTitle(Spell_Title,spell); //fait le titre du cartouche avec le rang en petit
             page2.addView(Spell_Title);
 
             View h_sep = new View(this);
@@ -82,11 +72,11 @@ public class SpellCastActivity extends AppCompatActivity {
 
 
             final ViewSwitcher panel = new ViewSwitcher(this);
-            Animation outtoLeft = new TranslateAnimation(
+            Animation outtoLeft = new TranslateAnimation(  
                     Animation.RELATIVE_TO_PARENT, 0.0f,
                     Animation.RELATIVE_TO_PARENT, -1.0f,
                     Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);
+                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation de sortie vers la gauche
                     outtoLeft.setDuration(500);
                     outtoLeft.setInterpolator(new AccelerateInterpolator());
 
@@ -94,7 +84,7 @@ public class SpellCastActivity extends AppCompatActivity {
                     Animation.RELATIVE_TO_PARENT, +1.0f,
                     Animation.RELATIVE_TO_PARENT, 0.0f,
                     Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);
+                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation d'entree par la droite
             inFromRight.setDuration(500);
             inFromRight.setInterpolator(new AccelerateInterpolator());
 
@@ -131,29 +121,10 @@ public class SpellCastActivity extends AppCompatActivity {
             descri.setMarqueeRepeatLimit(-1);
             fragment1.addView(descri);
 
-            TextView ligne_1 = new TextView(this) ;
-            ligne_1.setText("Dégats : "+spell.getN_dice()+spell.getDice_typ() +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange());
-            ligne_1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            ligne_1.setTextColor(Color.GRAY);
-            //ligne_1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-            fragment1.addView(ligne_1);
-
-            TextView ligne_2 = new TextView(this) ;
-            ligne_2.setText("Compos : "+spell.getCompo() +", Cast : "+ spell.getCast_tim()+ ", Durée : "+spell.getDuration());
-            ligne_2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            ligne_2.setTextColor(Color.GRAY);
-            //ligne_2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-            fragment1.addView(ligne_2);
-
-            TextView ligne_3 = new TextView(this) ;
-            ligne_3.setText("RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ spell.getSave_type()+"("+spell.getSave_val()+")"+ ", DD : "+spell.getDD());
-            ligne_3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            ligne_3.setTextColor(Color.GRAY);
-            //ligne_3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-            fragment1.addView(ligne_3);
+            TextView infos = new TextView(this) ;
+            infos.setSingleLine(false);
+            makeInfos(infos,spell);
+            fragment1.addView(infos);
 
             HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
             scroll_meta.setHorizontalScrollBarEnabled(false);
@@ -174,12 +145,13 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Enhance_Spell(true);
-                        Spell_Title.invalidate();  //regarder pour refresh les affichage
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell); 
 
                     } else {
                         spell.meta_Enhance_Spell(false);
-                        Spell_Title.invalidate();
-
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
                     }
                 }
             });
@@ -238,6 +210,26 @@ public class SpellCastActivity extends AppCompatActivity {
 
     private void switch_page(ViewSwitcher panel) {
         panel.showNext();
+    }
+    
+    private void makeInfos(TextView infos,Spell spell) {
+        infos.setText("Dégats : "+spell.getN_dice()+spell.getDice_typ() +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange()+"\n"
+                          +"Compos : "+spell.getCompo() +", Cast : "+ spell.getCast_tim()+ ", Durée : "+spell.getDuration()+"\n"
+                          +"RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ spell.getSave_type()+"("+spell.getSave_val()+")"+ ", DD : "+spell.getDD());
+        infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        infos.setTextColor(Color.GRAY);
+    }
+    
+    private void makeTitle(TextView Spell_Title,Spell spell) {
+        Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
+        SpannableString titre=  new SpannableString(titre_texte);
+        titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
+        titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
+        titre.setSpan(new ForegroundColorSpan(Color.GRAY),spell.getName().length(),titre_texte.length(), 0);// set color2
+        Spell_Title.setText(titre);
     }
 
 
