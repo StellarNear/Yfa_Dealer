@@ -143,6 +143,14 @@ public class Spell implements Serializable {
         toast.show();
     }
     
-    
+    //à ajouter dispense de compo matterrielle
+   //sort selectif
+   //augmentation d'intensité
+   //incant silencieuse
+   //quintessence des sorts
+   //incant rapid
+   //extension d'effet
+   //perfection magique
+   //sort éloigné
 
 }
