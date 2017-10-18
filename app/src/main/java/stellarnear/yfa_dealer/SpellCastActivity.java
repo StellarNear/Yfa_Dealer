@@ -2,24 +2,32 @@ package stellarnear.yfa_dealer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -28,17 +36,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- * Created by Utilisateur on 15/10/2017.
- */
 
 public class SpellCastActivity extends AppCompatActivity {
 
@@ -61,13 +70,14 @@ public class SpellCastActivity extends AppCompatActivity {
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
         for (final Spell spell : selected_spells) {
+            spell.setSave_val(getApplicationContext()); //refresh si le charisme à bouger
             final TextView Spell_Title = new TextView(this);
             makeTitle(Spell_Title,spell); //fait le titre du cartouche avec le rang en petit
             page2.addView(Spell_Title);
 
             View h_sep = new View(this);
             h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
-            h_sep.setBackgroundColor(Color.GRAY);
+            h_sep.setBackgroundColor(Color.BLACK);
             page2.addView(h_sep);
 
 
@@ -99,8 +109,9 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout fragment2= new LinearLayout(this);
             fragment2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment2);
+
             TextView lol = new TextView(this);
-            lol.setText("LOOOL");
+            lol.setText("lol");
             lol.setTextColor(Color.BLACK);
             fragment2.addView(lol);
 
@@ -121,10 +132,15 @@ public class SpellCastActivity extends AppCompatActivity {
             descri.setMarqueeRepeatLimit(-1);
             fragment1.addView(descri);
 
-            TextView infos = new TextView(this) ;
+            final TextView infos = new TextView(this) ;
             infos.setSingleLine(false);
             makeInfos(infos,spell);
             fragment1.addView(infos);
+
+            View h_sep_meta = new View(this);
+            h_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
+            h_sep_meta.setBackgroundColor(Color.GRAY);
+            fragment1.addView(h_sep_meta);
 
             HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
             scroll_meta.setHorizontalScrollBarEnabled(false);
@@ -134,28 +150,36 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout grid=new LinearLayout(this);
             scroll_meta.addView(grid);
 
-            CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Sort Amélioré");
-            checkbox.setTextColor(Color.GRAY);
-            grid.addView(checkbox);
+            Map<CheckBox,ImageButton> all_check_meta=construct_list_meta(spell,Spell_Title,infos);
 
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            View v_sep_meta = new View(this);
+            v_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
+            v_sep_meta.setBackgroundColor(Color.GRAY);
+            grid.addView(v_sep_meta);
+            for (Map.Entry<CheckBox, ImageButton> entry : all_check_meta.entrySet()){
 
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        spell.meta_Enhance_Spell(true);
-                        makeTitle(Spell_Title,spell);
-                        makeInfos(infos,spell); 
+                CheckBox checkbox = entry.getKey();
+                grid.addView(checkbox);
+                LinearLayout container=new LinearLayout(this);
+                container.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
+                container.setGravity(Gravity.CENTER);
+                ImageButton image = entry.getValue();
+                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                image.setForegroundGravity(Gravity.CENTER);
+                image.setColorFilter(Color.GRAY);
+                container.addView(image);
+                grid.addView(container);
 
-                    } else {
-                        spell.meta_Enhance_Spell(false);
-                        makeTitle(Spell_Title,spell);
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
+                View v_sep_meta2 = new View(this);
+                v_sep_meta2.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
+                v_sep_meta2.setBackgroundColor(Color.GRAY);
+                grid.addView(v_sep_meta2);
+            }
 
+            View h_sep_meta2 = new View(this);
+            h_sep_meta2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
+            h_sep_meta2.setBackgroundColor(Color.GRAY);
+            fragment1.addView(h_sep_meta2);
 
             SeekBar cast_slide = new SeekBar(this);
             cast_slide.setMax(100);
@@ -200,7 +224,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
-            h_sep2.setBackgroundColor(Color.GRAY);
+            h_sep2.setBackgroundColor(Color.BLACK);
             page2.addView(h_sep2);
 
 
@@ -208,14 +232,126 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
+    private Map<CheckBox,ImageButton> construct_list_meta(final Spell spell,final TextView Spell_Title,final TextView infos) {
+        Map<CheckBox,ImageButton> map_list_meta_check=new HashMap<>();
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+
+        if (settings.getBoolean("ameliore",getResources().getBoolean(R.bool.ameliore_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Sort Amélioré");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Enhance_Spell(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Enhance_Spell(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Enhance_Spell_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
+
+        if (settings.getBoolean("materiel",getResources().getBoolean(R.bool.materiel_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Dispense Mat");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Material(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Material(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Enhance_Spell_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
+
+        if (settings.getBoolean("silence",getResources().getBoolean(R.bool.silence_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Sort silencieux");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Silent(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Silent(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Enhance_Spell_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
+
+        return map_list_meta_check;
+    }
+
     private void switch_page(ViewSwitcher panel) {
         panel.showNext();
     }
     
     private void makeInfos(TextView infos,Spell spell) {
+        String resistance;
+        if (spell.getSave_type().equals("aucun")) {
+            resistance = spell.getSave_type();
+
+        } else {
+            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+        }
         infos.setText("Dégats : "+spell.getN_dice()+spell.getDice_typ() +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange()+"\n"
                           +"Compos : "+spell.getCompo() +", Cast : "+ spell.getCast_tim()+ ", Durée : "+spell.getDuration()+"\n"
-                          +"RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ spell.getSave_type()+"("+spell.getSave_val()+")"+ ", DD : "+spell.getDD());
+                          +"RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ resistance);
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         infos.setTextColor(Color.GRAY);
     }

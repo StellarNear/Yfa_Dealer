@@ -1,0 +1,15 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$GeneralPreferenceFragment"
+        android:icon="@drawable/ic_person_pin_black_24dp"
+        android:title="Caractéristiques générales" />
+
+    <header
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$CombatPreferenceFragment"
+        android:icon="@drawable/ic_playlist_add_check_black_24dp"
+        android:title="Dons actifs" />
+
+</preference-headers>

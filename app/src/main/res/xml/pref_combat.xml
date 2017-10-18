@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="ameliore"
+        android:summary="Auguement d'une catégorie les dès de dégâts d'un sort"
+        android:title="Sort amélioré" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="materiel"
+        android:summary="Pas besoin de composantes matérielles pour lancer un sort"
+        android:title="Dispense de compo matérielles" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="silence"
+        android:summary="Le personnage peut lancer un sort sans émettre le moindre son"
+        android:title="Incantation silencieuse" />
+
+
+</PreferenceScreen>

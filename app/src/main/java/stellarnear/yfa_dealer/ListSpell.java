@@ -1,6 +1,9 @@
 package stellarnear.yfa_dealer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import org.w3c.dom.Document;
@@ -50,11 +53,10 @@ public class ListSpell extends AppCompatActivity {
                                             getValue("cast_time",element2),
                                             getValue("duration",element2),
                                             getValue("compo",element2),
-                                            Integer.parseInt(getValue("dd",element2)),
                                             Boolean.parseBoolean(getValue("rm",element2)),
                                             getValue("save_type",element2),
                                             Integer.parseInt(getValue("save_val",element2)),
-                                            Integer.parseInt(getValue("rank",element2))));
+                                            Integer.parseInt(getValue("rank",element2)),mC));
                 }
             }
 

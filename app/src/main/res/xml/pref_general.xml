@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@string/lvl_def"
+        android:key="level"
+        android:title="Niveau du personnage"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : %s"/>
+
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@string/NLS_bonus_def"
+        android:key="NLS_bonus"
+        android:title="Bonus au NLS"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : %s"/>
+
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@string/charisme_def"
+        android:key="charisme"
+        android:title="Modificateur de charisme"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : +%s"/>
+
+</PreferenceScreen>

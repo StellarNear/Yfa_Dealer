@@ -1,8 +1,17 @@
 package stellarnear.yfa_dealer;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
+
 import java.io.Serializable;
 
-public class Spell implements Serializable {
+public class Spell extends AppCompatActivity implements Serializable {
 
 
     private String  name;
@@ -18,7 +27,7 @@ public class Spell implements Serializable {
     private String  save_type;
     private int     save_val;
     private int     rank;
-    public Spell(String name,String descr,String dice_type,int n_dice,String dmg_type,String range,String cast_time,String duration,String compo,boolean rm,String save_type,int save_val,int rank){
+    public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, boolean rm, String save_type, int save_val, int rank,Context mC){
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
@@ -30,8 +39,8 @@ public class Spell implements Serializable {
         this.compo=compo;
         this.rm=rm;
         this.save_type=save_type;
-        this.save_val=save_val;
         this.rank=rank;
+        setSave_val(mC);
     }
 
     public Integer getRank(){
@@ -70,9 +79,10 @@ public class Spell implements Serializable {
     public String  getSave_type(){
         return this.save_type;
     }
-    public Integer     getSave_val(){
+    public Integer  getSave_val(){
         return this.save_val;
     }
+
 
 
     private void setName(String name){
@@ -109,8 +119,12 @@ public class Spell implements Serializable {
     private void setSave_type(String save_type){
         this.save_type=save_type;
     }
-    private void setSave_val(int save_val){
-        this.save_val=save_val;
+    public void setSave_val(Context mC){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
+        Integer charisme = to_int(cha_txt,"Modificateur de charisme",mC);
+        Integer save_val_calc=charisme+this.rank+10;
+        this.save_val=save_val_calc;
     }
     private void setRank(int rank){
         this.rank=rank;
@@ -130,23 +144,58 @@ public class Spell implements Serializable {
         }
     }
     
-    public void meta_Enhance_Spell_descr() {
-        String descr="Les dés de dégâts pour les sorts que vous lancez augmentent d'un pas 
-            (c.a.d., d6>d8, d8>2d6, etc.). Un sort amélioré utilise un emplacement de sorts quatre fois plus haut 
-            que le niveau réel du sort. N'a aucun effet sur les sorts qui n'infligent pas de dégâts.";
-        Toast toast = Toast.makeText(getApplicationContext(), descr, Toast.LENGTH_LONG);
+    public void meta_Enhance_Spell_descr(Context mC) {
+        String descr="Les dés de dégâts pour les sorts que vous lancez augmentent d'un pas " +
+                "(c.a.d., d6>d8, d8>2d6, etc.). Un sort amélioré utilise un emplacement de sorts quatre fois plus haut " +
+                "que le niveau réel du sort. N'a aucun effet sur les sorts qui n'infligent pas de dégâts.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
+
+    public void meta_Material(boolean active) {  //à refaire mais pour test la
+        if (active) {
+            this.n_dice+=10;
+            this.rank+=7;
+        } else {
+            this.n_dice-=10;
+            this.rank-=7;
+        }
+    }
+
+    public void meta_Silent(boolean active) {//à refaire mais pour test la
+        if (active) {
+            this.n_dice+=1;
+            this.rank+=1;
+        } else {
+            this.n_dice-=1;
+            this.rank-=1;
+        }
+    }
     
-    //à ajouter dispense de compo matterrielle
+    //à ajouter dispense de compo matterrielle  remplacé M par M barré
    //sort selectif
    //augmentation d'intensité
-   //incant silencieuse
+   //incant silencieuse   juste remplacer le V par un V barré
    //quintessence des sorts
    //incant rapid
    //extension d'effet
    //perfection magique
    //sort éloigné
+
+    public Integer to_int(String key,String field,Context mC){
+        Integer value;
+        try {
+            value = Integer.parseInt(key);
+        } catch (Exception e){
+            Toast toast = Toast.makeText(mC, "Attention la valeur : "+key+"\nDu champ : "+field+"\nEst incorrecte, valeur mise à 0.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+            value=0;
+        }
+        return value;
+    }
+
+
 
 }
