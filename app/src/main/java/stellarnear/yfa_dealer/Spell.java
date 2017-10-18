@@ -133,5 +133,11 @@ public class Spell implements Serializable {
             this.rank-=4;
         }
     }
+    
+    public void meta_Enhance_Spell_descr() {
+        Toast toast = Toast.makeText(MainActivity.this, "Augemente la catégorie de dès du sort d'un rang.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
 
 }
