@@ -25,6 +25,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -59,7 +62,7 @@ public class SpellCastActivity extends AppCompatActivity {
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
         for (final Spell spell : selected_spells) {
-            TextView Spell_Title = new TextView(this);
+            final TextView Spell_Title = new TextView(this);
             Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -151,6 +154,35 @@ public class SpellCastActivity extends AppCompatActivity {
             //ligne_3.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             fragment1.addView(ligne_3);
+
+            HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
+            scroll_meta.setHorizontalScrollBarEnabled(false);
+            scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            fragment1.addView(scroll_meta);
+
+            LinearLayout grid=new LinearLayout(this);
+            scroll_meta.addView(grid);
+
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Sort Amélioré");
+            checkbox.setTextColor(Color.GRAY);
+            grid.addView(checkbox);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Enhance_Spell(true);
+                        Spell_Title.invalidate();  //regarder pour refresh les affichage
+
+                    } else {
+                        spell.meta_Enhance_Spell(false);
+                        Spell_Title.invalidate();
+
+                    }
+                }
+            });
 
 
             SeekBar cast_slide = new SeekBar(this);

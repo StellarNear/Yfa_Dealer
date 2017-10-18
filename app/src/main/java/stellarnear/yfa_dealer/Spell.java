@@ -89,7 +89,7 @@ public class Spell implements Serializable {
     private void setDice_type(String dice_type){
         this.dice_type=dice_type;
     }
-    private void  setN_dice(int n_dice){
+    private void setN_dice(int n_dice){
         this.n_dice=n_dice;
     }
     private void setDmg_type(String dmg_type){
@@ -124,5 +124,14 @@ public class Spell implements Serializable {
     }
 
     // methode de meta magie up les dès etc
+    public void meta_Enhance_Spell(Boolean active) {
+        if (active) {
+            this.n_dice+=1;
+            this.rank+=4;
+        } else {
+            this.n_dice-=1;
+            this.rank-=4;
+        }
+    }
 
 }
