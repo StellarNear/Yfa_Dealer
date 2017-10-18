@@ -123,7 +123,7 @@ public class Spell implements Serializable {
         this.rank=rank;
     }
 
-    // methode de meta magie up les dès etc
+    // methode de meta magie
     public void meta_Enhance_Spell(Boolean active) {
         if (active) {
             this.n_dice+=1;
@@ -135,9 +135,14 @@ public class Spell implements Serializable {
     }
     
     public void meta_Enhance_Spell_descr() {
-        Toast toast = Toast.makeText(MainActivity.this, "Augemente la catégorie de dès du sort d'un rang.", Toast.LENGTH_LONG);
+        String descr="Les dés de dégâts pour les sorts que vous lancez augmentent d'un pas 
+            (c.a.d., d6>d8, d8>2d6, etc.). Un sort amélioré utilise un emplacement de sorts quatre fois plus haut 
+            que le niveau réel du sort. N'a aucun effet sur les sorts qui n'infligent pas de dégâts.";
+        Toast toast = Toast.makeText(getApplicationContext(), descr, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
+    
+    
 
 }
