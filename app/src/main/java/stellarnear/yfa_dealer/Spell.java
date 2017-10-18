@@ -14,12 +14,11 @@ public class Spell implements Serializable {
     private String  cast_time;
     private String  duration;
     private String  compo;
-    private int     dd;
     private boolean rm;
     private String  save_type;
     private int     save_val;
     private int     rank;
-    public Spell(String name,String descr,String dice_type,int n_dice,String dmg_type,String range,String cast_time,String duration,String compo,int dd,boolean rm,String save_type,int save_val,int rank){
+    public Spell(String name,String descr,String dice_type,int n_dice,String dmg_type,String range,String cast_time,String duration,String compo,boolean rm,String save_type,int save_val,int rank){
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
@@ -29,7 +28,6 @@ public class Spell implements Serializable {
         this.cast_time=cast_time;
         this.duration=duration;
         this.compo=compo;
-        this.dd=dd;
         this.rm=rm;
         this.save_type=save_type;
         this.save_val=save_val;
@@ -65,9 +63,6 @@ public class Spell implements Serializable {
     }
     public String  getCompo(){
         return this.compo;
-    }
-    public Integer     getDD(){
-        return this.dd;
     }
     public boolean getRM(){
         return this.rm;
@@ -107,9 +102,7 @@ public class Spell implements Serializable {
     private void setCompo(String compo){
         this.compo=compo;
     }
-    private void setDD(int dd){
-        this.dd=dd;
-    }
+
     private void setRM(boolean rm){
         this.rm=rm;
     }
@@ -123,6 +116,9 @@ public class Spell implements Serializable {
         this.rank=rank;
     }
 
+    //calcul du jet_sauv pour chaque spell ici avec un setSave_val
+    
+    
     // methode de meta magie
     public void meta_Enhance_Spell(Boolean active) {
         if (active) {
