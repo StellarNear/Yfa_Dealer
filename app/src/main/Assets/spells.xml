@@ -1,206 +1,99 @@
 <?xml version="1.0"?>
 <records>
     <spell>
-        <name>boule de feu</name>
-        <descr>boule de feu rayon 6m qui va très loin et qui fait tres mal es-ce que ce texte est assez long je pense que oui  lol ...</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
+        <name>Projectile magique</name>
+        <descr>Tire 5 projectiles faisant chaqu'un 1d4+1 points de dégâts. Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.</descr>
+        <dice_type>d4</dice_type>
+        <n_dice>5</n_dice>
+        <dmg_type>physique</dmg_type>
+        <range>moyenne</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
+        <compo>V,G</compo>
         <rm>true</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
+        <save_type>aucun</save_type>
+        <save_val>0</save_val>
         <rank>1</rank>
     </spell>
 
     <spell>
-        <name>boule de givre</name>
-        <descr>boule de givre rayon 6m</descr>
+        <name>Décharge électrique</name>
+        <descr>Attaque de contact au corps à corps qui, en cas de réussite inflige 5d6 de dégâts. Si la cible porte une armure métallique (ou porte une arme faite principalement de métal), le lanceur de sorts bénéficie d’un bonus de +3 au jet d’attaque.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>froid</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>false</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>1</rank>
-    </spell>
-
-    <spell>
-        <name>boule de foudre</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
+        <n_dice>5</n_dice>
         <dmg_type>foudre</dmg_type>
-        <range>9m</range>
+        <range>contact</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
+        <compo>V,G</compo>
         <rm>true</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
+        <save_type>aucun</save_type>
+        <save_val>0</save_val>
         <rank>1</rank>
     </spell>
 
     <spell>
-        <name>boule de rien</name>
-        <descr>boule de feu rayon 6m</descr>
+        <name>Rayon ardent</name>
+        <descr>Attaque de contact au corps à corps qui, en cas de réussite lance 3 rayons infligeant 4d6 de dégâts chacun. Peut viser une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>rien</dmg_type>
-        <range>9m</range>
+        <n_dice>12</n_dice>
+        <dmg_type>foudre</dmg_type>
+        <range>courte</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>1</rank>
-    </spell>
-
-    <spell>
-        <name>boule de feu2</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <save_val>0</save_val>
         <rank>2</rank>
     </spell>
 
     <spell>
-        <name>boule de feu3</name>
-        <descr>boule de feu rayon 6m</descr>
+        <name>Éclair</name>
+        <descr>Violente décharge électrique qui inflige 10d6 points de dégâts d’électricité à toutes les créatures situées en ligne droite jusqu'à 36m.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
+        <n_dice>10</n_dice>
+        <dmg_type>foudre</dmg_type>
+        <range>36m</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <save_val>0</save_val>
         <rank>3</rank>
     </spell>
-
-    <spell>
-        <name>boule de feu4</name>
-        <descr>boule de feu rayon 6m</descr>
+    
+     <spell>
+        <name>Baiser du vampire</name>
+        <descr>Attaque de contact au corps à corps qui inflige 10d6 points de dégâts. Le lanceur de sorts gagne autant de points de vie temporaires. Ces points de vie ne peuvent toutefois dépasser le nombre actuel de points de vie de la cible + sa valeur de Constitution (ce qui peut suffire à la tuer). Les points de vie temporaires disparaissent au bout d’une heure.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
+        <n_dice>10</n_dice>
+        <dmg_type>sans</dmg_type>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <save_val>0</save_val>
+        <rank>3</rank>
+    </spell>
+    
+     <spell>
+        <name>Boule de feu</name>
+        <descr>Boule de feu qui inflige 10d6 points de dégâts. La zone de l'explostion est de 6m de rayon. Le personnage désigne la cible du doigt et choisit l’endroit où il souhaite que l’explosion se produise. </descr>
+        <dice_type>d6</dice_type>
+        <n_dice>10</n_dice>
         <dmg_type>feu</dmg_type>
-        <range>9m</range>
+        <range>longue</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>4</rank>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <save_val>0</save_val>
+        <rank>3</rank>
     </spell>
-
-    <spell>
-        <name>boule de feu5</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>5</rank>
-    </spell>
-
-    <spell>
-        <name>boule de feu6</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>6</rank>
-    </spell>
-
-    <spell>
-        <name>boule de feu7</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>7</rank>
-    </spell>
-
-    <spell>
-        <name>boule de feu8</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>8</rank>
-    </spell>
-
-    <spell>
-        <name>boule de feu9</name>
-        <descr>boule de feu rayon 6m</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>4</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <dd>16</dd>
-        <rm>1</rm>
-        <save_type>ref</save_type>
-        <save_val>14</save_val>
-        <rank>9</rank>
-    </spell>
+ 
 </records>
