@@ -3,4 +3,6 @@
     <bool name="ameliore_switch_def">true</bool>
     <bool name="silence_switch_def">false</bool>
     <bool name="materiel_switch_def">true</bool>
+    <bool name="rapid_switch_def">true</bool>
+    <bool name="select_switch_def">true</bool>
 </resources>

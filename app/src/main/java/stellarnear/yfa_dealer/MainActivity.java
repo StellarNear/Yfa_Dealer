@@ -9,7 +9,9 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -24,6 +26,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,9 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void buildPage1() {
-
         ListSpell ListAllSpell = new ListSpell(getApplicationContext());
-        List<Spell> rank_list = new ArrayList<Spell>();
+        List<Spell> rank_list  = new ArrayList<Spell>();
         for(int i=1;i<=9;i++){
             LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
             TextView Tier= new TextView(this);
@@ -73,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
             h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
             h_sep.setBackgroundColor(Color.BLACK);
             Tiers.addView(h_sep);
-
+            rank_list= ListAllSpell.selectRank(i);
+            if (rank_list.size()==0){ continue;}
 
             HorizontalScrollView scroll_spells= new HorizontalScrollView(this);
             scroll_spells.setHorizontalScrollBarEnabled(false);
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             v_sep.setBackgroundColor(Color.GRAY);
             grid.addView(v_sep);
 
-            rank_list= ListAllSpell.selectRank(i);
             for(Spell spell : rank_list){
                 CheckBox checkbox=new CheckBox(getApplicationContext());
                 checkbox.setText(spell.getName()+" ");
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void builPage2() {
-        SortedList<Spell> sel_list = new ArrayList<Spell>();
+        List<Spell> sel_list= new ArrayList<Spell>();
         Iterator iter = map_spell_check.keySet().iterator();
         while(iter.hasNext()) {
             Spell spell=(Spell)iter.next();

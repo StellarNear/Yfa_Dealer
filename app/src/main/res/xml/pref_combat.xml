@@ -1,20 +1,33 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="@bool/ameliore_switch_def"
         android:key="ameliore"
-        android:summary="Auguement d'une catégorie les dès de dégâts d'un sort"
+        android:summary="Augmente d'une catégorie les dès de dégâts d'un sort"
         android:title="Sort amélioré" />
+
     <SwitchPreference
-        android:defaultValue="true"
-        android:key="materiel"
-        android:summary="Pas besoin de composantes matérielles pour lancer un sort"
-        android:title="Dispense de compo matérielles" />
+        android:defaultValue="@bool/rapid_switch_def"
+        android:key="rapid"
+        android:summary="Lance le sort par une action rapide"
+        android:title="Sort rapide" />
+
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="@bool/select_switch_def"
+        android:key="select"
+        android:summary="Exclut certaines cibles de la zone d’effet d’un sort"
+        android:title="Sort sélectif" />
+
+    <SwitchPreference
+        android:defaultValue="@bool/silence_switch_def"
         android:key="silence"
         android:summary="Le personnage peut lancer un sort sans émettre le moindre son"
         android:title="Incantation silencieuse" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/materiel_switch_def"
+        android:key="materiel_switch"
+        android:summary="Pas besoin de composantes matérielles pour lancer un sort"
+        android:title="Dispense de compo matérielles" />
 
 </PreferenceScreen>

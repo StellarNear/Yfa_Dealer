@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

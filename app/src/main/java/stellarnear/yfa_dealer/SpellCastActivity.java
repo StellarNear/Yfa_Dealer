@@ -45,6 +45,7 @@ import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +67,7 @@ public class SpellCastActivity extends AppCompatActivity {
         });
 
         Intent i = getIntent();
-        SortedList<Spell> selected_spells = (SortedList<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
+        List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
         for (final Spell spell : selected_spells) {

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -17,10 +19,12 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  name;
     private String  descr;
     private String  dice_type;
+    private String  ori_dice_type;
     private int     n_dice;
     private String  dmg_type;
     private String  range;
     private String  cast_time;
+    private String  ori_cast_time;
     private String  duration;
     private String  compo;
     private boolean rm;
@@ -31,10 +35,12 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
+        this.ori_dice_type=dice_type;
         this.n_dice=n_dice;
         this.dmg_type=dmg_type;
         this.range=range;
         this.cast_time=cast_time;
+        this.ori_cast_time=cast_time;
         this.duration=duration;
         this.compo=compo;
         meta_Materiel(mC);
@@ -137,23 +143,23 @@ public class Spell extends AppCompatActivity implements Serializable {
     public void meta_Enhance_Spell(Boolean active) {
         
         if (active) {
-            if(this.dice_type.equal("d4")){
+            if(this.dice_type.equals("d4")){
                 this.dice_type="d6";
-                this.ori_dice="d4";
-            } else if(this.dice_type.equal("d6")){
+                this.ori_dice_type="d4";
+            } else if(this.dice_type.equals("d6")){
                 this.dice_type="d8";
-            } else if(this.dice_type.equal("d8")){
+            } else if(this.dice_type.equals("d8")){
                 this.dice_type="d6";
                 this.n_dice=this.n_dice*2;
-                this.ori_dice="d8";
+                this.ori_dice_type="d8";
             }
             this.rank+=4;
         } else {
-           if(this.dice_type.equal("d8")){
+           if(this.dice_type.equals("d8")){
                 this.dice_type="d6";
-            } else if(this.dice_type.equal("d6") && this.ori_dice.equal("d4")){ 
+            } else if(this.dice_type.equals("d6") && this.ori_dice_type.equals("d4")){
                 this.dice_type="d4";
-            } else if(this.dice_type.equal("d6") && this.ori_dice.equal("d8")){ 
+            } else if(this.dice_type.equals("d6") && this.ori_dice_type.equals("d8")){
                 this.n_dice=this.n_dice/2;
                 this.dice_type="d8"; 
             }
@@ -193,17 +199,17 @@ public class Spell extends AppCompatActivity implements Serializable {
     
     
 
-    public void meta_Selec_Spell(boolean active) { 
+    public void meta_Select_Spell(boolean active) {
         if (active) {
             this.rank+=1;
         } else {
             this.rank-=1;
         }
     }
-    public void meta_Selec_Spell_descr(Context mC) {
+    public void meta_Select_Spell_descr(Context mC) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
         String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
-        String descr="Lorsque le personnage lance un sort de zone sélectif, il peut choisir "+ cha_txt +" situées dans la zone."+
+        String descr="Lorsque le personnage lance un sort de zone sélectif, il peut choisir "+ cha_txt +" cibles situées dans la zone."+
             " Les cibles choisies échappent aux effets du sort. Un sort sélectif occupe un emplacement de sort d’un niveau de plus"+
             " que le niveau normal du sort.";
         Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
@@ -213,12 +219,12 @@ public class Spell extends AppCompatActivity implements Serializable {
     
 
     public void meta_Silent(boolean active) {//à refaire mais pour test la
-        String resultat=this.compo;        
+        String resultat=this.compo;
         if (active) {
-            resultat.replace("V","V".setSpan(new StrikethroughSpan(), 0, 1, 0));
+            resultat=resultat.replace("V","-");
             this.rank+=1;
         } else {
-            resultat.replace("V".setSpan(new StrikethroughSpan(), 0, 1, 0),"V");
+            resultat=resultat.replace("-","V");
             this.rank-=1;
         }
         this.compo=resultat;
@@ -233,14 +239,13 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
     
-    //à ajouter dispense de compo matterrielle  remplacé M par M barré
     public void meta_Materiel(Context mC) {
-        String resultat=this.compo;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        if (prefs.getBoolean("materiel",getResources().getBoolean(R.bool.materiel_switch_def)))  {
-            resultat.replace("M","M".setSpan(new StrikethroughSpan(), 0, 1, 0));
+        String resultat=this.compo;
+        if (prefs.getBoolean("materiel_switch",mC.getResources().getBoolean(R.bool.materiel_switch_def)))  {
+            resultat=resultat.replace("M","-");
         } else {
-            resultat.replace("M".setSpan(new StrikethroughSpan(), 0, 1, 0),"M");
+            resultat=resultat.replace("-","M");
         }
         this.compo=resultat;
     }
