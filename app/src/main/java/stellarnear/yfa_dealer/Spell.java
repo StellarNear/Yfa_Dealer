@@ -135,14 +135,28 @@ public class Spell extends AppCompatActivity implements Serializable {
     
     // methode de meta magie
     public void meta_Enhance_Spell(Boolean active) {
-        String [] all_type= {};
+        
         if (active) {
-            //calcul des dès catégory à up ...
-            
+            if(this.dice_type.equal("d4")){
+                this.dice_type="d6";
+                this.ori_dice="d4";
+            } else if(this.dice_type.equal("d6")){
+                this.dice_type="d8";
+            } else if(this.dice_type.equal("d8")){
+                this.dice_type="d6";
+                this.n_dice=this.n_dice*2;
+                this.ori_dice="d8";
+            }
             this.rank+=4;
         } else {
-           
-            
+           if(this.dice_type.equal("d8")){
+                this.dice_type="d6";
+            } else if(this.dice_type.equal("d6") && this.ori_dice.equal("d4")){ 
+                this.dice_type="d4";
+            } else if(this.dice_type.equal("d6") && this.ori_dice.equal("d8")){ 
+                this.n_dice=this.n_dice/2;
+                this.dice_type="d8"; 
+            }
             this.rank-=4;
         }
     }
@@ -155,21 +169,51 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
-
-    public void meta_Material(boolean active) {  //à refaire mais pour test la
+    
+        public void meta_Rapid(Boolean active) {
         if (active) {
-            this.n_dice+=10;
-            this.rank+=7;
+            this.ori_cast_time=this.cast_time;
+            this.cast_time="rapide";
+            this.rank+=4;
         } else {
-            this.n_dice-=10;
-            this.rank-=7;
+            this.cast_time=this.ori_cast_time;
+            this.rank-=4;
         }
     }
+    
+    public void meta_Rapid_descr(Context mC) {
+        String descr=" L’incantation du sort ne prend qu’une action rapide."+
+            " Si le temps d’incantation du sort est supérieur à un round,"+
+            " on ne peut pas l’accélérer avec ce don. Un sort à incantation rapide nécessite un emplacement de sort de quatre niveaux"
+            +" de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+    
+    
+
+    public void meta_Selec_Spell(boolean active) { 
+        if (active) {
+            this.rank+=1;
+        } else {
+            this.rank-=1;
+        }
+    }
+    public void meta_Selec_Spell_descr(Context mC) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
+        String descr="Lorsque le personnage lance un sort de zone sélectif, il peut choisir "+ cha_txt +" situées dans la zone."+
+            " Les cibles choisies échappent aux effets du sort. Un sort sélectif occupe un emplacement de sort d’un niveau de plus"+
+            " que le niveau normal du sort.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+    
 
     public void meta_Silent(boolean active) {//à refaire mais pour test la
-        String resultat=this.compo;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-                    
+        String resultat=this.compo;        
         if (active) {
             resultat.replace("V","V".setSpan(new StrikethroughSpan(), 0, 1, 0));
             this.rank+=1;
@@ -201,13 +245,14 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.compo=resultat;
     }
     
-   //sort selectif
    //augmentation d'intensité
    //quintessence des sorts
    //incant rapid
    //extension d'effet
-   //perfection magique
+   
    //sort éloigné
+    
+    //perfection magique vraiment à part uniquement sur desintégration permet de mettre une metamagie du choix gratos
 
     public Integer to_int(String key,String field,Context mC){
         Integer value;
