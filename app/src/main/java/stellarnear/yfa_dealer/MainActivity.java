@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    Map<Spell,CheckBox> map_spell_check=new HashMap<Spell,CheckBox>();
+    Map<Spell,CheckBox> map_spell_check=new LinkedHashMap<Spell,CheckBox>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void builPage2() {
-        List<Spell> sel_list = new ArrayList<Spell>();
+        SortedList<Spell> sel_list = new ArrayList<Spell>();
         Iterator iter = map_spell_check.keySet().iterator();
         while(iter.hasNext()) {
             Spell spell=(Spell)iter.next();
