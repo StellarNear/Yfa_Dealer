@@ -71,6 +71,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
         for (final Spell spell : selected_spells) {
             spell.setSave_val(getApplicationContext()); //refresh si le charisme à bouger
+            spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
             final TextView Spell_Title = new TextView(this);
             makeTitle(Spell_Title,spell); //fait le titre du cartouche avec le rang en petit
             page2.addView(Spell_Title);
@@ -328,7 +329,7 @@ public class SpellCastActivity extends AppCompatActivity {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    spell.meta_Enhance_Spell_descr(getApplicationContext());
+                    spell.meta_Silent_descr(getApplicationContext());
                 }
             });
             map_list_meta_check.put(checkbox,image);
