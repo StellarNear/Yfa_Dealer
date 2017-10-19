@@ -1,21 +1,6 @@
 <?xml version="1.0"?>
 <records>
-    <spell>
-        <name>Projectile magique</name>
-        <descr>Tire 5 projectiles faisant chaqu'un 1d4+1 points de dégâts. Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.</descr>
-        <dice_type>d4</dice_type>
-        <n_dice>5</n_dice>
-        <dmg_type>physique</dmg_type>
-        <range>moyenne</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G</compo>
-        <rm>true</rm>
-        <save_type>aucun</save_type>
-        <save_val>0</save_val>
-        <rank>1</rank>
-    </spell>
-
+    
     <spell>
         <name>Décharge électrique</name>
         <descr>Attaque de contact au corps à corps qui, en cas de réussite inflige 5d6 de dégâts. Si la cible porte une armure métallique (ou porte une arme faite principalement de métal), le lanceur de sorts bénéficie d’un bonus de +3 au jet d’attaque.</descr>
@@ -31,6 +16,23 @@
         <save_val>0</save_val>
         <rank>1</rank>
     </spell>
+    
+    <spell>
+        <name>Projectile magique</name>
+        <descr>Tire 5 projectiles faisant chaqu'un 1d4+1 points de dégâts. Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.</descr>
+        <dice_type>d4</dice_type>
+        <n_dice>5</n_dice>
+        <dmg_type>aucun</dmg_type>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <save_val>0</save_val>
+        <rank>1</rank>
+    </spell>
+
 
     <spell>
         <name>Rayon ardent</name>
@@ -46,6 +48,38 @@
         <save_type>aucun</save_type>
         <save_val>0</save_val>
         <rank>2</rank>
+    </spell>
+    
+    <spell>
+        <name>Baiser du vampire</name>
+        <descr>Attaque de contact au corps à corps qui inflige 10d6 points de dégâts. Le lanceur de sorts gagne autant de points de vie temporaires. Ces points de vie ne peuvent toutefois dépasser le nombre actuel de points de vie de la cible + sa valeur de Constitution (ce qui peut suffire à la tuer). Les points de vie temporaires disparaissent au bout d’une heure.</descr>
+        <dice_type>d6</dice_type>
+        <n_dice>10</n_dice>
+        <dmg_type>aucun</dmg_type>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <save_val>0</save_val>
+        <rank>3</rank>
+    </spell>
+    
+    <spell>
+        <name>Boule de feu</name>
+        <descr>Boule de feu qui inflige 10d6 points de dégâts. La zone de l'explostion est de 6m de rayon. Le personnage désigne la cible du doigt et choisit l’endroit où il souhaite que l’explosion se produise. </descr>
+        <dice_type>d6</dice_type>
+        <n_dice>10</n_dice>
+        <dmg_type>feu</dmg_type>
+        <range>longue</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <save_val>0</save_val>
+        <rank>3</rank>
     </spell>
 
     <spell>
@@ -64,28 +98,60 @@
         <rank>3</rank>
     </spell>
     
-     <spell>
-        <name>Baiser du vampire</name>
-        <descr>Attaque de contact au corps à corps qui inflige 10d6 points de dégâts. Le lanceur de sorts gagne autant de points de vie temporaires. Ces points de vie ne peuvent toutefois dépasser le nombre actuel de points de vie de la cible + sa valeur de Constitution (ce qui peut suffire à la tuer). Les points de vie temporaires disparaissent au bout d’une heure.</descr>
+    <spell>
+        <name>Cône de froid</name>
+        <descr>Cône de froid crée une vague de froid glacial naissant dans la main tendue du magicien et prenant la forme d’un cône. Toutes les créatures situées dans la zone d’effet subissent 15d6 points de dégâts de froid.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>10</n_dice>
-        <dmg_type>sans</dmg_type>
-        <range>contact</range>
+        <n_dice>15</n_dice>
+        <dmg_type>froid</dmg_type>
+        <range>18m</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
-        <compo>V,G</compo>
+        <compo>V,G,M</compo>
         <rm>true</rm>
-        <save_type>aucun</save_type>
+        <save_type>ref[1/2]</save_type>
         <save_val>0</save_val>
-        <rank>3</rank>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Jet d'acide</name>
+        <descr>Un jet d’acide jaillit de la main tendue du personnage et inflige 15d6 points de dégâts d’acide à toutes les créatures situées dans la zone. L’acide continue de brûler pendant 1 round et inflige 7d6 points de dégâts pour toute créature qui a raté son jet de sauvegarde contre le sort (un second jet de Réflexes, fait au tour de la créature, annule les dégâts supplémentaires).</descr>
+        <dice_type>d6</dice_type>
+        <n_dice>15</n_dice>
+        <dmg_type>acide</dmg_type>
+        <range>18m</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M+</compo>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <save_val>0</save_val>
+        <rank>5</rank>
     </spell>
     
-     <spell>
-        <name>Boule de feu</name>
-        <descr>Boule de feu qui inflige 10d6 points de dégâts. La zone de l'explostion est de 6m de rayon. Le personnage désigne la cible du doigt et choisit l’endroit où il souhaite que l’explosion se produise. </descr>
+    <spell>
+        <name>Désintégration</name>
+        <descr>Attaque de contact à distance infligeant 40d6 points de dégâts. Si le rayon réduit une créature à 0 point de vie ou moins, celle-ci est désintégrée. Son équipement n’est cependant pas affecté.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>10</n_dice>
-        <dmg_type>feu</dmg_type>
+        <n_dice>40</n_dice>
+        <dmg_type>aucun</dmg_type>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+        <rm>true</rm>
+        <save_type>vig[5d6]</save_type>
+        <save_val>0</save_val>
+        <rank>6</rank>
+    </spell>
+    
+    <spell>
+        <name>Éclair multiple</name>
+        <descr>Un éclair qui multiple se divise dès qu’il frappe sa première cible (infligeant 20d6). Puis il se divise pour toucher au maximum 20 cibles infligeant autant de dégats à ces cibles. Le DD du jet de Réflexes des éclairs secondaires est réduit de 2 points par rapport à celui de l’éclair originel.</descr>
+        <dice_type>d6</dice_type>
+        <n_dice>20</n_dice>
+        <dmg_type>aucun</dmg_type>
         <range>longue</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
@@ -93,7 +159,41 @@
         <rm>true</rm>
         <save_type>ref[1/2]</save_type>
         <save_val>0</save_val>
-        <rank>3</rank>
+        <rank>6</rank>
     </spell>
+    
+    
+    <spell>
+        <name>Doigt de mort</name>
+        <descr>Ce sort inflige 10 points de dégâts par niveau de lanceur de sorts. Si la cible réussit son jet de sauvegarde, elle perd seulement 3d6 points de vie, +1 par niveau de lanceur de sorts.</descr>
+        <dice_type>/lvl</dice_type>
+        <n_dice>10</n_dice>
+        <dmg_type>aucun</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>vigeur[3d6(+1/lvl)]</save_type>
+        <save_val>0</save_val>
+        <rank>7</rank>
+    </spell>
+    
+    <spell>
+        <name>Nuées d'orage</name>
+        <descr>Des éclairs jaillissent dans toutes les directions. Ils n'abîment pas la végétation naturelle ni les créatures que le personnage souhaite exclure. Infligeant 20d8 et étourdi pendant 1 round. Un jet de sauvegarde réussi réduit ces dégâts de moitié et annule l'étourdissement.</descr>
+        <dice_type>8</dice_type>
+        <n_dice>20</n_dice>
+        <dmg_type>foudre</dmg_type>
+        <range>9m</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+        <rm>true</rm>
+        <save_type>vig[1/2]</save_type>
+        <save_val>0</save_val>
+        <rank>8</rank>
+    </spell>
+
  
 </records>
