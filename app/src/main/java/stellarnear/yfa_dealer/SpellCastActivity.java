@@ -66,7 +66,7 @@ public class SpellCastActivity extends AppCompatActivity {
         });
 
         Intent i = getIntent();
-        List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
+        SortedList<Spell> selected_spells = (SortedList<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
         for (final Spell spell : selected_spells) {
@@ -234,7 +234,7 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     private Map<CheckBox,ImageButton> construct_list_meta(final Spell spell,final TextView Spell_Title,final TextView infos) {
-        Map<CheckBox,ImageButton> map_list_meta_check=new HashMap<>();
+        Map<CheckBox,ImageButton> map_list_meta_check=new LinkedHashMap<>();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
@@ -271,21 +271,21 @@ public class SpellCastActivity extends AppCompatActivity {
             map_list_meta_check.put(checkbox,image);
         }
 
-        if (settings.getBoolean("materiel",getResources().getBoolean(R.bool.materiel_switch_def)))  {
+        if (settings.getBoolean("rapid",getResources().getBoolean(R.bool.rapid_switch_def)))  {
             CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Dispense Mat");
+            checkbox.setText("Incantation rapide");
             checkbox.setTextColor(Color.GRAY);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        spell.meta_Material(true);
+                        spell.meta_Rapid(true);
                         makeTitle(Spell_Title,spell);
                         makeInfos(infos,spell);
 
                     } else {
-                        spell.meta_Material(false);
+                        spell.meta_Rapid(false);
                         makeTitle(Spell_Title,spell);
                         makeInfos(infos,spell);
                     }
@@ -297,7 +297,47 @@ public class SpellCastActivity extends AppCompatActivity {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    spell.meta_Enhance_Spell_descr(getApplicationContext());
+                    spell.meta_Rapid_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
+        
+        //quintessence des sorts +3
+        
+        //extension d'effet +2
+        
+        //augementation d'intensité +1
+        
+        //sort éloigné +1
+        
+        if (settings.getBoolean("select",getResources().getBoolean(R.bool.select_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Sort séléctif");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Select_Spell(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Select_Spell(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Select_Spell_descr(getApplicationContext());
                 }
             });
             map_list_meta_check.put(checkbox,image);
