@@ -37,6 +37,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.cast_time=cast_time;
         this.duration=duration;
         this.compo=compo;
+        meta_Materiel(mC);
         this.rm=rm;
         this.save_type=save_type;
         this.rank=rank;
@@ -130,16 +131,18 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.rank=rank;
     }
 
-    //calcul du jet_sauv pour chaque spell ici avec un setSave_val
-    
+ 
     
     // methode de meta magie
     public void meta_Enhance_Spell(Boolean active) {
+        String [] all_type= {};
         if (active) {
-            this.n_dice+=1;
+            //calcul des dès catégory à up ...
+            
             this.rank+=4;
         } else {
-            this.n_dice-=1;
+           
+            
             this.rank-=4;
         }
     }
@@ -164,19 +167,42 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
     public void meta_Silent(boolean active) {//à refaire mais pour test la
+        String resultat=this.compo;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+                    
         if (active) {
-            this.n_dice+=1;
+            resultat.replace("V","V".setSpan(new StrikethroughSpan(), 0, 1, 0));
             this.rank+=1;
         } else {
-            this.n_dice-=1;
+            resultat.replace("V".setSpan(new StrikethroughSpan(), 0, 1, 0),"V");
             this.rank-=1;
         }
+        this.compo=resultat;
+    }
+    
+    public void meta_Silent_descr(Context mC) {
+        String descr="Un sort à incantation silencieuse ne nécessite pas de composante verbale."+
+            " Les sorts sans composante verbale ne sont donc pas affectés. Un sort à incantation silencieuse nécessite "+
+            "un emplacement de sort d’un niveau de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
     
     //à ajouter dispense de compo matterrielle  remplacé M par M barré
+    public void meta_Materiel(Context mC) {
+        String resultat=this.compo;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        if (prefs.getBoolean("materiel",getResources().getBoolean(R.bool.materiel_switch_def)))  {
+            resultat.replace("M","M".setSpan(new StrikethroughSpan(), 0, 1, 0));
+        } else {
+            resultat.replace("M".setSpan(new StrikethroughSpan(), 0, 1, 0),"M");
+        }
+        this.compo=resultat;
+    }
+    
    //sort selectif
    //augmentation d'intensité
-   //incant silencieuse   juste remplacer le V par un V barré
    //quintessence des sorts
    //incant rapid
    //extension d'effet
