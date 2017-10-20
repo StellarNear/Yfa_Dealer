@@ -305,12 +305,136 @@ public class SpellCastActivity extends AppCompatActivity {
         }
         
         //quintessence des sorts +3
+        if (settings.getBoolean("quintessence",getResources().getBoolean(R.bool.quintessence_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Quintessence des sorts");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Quint(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Quint(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Quint_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
         
         //extension d'effet +2
+        if (settings.getBoolean("extension",getResources().getBoolean(R.bool.extension_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Extension d'effet");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Extend(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Extend(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Extend_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
         
         //augementation d'intensité +1
+        if (settings.getBoolean("intense",getResources().getBoolean(R.bool.intense_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Augmentation d'intensité");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Intense(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Intense(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Intense_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
         
         //sort éloigné +1
+        if (settings.getBoolean("eloigne",getResources().getBoolean(R.bool.eloigne_switch_def)))  {
+            CheckBox checkbox=new CheckBox(getApplicationContext());
+            checkbox.setText("Sort éloigné");
+            checkbox.setTextColor(Color.GRAY);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        spell.meta_Far(true);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+
+                    } else {
+                        spell.meta_Far(false);
+                        makeTitle(Spell_Title,spell);
+                        makeInfos(infos,spell);
+                    }
+                }
+            });
+            ImageButton image=new ImageButton(getApplicationContext());
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Far_descr(getApplicationContext());
+                }
+            });
+            map_list_meta_check.put(checkbox,image);
+        }
         
         if (settings.getBoolean("select",getResources().getBoolean(R.bool.select_switch_def)))  {
             CheckBox checkbox=new CheckBox(getApplicationContext());
