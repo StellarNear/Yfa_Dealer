@@ -56,8 +56,8 @@ public class ListSpell extends AppCompatActivity {
                                             getValue("compo",element2),
                                             Boolean.parseBoolean(getValue("rm",element2)),
                                             getValue("save_type",element2),
-                                            Integer.parseInt(getValue("save_val",element2)),
-                                            Integer.parseInt(getValue("rank",element2)),mC));
+                                            Integer.parseInt(getValue("rank",element2)),
+                                            mC));
                 }
             }
 
