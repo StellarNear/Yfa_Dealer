@@ -21,6 +21,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  dice_type;
     private String  ori_dice_type;
     private int     n_dice;
+    private int     ori_n_dice;
     private String  dmg_type;
     private String  range;
     private String  cast_time;
@@ -31,12 +32,14 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  save_type;
     private int     save_val;
     private int     rank;
-    public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, boolean rm, String save_type, int save_val, int rank,Context mC){
+    private int caster_lvl;
+    public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, boolean rm, String save_type, int rank,Context mC){
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
         this.ori_dice_type=dice_type;
         this.n_dice=n_dice;
+        this.ori_n_dice=n_dice;
         this.dmg_type=dmg_type;
         this.range=range;
         this.cast_time=cast_time;
@@ -48,6 +51,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.save_type=save_type;
         this.rank=rank;
         setSave_val(mC);
+        setCaster_lvl(mC);
     }
 
     public Integer getRank(){
@@ -126,6 +130,10 @@ public class Spell extends AppCompatActivity implements Serializable {
     private void setSave_type(String save_type){
         this.save_type=save_type;
     }
+    private void setRank(int rank){
+        this.rank=rank;
+    }
+    
     public void setSave_val(Context mC){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
         String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
@@ -133,9 +141,15 @@ public class Spell extends AppCompatActivity implements Serializable {
         Integer save_val_calc=charisme+this.rank+10;
         this.save_val=save_val_calc;
     }
-    private void setRank(int rank){
-        this.rank=rank;
+    
+    public void setCaster_lvl(Context mC){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        String lvl_txt=prefs.getString("level",mC.getResources().getString(R.string.level_def));
+        Integer lvl = to_int(lvl_txt,"Niveau du personnage",mC);
+        Integer caster_lvl_calc=lvl;
+        this.caster_lvl=caster_lvl_calc;
     }
+    
 
  
     
@@ -143,23 +157,21 @@ public class Spell extends AppCompatActivity implements Serializable {
     public void meta_Enhance_Spell(Boolean active) {
         
         if (active) {
-            if(this.dice_type.equals("d4")){
+            if(this.dice_type.contains("d4")){
                 this.dice_type="d6";
-                this.ori_dice_type="d4";
-            } else if(this.dice_type.equals("d6")){
+            } else if(this.dice_type.contains("d6")){
                 this.dice_type="d8";
-            } else if(this.dice_type.equals("d8")){
+            } else if(this.dice_type.contains("d8")){
                 this.dice_type="d6";
                 this.n_dice=this.n_dice*2;
-                this.ori_dice_type="d8";
             }
             this.rank+=4;
         } else {
-           if(this.dice_type.equals("d8")){
+           if(this.dice_type.contains("d8")){
                 this.dice_type="d6";
-            } else if(this.dice_type.equals("d6") && this.ori_dice_type.equals("d4")){
+            } else if(this.dice_type.contains("d6") && this.ori_dice_type.contains("d4")){
                 this.dice_type="d4";
-            } else if(this.dice_type.equals("d6") && this.ori_dice_type.equals("d8")){
+            } else if(this.dice_type.contains("d6") && this.ori_dice_type.contains("d8")){
                 this.n_dice=this.n_dice/2;
                 this.dice_type="d8"; 
             }
@@ -197,8 +209,47 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
     
+    //quintessence des sorts
+    public void meta_Quint(boolean active) {
+        resultat=this.dice_type
+        if (active) {
+            this.rank+=3;
+            resultat=resultat.replace("d","*d");
+        } else {
+            this.rank-=3;
+            resultat=resultat.replace("*d","d");
+        }
+        this.dice_type=resultat;
+    }
+    public void meta_Quint_descr(Context mC) {
+        String descr="Tous les effets numériques aléatoires de la quintessence d’un sort prennent automatiquement leur valeur maximale. "+
+            "Les jets de sauvegarde et les jets opposés ne sont pas affectés, pas plus que les sorts sans données numériques "+
+            "et aléatoires. La quintessence d’un sort nécessite un emplacement de sort de trois niveaux de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
     
-
+   //extension d'effet
+  
+    public void meta_Extend(boolean active) {
+        if (active) {
+            this.rank+=2;
+            this.n_dice += (int)(this.n_dice/2.0)
+        } else {
+            this.rank-=2;
+            this.n_dice=ori_n_dice
+        }
+    }
+    public void meta_Extend_descr(Context mC) {
+        String descr="Toutes les variables numériques et aléatoires d’un sort bénéficiant d'une extension d’effet augmentent de 50%."+
+            "Les jets de sauvegarde et les jets opposés ne sont pas affectés, ni les sorts sans variable numérique aléatoire. Un sort à extension d’effet nécessite un emplacement de sort de deux niveaux de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+    
+    //sort selectif
     public void meta_Select_Spell(boolean active) {
         if (active) {
             this.rank+=1;
@@ -218,7 +269,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
     
 
-    public void meta_Silent(boolean active) {//à refaire mais pour test la
+    public void meta_Silent(boolean active) {
         String resultat=this.compo;
         if (active) {
             resultat=resultat.replace("V","-");
@@ -250,15 +301,57 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.compo=resultat;
     }
     
-   //augmentation d'intensité
-   //quintessence des sorts
-   //incant rapid
-   //extension d'effet
+   //V2: augmentation d'intensité pourra etre pris plusieurs fois
+    public void meta_Intense(boolean active) {
+        if (active) {
+            this.save_val+=1;
+            this.rank+=1;
+            this.caster_lvl+=1;
+        } else {
+            this.save_val-=1;
+            this.rank-=1;
+            this.caster_lvl-=1;
+        }
+    }
+    
+    public void meta_Intense_descr(Context mC) {
+        String descr="Ce don permet d’amplifier l’intensité du sort choisi en augmentant son niveau effectif"+
+            " (d’un ou plusieurs niveaux, sans dépasser le 9e). Contrairement aux autres dons de métamagie, "+
+            "il augmente réellement le niveau de sort modifié. Toutes les propriétés du sort qui dépendent de son niveau, nécessite un emplacement de sort égal à son nouveau niveau effectif.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
    
    //sort éloigné
+     public void meta_Far(boolean active) {
+         String range=this.range;
+         String [] all_range={"contact","courte","moyenne","longue","illimitée"};
+         for(int i=0;i<all_range.length();i++){
+             if(all_range[i].equals(range){
+                 if(active){
+                     this.rank+=1;
+                     range=all_range[i+1];
+                 } else {
+                     this.rank-=1;
+                     range=all_range[i-1];
+                 }
+                 this.range=range;
+             }
+         }    
+    }
     
-    //perfection magique vraiment à part uniquement sur desintégration permet de mettre une metamagie du choix gratos
-
+    public void meta_Far_descr(Context mC) {
+        String descr="Ce don permet d’augmenter la portée d'un sort (selon l’ordre « contact », « courte », « moyenne », « longue »). "
+            +"Un sort éloigné occupe un emplacement de sort d’un niveau de plus que le niveau normal du sort pour chaque augmentation "+
+            "de catégorie. Si le sort de base nécessite des attaques de contact au corps à corps, la version modifiée par ce don utilise des attaques de contact à distance.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+    
+    //V2 : perfection magique vraiment à part uniquement sur desintégration permet de mettre une metamagie du choix gratos
+ 
     public Integer to_int(String key,String field,Context mC){
         Integer value;
         try {
