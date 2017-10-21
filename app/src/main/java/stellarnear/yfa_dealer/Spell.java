@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 
 public class Spell extends AppCompatActivity implements Serializable {
 
@@ -28,11 +29,14 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  ori_cast_time;
     private String  duration;
     private String  compo;
+    private Boolean[] compoBool=new Boolean[3];
+    private Boolean[] ori_compoBool=new Boolean[3];
     private boolean rm;
     private String  save_type;
     private int     save_val;
     private int     rank;
     private int caster_lvl;
+
     public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, boolean rm, String save_type, int rank,Context mC){
         this.name=name;
         this.descr=descr;
@@ -46,6 +50,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.ori_cast_time=cast_time;
         this.duration=duration;
         this.compo=compo;
+        setcompoBool(this.compo);
         meta_Materiel(mC);
         this.rm=rm;
         this.save_type=save_type;
@@ -66,6 +71,8 @@ public class Spell extends AppCompatActivity implements Serializable {
     public String  getDice_typ(){
         return this.dice_type;
     }
+
+    //faire un get damage qui simplement concatene 4 et d6 mais en cas de truc spéciaux (comme / lvl ou jet maxé *etc il fait le calcul)
     public Integer  getN_dice(){
         return this.n_dice;
     }
@@ -82,7 +89,12 @@ public class Spell extends AppCompatActivity implements Serializable {
         return this.duration;
     }
     public String  getCompo(){
-        return this.compo;
+        String compo_out="";
+        if(this.compoBool[0]){compo_out+="V,";}
+        if(this.compoBool[1]){compo_out+="G,";}
+        if(this.compoBool[2]){compo_out+="M,";}
+        if (compo_out.endsWith(",")){compo_out=compo_out.substring(0, compo_out.length() - 1);}
+        return compo_out;
     }
     public boolean getRM(){
         return this.rm;
@@ -149,7 +161,33 @@ public class Spell extends AppCompatActivity implements Serializable {
         Integer caster_lvl_calc=lvl;
         this.caster_lvl=caster_lvl_calc;
     }
-    
+
+    public void setcompoBool(String compo) { //V,G,M
+        if(compo.contains("V")){
+            this.compoBool[0]=true;
+            this.ori_compoBool[0]=true;
+        } else { this.compoBool[0]=false; this.ori_compoBool[0]=false; }
+        if(compo.contains("G")){
+            this.compoBool[1]=true;
+            this.ori_compoBool[1]=true;
+        } else {this.compoBool[1]=false; this.ori_compoBool[1]=false;}
+        if(compo.contains("M")){
+            this.compoBool[2]=true;
+            this.ori_compoBool[2]=true;
+        }else {this.compoBool[2]=false; this.ori_compoBool[2]=false;}
+
+    }
+
+    public void meta_Materiel(Context mC) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        if (prefs.getBoolean("materiel_switch",mC.getResources().getBoolean(R.bool.materiel_switch_def)))  {
+            if(!this.compo.contains("M+")){
+                this.compoBool[2]=false;
+            }
+        } else {
+            this.compoBool[2]=this.ori_compoBool[2];
+        }
+    }
 
  
     
@@ -211,7 +249,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     
     //quintessence des sorts
     public void meta_Quint(boolean active) {
-        resultat=this.dice_type
+        String resultat=this.dice_type;
         if (active) {
             this.rank+=3;
             resultat=resultat.replace("d","*d");
@@ -235,10 +273,10 @@ public class Spell extends AppCompatActivity implements Serializable {
     public void meta_Extend(boolean active) {
         if (active) {
             this.rank+=2;
-            this.n_dice += (int)(this.n_dice/2.0)
+            this.n_dice += (int)(this.n_dice/2.0);
         } else {
             this.rank-=2;
-            this.n_dice=ori_n_dice
+            this.n_dice=ori_n_dice;
         }
     }
     public void meta_Extend_descr(Context mC) {
@@ -270,15 +308,12 @@ public class Spell extends AppCompatActivity implements Serializable {
     
 
     public void meta_Silent(boolean active) {
-        String resultat=this.compo;
-        if (active) {
-            resultat=resultat.replace("V","-");
-            this.rank+=1;
+
+        if(active){
+            this.compoBool[0] = false;
         } else {
-            resultat=resultat.replace("-","V");
-            this.rank-=1;
+            this.compoBool[0] = this.ori_compoBool[0];
         }
-        this.compo=resultat;
     }
     
     public void meta_Silent_descr(Context mC) {
@@ -289,17 +324,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
-    
-    public void meta_Materiel(Context mC) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        String resultat=this.compo;
-        if (prefs.getBoolean("materiel_switch",mC.getResources().getBoolean(R.bool.materiel_switch_def)))  {
-            resultat=resultat.replace("M","-");
-        } else {
-            resultat=resultat.replace("-","M");
-        }
-        this.compo=resultat;
-    }
+
     
    //V2: augmentation d'intensité pourra etre pris plusieurs fois
     public void meta_Intense(boolean active) {
@@ -327,8 +352,8 @@ public class Spell extends AppCompatActivity implements Serializable {
      public void meta_Far(boolean active) {
          String range=this.range;
          String [] all_range={"contact","courte","moyenne","longue","illimitée"};
-         for(int i=0;i<all_range.length();i++){
-             if(all_range[i].equals(range){
+         for(int i=0;i<all_range.length;i++){
+             if(all_range[i].equals(range)){
                  if(active){
                      this.rank+=1;
                      range=all_range[i+1];
@@ -337,6 +362,7 @@ public class Spell extends AppCompatActivity implements Serializable {
                      range=all_range[i-1];
                  }
                  this.range=range;
+                 break;
              }
          }    
     }

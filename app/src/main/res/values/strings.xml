@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Yfa_dealer</string>
+    <string name="app_name">Yfa dealer</string>
     <string name="action_settings">Paramètres</string>
     <string name="lvl_def">21</string>
     <string name="charisme_def">"7"</string>
     <string name="NLS_bonus_def">0</string>
+    <string name="level_def">21</string>
 </resources>

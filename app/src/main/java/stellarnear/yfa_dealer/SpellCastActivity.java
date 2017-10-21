@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -75,6 +76,7 @@ public class SpellCastActivity extends AppCompatActivity {
             spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
             final TextView Spell_Title = new TextView(this);
             makeTitle(Spell_Title,spell); //fait le titre du cartouche avec le rang en petit
+            setSpellTitleColor(Spell_Title,spell);
             page2.addView(Spell_Title);
 
             View h_sep = new View(this);
@@ -186,7 +188,15 @@ public class SpellCastActivity extends AppCompatActivity {
             SeekBar cast_slide = new SeekBar(this);
             cast_slide.setMax(100);
             cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_black_24dp));
-            cast_slide.setDrawingCacheBackgroundColor(Color.GRAY);
+
+            //cast_slide.setDrawingCacheBackgroundColor(Color.BLACK);
+
+            GradientDrawable gd_background = new GradientDrawable(
+                    GradientDrawable.Orientation.BL_TR,
+                    new int[] {0xFFBDBDBD,0xFFFDEFEF});
+            gd_background.setCornerRadius(0f);
+            cast_slide.setBackground(gd_background);
+
             fragment1.addView(cast_slide);
             cast_slide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -530,8 +540,25 @@ public class SpellCastActivity extends AppCompatActivity {
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
-        titre.setSpan(new ForegroundColorSpan(Color.GRAY),spell.getName().length(),titre_texte.length(), 0);// set color2
+        titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
         Spell_Title.setText(titre);
+    }
+
+    public void setSpellTitleColor(TextView text,Spell spell) {
+        int end=0;
+        int start=0;
+        if (spell.getDmg_type().equals("aucun")) {end=R.color.aucun_dark;start=R.color.aucun;}
+        if (spell.getDmg_type().equals("feu")) {end=R.color.feu_dark;start=R.color.feu;}
+        if (spell.getDmg_type().equals("foudre")) {end=R.color.foudre_dark;start=R.color.foudre;}
+        if (spell.getDmg_type().equals("froid")) {end=R.color.froid_dark;start=R.color.froid;}
+        if (spell.getDmg_type().equals("acide")) {end=R.color.acide_dark;start=R.color.acide;}
+
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.BL_TR,
+                new int[] {getColor(start),getColor(end)});
+        gd.setCornerRadius(0f);
+        text.setTextColor(Color.BLACK);
+        text.setBackground(gd);
     }
 
 

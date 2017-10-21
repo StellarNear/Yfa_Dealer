@@ -5,4 +5,8 @@
     <bool name="materiel_switch_def">true</bool>
     <bool name="rapid_switch_def">true</bool>
     <bool name="select_switch_def">true</bool>
+    <bool name="quintessence_switch_def">true</bool>
+    <bool name="extension_switch_def">true</bool>
+    <bool name="eloigne_switch_def">true</bool>
+    <bool name="intense_switch_def">true</bool>
 </resources>

@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#297DC7</color>
+    <color name="colorPrimaryDark">#020142</color>
+    <color name="colorAccent">#000000</color>
     <color name="red">#FE2E2E</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#0000FF</color>
+
+    <color name="aucun">#F2F2F2</color>
+    <color name="aucun_dark">#A4A4A4</color>
+    <color name="feu">#F79F81</color>
+    <color name="feu_dark">#FF4000</color>
+    <color name="froid">#819FF7</color>
+    <color name="froid_dark">#013ADF</color>
+    <color name="foudre">#E0ECF8</color>
+    <color name="foudre_dark">#2ECCFA</color>
+    <color name="acide">#2EFE9A</color>
+    <color name="acide_dark">#088A29</color>
+
+
+
 
 </resources>

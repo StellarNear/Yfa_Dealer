@@ -12,6 +12,34 @@
         android:summary="Lance le sort par une action rapide"
         android:title="Sort rapide" />
 
+
+    <SwitchPreference
+        android:defaultValue="@bool/quintessence_switch_def"
+        android:key="quintessence"
+        android:summary="Les variables du sort sont au maximum"
+        android:title="Quintessence des sorts" />
+
+
+    <SwitchPreference
+        android:defaultValue="@bool/extension_switch_def"
+        android:key="extension"
+        android:summary="Augmente les variables des sorts de 50%"
+        android:title="Extension d’effet" />
+
+
+    <SwitchPreference
+        android:defaultValue="@bool/intense_switch_def"
+        android:key="intense"
+        android:summary="Le sort est considéré comme d’un niveau supérieur"
+        android:title="Augmentation d’intensité" />
+
+
+    <SwitchPreference
+        android:defaultValue="@bool/eloigne_switch_def"
+        android:key="eloigne"
+        android:summary="Augmente la portée d’un sort d’une ou de plusieurs catégories."
+        android:title="Sort éloignéAPG" />
+
     <SwitchPreference
         android:defaultValue="@bool/select_switch_def"
         android:key="select"
