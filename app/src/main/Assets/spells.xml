@@ -31,6 +31,27 @@
         <rank>1</rank>
     </spell>
 
+    <spell>
+        <name>Bouclier</name>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Coup au but</name>
+        <rank>1</rank>
+    </spell>
+
+
+    <spell>
+        <name>Charme personne</name>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Alarme</name>
+        <rank>1</rank>
+    </spell>
+
 
     <spell>
         <name>Rayon ardent</name>
@@ -46,7 +67,38 @@
         <save_type>aucun</save_type>
         <rank>2</rank>
     </spell>
-    
+
+
+    <spell>
+        <name>Main spectrale</name>
+        <rank>2</rank>
+    </spell>
+
+
+    <spell>
+        <name>Simulacre de vie</name>
+        <rank>2</rank>
+    </spell>
+
+
+    <spell>
+        <name>Déblocage</name>
+        <rank>2</rank>
+    </spell>
+
+
+    <spell>
+        <name>Détection de l'invisibilité</name>
+        <rank>2</rank>
+    </spell>
+
+
+    <spell>
+        <name>Flou</name>
+        <rank>2</rank>
+    </spell>
+
+
     <spell>
         <name>Baiser du vampire</name>
         <descr>Attaque de contact au corps à corps, le lanceur de sorts gagne autant de points de vie temporaires. Ces points de vie ne peuvent toutefois dépasser le nombre actuel de points de vie de la cible + sa valeur de Constitution (ce qui peut suffire à la tuer). Les points de vie temporaires disparaissent au bout d’une heure.</descr>
@@ -91,7 +143,43 @@
         <save_type>ref[1/2]</save_type>
         <rank>3</rank>
     </spell>
-    
+
+
+    <spell>
+        <name>Don des langues</name>
+        <rank>3</rank>
+    </spell>
+
+    <spell>
+        <name>Protection contre les énérgies destructives</name>
+        <rank>3</rank>
+    </spell>
+
+    <spell>
+        <name>Invisibilité suprême</name>
+        <rank>4</rank>
+    </spell>
+
+    <spell>
+        <name>Malédiction</name>
+        <rank>4</rank>
+    </spell>
+
+    <spell>
+        <name>Simulacre de vie supérieur</name>
+        <rank>4</rank>
+    </spell>
+
+    <spell>
+        <name>Peau de pierre</name>
+        <rank>4</rank>
+    </spell>
+
+    <spell>
+        <name>Liberté de mouvement</name>
+        <rank>4</rank>
+    </spell>
+
     <spell>
         <name>Cône de froid</name>
         <descr>Cône de froid crée une vague de froid glacial naissant dans la main tendue du magicien et prenant la forme d’un cône. Toutes les créatures situées dans la zone d’effet subissent les dégâts de froid.</descr>
@@ -121,7 +209,27 @@
         <save_type>ref[1/2]</save_type>
         <rank>5</rank>
     </spell>
-    
+
+    <spell>
+        <name>Permanence</name>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Lien télépathique</name>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Echolocalisation</name>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Annulation d'echantement</name>
+        <rank>5</rank>
+    </spell>
+
     <spell>
         <name>Désintégration</name>
         <descr>Attaque de contact à distance. Si le rayon réduit une créature à 0 point de vie ou moins, celle-ci est désintégrée. Son équipement n’est cependant pas affecté.</descr>
@@ -151,7 +259,16 @@
         <save_type>ref[1/2]</save_type>
         <rank>6</rank>
     </spell>
-    
+
+    <spell>
+        <name>Dissipation suprême</name>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Double illusoire</name>
+        <rank>6</rank>
+    </spell>
     
     <spell>
         <name>Doigt de mort</name>
@@ -167,7 +284,19 @@
         <save_type>vigeur[3d6(+1/lvl)]</save_type>
         <rank>7</rank>
     </spell>
-    
+
+    <spell>
+        <name>Teleportation suprême</name>
+        <rank>7</rank>
+    </spell>
+    <spell>
+        <name>Manoir somptueux</name>
+        <rank>7</rank>
+    </spell>
+    <spell>
+        <name>Renvoi des sorts</name>
+        <rank>7</rank>
+    </spell>
     <spell>
         <name>Nuées d'orage</name>
         <descr>Des éclairs jaillissent dans toutes les directions. Ils n'abîment pas la végétation naturelle ni les créatures que le personnage souhaite exclure. Infligeant des dégâts et étourdi pendant 1 round. Un jet de sauvegarde réussi réduit ces dégâts de moitié et annule l'étourdissement.</descr>
@@ -183,5 +312,49 @@
         <rank>8</rank>
     </spell>
 
- 
+    <spell>
+        <name>Esprit impénétrable</name>
+        <rank>8</rank>
+    </spell>
+
+    <spell>
+        <name>Animation suspendue</name>
+        <rank>8</rank>
+    </spell>
+    <spell>
+        <name>Localisation suprême</name>
+        <rank>8</rank>
+    </spell>
+
+    <spell>
+        <name>Moment de préscience</name>
+        <rank>8</rank>
+    </spell>
+
+    <spell>
+        <name>Arrêt du temps</name>
+        <rank>9</rank>
+    </spell>
+    <spell>
+        <name>Shouait</name>
+        <rank>9</rank>
+    </spell>
+    <spell>
+        <name>Vent de la vengeance</name>
+        <rank>9</rank>
+    </spell>
+    <spell>
+        <name>Présence écrasante</name>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Prémonition</name>
+        <rank>9</rank>
+    </spell>
+
+
+
+
+
 </records>

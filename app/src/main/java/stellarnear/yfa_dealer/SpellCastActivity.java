@@ -1,39 +1,26 @@
 package stellarnear.yfa_dealer;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
@@ -41,17 +28,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class SpellCastActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +49,15 @@ public class SpellCastActivity extends AppCompatActivity {
         toolbar2.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
         Intent i = getIntent();
         List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
+
+
 
         for (final Spell spell : selected_spells) {
             spell.setSave_val(getApplicationContext()); //refresh si le charisme à bouger
@@ -115,7 +103,7 @@ public class SpellCastActivity extends AppCompatActivity {
             panel.addView(fragment2);
 
             TextView lol = new TextView(this);
-            lol.setText("lol");
+            lol.setText("lol,rang:"+spell.getRank());
             lol.setTextColor(Color.BLACK);
             fragment2.addView(lol);
 
@@ -204,6 +192,10 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     if (seekBar.getProgress() > 75) {
                         seekBar.setProgress(100);
+                        SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
+                        spell_per_day.load_list_spell_per_day(getApplicationContext());
+                        spell_per_day.setSpell_per_day_rank(spell.getRank(),1);
+                        spell_per_day.save_list_spell_per_day(getApplicationContext());
                         switch_page(panel);
                         View view = (View) findViewById(R.id.page2);
                         Snackbar.make(view, "Lancement du sort : "+spell.getName(), Snackbar.LENGTH_LONG)
@@ -516,7 +508,9 @@ public class SpellCastActivity extends AppCompatActivity {
     private void switch_page(ViewSwitcher panel) {
         panel.showNext();
     }
-    
+
+
+
     private void makeInfos(TextView infos,Spell spell) {
         String resistance;
         if (spell.getSave_type().equals("aucun")) {
@@ -559,6 +553,16 @@ public class SpellCastActivity extends AppCompatActivity {
         gd.setCornerRadius(0f);
         text.setTextColor(Color.BLACK);
         text.setBackground(gd);
+    }
+
+    public Integer to_int(String key){
+        Integer value;
+        try {
+            value = Integer.parseInt(key);
+        } catch (Exception e){
+            value=0;
+        }
+        return value;
     }
 
 

@@ -6,6 +6,8 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,15 +50,15 @@ public class ListSpell extends AppCompatActivity {
                     AllSpells.add(new Spell(getValue("name",element2),
                                             getValue("descr",element2),
                                             getValue("dice_type",element2),
-                                            Integer.parseInt(getValue("n_dice",element2)),
+                                            to_int(getValue("n_dice",element2)),
                                             getValue("dmg_type",element2),
                                             getValue("range",element2),
                                             getValue("cast_time",element2),
                                             getValue("duration",element2),
                                             getValue("compo",element2),
-                                            Boolean.parseBoolean(getValue("rm",element2)),
+                                            to_bool(getValue("rm",element2)),
                                             getValue("save_type",element2),
-                                            Integer.parseInt(getValue("rank",element2)),
+                                            to_int(getValue("rank",element2)),
                                             mC));
                 }
             }
@@ -66,9 +68,13 @@ public class ListSpell extends AppCompatActivity {
     }
 
     public String getValue(String tag, Element element) {
-        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-        Node node = nodeList.item(0);
-        return node.getNodeValue();
+        try {
+            NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+            Node node = nodeList.item(0);
+            return node.getNodeValue();
+        } catch (Exception e){
+            return "";
+        }
     }
 
     public List<Spell> selectRank(int rank){
@@ -82,5 +88,25 @@ public class ListSpell extends AppCompatActivity {
         return sel_list;
     }
 
+
+    public Integer to_int(String key){
+        Integer value;
+        try {
+            value = Integer.parseInt(key);
+        } catch (Exception e){
+            value=0;
+        }
+        return value;
+    }
+
+    public Boolean to_bool(String key){
+        Boolean value;
+        try {
+            value = Boolean.parseBoolean(key);
+        } catch (Exception e){
+            value=false;
+        }
+        return value;
+    }
     //methode pour recuperaer une liste de nom basé sur un rank en bouclant sur les element de la liste Allspells
 }

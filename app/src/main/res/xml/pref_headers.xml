@@ -5,11 +5,34 @@
     <header
         android:fragment="stellarnear.yfa_dealer.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_person_pin_black_24dp"
-        android:title="Caractéristiques générales" />
+        android:title="Caractéristiques générales"
+        android:summary="Statistiques de base du personnage"/>
 
     <header
         android:fragment="stellarnear.yfa_dealer.SettingsActivity$CombatPreferenceFragment"
         android:icon="@drawable/ic_playlist_add_check_black_24dp"
+        android:summary="Ensemble des dons connus"
         android:title="Dons actifs" />
+
+    <header
+        android:id="@+id/raz"
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$RazPreferenceFragment"
+        android:key="clearCache"
+        android:summary="Réinitialise tout les paramètres"
+        android:icon="@drawable/ic_undo_black_24dp"
+        android:title="Reset des paramètres" />
+
+    <header
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$SpellByDayPreferenceFragment"
+        android:icon="@drawable/ic_format_list_numbered_black_24dp"
+        android:title="Nombre de sorts par jour"
+        android:summary="Valeurs de base du nombre de sorts journaliers par rang"/>
+
+    <header
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$SleepPreferenceFragment"
+        android:icon="@drawable/ic_brightness_3_black_24dp"
+        android:title="Repos (une bonne nuit de sommeil)"
+        android:summary="Remet les sorts disponibles journaliers à fond"/>
+
 
 </preference-headers>

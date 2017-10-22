@@ -1,9 +1,45 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">Yfa dealer</string>
-    <string name="action_settings">Paramètres</string>
-    <string name="lvl_def">21</string>
+    <string name="app_name">"Yfa dealer"</string>
+    <string name="action_settings">"Paramètres"</string>
+    <string name="lvl_def">"21"</string>
     <string name="charisme_def">"7"</string>
-    <string name="NLS_bonus_def">0</string>
-    <string name="level_def">21</string>
+    <string name="NLS_bonus_def">"0"</string>
+    <string name="level_def">"21"</string>
+    <string name="n_rank_1_def">"10"</string>
+    <string name="n_rank_2_def">"9"</string>
+    <string name="n_rank_3_def">"9"</string>
+    <string name="n_rank_4_def">"9"</string>
+    <string name="n_rank_5_def">"8"</string>
+    <string name="n_rank_6_def">"8"</string>
+    <string name="n_rank_7_def">"8"</string>
+    <string name="n_rank_8_def">"8"</string>
+    <string name="n_rank_9_def">"8"</string>
+    <string name="n_rank_10_def">"1"</string>
+    <string name="n_rank_11_def">"0"</string>
+    <string name="n_rank_12_def">"0"</string>
+    <string name="n_rank_13_def">"0"</string>
+    <string name="n_rank_14_def">"0"</string>
+    <string name="n_rank_15_def">"0"</string>
+
+
+    <string-array name="values">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5"</item>
+        <item>"6"</item>
+        <item>"7"</item>
+        <item>"8"</item>
+        <item>"9"</item>
+        <item>"10"</item>
+        <item>"11"</item>
+        <item>"12"</item>
+        <item>"13"</item>
+        <item>"14"</item>
+        <item>"15"</item>
+    </string-array>
+
 </resources>

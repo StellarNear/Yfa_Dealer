@@ -10,14 +10,17 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringDef;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,17 +28,21 @@ import android.widget.CheckBox;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     Map<Spell,CheckBox> map_spell_check=new LinkedHashMap<Spell,CheckBox>();
+    SpellPerDay spell_per_day;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setBackgroundResource(R.drawable.banner_background);
         setSupportActionBar(toolbar);
 
+        this.spell_per_day=new SpellPerDay(getApplicationContext());
+
+        this.spell_per_day.load_list_spell_per_day(getApplicationContext());
 
         buildPage1();
 
@@ -64,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
     private void buildPage1() {
         ListSpell ListAllSpell = new ListSpell(getApplicationContext());
         List<Spell> rank_list  = new ArrayList<Spell>();
-        for(int i=1;i<=9;i++){
+
+        for(int i=1;i<=10;i++){
             LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
             TextView Tier= new TextView(this);
             GradientDrawable gd = new GradientDrawable(
@@ -72,8 +83,14 @@ public class MainActivity extends AppCompatActivity {
                     new int[] {0xFF585858,0xFFE6E6E6});
             gd.setCornerRadius(0f);
             Tier.setBackground(gd);
-            Tier.setText("Tier "+i);
-            Tier.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+            String tier_txt="Tier "+i;
+            String titre_tier=tier_txt +" ["+ spell_per_day.getSpell_per_day_rank(i)+" restant(s)]";
+            SpannableString titre=  new SpannableString(titre_tier);
+            titre.setSpan(new RelativeSizeSpan(0.65f), tier_txt.length(),titre_tier.length(), 0);
+            Tier.setText(titre);
+
+            Tier.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             Tier.setTextColor(Color.BLACK);
             Tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             Tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -96,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
             View v_sep = new View(this);
             v_sep.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-            v_sep.setBackgroundColor(Color.GRAY);
+            v_sep.setBackgroundColor(Color.BLACK);
             grid.addView(v_sep);
 
             for(Spell spell : rank_list){
@@ -109,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
                 View v_sep2 = new View(this);
                 v_sep2.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-                v_sep2.setBackgroundColor(Color.GRAY);
+                v_sep2.setBackgroundColor(Color.BLACK);
                 grid.addView(v_sep2);
             }
             View h_sep2 = new View(this);
@@ -123,16 +140,25 @@ public class MainActivity extends AppCompatActivity {
     private void builPage2() {
         List<Spell> sel_list= new ArrayList<Spell>();
         Iterator iter = map_spell_check.keySet().iterator();
+        Boolean spell_dmg=false;
+
         while(iter.hasNext()) {
             Spell spell=(Spell)iter.next();
             CheckBox checkbox=(CheckBox)map_spell_check.get(spell);
-            if (checkbox.isChecked()){
+            if (checkbox.isChecked()&& !spell.getDmg_type().equals("")){
                 sel_list.add(spell);
+                spell_dmg=true;
+            } else if (checkbox.isChecked()&& spell.getDmg_type().equals("")){
+                checkbox.setChecked(false);
+                this.spell_per_day.setSpell_per_day_rank(spell.getRank(),1);
             }
         }
-        Intent intent = new Intent(getApplicationContext(), SpellCastActivity.class);
-        intent.putExtra("selected_spells", (Serializable) sel_list);
-        startActivity(intent);
+        this.spell_per_day.save_list_spell_per_day(getApplicationContext());
+        if (spell_dmg) {
+            Intent intent = new Intent(getApplicationContext(), SpellCastActivity.class);
+            intent.putExtra("selected_spells", (Serializable) sel_list);
+            startActivity(intent);
+        } else { startActivity(new Intent(this, MainActivity.class));}
     }
 
     @Override
@@ -141,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -161,11 +188,13 @@ public class MainActivity extends AppCompatActivity {
     public void setCheckBoxColor(CheckBox checkbox,Spell spell) {
         int bord=0;
         int centre=0;
+        boolean dmg_spell=true;
         if (spell.getDmg_type().equals("aucun")) {bord=R.color.aucun_dark;centre=R.color.aucun;}
-        if (spell.getDmg_type().equals("feu")) {bord=R.color.feu_dark;centre=R.color.feu;}
-        if (spell.getDmg_type().equals("foudre")) {bord=R.color.foudre_dark;centre=R.color.foudre;}
-        if (spell.getDmg_type().equals("froid")) {bord=R.color.froid_dark;centre=R.color.froid;}
-        if (spell.getDmg_type().equals("acide")) {bord=R.color.acide_dark;centre=R.color.acide;}
+        else if (spell.getDmg_type().equals("feu")) {bord=R.color.feu_dark;centre=R.color.feu;}
+        else if (spell.getDmg_type().equals("foudre")) {bord=R.color.foudre_dark;centre=R.color.foudre;}
+        else if (spell.getDmg_type().equals("froid")) {bord=R.color.froid_dark;centre=R.color.froid;}
+        else if (spell.getDmg_type().equals("acide")) {bord=R.color.acide_dark;centre=R.color.acide;}
+        else {bord=R.color.white;centre=R.color.white;dmg_spell=false;}
 
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.BL_TR,
@@ -174,18 +203,29 @@ public class MainActivity extends AppCompatActivity {
         gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
         gd.setGradientRadius(200.0f);
 
+        checkbox.setTextColor(Color.BLACK);
+        int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
+        if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
         ColorStateList colorStateList = new ColorStateList(
                 new int[][] {
                         new int[] { -android.R.attr.state_checked }, // unchecked
                         new int[] {  android.R.attr.state_checked }  // checked
-                },
-                new int[] {
-                        Color.BLACK,
-                        Color.BLACK
-                }
+                },colorClickBox
+
         );
         checkbox.setButtonTintList(colorStateList);
-        checkbox.setTextColor(Color.BLACK);
         checkbox.setBackground(gd);
     }
+
+    public Integer to_int(String key){
+        Integer value;
+        try {
+            value = Integer.parseInt(key);
+        } catch (Exception e){
+            value=0;
+        }
+        return value;
+    }
 }
+

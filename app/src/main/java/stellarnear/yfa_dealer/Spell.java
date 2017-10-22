@@ -311,8 +311,10 @@ public class Spell extends AppCompatActivity implements Serializable {
 
         if(active){
             this.compoBool[0] = false;
+            this.rank+=1;
         } else {
             this.compoBool[0] = this.ori_compoBool[0];
+            this.rank-=1;
         }
     }
     
@@ -387,6 +389,19 @@ public class Spell extends AppCompatActivity implements Serializable {
             toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
             value=0;
+        }
+        return value;
+    }
+
+    public Boolean to_bool(String key,String field,Context mC){
+        Boolean value;
+        try {
+            value = Boolean.parseBoolean(key);
+        } catch (Exception e){
+            Toast toast = Toast.makeText(mC, "Attention la valeur : "+key+"\nDu champ : "+field+"\nEst incorrecte, valeur mise à 0.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+            value=false;
         }
         return value;
     }

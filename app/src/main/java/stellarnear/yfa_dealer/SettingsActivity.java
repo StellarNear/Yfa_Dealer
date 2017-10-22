@@ -2,14 +2,22 @@ package stellarnear.yfa_dealer;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -43,7 +51,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
-                this.finish();
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -67,7 +75,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || CombatPreferenceFragment.class.getName().equals(fragmentName);
+                || CombatPreferenceFragment.class.getName().equals(fragmentName)
+                || SpellByDayPreferenceFragment.class.getName().equals(fragmentName)
+                || RazPreferenceFragment.class.getName().equals(fragmentName)
+                || SleepPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -124,6 +135,106 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     //autre fragement liste de sort par jour
+    /**
+     page de sort par jour
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class SpellByDayPreferenceFragment extends PreferenceFragment{
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_spell_by_day);
+            setHasOptionsMenu(true);
 
-    //autre fragement qui reset les sorts par jour zZ
+        }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    /**
+     page de reset settings
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class RazPreferenceFragment extends PreferenceFragment{
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear();
+            editor.commit();
+
+            String descr="Remise à zero des paramètres de l'application";
+            Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+            startActivity(new Intent(getActivity(), MainActivity.class));
+
+        }
+    }
+
+
+    /**
+     page de dodo
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class SleepPreferenceFragment extends PreferenceFragment{
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = prefs.edit();
+
+            editor.putString("n_rank_1",getString(R.string.n_rank_1_def));
+            editor.putString("n_rank_2",getString(R.string.n_rank_2_def));
+            editor.putString("n_rank_3",getString(R.string.n_rank_3_def));
+            editor.putString("n_rank_4",getString(R.string.n_rank_4_def));
+            editor.putString("n_rank_5",getString(R.string.n_rank_5_def));
+            editor.putString("n_rank_6",getString(R.string.n_rank_6_def));
+            editor.putString("n_rank_7",getString(R.string.n_rank_7_def));
+            editor.putString("n_rank_8",getString(R.string.n_rank_8_def));
+            editor.putString("n_rank_9",getString(R.string.n_rank_9_def));
+            editor.putString("n_rank_10",getString(R.string.n_rank_10_def));
+            editor.putString("n_rank_11",getString(R.string.n_rank_11_def));
+            editor.putString("n_rank_12",getString(R.string.n_rank_12_def));
+            editor.putString("n_rank_13",getString(R.string.n_rank_13_def));
+            editor.putString("n_rank_14",getString(R.string.n_rank_14_def));
+            editor.putString("n_rank_15",getString(R.string.n_rank_15_def));
+            editor.commit();
+
+            String descr="Bonne nuit ! Demain une nouvelle journée pleine de sortilèges t'attends.";
+            Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+            startActivity(new Intent(getActivity(), MainActivity.class));
+
+        }
+
+        public Integer to_int(String key){
+            Integer value;
+            try {
+                value = Integer.parseInt(key);
+            } catch (Exception e){
+                value=0;
+            }
+            return value;
+        }
+    }
+
+
+
 }

@@ -1,0 +1,112 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="n_rank_1"
+        android:defaultValue="@string/n_rank_1_def"
+        android:title="Nombre de sort de rang 1"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"/>
+
+    <ListPreference
+        android:key="n_rank_2"
+        android:title="Nombre de sort de rang 2"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_2_def"/>
+    <ListPreference
+        android:key="n_rank_3"
+        android:title="Nombre de sort de rang 3"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_3_def"/>
+    <ListPreference
+        android:key="n_rank_4"
+        android:title="Nombre de sort de rang 4"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_4_def"/>
+    <ListPreference
+        android:key="n_rank_5"
+        android:title="Nombre de sort de rang 5"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_5_def"/>
+    <ListPreference
+        android:key="n_rank_6"
+        android:title="Nombre de sort de rang 6"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_6_def"/>
+    <ListPreference
+        android:key="n_rank_7"
+        android:title="Nombre de sort de rang 7"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_7_def"/>
+    <ListPreference
+        android:key="n_rank_8"
+        android:title="Nombre de sort de rang 8"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_8_def"/>
+    <ListPreference
+        android:key="n_rank_9"
+        android:title="Nombre de sort de rang 9"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_9_def"/>
+    <ListPreference
+        android:key="n_rank_10"
+        android:title="Nombre de sort de rang 10"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_10_def"/>
+    <ListPreference
+        android:key="n_rank_11"
+        android:title="Nombre de sort de rang 11"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_11_def"/>
+    <ListPreference
+        android:key="n_rank_12"
+        android:title="Nombre de sort de rang 12"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_12_def"/>
+    <ListPreference
+        android:key="n_rank_13"
+        android:title="Nombre de sort de rang 13"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_13_def"/>
+
+    <ListPreference
+        android:key="n_rank_14"
+        android:title="Nombre de sort de rang 14"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_14_def"/>
+
+    <ListPreference
+        android:key="n_rank_15"
+        android:title="Nombre de sort de rang 15"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_15_def"/>
+
+</PreferenceScreen>
