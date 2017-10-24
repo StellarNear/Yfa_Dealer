@@ -150,7 +150,11 @@ public class MainActivity extends AppCompatActivity {
                 spell_dmg=true;
             } else if (checkbox.isChecked()&& spell.getDmg_type().equals("")){
                 checkbox.setChecked(false);
-                this.spell_per_day.setSpell_per_day_rank(spell.getRank(),1);
+                
+                if(this.spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
+                this.spell_per_day.castSpell_rank(spell.getRank());
+                } 
+                
             }
         }
         this.spell_per_day.save_list_spell_per_day(getApplicationContext());
