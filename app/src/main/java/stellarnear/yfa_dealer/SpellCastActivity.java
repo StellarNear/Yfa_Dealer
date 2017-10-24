@@ -63,7 +63,9 @@ public class SpellCastActivity extends AppCompatActivity {
             spell.setSave_val(getApplicationContext()); //refresh si le charisme à bouger
             spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
             final TextView Spell_Title = new TextView(this);
-            makeTitle(Spell_Title,spell); //fait le titre du cartouche avec le rang en petit
+            SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
+            spell_per_day.load_list_spell_per_day(getApplicationContext());
+            makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
             setSpellTitleColor(Spell_Title,spell);
             page2.addView(Spell_Title);
 
@@ -194,12 +196,18 @@ public class SpellCastActivity extends AppCompatActivity {
                         seekBar.setProgress(100);
                         SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
                         spell_per_day.load_list_spell_per_day(getApplicationContext());
-                        spell_per_day.setSpell_per_day_rank(spell.getRank(),1);
-                        spell_per_day.save_list_spell_per_day(getApplicationContext());
-                        switch_page(panel);
-                        View view = (View) findViewById(R.id.page2);
-                        Snackbar.make(view, "Lancement du sort : "+spell.getName(), Snackbar.LENGTH_LONG)
+                        
+                        if(spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
+                            this.spell_per_day.castSpell_rank(spell.getRank());
+                            spell_per_day.save_list_spell_per_day(getApplicationContext());
+                             switch_page(panel);
+                               View view = (View) findViewById(R.id.page2);
+                                Snackbar.make(view, "Lancement du sort : "+spell.getName(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
+                        } else {
+                            seekBar.setProgress(0);
+                        }
+                        
                     } else {
                         seekBar.setProgress(0);
                     }
@@ -240,7 +248,8 @@ public class SpellCastActivity extends AppCompatActivity {
         Map<CheckBox,ImageButton> map_list_meta_check=new LinkedHashMap<>();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-
+        SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
+        spell_per_day.load_list_spell_per_day(getApplicationContext());
         if (settings.getBoolean("ameliore",getResources().getBoolean(R.bool.ameliore_switch_def)))  {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Sort Amélioré");
@@ -251,12 +260,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Enhance_Spell(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Enhance_Spell(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -284,12 +293,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Rapid(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Rapid(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -317,12 +326,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Quint(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Quint(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -350,12 +359,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Extend(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Extend(false);
-                        makeTitle(Spell_Title,spell);
+                       makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -383,12 +392,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Intense(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Intense(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -416,12 +425,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Far(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Far(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -448,12 +457,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Select_Spell(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Select_Spell(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -480,12 +489,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Silent(true);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
                         spell.meta_Silent(false);
-                        makeTitle(Spell_Title,spell);
+                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
                     }
                 }
@@ -526,7 +535,7 @@ public class SpellCastActivity extends AppCompatActivity {
         infos.setTextColor(Color.GRAY);
     }
     
-    private void makeTitle(TextView Spell_Title,Spell spell) {
+    private void makeTitle(TextView Spell_Title,Spell spell,SpellPerDay spell_per_day,Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -534,7 +543,12 @@ public class SpellCastActivity extends AppCompatActivity {
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
-        titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
+        
+        if(this.spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
+            titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
+        } else {
+            titre.setSpan(new ForegroundColorSpan(Color.WARNING),spell.getName().length(),titre_texte.length(), 0);// set color2
+        }
         Spell_Title.setText(titre);
     }
 
