@@ -80,11 +80,11 @@ public class SpellPerDay extends AppCompatActivity {
         return this.list_spell_per_day[rank-1];
     }
 
-    public void setSpell_per_day_rank(Integer rank) {
+    public void castSpell_rank(Integer rank) {
         this.list_spell_per_day[rank-1]-=1;
     }
     
-    public bool check_rank_available(Integer rank) {
+    public bool checkRank_available(Integer rank) {
         Integer test=-1;
          try {
             test=this.list_spell_per_day[rank-1]-1;
