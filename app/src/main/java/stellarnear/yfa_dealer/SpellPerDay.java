@@ -84,15 +84,28 @@ public class SpellPerDay extends AppCompatActivity {
         this.list_spell_per_day[rank-1]-=1;
     }
     
-    public bool checkRank_available(Integer rank) {
+    public bool checkRank_available(Integer rank, Context mC) {
         Integer test=-1;
          try {
             test=this.list_spell_per_day[rank-1]-1;
         } catch (Exception e){
+         
+            String descr="Il n'y a pas d'emplacement de sort du rang "+rank+" de disponible...";
+            Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
             return false;
         }
         
-        if(test>=0) { return true;} else {return false;}
+        if(test>=0) { 
+            return true;
+        } else {
+            String descr="Il n'y a pas d'emplacement de sort du rang "+rank+" de disponible...";
+            Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+            return false;
+        }
         
     }
 
