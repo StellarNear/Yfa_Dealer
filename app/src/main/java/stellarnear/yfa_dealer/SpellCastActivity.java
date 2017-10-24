@@ -11,10 +11,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -30,9 +33,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 public class SpellCastActivity extends AppCompatActivity {
@@ -100,14 +107,12 @@ public class SpellCastActivity extends AppCompatActivity {
             fragment1.setOrientation(LinearLayout.VERTICAL);
             fragment1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment1);
-            LinearLayout fragment2= new LinearLayout(this);
+            final LinearLayout fragment2= new LinearLayout(this);
+            fragment2.setOrientation(LinearLayout.VERTICAL);
+            fragment2.setGravity(Gravity.CENTER_VERTICAL);
             fragment2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment2);
 
-            TextView lol = new TextView(this);
-            lol.setText("lol,rang:"+spell.getRank());
-            lol.setTextColor(Color.BLACK);
-            fragment2.addView(lol);
 
             //construction fragement 1
 
@@ -179,7 +184,6 @@ public class SpellCastActivity extends AppCompatActivity {
             cast_slide.setMax(100);
             cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_black_24dp));
 
-            //cast_slide.setDrawingCacheBackgroundColor(Color.BLACK);
 
             GradientDrawable gd_background = new GradientDrawable(
                     GradientDrawable.Orientation.BL_TR,
@@ -198,9 +202,10 @@ public class SpellCastActivity extends AppCompatActivity {
                         spell_per_day.load_list_spell_per_day(getApplicationContext());
                         
                         if(spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
-                            this.spell_per_day.castSpell_rank(spell.getRank());
+                            spell_per_day.castSpell_rank(spell.getRank());
                             spell_per_day.save_list_spell_per_day(getApplicationContext());
-                             switch_page(panel);
+                            constructFrag2(fragment2,spell);
+                            switch_page(panel);
                                View view = (View) findViewById(R.id.page2);
                                 Snackbar.make(view, "Lancement du sort : "+spell.getName(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
@@ -244,11 +249,111 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
+    private void constructFrag2(LinearLayout fragment2,Spell spell) {
+
+
+        if((spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
+            LinearLayout L1 = new LinearLayout(this);
+            L1.setOrientation(LinearLayout.HORIZONTAL);
+            fragment2.addView(L1);
+            TextView ligne_texte= new TextView(this);
+            ligne_texte.setGravity(Gravity.TOP);
+            ligne_texte.setText("  Dégats :     [Plage](%):     Chance de depassement:");
+            ligne_texte.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            L1.addView(ligne_texte);
+
+            LinearLayout L2 = new LinearLayout(this);
+            L2.setOrientation(LinearLayout.HORIZONTAL);
+            fragment2.addView(L2);
+            SpannableString all_text_dmg;
+            all_text_dmg = calculDmg(spell);
+            TextView dmg_view= new TextView(this);
+            dmg_view.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            dmg_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            dmg_view.setText(all_text_dmg);
+            L2.addView(dmg_view);
+        } else {
+            TextView dmg_view= new TextView(this);
+            dmg_view.setText("LOL");
+            fragment2.addView(dmg_view);
+        }
+
+
+    }
+
+    private Integer rand(Integer dice) {
+        Random r = new Random();
+        int jet = r.nextInt(dice)+1;
+        return jet;
+    }
+
+    private SpannableString calculDmg(Spell spell) {
+
+        Integer dmg_sum,dmg_min,dmg_max;
+        dmg_sum=dmg_min=dmg_max=0;
+        Integer nd4,nd6,nd8;
+        nd4=nd6=nd8=0;
+        switch (spell.getDice_typ()){
+            case ("d4"):
+                nd4=spell.getN_dice();
+                break;
+            case ("d6"):
+                nd6=spell.getN_dice();
+                break;
+            case ("d8"):
+                nd8=spell.getN_dice();
+                break;
+        }
+        for(int i=0;i<nd4;i++){
+            dmg_sum+=rand(4);
+            dmg_min+=1;
+            dmg_max+=4;
+        }
+        for(int i=0;i<nd6;i++){
+            dmg_sum+=rand(6);
+            dmg_min+=1;
+            dmg_max+=6;
+        }
+        for(int i=0;i<nd8;i++){
+            dmg_sum+=rand(8);
+            dmg_min+=1;
+            dmg_max+=8;
+        }
+
+        Integer percent=0;
+        Integer ecart =  dmg_max - dmg_min;
+        if(!ecart.equals(0)) {
+            percent = 100*(dmg_sum - dmg_min) / ecart;
+        }
+
+        Double proba=100.0-100.0*tableProba(nd4,nd6,nd8,dmg_sum);
+
+        SpannableString all_dmg=  new SpannableString(" "+dmg_sum+"   "+"["+dmg_min+"-"+dmg_max+"]("+percent+"%)"+"  "+String.format("%.02f", proba)+"%");
+        all_dmg.setSpan(new RelativeSizeSpan(2.5f), 0,String.valueOf(dmg_sum).length()+1, 0); // set size1
+
+        switch (spell.getDmg_type()){
+            case ("acide"):
+                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.acide_dark)), 0,all_dmg.length(), 0);// set color1
+                break;
+            case ("froid"):
+                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.froid_dark)), 0,all_dmg.length(), 0);// set color1
+                break;
+            case ("foudre"):
+                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.foudre_dark)), 0,all_dmg.length(), 0);// set color1
+                break;
+            case ("feu"):
+                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.feu_dark)), 0,all_dmg.length(), 0);// set color1
+                break;
+        }
+
+        return all_dmg;
+    }
+
     private Map<CheckBox,ImageButton> construct_list_meta(final Spell spell,final TextView Spell_Title,final TextView infos) {
         Map<CheckBox,ImageButton> map_list_meta_check=new LinkedHashMap<>();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
+        final SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
         spell_per_day.load_list_spell_per_day(getApplicationContext());
         if (settings.getBoolean("ameliore",getResources().getBoolean(R.bool.ameliore_switch_def)))  {
             CheckBox checkbox=new CheckBox(getApplicationContext());
@@ -528,7 +633,7 @@ public class SpellCastActivity extends AppCompatActivity {
         } else {
             resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
         }
-        infos.setText("Dégats : "+spell.getN_dice()+spell.getDice_typ() +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange()+"\n"
+        infos.setText("Dégats : "+spell.getDmg(spell) +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange()+"\n"
                           +"Compos : "+spell.getCompo() +", Cast : "+ spell.getCast_tim()+ ", Durée : "+spell.getDuration()+"\n"
                           +"RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ resistance);
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -544,10 +649,10 @@ public class SpellCastActivity extends AppCompatActivity {
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
         
-        if(this.spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
+        if(spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
             titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
         } else {
-            titre.setSpan(new ForegroundColorSpan(Color.WARNING),spell.getName().length(),titre_texte.length(), 0);// set color2
+            titre.setSpan(new ForegroundColorSpan(getColor(R.color.warning)),spell.getName().length(),titre_texte.length(), 0);// set color2
         }
         Spell_Title.setText(titre);
     }
@@ -577,6 +682,129 @@ public class SpellCastActivity extends AppCompatActivity {
             value=0;
         }
         return value;
+    }
+
+
+    private Double tableProba(Integer nd4,Integer nd6,Integer nd8,Integer sum) {
+        Log.d("STATE (table)nd4", String.valueOf(nd4));
+        Log.d("STATE (table)nd6", String.valueOf(nd6));
+        Log.d("STATE (table)nd8", String.valueOf(nd8));
+        Log.d("STATE (table)sum", String.valueOf(sum));
+
+        Integer total = nd4*4+nd6*6+nd8*8;
+        Log.d("STATE (table)total", String.valueOf(total));
+        BigInteger[] combi_old = new BigInteger[total];          // table du nombre de combinaison pour chaque valeur somme
+        BigInteger[] combi_new = new BigInteger[total];
+
+        for (int i=1;i<=total;i++){
+            combi_old[i-1]=BigInteger.ZERO;
+            combi_new[i-1]=BigInteger.ZERO;
+        }
+
+        if (!nd8.equals(0)) {
+            for (int i=1;i<=8;i++) {                     //on rempli la premiere itération
+                combi_old[i-1]=BigInteger.ONE;
+            }
+            nd8-=1;
+        } else if (!nd6.equals(0)) {                      //on rempli la premiere itération
+            for (int i=1;i<=6;i++) {
+                combi_old[i-1]=BigInteger.ONE;
+            }
+            nd6-=1;
+        } else if (!nd4.equals(0)) {                      //on rempli la premiere itération
+            for (int i=1;i<=4;i++) {
+                combi_old[i-1]=BigInteger.ONE;
+            }
+            nd4-=1;
+        } else {
+            return 1.0;
+        }
+
+        for (int i=1;i<=nd4;i++) {              //pour chaque nouveau dès on ajoute la somme(cf https://wizardofodds.com/gambling/dice/2/)
+            //Log.d("STATE table_prob","traitement d10:"+String.valueOf(i));
+            for (int j=1;j<=total;j++) {
+                //Log.d("STATE table_prob","traitement ligne:"+String.valueOf(j));
+                for (int k = 4; k >= 1; k--) {
+                    //Log.d("STATE table_prob","traitement somme k:"+String.valueOf(k));
+                    if (j-1-k>=0) {
+                        //Log.d("STATE table_prob","combi_new[j-1]:"+String.valueOf(combi_new[j-1]));
+                        //Log.d("STATE table_prob","combi_old[j-1-k]:"+String.valueOf(combi_old[j-1-k]));
+                        combi_new[j-1]=combi_new[j-1].add(combi_old[j-1-k]);
+                    }
+                }
+            }
+            for (int l=1;l<=total;l++){
+                combi_old[l-1]=combi_new[l-1];
+                combi_new[l-1]=BigInteger.ZERO;
+            }
+        }
+
+        for (int i=1;i<=nd6;i++) {       //pour chaque nouveau dès on ajoute la somme(cf https://wizardofodds.com/gambling/dice/2/)
+            //Log.d("STATE table_prob","traitement d6:"+String.valueOf(i));
+            for (int j=1;j<=total;j++) {
+                //Log.d("STATE table_prob","traitement ligne:"+String.valueOf(j));
+                for (int k = 6; k >= 1; k--) {
+                    //Log.d("STATE table_prob","traitement somme k:"+String.valueOf(k));
+                    if (j-1-k>=0) {
+                        //Log.d("STATE table_prob","combi_new[j-1]:"+String.valueOf(combi_new[j-1]));
+                        //Log.d("STATE table_prob","combi_old[j-1-k]:"+String.valueOf(combi_old[j-1-k]));
+                        combi_new[j-1]=combi_new[j-1].add(combi_old[j-1-k]);
+                    }
+                }
+            }
+            for (int l=1;l<=total;l++){
+                combi_old[l-1]=combi_new[l-1];
+                combi_new[l-1]=BigInteger.ZERO;
+            }
+        }
+
+        for (int i=1;i<=nd8;i++) {                            //pour chaque nouveau dès on ajoute la somme(cf https://wizardofodds.com/gambling/dice/2/)
+            //Log.d("STATE table_prob","traitement d8:"+String.valueOf(i));
+            for (int j=1;j<=total;j++) {
+                //Log.d("STATE table_prob","traitement ligne:"+String.valueOf(j));
+                for (int k = 8; k >= 1; k--) {
+                    //Log.d("STATE table_prob","traitement somme k:"+String.valueOf(k));
+                    if (j-1-k>=0) {
+                        //Log.d("STATE table_prob","combi_new[j-1]:"+String.valueOf(combi_new[j-1]));
+                        //Log.d("STATE table_prob","combi_old[j-1-k]:"+String.valueOf(combi_old[j-1-k]));
+                        combi_new[j-1]=combi_new[j-1].add(combi_old[j-1-k]);
+                    }
+                }
+            }
+            for (int l=1;l<=total;l++){
+                combi_old[l-1]=combi_new[l-1];
+                combi_new[l-1]=BigInteger.ZERO;
+            }
+        }
+
+
+        /* Sortie debug de toute la table
+        Log.d("STATE combi_prob_all","toutes les valeurs sum:n_comb");
+        for (int i=1;i<=total;i++){
+            Log.d("STATE combi_prob_all",String.valueOf(i)+":"+String.valueOf(combi_old[i-1]));
+        }
+        Log.d("STATE combi_sum",String.valueOf(sum));
+        Log.d("STATE combi_res",String.valueOf(combi_old[sum-1]));
+        */
+
+        BigInteger sum_combi,sum_combi_tot;
+        sum_combi=BigInteger.ZERO;
+        sum_combi_tot=BigInteger.ZERO;
+        for (int i=1;i<=total;i++){
+            sum_combi_tot=sum_combi_tot.add(combi_old[i-1]);
+            if (i==sum) {
+                sum_combi=sum_combi_tot;
+            }
+        }
+
+        BigDecimal temp_sum = new BigDecimal(sum_combi);
+        BigDecimal temp_sum_tot = new BigDecimal(sum_combi_tot);
+        BigDecimal result_percent;
+        result_percent= temp_sum.divide(temp_sum_tot,4, RoundingMode.HALF_UP);
+
+        Log.d("STATE combi_res_prob",String.valueOf(result_percent));
+
+        return result_percent.doubleValue();
     }
 
 

@@ -406,6 +406,12 @@ public class Spell extends AppCompatActivity implements Serializable {
         return value;
     }
 
+    public String getDmg(Spell spell) {
+        String dmg=spell.getN_dice()+spell.getDice_typ();
 
-
+        if(spell.getDice_typ().contains("*d")){
+            dmg=spell.getN_dice()+spell.getDice_typ().replace("*d","x");
+        }
+        return dmg;
+    }
 }
