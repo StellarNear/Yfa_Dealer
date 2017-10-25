@@ -329,6 +329,8 @@ public class SpellCastActivity extends AppCompatActivity {
             FloatingActionButton det_but = new FloatingActionButton(this);
 
             det_but.setForegroundGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            det_but.setBackgroundColor(R.Color.gray);
+            det_but.setImageResource(R.drawable.more);
 
             det_but.setOnClickListener(new View.OnClickListener() {
                 @Override
