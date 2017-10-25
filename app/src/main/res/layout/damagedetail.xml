@@ -1,0 +1,29 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="stellarnear.yfa_dealer.SpellCastActivity"
+    android:fitsSystemWindows="true"
+    android:transitionName="transition">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_damage_detail_ondetlay"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@drawable/ic_more_horiz_black_24dp" />
+
+
+
+
+    <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+    </ScrollView>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

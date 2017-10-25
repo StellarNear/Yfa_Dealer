@@ -7,12 +7,11 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -249,7 +248,7 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
-    private void constructFrag2(LinearLayout fragment2,Spell spell) {
+    private void constructFrag2(LinearLayout fragment2,final Spell spell) {
 
 
         if((spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
@@ -272,6 +271,19 @@ public class SpellCastActivity extends AppCompatActivity {
             dmg_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             dmg_view.setText(all_text_dmg);
             L2.addView(dmg_view);
+
+            FloatingActionButton det_but = new FloatingActionButton(this);
+
+            det_but.setForegroundGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+
+            det_but.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    display_dmg_detail(spell);
+                }});
+
+            fragment2.addView(det_but);
+
         } else {
             TextView dmg_view= new TextView(this);
             dmg_view.setText("LOL");
@@ -293,6 +305,7 @@ public class SpellCastActivity extends AppCompatActivity {
         dmg_sum=dmg_min=dmg_max=0;
         Integer nd4,nd6,nd8;
         nd4=nd6=nd8=0;
+        String dice_txt="";
         switch (spell.getDice_typ()){
             case ("d4"):
                 nd4=spell.getN_dice();
@@ -305,20 +318,28 @@ public class SpellCastActivity extends AppCompatActivity {
                 break;
         }
         for(int i=0;i<nd4;i++){
-            dmg_sum+=rand(4);
+            int jet=rand(4);
+            dmg_sum+=jet;
+            dice_txt+=spell.getDmg_type()+"_d4_"+jet+",";
             dmg_min+=1;
             dmg_max+=4;
         }
         for(int i=0;i<nd6;i++){
-            dmg_sum+=rand(6);
+            int jet=rand(6);
+            dmg_sum+=jet;
+            dice_txt+=spell.getDmg_type()+"_d6_"+jet+",";
             dmg_min+=1;
             dmg_max+=6;
         }
         for(int i=0;i<nd8;i++){
-            dmg_sum+=rand(8);
+            int jet=rand(8);
+            dmg_sum+=jet;
+            dice_txt+=spell.getDmg_type()+"_d8_"+jet+",";
             dmg_min+=1;
             dmg_max+=8;
         }
+
+        spell.getDmg_txt(dice_txt);
 
         Integer percent=0;
         Integer ecart =  dmg_max - dmg_min;
@@ -808,5 +829,23 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
 
+    private void display_dmg_detail(Spell spell){
+        Intent intent = new Intent(this, DisplayDamageDetail.class);
+        String text_extra=spell.getDmg_txt();
+        //on enlève les derneir , et ; en fin de chaine
+        while (text_extra.substring(text_extra.length() - 1, text_extra.length()).equals(","))
+        {
+            text_extra = text_extra.substring(0, text_extra.length() - 1);
+        }
+        Log.d("STATE b4 display detail",text_extra);   //sorti debug
+        intent.putExtra("all_dices_str",text_extra);    //transmet la variable à l'autre activité
+
+        startActivity(intent);      //lance l'affichage des detail
+
+    }
+
+
 }
+
+
 

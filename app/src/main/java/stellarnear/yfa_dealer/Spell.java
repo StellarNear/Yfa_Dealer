@@ -36,6 +36,8 @@ public class Spell extends AppCompatActivity implements Serializable {
     private int     save_val;
     private int     rank;
     private int caster_lvl;
+    private String dmg_txt;
+
 
     public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, boolean rm, String save_type, int rank,Context mC){
         this.name=name;
@@ -57,6 +59,8 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.rank=rank;
         setSave_val(mC);
         setCaster_lvl(mC);
+
+
     }
 
     public Integer getRank(){
@@ -105,7 +109,17 @@ public class Spell extends AppCompatActivity implements Serializable {
     public Integer  getSave_val(){
         return this.save_val;
     }
+    public String getDmg_txt(){
+        return  this.dmg_txt;
+    }
+    public String getDmg(Spell spell) {
+        String dmg=spell.getN_dice()+spell.getDice_typ();
 
+        if(spell.getDice_typ().contains("*d")){
+            dmg=spell.getN_dice()+spell.getDice_typ().replace("*d","x");
+        }
+        return dmg;
+    }
 
 
     private void setName(String name){
@@ -176,6 +190,10 @@ public class Spell extends AppCompatActivity implements Serializable {
             this.ori_compoBool[2]=true;
         }else {this.compoBool[2]=false; this.ori_compoBool[2]=false;}
 
+    }
+
+    public void getDmg_txt(String dmg_dices){
+        this.dmg_txt=dmg_dices;
     }
 
     public void meta_Materiel(Context mC) {
@@ -406,12 +424,5 @@ public class Spell extends AppCompatActivity implements Serializable {
         return value;
     }
 
-    public String getDmg(Spell spell) {
-        String dmg=spell.getN_dice()+spell.getDice_typ();
 
-        if(spell.getDice_typ().contains("*d")){
-            dmg=spell.getN_dice()+spell.getDice_typ().replace("*d","x");
-        }
-        return dmg;
-    }
 }
