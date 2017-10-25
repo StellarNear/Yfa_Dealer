@@ -107,8 +107,8 @@ public class SpellCastActivity extends AppCompatActivity {
             fragment1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment1);
             final LinearLayout fragment2= new LinearLayout(this);
-            fragment2.setOrientation(LinearLayout.VERTICAL);
-            fragment2.setGravity(Gravity.CENTER_VERTICAL);
+            fragment2.setOrientation(LinearLayout.HORIZONTAL);
+            //fragment2.setGravity(Gravity.CENTER_VERTICAL);
             fragment2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment2);
 
@@ -252,25 +252,75 @@ public class SpellCastActivity extends AppCompatActivity {
 
 
         if((spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
-            LinearLayout L1 = new LinearLayout(this);
-            L1.setOrientation(LinearLayout.HORIZONTAL);
-            fragment2.addView(L1);
-            TextView ligne_texte= new TextView(this);
-            ligne_texte.setGravity(Gravity.TOP);
-            ligne_texte.setText("  Dégats :     [Plage](%):     Chance de depassement:");
-            ligne_texte.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            L1.addView(ligne_texte);
-
+            LinearLayout Colonne1 = new LinearLayout(this);
+            Colonne1.setOrientation(LinearLayout.VERTICAL);
+            Colonne1.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+            Colonne1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout Colonne2 = new LinearLayout(this);
+            Colonne2.setOrientation(LinearLayout.VERTICAL);
+            Colonne2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne2.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+            LinearLayout Colonne3 = new LinearLayout(this);
+            Colonne3.setOrientation(LinearLayout.VERTICAL);
+            Colonne3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne3.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+            LinearLayout Colonne4 = new LinearLayout(this);
+            Colonne4.setOrientation(LinearLayout.VERTICAL);
+            Colonne4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne4.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+            
+            fragment2.addView(Colonne1);
+            fragment2.addView(Colonne2);
+            fragment2.addView(Colonne3);
+            fragment2.addView(Colonne4);
+            
+            TextView ligne_texteC1= new TextView(this);
+            ligne_texteC1.setGravity(Gravity.TOP);
+            ligne_texteC1.setText("Dégats :");
+            ligne_texteC1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            Colonne1.add(ligne_texteC1);
+            
+            TextView ligne_texteC2= new TextView(this);
+            ligne_texteC2.setGravity(Gravity.TOP);
+            ligne_texteC2.setText("[Plage](%) :");
+            ligne_texteC2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            Colonne1.add(ligne_texteC2);
+            
+            TextView ligne_texteC3= new TextView(this);
+            ligne_texteC3.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+            ligne_texteC3.setText("Chance de depassement :");
+            ligne_texteC3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            Colonne1.add(ligne_texteC3);
+ 
+            
+            
+            
             LinearLayout L2 = new LinearLayout(this);
             L2.setOrientation(LinearLayout.HORIZONTAL);
             fragment2.addView(L2);
-            SpannableString all_text_dmg;
+            String[] all_text_dmg;
             all_text_dmg = calculDmg(spell);
-            TextView dmg_view= new TextView(this);
-            dmg_view.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            dmg_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            dmg_view.setText(all_text_dmg);
-            L2.addView(dmg_view);
+            
+            TextView dmg_sum_txt=new TextView(this);
+            dmg_sum_txt.setText(Html.fromHtml(all_text_dmg[0]));
+            dmg_sum_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            Colonne1.addView(dmg_sum_txt);
+            
+           TextView dmg_range_txt=new TextView(this);
+            dmg_range_txt.setText(Html.fromHtml(all_text_dmg[1]));
+            dmg_range_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            Colonne2.addView(dmg_range_txt);
+            
+            TextView dmg_range_percent_txt=new TextView(this);
+            dmg_range_percent_txt.setText(Html.fromHtml(all_text_dmg[2]));
+            dmg_range_percent_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            Colonne2.addView(dmg_range_percent_txt);
+            
+                 
+            TextView dmg_proba_txt=new TextView(this);
+            dmg_proba_txt.setText(Html.fromHtml(all_text_dmg[3]));
+            dmg_proba_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            Colonne2.addView(dmg_proba_txt);
 
             FloatingActionButton det_but = new FloatingActionButton(this);
 
@@ -282,7 +332,7 @@ public class SpellCastActivity extends AppCompatActivity {
                     display_dmg_detail(spell);
                 }});
 
-            fragment2.addView(det_but);
+            Colonne4.addView(det_but);
 
         } else {
             TextView dmg_view= new TextView(this);
@@ -299,7 +349,7 @@ public class SpellCastActivity extends AppCompatActivity {
         return jet;
     }
 
-    private SpannableString calculDmg(Spell spell) {
+    private String[] calculDmg(Spell spell) {
 
         Integer dmg_sum,dmg_min,dmg_max;
         dmg_sum=dmg_min=dmg_max=0;
@@ -349,25 +399,34 @@ public class SpellCastActivity extends AppCompatActivity {
 
         Double proba=100.0-100.0*tableProba(nd4,nd6,nd8,dmg_sum);
 
-        SpannableString all_dmg=  new SpannableString(" "+dmg_sum+"   "+"["+dmg_min+"-"+dmg_max+"]("+percent+"%)"+"  "+String.format("%.02f", proba)+"%");
-        all_dmg.setSpan(new RelativeSizeSpan(2.5f), 0,String.valueOf(dmg_sum).length()+1, 0); // set size1
-
+        String text_dmg,text_range,text_dmg_percent,text_proba;
+  
+        String Color="<font color=#000000>";
         switch (spell.getDmg_type()){
             case ("acide"):
-                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.acide_dark)), 0,all_dmg.length(), 0);// set color1
+                color="<font color=#088A29>"
                 break;
             case ("froid"):
-                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.froid_dark)), 0,all_dmg.length(), 0);// set color1
+                color="<font color=#013ADF>"
                 break;
             case ("foudre"):
-                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.foudre_dark)), 0,all_dmg.length(), 0);// set color1
+                color="<font color=#2ECCFA>"
                 break;
             case ("feu"):
-                all_dmg.setSpan(new ForegroundColorSpan(getColor(R.color.feu_dark)), 0,all_dmg.length(), 0);// set color1
+                color="<font color=#FF4000>"
                 break;
+            case ("aucun"):
+                color="<font color=#A4A4A4>"
+                break;
+                
         }
 
-        return all_dmg;
+        text_dmg=color+dmg_sum+"</font>";
+        text_range=color+"["+dmg_min+"-"+dmg_max+"]</font>";
+        text_dmg_percent=color+"("+percent +"%)</font>";
+        text_proba=color+String.format("%.02f", proba) +"%</font>";
+        
+        return new String[]{text_dmg, text_range, text_dmg_percent, text_proba};
     }
 
     private Map<CheckBox,ImageButton> construct_list_meta(final Spell spell,final TextView Spell_Title,final TextView infos) {
