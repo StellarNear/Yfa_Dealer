@@ -140,25 +140,18 @@ public class MainActivity extends AppCompatActivity {
     private void builPage2() {
         List<Spell> sel_list= new ArrayList<Spell>();
         Iterator iter = map_spell_check.keySet().iterator();
-        Boolean spell_dmg=false;
+        Boolean spell_casted=false;
 
         while(iter.hasNext()) {
             Spell spell=(Spell)iter.next();
             CheckBox checkbox=(CheckBox)map_spell_check.get(spell);
-            if (checkbox.isChecked()&& !spell.getDmg_type().equals("")){
+            if (checkbox.isChecked()){
                 sel_list.add(spell);
-                spell_dmg=true;
-            } else if (checkbox.isChecked()&& spell.getDmg_type().equals("")){
-                checkbox.setChecked(false);
-                
-                if(this.spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
-                this.spell_per_day.castSpell_rank(spell.getRank());
-                } 
-                
-            }
+                spell_casted=true;
+            } 
         }
-        this.spell_per_day.save_list_spell_per_day(getApplicationContext());
-        if (spell_dmg) {
+        
+        if (spell_casted) {
             Intent intent = new Intent(getApplicationContext(), SpellCastActivity.class);
             intent.putExtra("selected_spells", (Serializable) sel_list);
             startActivity(intent);
