@@ -31,26 +31,52 @@
         <rank>1</rank>
     </spell>
 
+      <spell>
+        <name>Alarme</name>
+        <descr>Alarme audible(18m), Alarme mentale(1.5km). Alarme audible La sonnerie est audible ou mentale suivant la décision du jeteur de sorts.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>2h/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>1</rank>
+    </spell>
+    
     <spell>
         <name>Bouclier</name>
+        <descr>Bouclier conférant un bonus de bouclier de +4 à la CA. S’agissant d’un effet de force, ce bonus agit face aux attaques de contact à distance intangibles. Il ne présente ni malus d’armure aux tests ni risque d’échec des sorts profanes.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G,M+</compo>
         <rank>1</rank>
     </spell>
 
+      <spell>
+        <name>Charme personne</name>
+        <descr>Charme-personne ne s’utilise que sur les humanoïdes. La créature affectée considère le lanceur de sorts comme son meilleur ami. Néanmoins si elle est menacée par le personnage ou ses compagnons, elle bénéficie d’un bonus de +5 au jet de sauvegarde.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
+            <rm>true</rm>
+        <save_type>Vol[annule]</save_type>
+        <rank>1</rank>
+    </spell>
+    
     <spell>
         <name>Coup au but</name>
+        <descr>Bonus de +20 au prochain jet d'attaque. De plus, il n’a aucune chance de manquer une cible camouflée.</descr>
+        <range>personelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1 round</duration>
+        <compo>V,M</compo>
         <rank>1</rank>
     </spell>
 
 
-    <spell>
-        <name>Charme personne</name>
-        <rank>1</rank>
-    </spell>
+  
 
-    <spell>
-        <name>Alarme</name>
-        <rank>1</rank>
-    </spell>
+  
 
 
     <spell>
@@ -68,33 +94,56 @@
         <rank>2</rank>
     </spell>
 
+    <spell>
+        <name>Déblocage</name>
+        <descr>Ouvre une porte, un coffre ou boîte ne faisant pas plus de 1 m²/niveau. Le personnage doit effectuer un test de niveau de lanceur de sorts contre le DD du verrou, avec un bonus de +10. S’il réussit, il ouvre jusqu’à deux éléments de fermeture. Ce sort ouvre également les passages secrets, les boîtes et les coffres.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V</compo>
+        <rank>2</rank>
+    </spell>
+    
+    <spell>
+        <name>Détection de l'invisibilité</name>
+        <descr>Ce sort permet au personnage de repérer les objets et les créatures invisibles situés dans son champ de vision, ainsi que celles qui sont éthérées, comme si elles étaient visibles.</descr>
+        <range>personelle</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>2</rank>
+    </spell>
+    
+    
 
     <spell>
+        <name>Flou</name>
+        <descr>La cible bénéficie d’un camouflage (20 % de chances que les attaques le ratent). Détection de l’invisibilité ne contre pas flou, mais vision lucide, si.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V</compo>
+        <rank>2</rank>
+    </spell>
+    
+    <spell>
         <name>Main spectrale</name>
+        <descr>Permet de lancer à distance des sorts de contact de bas niveau. Tant que le sort persiste, le personnage peut lancer n’importe quel sort de contact à distance du 4e niveau ou moins par l’intermédiaire de la main spectrale, qui lui confère un bonus de +2 au jet d’attaque de contact au corps à corps.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
         <rank>2</rank>
     </spell>
 
 
     <spell>
         <name>Simulacre de vie</name>
-        <rank>2</rank>
-    </spell>
-
-
-    <spell>
-        <name>Déblocage</name>
-        <rank>2</rank>
-    </spell>
-
-
-    <spell>
-        <name>Détection de l'invisibilité</name>
-        <rank>2</rank>
-    </spell>
-
-
-    <spell>
-        <name>Flou</name>
+        <descr>Tant que ce sort fait effet, il gagne un nombre de points de vie temporaires égal à 1d10 +1 par niveau de lanceur de sorts (+10 maximum).</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
         <rank>2</rank>
     </spell>
 
@@ -147,38 +196,92 @@
 
     <spell>
         <name>Don des langues</name>
+        <descr>Ce sort donne à la créature touchée la capacité de parler et de comprendre le langage de n’importe quelle créature intelligente</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+           <rm>true</rm>
+        <save_type>vol[annule]</save_type>
         <rank>3</rank>
     </spell>
-
-    <spell>
+    
+     <spell>
         <name>Protection contre les énérgies destructives</name>
+        <descr>Bouclier de 12pts/lvl (max +120). Ce sort offre une immunité temporaire contre le type d’énergie sélectionné (acide, électricité, feu, froid ou son).</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G</compo>
+         <rm>true</rm>
+        <save_type>vig[annule]</save_type>
         <rank>3</rank>
     </spell>
-
-    <spell>
+    
+     <spell>
         <name>Invisibilité suprême</name>
+        <descr>La créature touchée devient invisible. Une créature invisible et immobile bénéficie d’un bonus de +40 aux tests de Discrétion. Ce bonus est réduit à +20 si la créature se déplace.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M+</compo>
+        <rank>4</rank>
+    </spell>
+    
+    
+    <spell>
+        <name>Liberté de mouvement</name>
+        <descr>Permet de se déplacer et de combattre normalement, même si elle subit les effets d’un sort ou d’une magie qui réduit ses déplacements. Le sujet peut également se déplacer et attaquer normalement quand il se trouve sous l’eau.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+             <rm>true</rm>
+        <save_type>vol[annule]</save_type>
+        <rank>4</rank>
+    </spell>
+    
+      <spell>
+        <name>Malédiction</name>
+        <descr>Le personnage choisit l’effet qu’il souhaite produire parmi les trois suivants :
+-6 à une valeur de caractéristique (1 minimum) OU 
+Malus de -4 aux jets d’attaque, aux jets de sauvegarde, aux tests de caractéristique et aux tests de compétence OU
+Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir agir normalement. Sinon, elle ne fait rien.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>permanente</duration>
+        <compo>V,G</compo>
+           <rm>true</rm>
+        <save_type>vol[annule]</save_type>
         <rank>4</rank>
     </spell>
 
-    <spell>
-        <name>Malédiction</name>
+      <spell>
+        <name>Peau de pierre</name>
+        <descr>Bouclier de 10pts/lvl (max 150). Protection contre les attaques physiques qui se traduit par une réduction des dégâts de 10/adamantium.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M+</compo>
+        <rm>true</rm>
+        <save_type>vol[annule]</save_type>
         <rank>4</rank>
     </spell>
+   
+
 
     <spell>
         <name>Simulacre de vie supérieur</name>
+        <descr>Gagne un nombre de points de vie temporaires égal à 2d10 +1 par niveau de lanceur de sorts (+20 maximum).</descr>
+        <range>personelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
         <rank>4</rank>
     </spell>
 
-    <spell>
-        <name>Peau de pierre</name>
-        <rank>4</rank>
-    </spell>
+  
 
-    <spell>
-        <name>Liberté de mouvement</name>
-        <rank>4</rank>
-    </spell>
 
     <spell>
         <name>Cône de froid</name>
@@ -209,26 +312,49 @@
         <save_type>ref[1/2]</save_type>
         <rank>5</rank>
     </spell>
+    
+    
+ <spell>
+        <name>Annulation d'echantement</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>5</rank>
+    </spell>
+    
+    <spell>
+        <name>Echolocalisation</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>5</rank>
+    </spell>
+    
+    <spell>
+        <name>Lien télépathique</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>5</rank>
+    </spell>
 
     <spell>
         <name>Permanence</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>5</rank>
     </spell>
 
-    <spell>
-        <name>Lien télépathique</name>
-        <rank>5</rank>
-    </spell>
-
-    <spell>
-        <name>Echolocalisation</name>
-        <rank>5</rank>
-    </spell>
-
-    <spell>
-        <name>Annulation d'echantement</name>
-        <rank>5</rank>
-    </spell>
+  
 
     <spell>
         <name>Désintégration</name>
@@ -262,11 +388,21 @@
 
     <spell>
         <name>Dissipation suprême</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>6</rank>
     </spell>
 
     <spell>
         <name>Double illusoire</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>6</rank>
     </spell>
     
@@ -285,18 +421,36 @@
         <rank>7</rank>
     </spell>
 
-    <spell>
-        <name>Teleportation suprême</name>
-        <rank>7</rank>
-    </spell>
+   
     <spell>
         <name>Manoir somptueux</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>7</rank>
     </spell>
     <spell>
         <name>Renvoi des sorts</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>7</rank>
     </spell>
+     <spell>
+        <name>Teleportation suprême</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>7</rank>
+    </spell>
+    
+    
     <spell>
         <name>Nuées d'orage</name>
         <descr>Des éclairs jaillissent dans toutes les directions. Ils n'abîment pas la végétation naturelle ni les créatures que le personnage souhaite exclure. Infligeant des dégâts et étourdi pendant 1 round. Un jet de sauvegarde réussi réduit ces dégâts de moitié et annule l'étourdissement.</descr>
@@ -313,45 +467,94 @@
     </spell>
 
     <spell>
+        <name>Animation suspendue</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>8</rank>
+    </spell>
+    
+    <spell>
         <name>Esprit impénétrable</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>8</rank>
     </spell>
 
-    <spell>
-        <name>Animation suspendue</name>
-        <rank>8</rank>
-    </spell>
+
     <spell>
         <name>Localisation suprême</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>8</rank>
     </spell>
 
     <spell>
         <name>Moment de préscience</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>8</rank>
     </spell>
 
     <spell>
         <name>Arrêt du temps</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>9</rank>
+    </spell>
+      <spell>
+        <name>Prémonition</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
+        <rank>9</rank>
+    </spell>
+       <name>Présence écrasante</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>9</rank>
     </spell>
     <spell>
         <name>Shouait</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>9</rank>
     </spell>
     <spell>
         <name>Vent de la vengeance</name>
+        <descr></descr>
+        <range></range>
+        <cast_time></cast_time>
+        <duration></duration>
+        <compo>V,G,M+</compo>
         <rank>9</rank>
     </spell>
     <spell>
-        <name>Présence écrasante</name>
-        <rank>9</rank>
-    </spell>
+     
 
-    <spell>
-        <name>Prémonition</name>
-        <rank>9</rank>
-    </spell>
+  
 
 
 
