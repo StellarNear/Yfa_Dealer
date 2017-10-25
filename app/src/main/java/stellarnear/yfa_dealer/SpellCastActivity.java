@@ -304,23 +304,27 @@ public class SpellCastActivity extends AppCompatActivity {
             TextView dmg_sum_txt=new TextView(this);
             dmg_sum_txt.setText(Html.fromHtml(all_text_dmg[0]));
             dmg_sum_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            dmg_sum_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             Colonne1.addView(dmg_sum_txt);
             
            TextView dmg_range_txt=new TextView(this);
             dmg_range_txt.setText(Html.fromHtml(all_text_dmg[1]));
             dmg_range_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            dmg_range_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne2.addView(dmg_range_txt);
             
             TextView dmg_range_percent_txt=new TextView(this);
             dmg_range_percent_txt.setText(Html.fromHtml(all_text_dmg[2]));
             dmg_range_percent_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            dmg_range_percent_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne2.addView(dmg_range_percent_txt);
             
                  
             TextView dmg_proba_txt=new TextView(this);
             dmg_proba_txt.setText(Html.fromHtml(all_text_dmg[3]));
             dmg_proba_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-            Colonne2.addView(dmg_proba_txt);
+            dmg_proba_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            Colonne3.addView(dmg_proba_txt);
 
             FloatingActionButton det_but = new FloatingActionButton(this);
 
@@ -707,15 +711,57 @@ public class SpellCastActivity extends AppCompatActivity {
 
     private void makeInfos(TextView infos,Spell spell) {
         String resistance;
-        if (spell.getSave_type().equals("aucun")) {
+        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
             resistance = spell.getSave_type();
 
         } else {
             resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
         }
-        infos.setText("Dégats : "+spell.getDmg(spell) +", Type : "+ spell.getDmg_type()+ ", Portée : "+spell.getRange()+"\n"
-                          +"Compos : "+spell.getCompo() +", Cast : "+ spell.getCast_tim()+ ", Durée : "+spell.getDuration()+"\n"
-                          +"RM : "+(spell.getRM()? "oui" : "non") +", Jet de sauv : "+ resistance);
+        
+        String text="";
+        Integer n_inf=0;
+        if(!spell.getDmg().equal("")){
+            text+="Dégats : "+spell.getDmg(spell)+", ";
+            n_inf+=1;
+        }
+        if(!spell.getDmg().equal("")){
+            text+="Type : "+ spell.getDmg_type()+", ";
+            n_inf+=1;
+        }
+        if(!spell.getRange().equal("")){
+            text+="Portée : "+spell.getRange()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+        if(!spell.getCompo().equal("")){
+            text+="Compos : "+spell.getCompo()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+        
+        if(!spell.getCast_tim().equal("")){
+            text+="Cast : "+ spell.getCast_tim()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+        
+         if(!spell.getDuration().equal("")){
+            text+="Durée : "+spell.getDuration()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+        
+        if(!spell.getRM().equal("")){
+            text+="RM : "+(spell.getRM()? "oui" : "non")+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+        if(!resistance.equal("")){
+            text+="Jet de sauv : "+ resistance+", ";
+            n_inf+=1;
+        }
+        text = text.substring(0, text.length() - 1);
+        infos.setText(text);
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         infos.setTextColor(Color.GRAY);
     }
