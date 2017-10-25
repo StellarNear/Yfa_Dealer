@@ -3,7 +3,10 @@ package stellarnear.yfa_dealer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -30,13 +33,19 @@ public class DisplayDamageDetail extends AppCompatActivity {
     }
 
     private void display_dmg_detail(String param_all_dices_str){
-        ScrollView  scroll = (ScrollView) findViewById(R.id.scroll) ;
+        GridLayout scroll = (GridLayout) findViewById(R.id.grid_scroll) ;
 
-        List<String> dices_per_arrow = Arrays.asList(param_all_dices_str.split(","));
-        for ( String dice_str : dices_per_arrow) {
+        Log.d("STATE all",param_all_dices_str);
+        List<String> dices = Arrays.asList(param_all_dices_str.split(","));
+
+        for ( String dice_str : dices) {
+
+
+            Log.d("STATE indi", dice_str);
             ImageView dice = new ImageView(getApplicationContext());
             dice.setImageResource(ImageAdapter.dice_map.get(dice_str));
             scroll.addView(dice);
+
         }
 
         /*

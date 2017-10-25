@@ -522,7 +522,8 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>V</compo>
         <rank>9</rank>
     </spell>
-      <spell>
+
+    <spell>
         <name>Prémonition</name>
         <descr>Averti dès qu’un péril menace la cible. +2 à la CA et aux jets de Réflexes si personnelle.</descr>
         <range>contact</range>
@@ -531,6 +532,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>V,G,M</compo>
         <rank>9</rank>
     </spell>
+    <spell>
        <name>Présence écrasante</name>
         <descr>Cible une créature/niveau qui ne doivent pas être distantes de plus de 9 m les unes des autres. Si les cibles ratent leur jet de sauvegarde, elles tombent à genoux et se prosternent devant le personnage, en pensant s’incliner devant une présence divine.</descr>
         <range>moyenne</range>
@@ -541,6 +543,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <save_type>vol[annule]</save_type>
         <rank>9</rank>
     </spell>
+
     <spell>
         <name>Souhait</name>
         <descr>Souhait est le sort ultime des magiciens et des ensorceleurs. Il suffit en effet au personnage d’exprimer un souhait pour que le tissu de la réalité se modifie selon leurs désirs. Mais même un sort aussi puissant a ses limites.</descr>
@@ -548,6 +551,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>V,G,M+</compo>
         <rank>9</rank>
     </spell>
+
     <spell>
         <name>Vent de la vengeance</name>
         <descr>Entourre le personnage d'une tonade de vent surnaturel. De plus, quand une créature frappe le personnage au corps à corps, ce dernier peut ordonner aux vents de fouetter l'attaquant par une action immédiate. La créature doit réussir un jet de Vigueur ou recevoir 5d8 points de dégâts contondants et tomber à terre. Vitesse de vol de 18 mètres. Permet de voler et de respirer sous l'eau ou dans l'espace.</descr>
@@ -559,13 +563,5 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>V,G</compo>
         <rank>9</rank>
     </spell>
-    <spell>
-     
-
-  
-
-
-
-
 
 </records>

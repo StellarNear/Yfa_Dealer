@@ -56,7 +56,7 @@ public class ListSpell extends AppCompatActivity {
                                             getValue("cast_time",element2),
                                             getValue("duration",element2),
                                             getValue("compo",element2),
-                                            to_bool(getValue("rm",element2)),
+                                            getValue("rm",element2),
                                             getValue("save_type",element2),
                                             to_int(getValue("rank",element2)),
                                             mC));

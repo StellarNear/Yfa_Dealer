@@ -31,6 +31,8 @@
             android:label="Paramètres">
         </activity>
 
+        <activity android:label="Détail des dégâts" android:name=".DisplayDamageDetail"/>
+
 
     </application>
 

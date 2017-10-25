@@ -31,15 +31,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  compo;
     private Boolean[] compoBool=new Boolean[3];
     private Boolean[] ori_compoBool=new Boolean[3];
-    private boolean rm;
+    private String rm;
     private String  save_type;
     private int     save_val;
     private int     rank;
+    private String dmg_dice_roll_txt;
     private int caster_lvl;
-    private String dmg_txt;
 
 
-    public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, boolean rm, String save_type, int rank,Context mC){
+    public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
@@ -100,8 +100,9 @@ public class Spell extends AppCompatActivity implements Serializable {
         if (compo_out.endsWith(",")){compo_out=compo_out.substring(0, compo_out.length() - 1);}
         return compo_out;
     }
-    public boolean getRM(){
-        return this.rm;
+    public String getRM(){
+        if (this.rm.equals("")) {return "";}
+        return (Boolean.valueOf(this.rm)? "oui" : "non");
     }
     public String  getSave_type(){
         return this.save_type;
@@ -109,18 +110,20 @@ public class Spell extends AppCompatActivity implements Serializable {
     public Integer  getSave_val(){
         return this.save_val;
     }
-    public String getDmg_txt(){
-        return  this.dmg_txt;
-    }
-    public String getDmg(Spell spell) {
-        String dmg=spell.getN_dice()+spell.getDice_typ();
 
-        if(spell.getDice_typ().contains("*d")){
-            dmg=spell.getN_dice()+spell.getDice_typ().replace("*d","x");
+    public String getDmg_txt() {
+        if (this.n_dice==0) {return "";}
+        String dmg=this.n_dice+this.dice_type;
+
+        if(this.dice_type.contains("*d")){
+            dmg=this.n_dice+this.dice_type.replace("*d","x");
         }
         return dmg;
     }
 
+    public String getDmg_dice_roll_txt() {
+        return this.dmg_dice_roll_txt;
+    }
 
     private void setName(String name){
         this.name=name;
@@ -150,7 +153,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.compo=compo;
     }
 
-    private void setRM(boolean rm){
+    private void setRM(String rm){
         this.rm=rm;
     }
     private void setSave_type(String save_type){
@@ -192,8 +195,8 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     }
 
-    public void getDmg_txt(String dmg_dices){
-        this.dmg_txt=dmg_dices;
+    public void setDmg_dice_roll_txt(String dmg_dice_roll_txt) {
+        this.dmg_dice_roll_txt = dmg_dice_roll_txt;
     }
 
     public void meta_Materiel(Context mC) {
@@ -423,6 +426,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         }
         return value;
     }
+
 
 
 }

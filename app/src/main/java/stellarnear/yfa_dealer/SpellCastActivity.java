@@ -3,6 +3,7 @@ package stellarnear.yfa_dealer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -108,7 +110,8 @@ public class SpellCastActivity extends AppCompatActivity {
             panel.addView(fragment1);
             final LinearLayout fragment2= new LinearLayout(this);
             fragment2.setOrientation(LinearLayout.HORIZONTAL);
-            //fragment2.setGravity(Gravity.CENTER_VERTICAL);
+            fragment2.setGravity(Gravity.CENTER_VERTICAL);
+            fragment2.setWeightSum(7);
             fragment2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment2);
 
@@ -255,42 +258,55 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout Colonne1 = new LinearLayout(this);
             Colonne1.setOrientation(LinearLayout.VERTICAL);
             Colonne1.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-            Colonne1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,2));
             LinearLayout Colonne2 = new LinearLayout(this);
             Colonne2.setOrientation(LinearLayout.VERTICAL);
-            Colonne2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,2));
             Colonne2.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
             LinearLayout Colonne3 = new LinearLayout(this);
             Colonne3.setOrientation(LinearLayout.VERTICAL);
-            Colonne3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,2));
             Colonne3.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
             LinearLayout Colonne4 = new LinearLayout(this);
             Colonne4.setOrientation(LinearLayout.VERTICAL);
-            Colonne4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            Colonne4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
             Colonne4.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
             
             fragment2.addView(Colonne1);
+            View v_sep = new View(this);
+            v_sep.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
+            v_sep.setBackgroundColor(Color.GRAY);
+            fragment2.addView(v_sep);
             fragment2.addView(Colonne2);
+            View v_sep2 = new View(this);
+            v_sep2.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
+            v_sep2.setBackgroundColor(Color.GRAY);
+            fragment2.addView(v_sep2);
             fragment2.addView(Colonne3);
+            View v_sep3 = new View(this);
+            v_sep3.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
+            v_sep3.setBackgroundColor(Color.GRAY);
+            fragment2.addView(v_sep3);
             fragment2.addView(Colonne4);
             
             TextView ligne_texteC1= new TextView(this);
-            ligne_texteC1.setGravity(Gravity.TOP);
+            ligne_texteC1.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
             ligne_texteC1.setText("Dégats :");
             ligne_texteC1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            Colonne1.add(ligne_texteC1);
+            Colonne1.addView(ligne_texteC1);
             
             TextView ligne_texteC2= new TextView(this);
-            ligne_texteC2.setGravity(Gravity.TOP);
+            ligne_texteC2.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
             ligne_texteC2.setText("[Plage](%) :");
             ligne_texteC2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            Colonne1.add(ligne_texteC2);
+            Colonne2.addView(ligne_texteC2);
             
             TextView ligne_texteC3= new TextView(this);
             ligne_texteC3.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
-            ligne_texteC3.setText("Chance de depassement :");
+            ligne_texteC3.setText("Probabilité de\ndépassement :");
+            ligne_texteC3.setSingleLine(false);
             ligne_texteC3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            Colonne1.add(ligne_texteC3);
+            Colonne3.addView(ligne_texteC3);
  
             
             
@@ -304,33 +320,33 @@ public class SpellCastActivity extends AppCompatActivity {
             TextView dmg_sum_txt=new TextView(this);
             dmg_sum_txt.setText(Html.fromHtml(all_text_dmg[0]));
             dmg_sum_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-            dmg_sum_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            dmg_sum_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
             Colonne1.addView(dmg_sum_txt);
             
            TextView dmg_range_txt=new TextView(this);
             dmg_range_txt.setText(Html.fromHtml(all_text_dmg[1]));
             dmg_range_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-            dmg_range_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            dmg_range_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             Colonne2.addView(dmg_range_txt);
             
             TextView dmg_range_percent_txt=new TextView(this);
             dmg_range_percent_txt.setText(Html.fromHtml(all_text_dmg[2]));
             dmg_range_percent_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-            dmg_range_percent_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            dmg_range_percent_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             Colonne2.addView(dmg_range_percent_txt);
             
                  
             TextView dmg_proba_txt=new TextView(this);
             dmg_proba_txt.setText(Html.fromHtml(all_text_dmg[3]));
             dmg_proba_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-            dmg_proba_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            dmg_proba_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             Colonne3.addView(dmg_proba_txt);
 
             FloatingActionButton det_but = new FloatingActionButton(this);
 
             det_but.setForegroundGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-            det_but.setBackgroundColor(R.Color.gray);
-            det_but.setImageResource(R.drawable.more);
+            det_but.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+            det_but.setImageResource(R.drawable.ic_more_horiz_black_24dp);
 
             det_but.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -395,7 +411,7 @@ public class SpellCastActivity extends AppCompatActivity {
             dmg_max+=8;
         }
 
-        spell.getDmg_txt(dice_txt);
+        spell.setDmg_dice_roll_txt(dice_txt);
 
         Integer percent=0;
         Integer ecart =  dmg_max - dmg_min;
@@ -407,22 +423,22 @@ public class SpellCastActivity extends AppCompatActivity {
 
         String text_dmg,text_range,text_dmg_percent,text_proba;
   
-        String Color="<font color=#000000>";
+        String color="<font color=#000000>";
         switch (spell.getDmg_type()){
             case ("acide"):
-                color="<font color=#088A29>"
+                color="<font color=#088A29>";
                 break;
             case ("froid"):
-                color="<font color=#013ADF>"
+                color="<font color=#013ADF>";
                 break;
             case ("foudre"):
-                color="<font color=#2ECCFA>"
+                color="<font color=#2ECCFA>";
                 break;
             case ("feu"):
-                color="<font color=#FF4000>"
+                color="<font color=#FF4000>";
                 break;
             case ("aucun"):
-                color="<font color=#A4A4A4>"
+                color="<font color=#A4A4A4>";
                 break;
                 
         }
@@ -722,47 +738,47 @@ public class SpellCastActivity extends AppCompatActivity {
         
         String text="";
         Integer n_inf=0;
-        if(!spell.getDmg().equal("")){
-            text+="Dégats : "+spell.getDmg(spell)+", ";
+        if(!spell.getDmg_txt().equals("")){
+            text+="Dégats : "+spell.getDmg_txt()+", ";
             n_inf+=1;
         }
-        if(!spell.getDmg().equal("")){
+        if(!spell.getDmg_type().equals("")){
             text+="Type : "+ spell.getDmg_type()+", ";
             n_inf+=1;
         }
-        if(!spell.getRange().equal("")){
+        if(!spell.getRange().equals("")){
             text+="Portée : "+spell.getRange()+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
-        if(!spell.getCompo().equal("")){
+        if(!spell.getCompo().equals("")){
             text+="Compos : "+spell.getCompo()+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
         
-        if(!spell.getCast_tim().equal("")){
+        if(!spell.getCast_tim().equals("")){
             text+="Cast : "+ spell.getCast_tim()+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
         
-         if(!spell.getDuration().equal("")){
+         if(!spell.getDuration().equals("")){
             text+="Durée : "+spell.getDuration()+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
         
-        if(!spell.getRM().equal("")){
-            text+="RM : "+(spell.getRM()? "oui" : "non")+", ";
+        if(!spell.getRM().equals("")){
+            text+="RM : "+spell.getRM()+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
-        if(!resistance.equal("")){
+        if(!resistance.equals("")){
             text+="Jet de sauv : "+ resistance+", ";
             n_inf+=1;
         }
-        text = text.substring(0, text.length() - 1);
+        text = text.substring(0, text.length() - 2);
         infos.setText(text);
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         infos.setTextColor(Color.GRAY);
@@ -771,7 +787,7 @@ public class SpellCastActivity extends AppCompatActivity {
     private void makeTitle(TextView Spell_Title,Spell spell,SpellPerDay spell_per_day,Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
@@ -786,8 +802,9 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     public void setSpellTitleColor(TextView text,Spell spell) {
-        int end=0;
-        int start=0;
+        int end=R.color.aucun;
+        int start=R.color.white;
+
         if (spell.getDmg_type().equals("aucun")) {end=R.color.aucun_dark;start=R.color.aucun;}
         if (spell.getDmg_type().equals("feu")) {end=R.color.feu_dark;start=R.color.feu;}
         if (spell.getDmg_type().equals("foudre")) {end=R.color.foudre_dark;start=R.color.foudre;}
@@ -938,7 +955,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
     private void display_dmg_detail(Spell spell){
         Intent intent = new Intent(this, DisplayDamageDetail.class);
-        String text_extra=spell.getDmg_txt();
+        String text_extra=spell.getDmg_dice_roll_txt();
         //on enlève les derneir , et ; en fin de chaine
         while (text_extra.substring(text_extra.length() - 1, text_extra.length()).equals(","))
         {
