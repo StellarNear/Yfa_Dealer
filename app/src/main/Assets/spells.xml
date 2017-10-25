@@ -316,40 +316,40 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     
  <spell>
         <name>Annulation d'echantement</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Cibles jusqu’à 1 créature/niveau, à moins de 9 m. Ce sort annule les enchantements, transmutations et malédictions actifs sur la cible. Le personnage fait un test de niveau de lanceur de sorts (1d20 + son niveau de lanceur de sorts, maximum +15) contre un DD égal à 11 + niveau de lanceur de sorts de l’effet.</descr>
+        <range>courte</range>
+        <cast_time>1min</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
         <rank>5</rank>
     </spell>
     
     <spell>
         <name>Echolocalisation</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Procure vision aveugle dans un rayon de 12 mètres. Le personnage ne peut pas utiliser ce pouvoir s'il est sourd et il ne détecte rien dans une zone de silence.</descr>
+        <range>personelle</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V</compo>
         <rank>5</rank>
     </spell>
     
     <spell>
         <name>Lien télépathique</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Cibles le jeteur de sorts et 1 créature consentante/3 niveaux, distantes de moins de 9 m. Ce sort de divination génère un lien télépathique entre plusieurs créatures dont l’Intelligence doit au moins être égale ou supérieure à 3.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
         <rank>5</rank>
     </spell>
 
     <spell>
         <name>Permanence</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
+        <descr>Ce sort rend permanent l’effet de certains autres sorts. En fonction du sort, il faut avoir atteint un certain niveau et payer un certain nombre de po en poussière de diamant.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>permanente</duration>
         <compo>V,G,M+</compo>
         <rank>5</rank>
     </spell>
@@ -388,21 +388,23 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Dissipation suprême</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Cible ou zone d’effet 1 jeteur de sorts, 1 créature ou 1 objet, ou bien rayonnement de 6 m de rayon. Dissipation suprême peut servir de trois manières différentes : dissipation ciblée, dissipation de zone ou contresort.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <rm>false</rm>
+        <save_type>aucun</save_type>
+        <compo>V,G</compo>
         <rank>6</rank>
     </spell>
 
     <spell>
         <name>Double illusoire</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Le double illusoire persiste tant que le personnage se concentre sur le sort et pendant 3 rounds après cela. L’invisibilité suprême, elle, dure 1 round par niveau, indépendamment de la concentration.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/niveau</duration>
+        <compo>G</compo>
         <rank>6</rank>
     </spell>
     
@@ -417,36 +419,36 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <duration>instant</duration>
         <compo>V,G</compo>
         <rm>true</rm>
-        <save_type>vigeur[3d6(+1/lvl)]</save_type>
+        <save_type>vig[3d6(+1/lvl)]</save_type>
         <rank>7</rank>
     </spell>
 
    
     <spell>
         <name>Manoir somptueux</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
+        <descr>Seules les créatures désignées lors de l’incantation peuvent la franchir et le portail se ferme et devient invisible quand le personnage pénètre dans le manoir.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>2h/lvl</duration>
         <compo>V,G,M+</compo>
         <rank>7</rank>
     </spell>
     <spell>
         <name>Renvoi des sorts</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Les sorts et effets magiques qui prennent le personnage pour cible (et seulement ceux-là) sont renvoyés sur celui qui les a lancés. Les sorts de zone ne sont pas affectés, pas plus que les sorts à effet. Cette protection est inefficace contre les sorts de contact. L’abjuration renvoie de sept à dix (1d4+6) niveaux de sort (ce chiffre est déterminé en secret). Chaque sort retourné à l’envoyeur est retranché à ce nombre.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
         <rank>7</rank>
     </spell>
      <spell>
         <name>Teleportation suprême</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Ce sort transporte instantanément le personnage sur les lieux de son choix. quelque soit la distance à parcourir mais le personnage ne peut pas se rendre dans un autre plan d’existence. De plus, il n’a pas besoin de connaître sa destination, même s’il doit tout de même disposer d’une description fiable de l’endroit. Dans le cas contraire (ou si on l’a trompé), il disparaît et réapparaît aussitôt à son lieu de départ.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V</compo>
         <rank>7</rank>
     </spell>
     
@@ -468,87 +470,93 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Animation suspendue</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
+        <descr>Le lanceur de sorts doit toucher sa cible à l’aide d’une attaque de contact au corps à corps. S’il réussit, son adversaire se retrouve en état de stase. Pour ce dernier le temps cesse de s’écouler et plus rien ne l’affecte.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>permanente</duration>
         <compo>V,G,M+</compo>
+        <rm>true</rm>
+        <save_type>vig[annule]</save_type>
         <rank>8</rank>
     </spell>
     
     <spell>
         <name>Esprit impénétrable</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Tous les sorts et objets qui permettent de recueillir des renseignements à son sujet grâce à la divination comme détection du Mal, localisation de créature, scrutation et détection de l’invisibilité. Ce sort offre aussi un bonus de résistance de +8 aux jets de sauvegarde contre tous les effets et sorts mentaux.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>24h</duration>
+        <compo>V,G</compo>
         <rank>8</rank>
     </spell>
 
 
     <spell>
         <name>Localisation suprême</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Pour localiser une créature grâce à ce sort, le lanceur de sort doit l’avoir déjà vue ou avoir possédé un objet qui lui a appartenu. Seuls esprit impénétrable ou l’intervention directe d’un dieu permettent d’empêcher le lanceur de sorts d’apprendre ce qu’il cherche à savoir via ce sort.</descr>
+        <range>illimitée</range>
+        <cast_time>10min</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>false</rm>
+        <save_type>aucun</save_type>
         <rank>8</rank>
     </spell>
 
     <spell>
         <name>Moment de préscience</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Une seule fois pendant toute la durée du sort et il donne un bonus d’intuition égal au niveau de lanceur de sorts (maximum +25) à un jet d’attaque, un jet de manœuvre de combat, un test de caractéristique ou de compétence opposé, ou un jet de sauvegarde.  Si besoin, il est même possible de l’activer au tour de jeu d’un autre personnage. </descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
         <rank>8</rank>
     </spell>
 
     <spell>
         <name>Arrêt du temps</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Le personnage peut agir pendant 1d4+1 rounds de temps apparent. Feu, froid, gaz et autres, qu’ils soient magiques ou non, l’affectent toujours. Tant que l’arrêt du temps dure, les autres créatures sont invulnérables aux attaques et aux sorts du personnage. Tant que l’arrêt du temps dure, les autres créatures sont invulnérables aux attaques et aux sorts du personnage.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1d4+1rounds</duration>
+        <compo>V</compo>
         <rank>9</rank>
     </spell>
       <spell>
         <name>Prémonition</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Averti dès qu’un péril menace la cible. +2 à la CA et aux jets de Réflexes si personnelle.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
         <rank>9</rank>
     </spell>
        <name>Présence écrasante</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Cible une créature/niveau qui ne doivent pas être distantes de plus de 9 m les unes des autres. Si les cibles ratent leur jet de sauvegarde, elles tombent à genoux et se prosternent devant le personnage, en pensant s’incliner devant une présence divine.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/niveau</duration>
+        <compo>V,G,M</compo>
+        <rm>true</rm>
+        <save_type>vol[annule]</save_type>
         <rank>9</rank>
     </spell>
     <spell>
-        <name>Shouait</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
+        <name>Souhait</name>
+        <descr>Souhait est le sort ultime des magiciens et des ensorceleurs. Il suffit en effet au personnage d’exprimer un souhait pour que le tissu de la réalité se modifie selon leurs désirs. Mais même un sort aussi puissant a ses limites.</descr>
+        <cast_time>simple</cast_time>
         <compo>V,G,M+</compo>
         <rank>9</rank>
     </spell>
     <spell>
         <name>Vent de la vengeance</name>
-        <descr></descr>
-        <range></range>
-        <cast_time></cast_time>
-        <duration></duration>
-        <compo>V,G,M+</compo>
+        <descr>Entourre le personnage d'une tonade de vent surnaturel. De plus, quand une créature frappe le personnage au corps à corps, ce dernier peut ordonner aux vents de fouetter l'attaquant par une action immédiate. La créature doit réussir un jet de Vigueur ou recevoir 5d8 points de dégâts contondants et tomber à terre. Vitesse de vol de 18 mètres. Permet de voler et de respirer sous l'eau ou dans l'espace.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <save_type>vig[1/2]</save_type>
+         <rm>false</rm>
+        <compo>V,G</compo>
         <rank>9</rank>
     </spell>
     <spell>
