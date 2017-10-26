@@ -291,7 +291,7 @@ public class SpellCastActivity extends AppCompatActivity {
             
             TextView ligne_texteC1= new TextView(this);
             ligne_texteC1.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
-            ligne_texteC1.setText("Dégats :");
+            ligne_texteC1.setText("Dégâts :");
             ligne_texteC1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne1.addView(ligne_texteC1);
             
@@ -356,10 +356,43 @@ public class SpellCastActivity extends AppCompatActivity {
 
             Colonne4.addView(det_but);
 
-        } else {
+        } else if(!spell.getDmg_txt().equals("")){
+            TextView txt_view= new TextView(this);
+            txt_view.setText("Dégâts :");
+            txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            txt_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP);
+            fragment2.addView(txt_view);
+   
+            String color="<font color=#000000>";
+            switch (spell.getDmg_type()){
+                    case ("acide"):
+                        color="<font color=#088A29>";
+                        break;
+                    case ("froid"):
+                        color="<font color=#013ADF>";
+                        break;
+                    case ("foudre"):
+                        color="<font color=#2ECCFA>";
+                        break;
+                    case ("feu"):
+                        color="<font color=#FF4000>";
+                        break;
+                    case ("aucun"):
+                        color="<font color=#A4A4A4>";
+                        break;
+            }
             TextView dmg_view= new TextView(this);
-            dmg_view.setText("LOL");
+            
+            dmg_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
+            dmg_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            dmg_view.setText(Html.fromHtml(color+spell.getDmg_txt()+"</font>"));
             fragment2.addView(dmg_view);
+        } else {
+            TextView txt_view= new TextView(this);
+            txt_view.setText("Sortilège "+spell.getName()+ " lancé !");
+            txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            txt_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            fragment2.addView(txt_view);
         }
 
 
