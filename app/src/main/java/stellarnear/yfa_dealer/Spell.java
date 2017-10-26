@@ -83,14 +83,49 @@ public class Spell extends AppCompatActivity implements Serializable {
     public String  getDmg_type(){
         return this.dmg_type;
     }
-    public String  getRange(){
-        return this.range;
+    public String  getRange(Context mC){
+        String rang=this.range;
+        String[] ranges_lvl = { "courte", "moyenne", "longue" };
+
+        if (Arrays.asList(ranges_lvl).contains(rang)) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+            String lvl_txt=prefs.getString("lvl",mC.getResources().getString(R.string.lvl_def));
+            Integer lvl = to_int(lvl_txt,"Niveau du personnage",mC);
+            Double dist_doubl =0.0;
+            switch(rang) {
+                case ("courte"):
+                    dist_doubl=7.5+1.5*(lvl/2.0);
+                    break;
+                    
+                case ("moyenne"):
+                    dist_doubl=30.0+3.0*lvl;
+                    break;
+                    
+                case ("longue"):
+                    dist_doubl=120.0+lvl*12.0;
+                    break;     
+            }
+            
+            rang= String.valueOf(dist_doubl)+"m";
+        }
+        return rang;
     }
+    
     public String  getCast_tim(){
         return this.cast_time;
     }
-    public String  getDuration(){
-        return this.duration;
+    public String  getDuration(Context mC){
+        String dura=this.duration;
+        if(this.range.duration("/lvl")){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+            String lvl_txt=prefs.getString("lvl",mC.getResources().getString(R.string.lvl_def));
+            Integer lvl = to_int(lvl_txt,"Niveau du personnage",mC);
+            Integer factor= to_int(dura.replace("[^0-9?!]",""),"Facteur numérique de durée du sort",mC);
+            Integer result = factor * lvl;
+            String duration_unit = dura.replace("/lvl","").replace("[0-9?!]","");
+            dura = result+duration_unit;
+        }
+        return dura; 
     }
     public String  getCompo(){
         String compo_out="";
@@ -111,13 +146,26 @@ public class Spell extends AppCompatActivity implements Serializable {
         return this.save_val;
     }
 
-    public String getDmg_txt() {
+    public String getDmg_txt(Context mC) {
         if (this.n_dice==0) {return "";}
         String dmg=this.n_dice+this.dice_type;
 
         if(this.dice_type.contains("*d")){
-            dmg=this.n_dice+this.dice_type.replace("*d","x");
+            Integer integer_dice = to_int(dice_type.replace("*d",""),"Type de dès",mC);
+            Integer dmg_int = this.n_dice * integer_dice;
+            dmg = String.valueOf(dmg_int);
+            return dmg;
         }
+        
+        if(this.dice_type.contains("/lvl")){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+            String lvl_txt=prefs.getString("lvl",mC.getResources().getString(R.string.lvl_def));
+            Integer lvl = to_int(lvl_txt,"Niveau du personnage",mC);
+            Integer dmg_int = this.n_dice * lvl;
+            dmg = String.valueOf(dmg_int);
+            return dmg;
+        }
+        
         return dmg;
     }
 
@@ -140,8 +188,14 @@ public class Spell extends AppCompatActivity implements Serializable {
     private void setDmg_type(String dmg_type){
         this.dmg_type=dmg_type;
     }
-    private void setRange(String range){
+    private void setRange(String range,Context mC){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        String lvl_txt=prefs.getString("lvl",mC.getResources().getString(R.string.lvl_def));
+        Integer lvl = to_int(lvl_txt,"Niveau du personnage",mC);
+   
+        
         this.range=range;
+        
     }
     private void setCast_time(String cast_time){
         this.cast_time=cast_time;
