@@ -2,7 +2,7 @@
 
     <stellarnear.yfa_dealer.EditTextPreference
         android:defaultValue="@string/lvl_def"
-        android:key="level"
+        android:key="lvl"
         android:title="Niveau du personnage"
         android:selectAllOnFocus="true"
         android:singleLine="true"
