@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Spell extends AppCompatActivity implements Serializable {
 
@@ -92,6 +93,7 @@ public class Spell extends AppCompatActivity implements Serializable {
             Double dist_doubl =0.0;
             switch(rang) {
                 case ("courte"):
+
                     dist_doubl=7.5+1.5*(lvl/2.0);
                     break;
                     
@@ -112,13 +114,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     public String  getCast_tim(){
         return this.cast_time;
     }
-    public String  getDuration(){
+    public String  getDuration(Context mC){
         String dura=this.duration;
-        if(this.range.duration("/lvl")){
+        if(dura.contains("/lvl")){
             Integer lvl =  this.caster_lvl;
-            Integer factor= to_int(dura.replace("[^0-9?!]",""),"Facteur numérique de durée du sort",mC);
+            Log.d("STATE dura",dura);
+            Log.d("STATE durarepl",dura.replaceAll("[^0-9?!]",""));
+            Integer factor= to_int(dura.replaceAll("[^0-9?!]",""),"Facteur numérique de durée du sort",mC);
             Integer result = factor * lvl;
-            String duration_unit = dura.replace("/lvl","").replace("[0-9?!]","");
+            String duration_unit = dura.replaceAll("/lvl","").replaceAll("[0-9?!]","");
             dura = result+duration_unit;
         }
         return dura; 
@@ -219,7 +223,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         String lvl_txt=prefs.getString("nls_val",mC.getResources().getString(R.string.nls_val_def));
         Integer lvl = to_int(lvl_txt,"NLS",mC);
         String lvl_bonus_txt=prefs.getString("NLS_bonus",mC.getResources().getString(R.string.NLS_bonus_def));
-        Integer lvl_bonus = to_int(lvl_txt,"NLS bonus",mC);
+        Integer lvl_bonus = to_int(lvl_bonus_txt,"NLS bonus",mC);
         Integer caster_lvl_calc=lvl+lvl_bonus;
         this.caster_lvl=caster_lvl_calc;
     }

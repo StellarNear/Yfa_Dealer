@@ -356,12 +356,17 @@ public class SpellCastActivity extends AppCompatActivity {
 
             Colonne4.addView(det_but);
 
-        } else if(!spell.getDmg_txt().equals("")){
+        } else if(!spell.getDmg_txt(getApplicationContext()).equals("")){
+            LinearLayout enLigne = new LinearLayout(this);
+            fragment2.setGravity(Gravity.CENTER_HORIZONTAL);
+            enLigne.setOrientation(LinearLayout.VERTICAL);
+            //enLigne.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            fragment2.addView(enLigne);
             TextView txt_view= new TextView(this);
             txt_view.setText("Dégâts :");
             txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             txt_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP);
-            fragment2.addView(txt_view);
+            enLigne.addView(txt_view);
    
             String color="<font color=#000000>";
             switch (spell.getDmg_type()){
@@ -384,9 +389,10 @@ public class SpellCastActivity extends AppCompatActivity {
             TextView dmg_view= new TextView(this);
             
             dmg_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
-            dmg_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
-            dmg_view.setText(Html.fromHtml(color+spell.getDmg_txt()+"</font>"));
-            fragment2.addView(dmg_view);
+            dmg_view.setGravity(Gravity.CENTER_HORIZONTAL);
+            dmg_view.setText(Html.fromHtml(color+spell.getDmg_txt(getApplicationContext())+"</font>"));
+            enLigne.addView(dmg_view);
+
         } else {
             TextView txt_view= new TextView(this);
             txt_view.setText("Sortilège "+spell.getName()+ " lancé !");
@@ -771,8 +777,8 @@ public class SpellCastActivity extends AppCompatActivity {
         
         String text="";
         Integer n_inf=0;
-        if(!spell.getDmg_txt().equals("")){
-            text+="Dégats : "+spell.getDmg_txt()+", ";
+        if(!spell.getDmg_txt(getApplicationContext()).equals("")){
+            text+="Dégats : "+spell.getDmg_txt(getApplicationContext())+", ";
             n_inf+=1;
         }
         if(!spell.getDmg_type().equals("")){
@@ -796,8 +802,8 @@ public class SpellCastActivity extends AppCompatActivity {
         }
         if(n_inf==3){text+="\n";n_inf=0;}
         
-         if(!spell.getDuration().equals("")){
-            text+="Durée : "+spell.getDuration()+", ";
+         if(!spell.getDuration(getApplicationContext()).equals("")){
+            text+="Durée : "+spell.getDuration(getApplicationContext())+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
