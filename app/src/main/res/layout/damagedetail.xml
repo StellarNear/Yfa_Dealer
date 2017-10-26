@@ -20,13 +20,14 @@
 
     <ScrollView
             android:id="@+id/scroll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <GridLayout
             android:id="@+id/grid_scroll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
             android:columnCount="4"
             >
 
