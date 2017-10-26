@@ -1,9 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/lvl_def"
-        android:key="lvl"
-        android:title="Niveau du personnage"
+        android:defaultValue="@string/nls_val_def"
+        android:key="nls_val"
+        android:title="Niveau lanceur de sort"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="Valeur : %s"/>
