@@ -68,7 +68,7 @@
         <descr>Bonus de +20 au prochain jet d'attaque. De plus, il n’a aucune chance de manquer une cible camouflée.</descr>
         <range>personelle</range>
         <cast_time>simple</cast_time>
-        <duration>1 round</duration>
+        <duration>1round</duration>
         <compo>V,M</compo>
         <rank>1</rank>
     </spell>
@@ -403,7 +403,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <descr>Le double illusoire persiste tant que le personnage se concentre sur le sort et pendant 3 rounds après cela. L’invisibilité suprême, elle, dure 1 round par niveau, indépendamment de la concentration.</descr>
         <range>courte</range>
         <cast_time>simple</cast_time>
-        <duration>1round/niveau</duration>
+        <duration>1round/lvl</duration>
         <compo>G</compo>
         <rank>6</rank>
     </spell>
@@ -537,7 +537,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <descr>Cible une créature/niveau qui ne doivent pas être distantes de plus de 9 m les unes des autres. Si les cibles ratent leur jet de sauvegarde, elles tombent à genoux et se prosternent devant le personnage, en pensant s’incliner devant une présence divine.</descr>
         <range>moyenne</range>
         <cast_time>simple</cast_time>
-        <duration>1round/niveau</duration>
+        <duration>1round/lvl</duration>
         <compo>V,G,M</compo>
         <rm>true</rm>
         <save_type>vol[annule]</save_type>
