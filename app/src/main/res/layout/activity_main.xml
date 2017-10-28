@@ -29,16 +29,14 @@
 
     <RelativeLayout
         android:id="@+id/RelatTitle"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_anchor="@+id/toolbar"
         app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_gravity="bottom"
         android:background="@android:color/black"
-        android:textAlignment="center"
 
         >
 
@@ -72,11 +70,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_anchor="@+id/RelatTitle"
         app:layout_anchorGravity="bottom"
         android:layout_gravity="bottom"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="100dp"
+
       >
 
         <LinearLayout
@@ -84,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
+            android:textAlignment="center"
             ></LinearLayout>
     </ScrollView>
 
