@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!isChecked) {
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("Demande de confirmation")
-                                    .setMessage("Veux tu lancer ce sort une fois de plus ?")
+                                    .setMessage("Veux-tu tu lancer ce sort une fois de plus ?")
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
