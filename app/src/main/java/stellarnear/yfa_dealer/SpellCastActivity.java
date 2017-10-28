@@ -702,7 +702,7 @@ public class SpellCastActivity extends AppCompatActivity {
                     } else {
                         new AlertDialog.Builder(SpellCastActivity.this)
                                 .setTitle("Demande de confirmation")
-                                .setMessage("Veux-tu utiliser cette métamagie une fois de plus ?")
+                                .setMessage("Veux-tu utiliser Augmentation d'intensité une fois de plus ?")
                                 .setIcon(android.R.drawable.ic_menu_help)
                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -758,7 +758,7 @@ public class SpellCastActivity extends AppCompatActivity {
                     } else {
                         new AlertDialog.Builder(SpellCastActivity.this)
                                 .setTitle("Demande de confirmation")
-                                .setMessage("Veux-tu utiliser cette métamagie une fois de plus ?")
+                                .setMessage("Veux-tu utiliser Sort éloigné une fois de plus ?")
                                 .setIcon(android.R.drawable.ic_menu_help)
                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
