@@ -1,6 +1,7 @@
 package stellarnear.yfa_dealer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -11,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -25,6 +27,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
@@ -500,6 +503,17 @@ public class SpellCastActivity extends AppCompatActivity {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Sort Amélioré");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -533,6 +547,17 @@ public class SpellCastActivity extends AppCompatActivity {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Incantation rapide");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -566,6 +591,17 @@ public class SpellCastActivity extends AppCompatActivity {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Quintessence des sorts");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -599,6 +635,17 @@ public class SpellCastActivity extends AppCompatActivity {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Extension d'effet");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -629,9 +676,20 @@ public class SpellCastActivity extends AppCompatActivity {
         
         //augementation d'intensité +1
         if (settings.getBoolean("intense",getResources().getBoolean(R.bool.intense_switch_def)))  {
-            CheckBox checkbox=new CheckBox(getApplicationContext());
+            final CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Augmentation d'intensité");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -642,9 +700,20 @@ public class SpellCastActivity extends AppCompatActivity {
                         makeInfos(infos,spell);
 
                     } else {
-                        spell.meta_Intense(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
+                        new AlertDialog.Builder(SpellCastActivity.this)
+                                .setTitle("Demande de confirmation")
+                                .setMessage("Voulez utiliser cette métamagie une fois de plus ?")
+                                .setIcon(android.R.drawable.ic_menu_help)
+                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        checkbox.setChecked(true);
+                                    }})
+                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        spell.meta_Intense(false);
+                                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
+                                        makeInfos(infos,spell);
+                                    }}).show();
                     }
                 }
             });
@@ -662,22 +731,45 @@ public class SpellCastActivity extends AppCompatActivity {
         
         //sort éloigné +1
         if (settings.getBoolean("eloigne",getResources().getBoolean(R.bool.eloigne_switch_def)))  {
-            CheckBox checkbox=new CheckBox(getApplicationContext());
+            final CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Sort éloigné");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                     if (isChecked) {
                         spell.meta_Far(true);
                         makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
                         makeInfos(infos,spell);
 
                     } else {
-                        spell.meta_Far(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
+                        new AlertDialog.Builder(SpellCastActivity.this)
+                                .setTitle("Demande de confirmation")
+                                .setMessage("Voulez utiliser cette métamagie une fois de plus ?")
+                                .setIcon(android.R.drawable.ic_menu_help)
+                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        checkbox.setChecked(true);
+                                    }})
+                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        spell.meta_Far(false);
+                                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
+                                        makeInfos(infos,spell);
+                                    }}).show();
                     }
                 }
             });
@@ -697,6 +789,17 @@ public class SpellCastActivity extends AppCompatActivity {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Sort séléctif");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -729,6 +832,17 @@ public class SpellCastActivity extends AppCompatActivity {
             CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Sort silencieux");
             checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
 
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

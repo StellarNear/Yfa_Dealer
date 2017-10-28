@@ -1,5 +1,6 @@
 package stellarnear.yfa_dealer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -13,6 +14,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringDef;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +26,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         buildPage1();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        ImageButton fab = (ImageButton) findViewById(R.id.fab);
+
+        fab.setColorFilter(Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,8 +123,31 @@ public class MainActivity extends AppCompatActivity {
             v_sep.setBackgroundColor(Color.BLACK);
             grid.addView(v_sep);
 
-            for(Spell spell : rank_list){
-                CheckBox checkbox=new CheckBox(getApplicationContext());
+            for(final Spell spell : rank_list){
+                final CheckBox checkbox=new CheckBox(getApplicationContext());
+
+                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (!isChecked) {
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("Demande de confirmation")
+                                    .setMessage("Veux tu lancer ce sort une fois de plus ?")
+                                    .setIcon(android.R.drawable.ic_menu_help)
+                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            checkbox.setChecked(true);
+                                            spell.setN_cast(spell.getN_cast()+1);
+                                        }})
+                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            spell.setN_cast(1);
+                                        }}).show();
+                        }
+                    }
+                });
+
+
                 setCheckBoxColor(checkbox,spell);
                 checkbox.setText(spell.getName()+" ");
                 grid.addView(checkbox);
@@ -147,6 +177,11 @@ public class MainActivity extends AppCompatActivity {
             CheckBox checkbox=(CheckBox)map_spell_check.get(spell);
             if (checkbox.isChecked()){
                 sel_list.add(spell);
+                if (spell.getN_cast()>1){
+                    for (int i=1;i<spell.getN_cast();i++){
+                        sel_list.add(spell);
+                    }
+                }
                 spell_casted=true;
             } 
         }
@@ -202,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkbox.setTextColor(Color.BLACK);
         int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
-        if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
         ColorStateList colorStateList = new ColorStateList(
                 new int[][] {

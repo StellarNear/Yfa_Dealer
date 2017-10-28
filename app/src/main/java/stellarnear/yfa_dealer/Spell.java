@@ -38,6 +38,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private int     rank;
     private String dmg_dice_roll_txt;
     private int caster_lvl;
+    private int n_cast;
 
 
     public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
@@ -60,6 +61,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.rank=rank;
         setSave_val(mC);
         setCaster_lvl(mC);
+        this.n_cast=1;
 
 
     }
@@ -171,6 +173,10 @@ public class Spell extends AppCompatActivity implements Serializable {
         return this.dmg_dice_roll_txt;
     }
 
+    public Integer getN_cast() {
+        return this.n_cast;
+    }
+
     private void setName(String name){
         this.name=name;
     }
@@ -248,6 +254,14 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.dmg_dice_roll_txt = dmg_dice_roll_txt;
     }
 
+
+    public void setN_cast(Integer ncast) {
+         this.n_cast=ncast;
+    }
+
+
+    // methode de meta magie
+
     public void meta_Materiel(Context mC) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
         if (prefs.getBoolean("materiel_switch",mC.getResources().getBoolean(R.bool.materiel_switch_def)))  {
@@ -261,7 +275,7 @@ public class Spell extends AppCompatActivity implements Serializable {
 
  
     
-    // methode de meta magie
+    // methode de meta magie actives
     public void meta_Enhance_Spell(Boolean active) {
         
         if (active) {
@@ -427,8 +441,13 @@ public class Spell extends AppCompatActivity implements Serializable {
          for(int i=0;i<all_range.length;i++){
              if(all_range[i].equals(range)){
                  if(active){
-                     this.rank+=1;
-                     range=all_range[i+1];
+                     if (all_range[i].equals("illimitée")){
+                         this.rank+=1;
+                         range=all_range[i];
+                     } else {
+                         this.rank += 1;
+                         range = all_range[i + 1];
+                     }
                  } else {
                      this.rank-=1;
                      range=all_range[i-1];
