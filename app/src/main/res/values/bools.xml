@@ -9,4 +9,5 @@
     <bool name="extension_switch_def">true</bool>
     <bool name="eloigne_switch_def">true</bool>
     <bool name="intense_switch_def">true</bool>
+    <bool name="perfect_desint_def">true</bool>
 </resources>

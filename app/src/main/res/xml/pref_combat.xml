@@ -1,5 +1,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <SwitchPreference
+        android:defaultValue="@bool/perfect_desint_def"
+        android:key="perfect_desint"
+        android:summary="Une métamagie sur Désintégration n'augementera pas son rang requis"
+        android:title="Perfection (Désintégration)" />
+
     <SwitchPreference
         android:defaultValue="@bool/ameliore_switch_def"
         android:key="ameliore"
