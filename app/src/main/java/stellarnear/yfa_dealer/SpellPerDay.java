@@ -78,14 +78,18 @@ public class SpellPerDay extends AppCompatActivity {
     }
 
     public Integer getSpell_per_day_rank(Integer rank) {
+        if (rank==0){return 1;}  //il y aura toujours un sort de rank 0 dispo
         return this.list_spell_per_day[rank-1];
     }
 
     public void castSpell_rank(Integer rank) {
-        this.list_spell_per_day[rank-1]-=1;
+        if(!rank==0){
+            this.list_spell_per_day[rank-1]-=1;
+        }
     }
     
     public Boolean checkRank_available(Integer rank, Context mC) {
+        if (rank==0){return true;}
         Integer test=-1;
          try {
             test=this.list_spell_per_day[rank-1]-1;
