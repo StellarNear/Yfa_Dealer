@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         ListSpell ListAllSpell = new ListSpell(getApplicationContext());
         List<Spell> rank_list  = new ArrayList<Spell>();
 
-        for(int i=1;i<=10;i++){
+        for(int i=0;i<=10;i++){
             LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
             TextView Tier= new TextView(this);
             GradientDrawable gd = new GradientDrawable(
@@ -92,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
             Tier.setBackground(gd);
 
             String tier_txt="Tier "+i;
+            
             String titre_tier=tier_txt +" ["+ spell_per_day.getSpell_per_day_rank(i)+" restant(s)]";
+            if (rank==0){titre_tier=tier_txt +" [illimité]";}
             SpannableString titre=  new SpannableString(titre_tier);
             titre.setSpan(new RelativeSizeSpan(0.65f), tier_txt.length(),titre_tier.length(), 0);
             Tier.setText(titre);
