@@ -1,5 +1,100 @@
 <?xml version="1.0"?>
 <records>
+    <spell>
+        <name>Destruction de mort-vivant</name>
+        <descr>Rayon d’énergie positive. Le personnage doit réussir une attaque de contact à distance pour atteindre le mort-vivant.</descr>
+        <dice_type>d6</dice_type>
+        <n_dice>1</n_dice>
+        <dmg_type>aucun</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <compo>V,G</compo>
+        <rank>0</rank>
+    </spell>
+    
+      <spell>
+        <name>Détection de la magie</name>
+        <descr>Grâce à ce sort, le personnage peut repérer les auras magiques. Les informations fournies par détection de la magie dépendent du temps que le personnage passe à étudier le sujet et ou la zone. Premier round : présence ou absence d’auras magiques. Deuxième round : nombre d’auras magiques et intensité de la plus puissante. Troisième round : intensité et emplacement précis de chaque aura</descr>
+        <range>18m</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>0</rank>
+    </spell>
+    
+    <spell>
+        <name>Lecture de la magie</name>
+        <descr>Grâce à ce sort, le personnage peut lire les inscriptions magiques normalement incompréhensibles (celles des parchemins, livres magiques, armes, etc.).</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>0</rank>
+    </spell>
+    
+    <spell>
+        <name>Lumière</name>
+        <descr>Lancé sur un objet, ce sort le fait briller comme la lumière d’une torche, ce qui lui permet d’éclairer jusqu’à six mètres. Tous les sorts de lumière contrent et dissipent les sorts d’obscurité de niveau inférieur ou égal.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,M</compo>
+        <rank>0</rank>
+    </spell>
+    <spell>
+        <name>Manipulation à distance</name>
+        <descr>Le lanceur de sorts peut le soulever et le déplacer un objet pesant jusqu’à 2,5 kg et n’étant porté ou tenu par personne. Par une action de mouvement, il peut déplacer l’objet de 4,50 m au maximum.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>concentration</duration>
+        <compo>V,G</compo>
+        <rank>0</rank>
+    </spell>
+    <spell>
+        <name>Message</name>
+        <descr>Chuchoter des messages à 1cible/niveau. Les personnes alentour discernent le message si elles réussissent un test de Perception DD 25. Le personnage indique du doigt toutes les créatures à inclure dans le sort. Le message est entendu par tous les destinataires, dans les limites de portée. Le sort est bloqué par un silence d’origine magique, 30 cm de pierre, 2,5 cm de métal, une feuille de plomb, ou 90 cm de bois ou de terre.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>0</rank>
+    </spell>
+    <spell>
+        <name>Ouverture/fermeture</name>
+        <descr>Permet d'ouvrir un objet pesant jusqu’à 15 kg ou une porte, un coffre, une boîte, une fenêtre, un sac, une bourse, une bouteille ou tout autre récipient. Il échoue automatiquement si l’objet dispose d’un mécanisme de fermeture (barre, serrure fermée, etc.).</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+        <rank>0</rank>
+    </spell>
+    <spell>
+        <name>Rayon de givre</name>
+        <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
+        <dice_type>d3</dice_type>
+        <n_dice>1</n_dice>
+        <dmg_type>froid</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <compo>V,G</compo>
+        <rank>0</rank>
+    </spell>
+    <spell>
+        <name>Résistance</name>
+        <descr>Ce sort protège la cible en lui offrant temporairement un bonus de résistance de +1 aux jets de sauvegarde.</descr>
+        <range>Contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1min</duration>
+        <compo>V,G,M</compo>
+        <rank>0</rank>
+    </spell>
+    
     
     <spell>
         <name>Décharge électrique</name>
