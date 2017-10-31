@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             String tier_txt="Tier "+i;
             
             String titre_tier=tier_txt +" ["+ spell_per_day.getSpell_per_day_rank(i)+" restant(s)]";
-            if (rank==0){titre_tier=tier_txt +" [illimité]";}
+            if (i==0){titre_tier=tier_txt +" [illimité]";}
             SpannableString titre=  new SpannableString(titre_tier);
             titre.setSpan(new RelativeSizeSpan(0.65f), tier_txt.length(),titre_tier.length(), 0);
             Tier.setText(titre);

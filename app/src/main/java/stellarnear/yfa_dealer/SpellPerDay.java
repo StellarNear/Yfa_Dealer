@@ -83,7 +83,7 @@ public class SpellPerDay extends AppCompatActivity {
     }
 
     public void castSpell_rank(Integer rank) {
-        if(!rank==0){
+        if(!(rank==0)){
             this.list_spell_per_day[rank-1]-=1;
         }
     }

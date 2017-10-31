@@ -14,6 +14,20 @@
         <compo>V,G</compo>
         <rank>0</rank>
     </spell>
+    <spell>
+        <name>Rayon de givre</name>
+        <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
+        <dice_type>d3</dice_type>
+        <n_dice>1</n_dice>
+        <dmg_type>froid</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <compo>V,G</compo>
+        <rank>0</rank>
+    </spell>
     
       <spell>
         <name>Détection de la magie</name>
@@ -71,20 +85,7 @@
         <compo>V,G,M</compo>
         <rank>0</rank>
     </spell>
-    <spell>
-        <name>Rayon de givre</name>
-        <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
-        <dice_type>d3</dice_type>
-        <n_dice>1</n_dice>
-        <dmg_type>froid</dmg_type>
-        <range>courte</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <rm>true</rm>
-        <save_type>aucun</save_type>
-        <compo>V,G</compo>
-        <rank>0</rank>
-    </spell>
+
     <spell>
         <name>Résistance</name>
         <descr>Ce sort protège la cible en lui offrant temporairement un bonus de résistance de +1 aux jets de sauvegarde.</descr>

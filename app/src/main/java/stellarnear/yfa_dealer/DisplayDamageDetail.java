@@ -48,23 +48,6 @@ public class DisplayDamageDetail extends AppCompatActivity {
 
         }
 
-        /*
-        LinearLayout lines = new LinearLayout(getApplicationContext());
-        lines.setOrientation(LinearLayout.VERTICAL);
-        scroll.addView(lines);
-
-        List<String> list_dice_per_arrow = Arrays.asList(param_all_dices_str.split(";"));
-        for (String arrow_str : list_dice_per_arrow) {
-            LinearLayout arrow_layout = new LinearLayout(getApplicationContext());
-            arrow_layout.setOrientation(LinearLayout.HORIZONTAL);
-            List<String> dices_per_arrow = Arrays.asList(arrow_str.split(","));
-            for ( String dice_str : dices_per_arrow) {
-                ImageView dice = new ImageView(getApplicationContext());
-                dice.setImageResource(ImageAdapter.dice_map.get(dice_str));
-                arrow_layout.addView(dice);
-            }
-            lines.addView(arrow_layout);
-        }*/
 
     }
 

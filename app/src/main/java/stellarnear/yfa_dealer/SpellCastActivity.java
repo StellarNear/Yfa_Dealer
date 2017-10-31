@@ -258,7 +258,7 @@ public class SpellCastActivity extends AppCompatActivity {
     private void constructFrag2(LinearLayout fragment2,final Spell spell) {
 
 
-        if((spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
+        if((spell.getDice_typ().contains("d3")||spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
             LinearLayout Colonne1 = new LinearLayout(this);
             Colonne1.setOrientation(LinearLayout.VERTICAL);
             Colonne1.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
@@ -418,10 +418,13 @@ public class SpellCastActivity extends AppCompatActivity {
 
         Integer dmg_sum,dmg_min,dmg_max;
         dmg_sum=dmg_min=dmg_max=0;
-        Integer nd4,nd6,nd8;
-        nd4=nd6=nd8=0;
+        Integer nd3,nd4,nd6,nd8;
+        nd3=nd4=nd6=nd8=0;
         String dice_txt="";
         switch (spell.getDice_typ()){
+            case ("d3"):
+                nd3=spell.getN_dice();
+                break;
             case ("d4"):
                 nd4=spell.getN_dice();
                 break;
@@ -432,6 +435,14 @@ public class SpellCastActivity extends AppCompatActivity {
                 nd8=spell.getN_dice();
                 break;
         }
+        for(int i=0;i<nd3;i++){
+            int jet=rand(3);
+            dmg_sum+=jet;
+            dice_txt+=spell.getDmg_type()+"_d3_"+jet+",";
+            dmg_min+=1;
+            dmg_max+=3;
+        }
+
         for(int i=0;i<nd4;i++){
             int jet=rand(4);
             dmg_sum+=jet;
@@ -462,7 +473,7 @@ public class SpellCastActivity extends AppCompatActivity {
             percent = 100*(dmg_sum - dmg_min) / ecart;
         }
 
-        Double proba=100.0-100.0*tableProba(nd4,nd6,nd8,dmg_sum);
+        Double proba=100.0-100.0*tableProba(nd3,nd4,nd6,nd8,dmg_sum);
 
         String text_dmg,text_range,text_dmg_percent,text_proba;
   
@@ -1194,13 +1205,15 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
 
-    private Double tableProba(Integer nd4,Integer nd6,Integer nd8,Integer sum) {
+    private Double tableProba(Integer nd3,Integer nd4,Integer nd6,Integer nd8,Integer sum) {
+
+        Log.d("STATE (table)nd3", String.valueOf(nd3));
         Log.d("STATE (table)nd4", String.valueOf(nd4));
         Log.d("STATE (table)nd6", String.valueOf(nd6));
         Log.d("STATE (table)nd8", String.valueOf(nd8));
         Log.d("STATE (table)sum", String.valueOf(sum));
 
-        Integer total = nd4*4+nd6*6+nd8*8;
+        Integer total = nd3*3+nd4*4+nd6*6+nd8*8;
         Log.d("STATE (table)total", String.valueOf(total));
         BigInteger[] combi_old = new BigInteger[total];          // table du nombre de combinaison pour chaque valeur somme
         BigInteger[] combi_new = new BigInteger[total];
@@ -1225,8 +1238,32 @@ public class SpellCastActivity extends AppCompatActivity {
                 combi_old[i-1]=BigInteger.ONE;
             }
             nd4-=1;
+        } else if (!nd3.equals(0)) {                      //on rempli la premiere itération
+            for (int i=1;i<=3;i++) {
+                combi_old[i-1]=BigInteger.ONE;
+            }
+            nd3-=1;
         } else {
             return 1.0;
+        }
+
+        for (int i=1;i<=nd3;i++) {              //pour chaque nouveau dès on ajoute la somme(cf https://wizardofodds.com/gambling/dice/2/)
+            //Log.d("STATE table_prob","traitement d10:"+String.valueOf(i));
+            for (int j=1;j<=total;j++) {
+                //Log.d("STATE table_prob","traitement ligne:"+String.valueOf(j));
+                for (int k = 3; k >= 1; k--) {
+                    //Log.d("STATE table_prob","traitement somme k:"+String.valueOf(k));
+                    if (j-1-k>=0) {
+                        //Log.d("STATE table_prob","combi_new[j-1]:"+String.valueOf(combi_new[j-1]));
+                        //Log.d("STATE table_prob","combi_old[j-1-k]:"+String.valueOf(combi_old[j-1-k]));
+                        combi_new[j-1]=combi_new[j-1].add(combi_old[j-1-k]);
+                    }
+                }
+            }
+            for (int l=1;l<=total;l++){
+                combi_old[l-1]=combi_new[l-1];
+                combi_new[l-1]=BigInteger.ZERO;
+            }
         }
 
         for (int i=1;i<=nd4;i++) {              //pour chaque nouveau dès on ajoute la somme(cf https://wizardofodds.com/gambling/dice/2/)

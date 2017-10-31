@@ -21,6 +21,9 @@ public class ImageAdapter extends BaseAdapter {
 
     public static final Map<String,Integer> dice_map= new HashMap<>();
     static {
+        dice_map.put("froid_d3_1",R.mipmap.froid_d3_1);
+        dice_map.put("froid_d3_2",R.mipmap.froid_d3_2);
+        dice_map.put("froid_d3_3",R.mipmap.froid_d3_3);
         dice_map.put("feu_d6_1",R.mipmap.feu_d6_1);
         dice_map.put("feu_d6_2",R.mipmap.feu_d6_2);
         dice_map.put("feu_d6_3",R.mipmap.feu_d6_3);
