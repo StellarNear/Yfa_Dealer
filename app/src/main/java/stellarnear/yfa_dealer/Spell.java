@@ -518,7 +518,7 @@ public class Spell extends AppCompatActivity implements Serializable {
             Matcher matcher = pattern.matcher(spell.getDuration());
             if (matcher.find())
             {
-                Integer int_dura = 2*to_int(matcher.group(1));
+                Integer int_dura = 2*to_int(matcher.group());
                 this.duration=this.duration.replaceAll(matcher.group(1),String.ValueOf(int_dura));
             }   
             this.rank+=2;
