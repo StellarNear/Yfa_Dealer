@@ -29,6 +29,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  cast_time;
     private String  ori_cast_time;
     private String  duration;
+    private String  ori_duration;
     private String  compo;
     private Boolean[] compoBool=new Boolean[3];
     private Boolean[] ori_compoBool=new Boolean[3];
@@ -54,6 +55,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.cast_time=cast_time;
         this.ori_cast_time=cast_time;
         this.duration=duration;
+        this.ori_duration=duration;
         this.compo=compo;
         setcompoBool(this.compo);
         meta_Materiel(mC);
@@ -352,9 +354,9 @@ public class Spell extends AppCompatActivity implements Serializable {
             this.rank-=4;
         }
     }
-
+    
     public void meta_Rapid_descr(Context mC) {
-        String descr=" L’incantation du sort ne prend qu’une action rapide."+
+        String descr="L’incantation du sort ne prend qu’une action rapide."+
                 " Si le temps d’incantation du sort est supérieur à un round,"+
                 " on ne peut pas l’accélérer avec ce don. Un sort à incantation rapide nécessite un emplacement de sort de quatre niveaux"
                 +" de plus que son niveau réel.";
@@ -362,8 +364,27 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
+    
+        // sort à retardement +4
+    public void meta_Delay(Boolean active) {
+        if (active) {
+            this.rank+=4;
+        } else {
+            this.rank-=4;
+        }
+    }
 
-    //quintessence des sorts
+    public void meta_Delay_descr(Context mC) {
+        String descr="Le déclenchement du sort se produira un fois un certain temps écoulé (max 24h)."+
+                " Une fois la durée fixée rien ne peut la changer (hors annulation)."+
+                " Un sort retardé est visible magiquement et peut etre dissipé. Un sort à retardement nécessite un emplacement de sort de quatre niveaux"
+                +" de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+
+    //quintessence des sorts +3
     public void meta_Quint(boolean active) {
         String resultat=this.dice_type;
         if (active) {
@@ -384,7 +405,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
 
-    //extension d'effet
+    //extension d'effet+2
 
     public void meta_Extend(boolean active) {
         if (active) {
@@ -402,8 +423,31 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
+    
+            // flêche naturalisée
+    public void meta_Enchant_arrow(Boolean active) {
+        if (active) {
+            this.ori_cast_time=this.cast_time;
+            this.cast_time="complexe";
+            this.rank+=2;
+        } else {
+            this.cast_time=this.ori_cast_time;
+            this.rank-=2;
+        }
+    }
 
-    //sort selectif
+    public void meta_Enchant_arrow_descr(Context mC) {
+        String descr="Place un sort sur une flêche de l'archer-sylvestre (Wedge + Tenshi ftw). "+
+            "Tout sort placé sur une flèche de cette manière est alors considéré comme "+
+            "lancé. Les flèches naturalisées restent actives 24h. Utiliser ce pouvoir est "+
+            "une action complexe et nécéssite un emplacement de sort de deux niveaux de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+    
+    
+    //sort selectif +1
     public void meta_Select_Spell(boolean active) {
         if (active) {
             this.rank+=1;
@@ -444,7 +488,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
 
-    //V2: augmentation d'intensité pourra etre pris plusieurs fois
+    //augmentation d'intensité pourra etre pris plusieurs fois
     public void meta_Intense(boolean active) {
         if (active) {
             this.save_val+=1;
@@ -461,6 +505,31 @@ public class Spell extends AppCompatActivity implements Serializable {
         String descr="Ce don permet d’amplifier l’intensité du sort choisi en augmentant son niveau effectif"+
                 " (d’un ou plusieurs niveaux, sans dépasser le 9e). Contrairement aux autres dons de métamagie, "+
                 "il augmente réellement le niveau de sort modifié. Toutes les propriétés du sort qui dépendent de son niveau, nécessite un emplacement de sort égal à son nouveau niveau effectif.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+    
+    // extend durée+2
+    
+    public void meta_Extend_dura(boolean active) {
+        if (active) {
+            Pattern pattern = Pattern.compile("^([0-9]+)");  //si ca plante à test avec * à la place de +
+            Matcher matcher = pattern.matcher(spell.getDuration());
+            if (matcher.find())
+            {
+                Integer int_dura = 2*to_int(matcher.group(1));
+                this.duration=this.duration.replaceAll(matcher.group(1),String.ValueOf(int_dura));
+            }   
+            this.rank+=2;
+        } else {
+            this.duration=this.ori_duration;
+            this.rank-=2;
+        }
+    }
+
+    public void meta_Extend_dura_descr(Context mC) {
+        String descr="Un sort à extension de durée dure deux fois plus longtemps qu’indiqué dans sa description. Les sorts permanents, instantanés et ceux dont la durée dépend de la concentration du personnage ne sont pas concernés. Un sort à extension de durée nécessite un emplacement de sort d’un niveau de plus que son niveau réel.";
         Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
