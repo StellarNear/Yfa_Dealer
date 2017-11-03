@@ -36,6 +36,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  save_type;
     private int     save_val;
     private int     rank;
+    private int ori_rank;
     private String dmg_dice_roll_txt;
     private int caster_lvl;
     private int n_cast;
@@ -59,6 +60,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.rm=rm;
         this.save_type=save_type;
         this.rank=rank;
+        this.ori_rank=rank;
         setSave_val(mC);
         setCaster_lvl(mC);
         this.n_cast=1;
@@ -185,6 +187,10 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     public Integer getN_cast() {
         return this.n_cast;
+    }
+    
+    public Integer getBaseRank() {
+        return this.ori_rank;
     }
 
     public boolean isPerfect() {
