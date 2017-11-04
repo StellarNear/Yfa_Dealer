@@ -11,53 +11,78 @@
         android:defaultValue="@bool/ameliore_switch_def"
         android:key="ameliore"
         android:summary="Augmente d'une catégorie les dès de dégâts d'un sort"
-        android:title="Sort amélioré" />
+        android:title="Sort amélioré (+4)" />
 
     <SwitchPreference
         android:defaultValue="@bool/rapid_switch_def"
         android:key="rapid"
         android:summary="Lance le sort par une action rapide"
-        android:title="Sort rapide" />
+        android:title="Sort rapide (+4)" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/delay_switch_def"
+        android:key="delay"
+        android:summary="Le sort se déclenche après un certain temps"
+        android:title="Sort à retardement (+4)" />
 
     <SwitchPreference
         android:defaultValue="@bool/quintessence_switch_def"
         android:key="quintessence"
         android:summary="Les variables du sort sont au maximum"
-        android:title="Quintessence des sorts" />
+        android:title="Quintessence des sorts (+3)" />
 
 
     <SwitchPreference
         android:defaultValue="@bool/extension_switch_def"
         android:key="extension"
         android:summary="Augmente les variables des sorts de 50%"
-        android:title="Extension d’effet" />
+        android:title="Extension d’effet (+2)" />
+
+    <SwitchPreference
+        android:defaultValue="@bool/enchant_arrow_switch_def"
+        android:key="enchant_arrow"
+        android:summary="Place un sort sur une flêche de l'archer-sylvestre"
+        android:title="Flêche naturalisée (+2)" />
+
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@string/wedge_max_lvl_spell_def"
+        android:key="wedge_max_lvl_spell"
+        android:title="Niveau max de sort connu par l'archer-sylvestre"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:dependency="enchant_arrow"
+        android:summary="Tier : %s"/>
 
 
     <SwitchPreference
         android:defaultValue="@bool/intense_switch_def"
         android:key="intense"
         android:summary="Le sort est considéré comme d’un niveau supérieur"
-        android:title="Augmentation d’intensité" />
+        android:title="Augmentation d’intensité (+1)" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/extension_dura_switch_def"
+        android:key="extension_dura"
+        android:summary="Le sort dure deux fois plus longtemps."
+        android:title="Extension de durée (+1)" />
 
     <SwitchPreference
         android:defaultValue="@bool/eloigne_switch_def"
         android:key="eloigne"
         android:summary="Augmente la portée d’un sort d’une ou de plusieurs catégories."
-        android:title="Sort éloignéAPG" />
+        android:title="Sort éloigné (+1)" />
 
     <SwitchPreference
         android:defaultValue="@bool/select_switch_def"
         android:key="select"
         android:summary="Exclut certaines cibles de la zone d’effet d’un sort"
-        android:title="Sort sélectif" />
+        android:title="Sort sélectif (+1)" />
 
     <SwitchPreference
         android:defaultValue="@bool/silence_switch_def"
         android:key="silence"
         android:summary="Le personnage peut lancer un sort sans émettre le moindre son"
-        android:title="Incantation silencieuse" />
+        android:title="Incantation silencieuse (+1)" />
 
     <SwitchPreference
         android:defaultValue="@bool/materiel_switch_def"

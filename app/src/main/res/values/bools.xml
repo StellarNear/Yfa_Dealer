@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="ameliore_switch_def">true</bool>
+    <bool name="ameliore_switch_def">false</bool>
     <bool name="silence_switch_def">true</bool>
     <bool name="materiel_switch_def">true</bool>
     <bool name="rapid_switch_def">true</bool>
@@ -10,4 +10,7 @@
     <bool name="eloigne_switch_def">true</bool>
     <bool name="intense_switch_def">true</bool>
     <bool name="perfect_desint_def">true</bool>
+    <bool name="enchant_arrow_switch_def">true</bool>
+    <bool name="delay_switch_def">false</bool>
+    <bool name="extension_dura_switch_def">true</bool>
 </resources>

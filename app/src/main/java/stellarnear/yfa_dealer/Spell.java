@@ -14,6 +14,8 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Spell extends AppCompatActivity implements Serializable {
 
@@ -134,8 +136,8 @@ public class Spell extends AppCompatActivity implements Serializable {
         String dura=this.duration;
         if(dura.contains("/lvl")){
             Integer lvl =  this.caster_lvl;
-            Log.d("STATE dura",dura);
-            Log.d("STATE durarepl",dura.replaceAll("[^0-9?!]",""));
+            //Log.d("STATE dura",dura);
+            //Log.d("STATE durarepl",dura.replaceAll("[^0-9?!]",""));
             Integer factor= to_int(dura.replaceAll("[^0-9?!]",""),"Facteur numérique de durée du sort",mC);
             Integer result = factor * lvl;
             String duration_unit = dura.replaceAll("/lvl","").replaceAll("[0-9?!]","");
@@ -424,7 +426,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
     
-            // flêche naturalisée
+            // flêche naturalisée+2
     public void meta_Enchant_arrow(Boolean active) {
         if (active) {
             this.ori_cast_time=this.cast_time;
@@ -510,21 +512,21 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
     
-    // extend durée+2
+    // extend durée+1
     
     public void meta_Extend_dura(boolean active) {
         if (active) {
             Pattern pattern = Pattern.compile("^([0-9]+)");  //si ca plante à test avec * à la place de +
-            Matcher matcher = pattern.matcher(spell.getDuration());
+            Matcher matcher = pattern.matcher(this.duration);
             if (matcher.find())
             {
                 Integer int_dura = 2*to_int(matcher.group());
-                this.duration=this.duration.replaceAll(matcher.group(1),String.ValueOf(int_dura));
+                this.duration=this.duration.replaceAll(matcher.group(1),String.valueOf(int_dura));
             }   
-            this.rank+=2;
+            this.rank+=1;
         } else {
             this.duration=this.ori_duration;
-            this.rank-=2;
+            this.rank-=1;
         }
     }
 
@@ -566,7 +568,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
 
-    //V2 : perfection magique vraiment à part uniquement sur desintégration permet de mettre une metamagie du choix gratos
+
 
     public Integer to_int(String key,String field,Context mC){
         Integer value;
@@ -576,6 +578,16 @@ public class Spell extends AppCompatActivity implements Serializable {
             Toast toast = Toast.makeText(mC, "Attention la valeur : "+key+"\nDu champ : "+field+"\nEst incorrecte, valeur mise à 0.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
+            value=0;
+        }
+        return value;
+    }
+
+    public Integer to_int(String key){
+        Integer value;
+        try {
+            value = Integer.parseInt(key);
+        } catch (Exception e){
             value=0;
         }
         return value;

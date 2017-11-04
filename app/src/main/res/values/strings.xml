@@ -20,6 +20,7 @@
     <string name="n_rank_13_def">"0"</string>
     <string name="n_rank_14_def">"0"</string>
     <string name="n_rank_15_def">"0"</string>
+    <string name="wedge_max_lvl_spell_def">6</string>
 
 
     <string-array name="values">
