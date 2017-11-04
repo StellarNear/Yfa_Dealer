@@ -1084,7 +1084,7 @@ public class SpellCastActivity extends AppCompatActivity {
         }        
         
         
-        //sort éloigné +1
+        //sort éloigné  +1
         String [] all_range_far_ok={"contact","courte","moyenne"};
         if ((settings.getBoolean("eloigne",getResources().getBoolean(R.bool.eloigne_switch_def)))&&(Arrays.asList(all_range_far_ok).contains(spell.getRange()))) {
             final CheckBox checkbox=new CheckBox(getApplicationContext());
