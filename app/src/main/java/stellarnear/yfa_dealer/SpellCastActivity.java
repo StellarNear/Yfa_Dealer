@@ -1017,7 +1017,7 @@ public class SpellCastActivity extends AppCompatActivity {
         }
         
         //Extension de durée (+1)
-        if ((settings.getBoolean("extension_dura",getResources().getBoolean(R.bool.extension_dura_switch_def)))&&(!spell.getDuration(getApplicationContext()).equals("instant")))  {
+        if ((settings.getBoolean("extension_dura",getResources().getBoolean(R.bool.extension_dura_switch_def)))&&(!spell.getDuration(getApplicationContext()).equals("instant"))&&(!spell.getDuration(getApplicationContext()).equals("permanente"))&&(!spell.getName().equals("Arrêt du temps")))  {
             final CheckBox checkbox=new CheckBox(getApplicationContext());
             checkbox.setText("Extension de durée (+1)");
             checkbox.setTextColor(Color.GRAY);
