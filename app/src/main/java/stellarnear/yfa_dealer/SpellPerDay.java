@@ -59,21 +59,22 @@ public class SpellPerDay extends AppCompatActivity {
     public void load_list_spell_per_day(Context mC) {
         int [] list_spell_per_day=new int[15];
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        list_spell_per_day[0]=to_int(prefs.getString("n_rank_1",mC.getString(R.string.n_rank_1_def)));
-        list_spell_per_day[1]=to_int(prefs.getString("n_rank_2",mC.getString(R.string.n_rank_2_def)));
-        list_spell_per_day[2]=to_int(prefs.getString("n_rank_3",mC.getString(R.string.n_rank_3_def)));
-        list_spell_per_day[3]=to_int(prefs.getString("n_rank_4",mC.getString(R.string.n_rank_4_def)));
-        list_spell_per_day[4]=to_int(prefs.getString("n_rank_5",mC.getString(R.string.n_rank_5_def)));
-        list_spell_per_day[5]=to_int(prefs.getString("n_rank_6",mC.getString(R.string.n_rank_6_def)));
-        list_spell_per_day[6]=to_int(prefs.getString("n_rank_7",mC.getString(R.string.n_rank_7_def)));
-        list_spell_per_day[7]=to_int(prefs.getString("n_rank_8",mC.getString(R.string.n_rank_8_def)));
-        list_spell_per_day[8]=to_int(prefs.getString("n_rank_9",mC.getString(R.string.n_rank_9_def)));
-        list_spell_per_day[9]=to_int(prefs.getString("n_rank_10",mC.getString(R.string.n_rank_10_def)));
-        list_spell_per_day[10]=to_int(prefs.getString("n_rank_11",mC.getString(R.string.n_rank_11_def)));
-        list_spell_per_day[11]=to_int(prefs.getString("n_rank_12",mC.getString(R.string.n_rank_12_def)));
-        list_spell_per_day[12]=to_int(prefs.getString("n_rank_13",mC.getString(R.string.n_rank_13_def)));
-        list_spell_per_day[13]=to_int(prefs.getString("n_rank_14",mC.getString(R.string.n_rank_14_def)));
-        list_spell_per_day[14]=to_int(prefs.getString("n_rank_15",mC.getString(R.string.n_rank_15_def)));
+       
+        list_spell_per_day[0]=to_int(prefs.getString("n_rank_1",prefs.getString("n_rank_1_start",mC.getString(R.string.n_rank_1_def))));
+        list_spell_per_day[1]=to_int(prefs.getString("n_rank_2",prefs.getString("n_rank_2_start",mC.getString(R.string.n_rank_2_def))));
+        list_spell_per_day[2]=to_int(prefs.getString("n_rank_3",prefs.getString("n_rank_3_start",mC.getString(R.string.n_rank_3_def))));
+        list_spell_per_day[3]=to_int(prefs.getString("n_rank_4",prefs.getString("n_rank_4_start",mC.getString(R.string.n_rank_4_def))));
+        list_spell_per_day[4]=to_int(prefs.getString("n_rank_5",prefs.getString("n_rank_5_start",mC.getString(R.string.n_rank_5_def))));
+        list_spell_per_day[5]=to_int(prefs.getString("n_rank_6",prefs.getString("n_rank_6_start",mC.getString(R.string.n_rank_6_def))));
+        list_spell_per_day[6]=to_int(prefs.getString("n_rank_7",prefs.getString("n_rank_7_start",mC.getString(R.string.n_rank_7_def))));
+        list_spell_per_day[7]=to_int(prefs.getString("n_rank_8",prefs.getString("n_rank_8_start",mC.getString(R.string.n_rank_8_def))));
+        list_spell_per_day[8]=to_int(prefs.getString("n_rank_9",prefs.getString("n_rank_9_start",mC.getString(R.string.n_rank_9_def))));
+        list_spell_per_day[9]=to_int(prefs.getString("n_rank_10",prefs.getString("n_rank_10_start",mC.getString(R.string.n_rank_10_def))));
+        list_spell_per_day[10]=to_int(prefs.getString("n_rank_11",prefs.getString("n_rank_11_start",mC.getString(R.string.n_rank_11_def))));
+        list_spell_per_day[11]=to_int(prefs.getString("n_rank_12",prefs.getString("n_rank_12_start",mC.getString(R.string.n_rank_12_def))));
+        list_spell_per_day[12]=to_int(prefs.getString("n_rank_13",prefs.getString("n_rank_13_start",mC.getString(R.string.n_rank_13_def))));
+        list_spell_per_day[13]=to_int(prefs.getString("n_rank_14",prefs.getString("n_rank_14_start",mC.getString(R.string.n_rank_14_def))));
+        list_spell_per_day[14]=to_int(prefs.getString("n_rank_15",prefs.getString("n_rank_15_start",mC.getString(R.string.n_rank_15_def))));
         this.list_spell_per_day=list_spell_per_day;
     }
 
