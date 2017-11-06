@@ -199,21 +199,21 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = prefs.edit();
 
-            editor.putString("n_rank_1",getString(R.string.n_rank_1_def));
-            editor.putString("n_rank_2",getString(R.string.n_rank_2_def));
-            editor.putString("n_rank_3",getString(R.string.n_rank_3_def));
-            editor.putString("n_rank_4",getString(R.string.n_rank_4_def));
-            editor.putString("n_rank_5",getString(R.string.n_rank_5_def));
-            editor.putString("n_rank_6",getString(R.string.n_rank_6_def));
-            editor.putString("n_rank_7",getString(R.string.n_rank_7_def));
-            editor.putString("n_rank_8",getString(R.string.n_rank_8_def));
-            editor.putString("n_rank_9",getString(R.string.n_rank_9_def));
-            editor.putString("n_rank_10",getString(R.string.n_rank_10_def));
-            editor.putString("n_rank_11",getString(R.string.n_rank_11_def));
-            editor.putString("n_rank_12",getString(R.string.n_rank_12_def));
-            editor.putString("n_rank_13",getString(R.string.n_rank_13_def));
-            editor.putString("n_rank_14",getString(R.string.n_rank_14_def));
-            editor.putString("n_rank_15",getString(R.string.n_rank_15_def));
+            editor.putString("n_rank_1",prefs.getString("n_rank_1_start",getString(R.string.n_rank_1_def)));
+            editor.putString("n_rank_2",prefs.getString("n_rank_2_start",getString(R.string.n_rank_2_def)));
+            editor.putString("n_rank_3",prefs.getString("n_rank_3_start",getString(R.string.n_rank_3_def)));
+            editor.putString("n_rank_4",prefs.getString("n_rank_4_start",getString(R.string.n_rank_4_def)));
+            editor.putString("n_rank_5",prefs.getString("n_rank_5_start",getString(R.string.n_rank_5_def)));
+            editor.putString("n_rank_6",prefs.getString("n_rank_6_start",getString(R.string.n_rank_6_def)));
+            editor.putString("n_rank_7",prefs.getString("n_rank_7_start",getString(R.string.n_rank_7_def)));
+            editor.putString("n_rank_8",prefs.getString("n_rank_8_start",getString(R.string.n_rank_8_def)));
+            editor.putString("n_rank_9",prefs.getString("n_rank_9_start",getString(R.string.n_rank_9_def)));
+            editor.putString("n_rank_10",prefs.getString("n_rank_10_start",getString(R.string.n_rank_10_def)));
+            editor.putString("n_rank_11",prefs.getString("n_rank_11_start",getString(R.string.n_rank_11_def)));
+            editor.putString("n_rank_12",prefs.getString("n_rank_12_start",getString(R.string.n_rank_12_def)));
+            editor.putString("n_rank_13",prefs.getString("n_rank_13_start",getString(R.string.n_rank_13_def)));
+            editor.putString("n_rank_14",prefs.getString("n_rank_14_start",getString(R.string.n_rank_14_def)));
+            editor.putString("n_rank_15",prefs.getString("n_rank_15_start",getString(R.string.n_rank_15_def)));
             editor.commit();
 
             String descr="Bonne nuit ! Demain une nouvelle journée pleine de sortilèges t'attends.";
