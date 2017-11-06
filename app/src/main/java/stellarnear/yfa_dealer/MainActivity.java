@@ -76,13 +76,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void buildPage1() {
         ListSpell ListAllSpell = new ListSpell(getApplicationContext());
         List<Spell> rank_list  = new ArrayList<Spell>();
 
-        for(int i=0;i<=10;i++){
+        int max_tier=0;
+        for(int i=0;i<=19;i++){
+            try{
+                if (spell_per_day.getSpell_per_day_rank(i)>0) {max_tier=i;}
+            }catch (Exception e){ }
+        }
+
+        for(int i=0;i<=max_tier;i++){
             LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
             TextView Tier= new TextView(this);
             GradientDrawable gd = new GradientDrawable(
