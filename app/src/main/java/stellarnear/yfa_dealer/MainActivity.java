@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.BL_TR,
-                new int[] {getColor(centre),getColor(bord)});
+                new int[] {getColor(centre),getColor(bord)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
         gd.setCornerRadius(0f);
         gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
         gd.setGradientRadius(200.0f);
