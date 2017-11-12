@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
             View v_sep = new View(this);
             v_sep.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-            v_sep.setBackgroundColor(Color.BLACK);
+            v_sep.setBackgroundColor(Color.DKGRAY);
             grid.addView(v_sep);
 
             for(final Spell spell : rank_list){
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
                 View v_sep2 = new View(this);
                 v_sep2.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-                v_sep2.setBackgroundColor(Color.BLACK);
+                v_sep2.setBackgroundColor(Color.DKGRAY);
                 grid.addView(v_sep2);
             }
             View h_sep2 = new View(this);
@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
         gd.setGradientRadius(200.0f);
 
         checkbox.setTextColor(Color.BLACK);
-        int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
+        int[] colorClickBox=new int[]{Color.DKGRAY,Color.DKGRAY};
         //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
         ColorStateList colorStateList = new ColorStateList(
