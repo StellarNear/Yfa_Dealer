@@ -1,20 +1,35 @@
 package stellarnear.yfa_dealer;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.ContentFrameLayout;
+import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,7 +58,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
     }
 
     @Override
@@ -53,6 +67,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // app icon in action bar clicked; goto parent activity.
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -77,6 +92,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || CombatPreferenceFragment.class.getName().equals(fragmentName)
                 || SpellByDayPreferenceFragment.class.getName().equals(fragmentName)
+                || InfosPreferenceFragment.class.getName().equals(fragmentName)
                 || RazPreferenceFragment.class.getName().equals(fragmentName)
                 || SleepPreferenceFragment.class.getName().equals(fragmentName);
     }
@@ -160,6 +176,66 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
+    /**
+     page d'info settings
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class InfosPreferenceFragment extends PreferenceFragment{
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            ContentFrameLayout window =(ContentFrameLayout) getActivity().findViewById(android.R.id.content);
+
+            ImageView ivBackground = new ImageView(getContext());
+            ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.logo_near));
+
+            window.addView(ivBackground);
+
+
+            LinearLayout page_info = new LinearLayout(getContext());
+            page_info.setOrientation(LinearLayout.VERTICAL);
+            window.addView(page_info);
+
+
+            TextView Yfa_version = new TextView(getContext());
+            Yfa_version.setText("Version actuelle : "+getResources().getString(R.string.version));
+            Yfa_version.setTextSize(22);
+
+            page_info.addView(Yfa_version);
+
+            ScrollView scroll_info = new ScrollView(getContext());
+            page_info.addView(scroll_info);
+
+            final TextView texte_infos = new TextView(getContext());
+            texte_infos.setSingleLine(false);
+            texte_infos.setTextColor(Color.DKGRAY);
+
+            texte_infos.setText(getResources().getString(R.string.basic_infos));
+
+            scroll_info.addView(texte_infos);
+
+            final Button button = new Button(getContext());
+            button.setText("Patch notes");
+            button.setTextSize(18);
+            button.setElevation(10);
+            page_info.addView(button);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    texte_infos.setText(getResources().getString(R.string.patch_list));
+
+                    button.setVisibility(View.GONE);
+                }
+            });
+
+
+        }
+    }
+
 
     /**
      page de reset settings
@@ -171,6 +247,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
+            View window =(View) getActivity().findViewById(android.R.id.content);
+            window.setBackgroundResource(R.drawable.reset_background);
+
+
+            int time=2000; // in milliseconds
+
+            Handler h=new Handler();
+
+            h.postDelayed(new Runnable() {
+
+                              @Override
+                              public void run() {
+
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = prefs.edit();
             editor.clear();
@@ -181,6 +270,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
             startActivity(new Intent(getActivity(), MainActivity.class));
+                              }
+
+            },time);
 
         }
     }
@@ -195,6 +287,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            View window =(View) getActivity().findViewById(android.R.id.content);
+            window.setBackgroundResource(R.drawable.sleep_background);
+
+            String descr="Fais de beaux rêves !";
+            Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+
+
+
+            int time=2000; // in milliseconds
+
+            Handler h=new Handler();
+
+            h.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = prefs.edit();
@@ -216,11 +328,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             editor.putString("n_rank_15",prefs.getString("n_rank_15_start",getString(R.string.n_rank_15_def)));
             editor.commit();
 
-            String descr="Bonne nuit ! Demain une nouvelle journée pleine de sortilèges t'attends.";
+            String descr="Une nouvelle journée pleine de sortilèges t'attends.";
             Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
             startActivity(new Intent(getActivity(), MainActivity.class));
+                }
+
+            },time);
 
         }
 

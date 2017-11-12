@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="version">"v2.0"</string>
+    <string name="basic_infos">"Cette application est développée par un ami pour un ami.
+Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufrey."
+    </string>
+
+<string name="patch_list">"----------------------------------------------------------------------------------
+V2.0 !
+Nouvelles fonctionnalités :
+-Mode compact / mode liste pour la page 1 (changeable dans setting)
+-Mode liste optimisée en fonction de l'orientation du téléphone
+-En mode liste Barre latérale d’accès rapide avec n sorts dispo
+-Menu infos
+-Amélioration des menu sleep et reset
+-Lancement en cours liste les sorts en cours quand n_spell>1
+-Organisation alphabétique des sorts
+----------------------------------------------------------------------------------
+Patch note V1.55
+-auto détection du tier max (page1)
+-sauvegarde du n_sort_per_day_start (celui du nombre par jour n'est plus directement issu du xml mais bien depuis les settings)
+----------------------------------------------------------------------------------
+Patch note V1.51
+-fix arrêt du temps pas possible dans extension durée
+----------------------------------------------------------------------------------
+Patch note V1.5
+-ajout des meta : delay , extend durée et flèche naturalisée
+-smart picker des meta pour pas avoir de méta inutile
+----------------------------------------------------------------------------------
+Patch note V1.4
+-ajout spell rang 0
+-ajout les d3 (froid)
+----------------------------------------------------------------------------------
+Patch note V1.3
+-perfection magique fonctionnelle
+-perfection magique dynamiquement maximisée sur les métamagie stackable
+----------------------------------------------------------------------------------
+Patch note V1.1a-b-c
+-UI fixing for cross tel
+-change def_val spell_per_day
+----------------------------------------------------------------------------------
+Patch note V1.1
+-bouton lancement page1>2 en haut
+-multi lancement de sort et métamagie
+-couleur checkbox pas transparente page 2
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+V 1.0 !
+Liste des fonctionnalités :
+Page 1 Liste sort Ok
+XML parser liste auto OK
+Transert de sorts select vers page 2 OK
+Page 2 OK
+Fragment par sorts OK
+Slider pour lancement sort switch fragment OK
+Descriptif des sorts OK
+Settings OK
+Construction auto de la métamagie avec les settings OK (à completer)
+Liste sorts complete OK
+Sort dans l'ordre OK
+Les affichages dynamique des valeur level sort etc (avec listner sur les checkbox) OK
+All méta OK
+Couleur spell auto page 1 et 2
+Thème couleur OK
+Comptage des nombre de spell/j/rang  OK
+Verrouillage si pas de nombre de sorts du rang dispo  OK
+Lancement des degat OK
+avec stat OK
+avec détail des dès à partir d'un bouton fragment 2 OK
+Fragment 2 design OK
+Range, durée tout est dynamique et calculé par rapport au level OK
+Tout les dès de chaque élément OK
+----------------------------------------------------------------------------------
+To do ideas :
+- mieux faire l'alignement dynamique de la grille de dès dans dmg_det
+- contrôle du lancement de plus que deux action simple en un round ? comptabilisé les round nécessaires aux lancements"
+    </string>
+
+</resources>

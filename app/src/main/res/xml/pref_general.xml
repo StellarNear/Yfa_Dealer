@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <stellarnear.yfa_dealer.EditTextPreference
         android:defaultValue="@string/nls_val_def"
@@ -23,5 +24,11 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="Valeur : +%s"/>
+
+    <SwitchPreference
+        android:defaultValue="@bool/compact_list_switch_def"
+        android:key="compact_list"
+        android:summary="La liste de sort est en défilement horizontal"
+        android:title="Liste de sort en mode compact" />
 
 </PreferenceScreen>

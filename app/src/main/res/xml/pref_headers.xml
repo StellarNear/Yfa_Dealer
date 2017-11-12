@@ -5,8 +5,8 @@
     <header
         android:fragment="stellarnear.yfa_dealer.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_person_pin_black_24dp"
-        android:title="Caractéristiques générales"
-        android:summary="Statistiques de base du personnage"/>
+        android:title="Paramètres généraux"
+        android:summary="Statistiques de base du personnage et paramètres de l'application"/>
 
     <header
         android:fragment="stellarnear.yfa_dealer.SettingsActivity$CombatPreferenceFragment"
@@ -19,6 +19,12 @@
         android:icon="@drawable/ic_format_list_numbered_black_24dp"
         android:title="Nombre de sorts par jour"
         android:summary="Valeurs de base du nombre de sorts journaliers par rang"/>
+
+    <header
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$InfosPreferenceFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="Infos"
+        android:summary="Résumé d'informations sur l'application"/>
 
     <header
         android:id="@+id/raz"

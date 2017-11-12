@@ -535,6 +535,11 @@ public class SpellCastActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                        spell.meta_Rapid(true);
+                        makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
+                        makeInfos(infos, spell);
+
+                        /*  Meta quickspell pas possible pour perfection
                         if(spell.isPerfect())
                         {
 
@@ -561,7 +566,7 @@ public class SpellCastActivity extends AppCompatActivity {
                             spell.meta_Rapid(true);
                             makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
                             makeInfos(infos, spell);
-                        }
+                        }*/
 
                     } else {
                         spell.meta_Rapid(false);

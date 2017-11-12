@@ -67,7 +67,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.ori_rank=rank;
         setSave_val(mC);
         setCaster_lvl(mC);
-        this.n_cast=1;
+        this.n_cast=0;
         setPerfect(mC);
 
         //tester si perfect dans meta si oui popup si il depense perfect on uprank gratos on rend le sort non perfect mais on desactive la box (plus cliquable) peut etre à faire

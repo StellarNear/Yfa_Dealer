@@ -14,20 +14,7 @@
         <compo>V,G</compo>
         <rank>0</rank>
     </spell>
-    <spell>
-        <name>Rayon de givre</name>
-        <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
-        <dice_type>d3</dice_type>
-        <n_dice>1</n_dice>
-        <dmg_type>froid</dmg_type>
-        <range>courte</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <rm>true</rm>
-        <save_type>aucun</save_type>
-        <compo>V,G</compo>
-        <rank>0</rank>
-    </spell>
+
     
       <spell>
         <name>Détection de la magie</name>
@@ -87,6 +74,21 @@
     </spell>
 
     <spell>
+        <name>Rayon de givre</name>
+        <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
+        <dice_type>d3</dice_type>
+        <n_dice>1</n_dice>
+        <dmg_type>froid</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <compo>V,G</compo>
+        <rank>0</rank>
+    </spell>
+
+    <spell>
         <name>Résistance</name>
         <descr>Ce sort protège la cible en lui offrant temporairement un bonus de résistance de +1 aux jets de sauvegarde.</descr>
         <range>Contact</range>
@@ -97,35 +99,7 @@
     </spell>
     
     
-    <spell>
-        <name>Décharge électrique</name>
-        <descr>Attaque de contact au corps à corps qui, en cas de réussite inflige des dégâts. Si la cible porte une armure métallique (ou porte une arme faite principalement de métal), le lanceur de sorts bénéficie d’un bonus de +3 au jet d’attaque.</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>5</n_dice>
-        <dmg_type>foudre</dmg_type>
-        <range>contact</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G</compo>
-        <rm>true</rm>
-        <save_type>aucun</save_type>
-        <rank>1</rank>
-    </spell>
-    
-    <spell>
-        <name>Projectile magique</name>
-        <descr>Tire 5 projectiles faisant chaqu'un des dégâts. Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.</descr>
-        <dice_type>d4</dice_type>
-        <n_dice>5</n_dice>
-        <dmg_type>aucun</dmg_type>
-        <range>moyenne</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G</compo>
-        <rm>true</rm>
-        <save_type>aucun</save_type>
-        <rank>1</rank>
-    </spell>
+
 
       <spell>
         <name>Alarme</name>
@@ -169,25 +143,34 @@
         <rank>1</rank>
     </spell>
 
-
-  
-
-  
-
-
     <spell>
-        <name>Rayon ardent</name>
-        <descr>Attaque de contact au corps à corps qui, en cas de réussite lance 3 rayons infligeant chacun des dégâts. Peut viser une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres.</descr>
+        <name>Décharge électrique</name>
+        <descr>Attaque de contact au corps à corps qui, en cas de réussite inflige des dégâts. Si la cible porte une armure métallique (ou porte une arme faite principalement de métal), le lanceur de sorts bénéficie d’un bonus de +3 au jet d’attaque.</descr>
         <dice_type>d6</dice_type>
-        <n_dice>12</n_dice>
-        <dmg_type>feu</dmg_type>
-        <range>courte</range>
+        <n_dice>5</n_dice>
+        <dmg_type>foudre</dmg_type>
+        <range>contact</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G</compo>
         <rm>true</rm>
         <save_type>aucun</save_type>
-        <rank>2</rank>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Projectile magique</name>
+        <descr>Tire 5 projectiles faisant chaqu'un des dégâts. Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.</descr>
+        <dice_type>d4</dice_type>
+        <n_dice>5</n_dice>
+        <dmg_type>aucun</dmg_type>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
+        <rank>1</rank>
     </spell>
 
     <spell>
@@ -229,6 +212,21 @@
         <cast_time>simple</cast_time>
         <duration>1min/lvl</duration>
         <compo>V,G</compo>
+        <rank>2</rank>
+    </spell>
+
+    <spell>
+        <name>Rayon ardent</name>
+        <descr>Attaque de contact au corps à corps qui, en cas de réussite lance 3 rayons infligeant chacun des dégâts. Peut viser une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres.</descr>
+        <dice_type>d6</dice_type>
+        <n_dice>12</n_dice>
+        <dmg_type>feu</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>aucun</save_type>
         <rank>2</rank>
     </spell>
 
@@ -274,6 +272,21 @@
         <rank>3</rank>
     </spell>
 
+
+
+
+    <spell>
+        <name>Don des langues</name>
+        <descr>Ce sort donne à la créature touchée la capacité de parler et de comprendre le langage de n’importe quelle créature intelligente</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+           <rm>true</rm>
+        <save_type>vol[annule]</save_type>
+        <rank>3</rank>
+    </spell>
+
     <spell>
         <name>Éclair</name>
         <descr>Violente décharge électrique qui inflige des dégâts d’électricité à toutes les créatures situées en ligne droite jusqu'à 36m.</descr>
@@ -286,19 +299,6 @@
         <compo>V,G,M</compo>
         <rm>true</rm>
         <save_type>ref[1/2]</save_type>
-        <rank>3</rank>
-    </spell>
-
-
-    <spell>
-        <name>Don des langues</name>
-        <descr>Ce sort donne à la créature touchée la capacité de parler et de comprendre le langage de n’importe quelle créature intelligente</descr>
-        <range>contact</range>
-        <cast_time>simple</cast_time>
-        <duration>10min/lvl</duration>
-        <compo>V,G,M</compo>
-           <rm>true</rm>
-        <save_type>vol[annule]</save_type>
         <rank>3</rank>
     </spell>
     
@@ -379,6 +379,18 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
   
 
 
+
+    
+ <spell>
+        <name>Annulation d'echantement</name>
+        <descr>Cibles jusqu’à 1 créature/niveau, à moins de 9 m. Ce sort annule les enchantements, transmutations et malédictions actifs sur la cible. Le personnage fait un test de niveau de lanceur de sorts (1d20 + son niveau de lanceur de sorts, maximum +15) contre un DD égal à 11 + niveau de lanceur de sorts de l’effet.</descr>
+        <range>courte</range>
+        <cast_time>1min</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rank>5</rank>
+    </spell>
+
     <spell>
         <name>Cône de froid</name>
         <descr>Cône de froid crée une vague de froid glacial naissant dans la main tendue du magicien et prenant la forme d’un cône. Toutes les créatures situées dans la zone d’effet subissent les dégâts de froid.</descr>
@@ -391,6 +403,16 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>V,G,M</compo>
         <rm>true</rm>
         <save_type>ref[1/2]</save_type>
+        <rank>5</rank>
+    </spell>
+    
+    <spell>
+        <name>Echolocalisation</name>
+        <descr>Procure vision aveugle dans un rayon de 12 mètres. Le personnage ne peut pas utiliser ce pouvoir s'il est sourd et il ne détecte rien dans une zone de silence.</descr>
+        <range>personelle</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V</compo>
         <rank>5</rank>
     </spell>
 
@@ -408,28 +430,8 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <save_type>ref[1/2]</save_type>
         <rank>5</rank>
     </spell>
-    
-    
- <spell>
-        <name>Annulation d'echantement</name>
-        <descr>Cibles jusqu’à 1 créature/niveau, à moins de 9 m. Ce sort annule les enchantements, transmutations et malédictions actifs sur la cible. Le personnage fait un test de niveau de lanceur de sorts (1d20 + son niveau de lanceur de sorts, maximum +15) contre un DD égal à 11 + niveau de lanceur de sorts de l’effet.</descr>
-        <range>courte</range>
-        <cast_time>1min</cast_time>
-        <duration>instant</duration>
-        <compo>V,G</compo>
-        <rank>5</rank>
-    </spell>
-    
-    <spell>
-        <name>Echolocalisation</name>
-        <descr>Procure vision aveugle dans un rayon de 12 mètres. Le personnage ne peut pas utiliser ce pouvoir s'il est sourd et il ne détecte rien dans une zone de silence.</descr>
-        <range>personelle</range>
-        <cast_time>simple</cast_time>
-        <duration>10min/lvl</duration>
-        <compo>V</compo>
-        <rank>5</rank>
-    </spell>
-    
+
+
     <spell>
         <name>Lien télépathique</name>
         <descr>Cibles le jeteur de sorts et 1 créature consentante/3 niveaux, distantes de moins de 9 m. Ce sort de divination génère un lien télépathique entre plusieurs créatures dont l’Intelligence doit au moins être égale ou supérieure à 3.</descr>
@@ -467,20 +469,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <rank>6</rank>
     </spell>
     
-    <spell>
-        <name>Éclair multiple</name>
-        <descr>Un éclair qui multiple se divise dès qu’il frappe sa première cible. Puis il se divise pour toucher au maximum 20 cibles infligeant autant de dégats à ces cibles. Le DD du jet de Réflexes des éclairs secondaires est réduit de 2 points par rapport à celui de l’éclair originel.</descr>
-        <dice_type>d6</dice_type>
-        <n_dice>20</n_dice>
-        <dmg_type>foudre</dmg_type>
-        <range>longue</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <rm>true</rm>
-        <save_type>ref[1/2]</save_type>
-        <rank>6</rank>
-    </spell>
+
 
     <spell>
         <name>Dissipation suprême</name>
@@ -503,7 +492,22 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>G</compo>
         <rank>6</rank>
     </spell>
-    
+
+    <spell>
+        <name>Éclair multiple</name>
+        <descr>Un éclair qui multiple se divise dès qu’il frappe sa première cible. Puis il se divise pour toucher au maximum 20 cibles infligeant autant de dégats à ces cibles. Le DD du jet de Réflexes des éclairs secondaires est réduit de 2 points par rapport à celui de l’éclair originel.</descr>
+        <dice_type>d6</dice_type>
+        <n_dice>20</n_dice>
+        <dmg_type>foudre</dmg_type>
+        <range>longue</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <rank>6</rank>
+    </spell>
+
     <spell>
         <name>Doigt de mort</name>
         <descr>Ce sort inflige 10 points de dégâts par niveau de lanceur de sorts. Si la cible réussit son jet de sauvegarde, elle perd seulement 3d6 points de vie+1 par niveau de lanceur de sorts.</descr>
@@ -549,20 +553,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     </spell>
     
     
-    <spell>
-        <name>Nuées d'orage</name>
-        <descr>Des éclairs jaillissent dans toutes les directions. Ils n'abîment pas la végétation naturelle ni les créatures que le personnage souhaite exclure. Infligeant des dégâts et étourdi pendant 1 round. Un jet de sauvegarde réussi réduit ces dégâts de moitié et annule l'étourdissement.</descr>
-        <dice_type>d8</dice_type>
-        <n_dice>20</n_dice>
-        <dmg_type>foudre</dmg_type>
-        <range>9m</range>
-        <cast_time>simple</cast_time>
-        <duration>instant</duration>
-        <compo>V,G,M</compo>
-        <rm>true</rm>
-        <save_type>vig[1/2]</save_type>
-        <rank>8</rank>
-    </spell>
+
 
     <spell>
         <name>Animation suspendue</name>
@@ -606,6 +597,21 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <cast_time>simple</cast_time>
         <duration>1h/lvl</duration>
         <compo>V,G</compo>
+        <rank>8</rank>
+    </spell>
+
+    <spell>
+        <name>Nuées d'orage</name>
+        <descr>Des éclairs jaillissent dans toutes les directions. Ils n'abîment pas la végétation naturelle ni les créatures que le personnage souhaite exclure. Infligeant des dégâts et étourdi pendant 1 round. Un jet de sauvegarde réussi réduit ces dégâts de moitié et annule l'étourdissement.</descr>
+        <dice_type>d8</dice_type>
+        <n_dice>20</n_dice>
+        <dmg_type>foudre</dmg_type>
+        <range>9m</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+        <rm>true</rm>
+        <save_type>vig[1/2]</save_type>
         <rank>8</rank>
     </spell>
 

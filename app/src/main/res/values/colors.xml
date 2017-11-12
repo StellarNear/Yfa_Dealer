@@ -11,7 +11,7 @@
     <color name="aucun">#F2F2F2</color>
     <color name="aucun_dark">#A4A4A4</color>
     <color name="feu">#F79F81</color>
-    <color name="feu_dark">#FF4000</color>
+    <color name="feu_dark">#FF0000</color>
     <color name="froid">#819FF7</color>
     <color name="froid_dark">#013ADF</color>
     <color name="foudre">#E0ECF8</color>
