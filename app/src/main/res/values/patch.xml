@@ -6,6 +6,8 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+V2.0a : fix mise en cache des images
+
 V2.0 !
 Nouvelles fonctionnalités :
 -Mode compact / mode liste pour la page 1 (changeable dans setting)
