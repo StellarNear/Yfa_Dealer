@@ -115,4 +115,12 @@ public class SpellPerDay extends AppCompatActivity {
         
     }
 
+    public boolean checkAnyconvertible_available(Context mC) {
+        return true; //to do
+    }
+
+    public boolean checkConvertible_available(int i, Context mC) {
+
+        return true;
+    }
 }

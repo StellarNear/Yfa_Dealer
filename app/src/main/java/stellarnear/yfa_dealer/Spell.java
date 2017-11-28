@@ -44,6 +44,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private int caster_lvl;
     private int n_cast;
     private boolean perfect;
+    private boolean converted;
 
     public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         this.name=name;
@@ -69,6 +70,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         setCaster_lvl(mC);
         this.n_cast=0;
         setPerfect(mC);
+        this.converted=false;
 
         //tester si perfect dans meta si oui popup si il depense perfect on uprank gratos on rend le sort non perfect mais on desactive la box (plus cliquable) peut etre à faire
         // dans spellcastactivity du coup
@@ -200,6 +202,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     public boolean isPerfect() {
         return this.perfect;
     }
+    public boolean isConverted() {        return this.converted;    }
 
     private void setName(String name){
         this.name=name;
@@ -294,6 +297,10 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     public void setPerfect(Boolean bool) {
         this.perfect=bool;
+    }
+
+    public void setConverted (Boolean bool) {
+        this.converted=bool;
     }
 
     // methode de meta magie

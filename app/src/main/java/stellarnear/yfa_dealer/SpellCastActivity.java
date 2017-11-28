@@ -1,11 +1,15 @@
 package stellarnear.yfa_dealer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,21 +19,26 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -38,9 +47,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import org.w3c.dom.Text;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,9 +88,9 @@ public class SpellCastActivity extends AppCompatActivity {
             spell.setSave_val(getApplicationContext()); //refresh si le charisme à bouger
             spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
             final TextView Spell_Title = new TextView(this);
-            SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
+            final SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
             spell_per_day.load_list_spell_per_day(getApplicationContext());
-            makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
+
             setSpellTitleColor(Spell_Title,spell);
             page2.addView(Spell_Title);
 
@@ -108,6 +120,8 @@ public class SpellCastActivity extends AppCompatActivity {
             panel.setInAnimation(inFromRight);
             panel.setOutAnimation(outtoLeft);
             page2.addView(panel);
+
+            makeTitle(Spell_Title, spell, spell_per_day, panel ,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
 
             LinearLayout fragment1= new LinearLayout(this);
             fragment1.setOrientation(LinearLayout.VERTICAL);
@@ -156,7 +170,9 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout grid=new LinearLayout(this);
             scroll_meta.addView(grid);
 
-            Map<CheckBox,ImageButton> all_check_meta=construct_list_meta(spell,Spell_Title,infos);
+            //Map<CheckBox,ImageButton> all_check_meta=construct_list_meta(spell,Spell_Title,infos,panel);
+
+            Map<CheckBox,ImageButton> all_check_meta = new ListMeta().all_meta(spell,Spell_Title,infos,panel,SpellCastActivity.this);
 
             View v_sep_meta = new View(this);
             v_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -165,6 +181,16 @@ public class SpellCastActivity extends AppCompatActivity {
             for (Map.Entry<CheckBox, ImageButton> entry : all_check_meta.entrySet()){
 
                 CheckBox checkbox = entry.getKey();
+
+                checkbox.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v) {
+                        makeTitle(Spell_Title, spell, spell_per_day, panel, getApplicationContext());
+                        makeInfos(infos, spell);
+                    }
+                });     // a test à remplacer par le changetextlistener
+
                 grid.addView(checkbox);
                 LinearLayout container=new LinearLayout(this);
                 container.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -250,8 +276,6 @@ public class SpellCastActivity extends AppCompatActivity {
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
             h_sep2.setBackgroundColor(Color.BLACK);
             page2.addView(h_sep2);
-
-
 
         }
     }
@@ -506,822 +530,18 @@ public class SpellCastActivity extends AppCompatActivity {
         return new String[]{text_dmg, text_range, text_dmg_percent, text_proba};
     }
 
-    private Map<CheckBox,ImageButton> construct_list_meta(final Spell spell,final TextView Spell_Title,final TextView infos) {
-        Map<CheckBox,ImageButton> map_list_meta_check=new LinkedHashMap<>();
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        final SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
-        spell_per_day.load_list_spell_per_day(getApplicationContext());
-
-        // incant rapide (+4)
-
-        if (settings.getBoolean("rapid",getResources().getBoolean(R.bool.rapid_switch_def)))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Incantation rapide (+4)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        spell.meta_Rapid(true);
-                        makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                        makeInfos(infos, spell);
-
-                        /*  Meta quickspell pas possible pour perfection
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Incantation rapide ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Rapid(true);
-                                            spell.setRank(spell.getRank()-4);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Rapid(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Rapid(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }*/
-
-                    } else {
-                        spell.meta_Rapid(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Rapid_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-
-        // sort amélioré
-        if ((settings.getBoolean("ameliore",getResources().getBoolean(R.bool.ameliore_switch_def)))&&(spell.getDice_typ().contains("d")))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Sort Amélioré (+4)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Sort Amélioré ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enhance_Spell(true);
-                                            spell.setRank(spell.getRank()-4);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enhance_Spell(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Enhance_Spell(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-                    } else {
-                        spell.meta_Enhance_Spell(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Enhance_Spell_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-
-        // sort à retardement +4
-
-        if (settings.getBoolean("delay",getResources().getBoolean(R.bool.delay_switch_def)))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Sort à retardement (+4)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Sort à retardement ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Delay(true);
-                                            spell.setRank(spell.getRank()-4);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Delay(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Delay(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-                    } else {
-                        spell.meta_Delay(false);
-                       makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Delay_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }   
-        
-        //quintessence des sorts +3
-        if ((settings.getBoolean("quintessence",getResources().getBoolean(R.bool.quintessence_switch_def)))&&(spell.getDice_typ().contains("d")))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Quintessence des sorts (+3)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Quintessence des sorts ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Quint(true);
-                                            spell.setRank(spell.getRank()-3);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Quint(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Quint(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-
-                    } else {
-                        spell.meta_Quint(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Quint_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-        
-        //extension d'effet +2
-        if ((settings.getBoolean("extension",getResources().getBoolean(R.bool.extension_switch_def)))&&(spell.getDice_typ().contains("d")))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Extension d'effet (+2)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Extension d'effet ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend(true);
-                                            spell.setRank(spell.getRank()-2);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Extend(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-                    } else {
-                        spell.meta_Extend(false);
-                       makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Extend_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-        
-        //flêche naturalisée
-        // si le level du sort est inférieur ou egal au niveau de sort max de wedge && que la méta est active
-        if ((spell.getBaseRank() <= to_int(settings.getString("wedge_max_lvl_spell",getResources().getString(R.string.wedge_max_lvl_spell_def)))) && (settings.getBoolean("enchant_arrow",getResources().getBoolean(R.bool.enchant_arrow_switch_def))))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Flêche naturalisée (+2)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Flêche naturalisée ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enchant_arrow(true);
-                                            spell.setRank(spell.getRank()-2);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enchant_arrow(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Enchant_arrow(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-                    } else {
-                        spell.meta_Enchant_arrow(false);
-                       makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Enchant_arrow_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }       
-        
-        //augementation d'intensité +1
-        if (settings.getBoolean("intense",getResources().getBoolean(R.bool.intense_switch_def)))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Augmentation d'intensité (+1)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            final Integer ori_save_val=spell.getSave_val();
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.getRank()<9) {
-                            if(spell.isPerfect())
-                            {
-                                new AlertDialog.Builder(SpellCastActivity.this)
-                                        .setTitle("Demande de confirmation")
-                                        .setMessage("Veux-tu utiliser ta perfection magique sur Augmentation d'intensité ?")
-                                        .setIcon(android.R.drawable.ic_menu_help)
-                                        .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int whichButton) {
-                                                int rank_prev=spell.getRank();
-                                                while (spell.getRank()<9) {
-                                                    spell.meta_Intense(true);
-                                                }
-                                                spell.setRank(rank_prev);
-                                                spell.setPerfect(false);
-                                                checkbox.setClickable(false);
-                                                makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                                makeInfos(infos, spell);
-                                            }})
-                                        .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int whichButton) {
-                                                spell.meta_Intense(true);
-                                                makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                                makeInfos(infos, spell);
-                                            }}).show();
-                            }else {
-                                spell.meta_Intense(true);
-                                makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                makeInfos(infos, spell);
-                            }
-                        } else {
-                            String descr="Augmentation d'intensité ne permet pas de dépasser le rang 9.";
-                            Toast toast = Toast.makeText(getApplicationContext(), descr, Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                            toast.show();;
-                        }
-
-                    } else {
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                .setTitle("Demande de confirmation")
-                                .setMessage("Veux-tu utiliser Augmentation d'intensité une fois de plus ?")
-                                .setIcon(android.R.drawable.ic_menu_help)
-                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        checkbox.setChecked(true);
-                                    }})
-                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                                        while(!spell.getSave_val().equals(ori_save_val)){
-                                            spell.meta_Intense(false);
-                                        }
-
-                                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                                        makeInfos(infos,spell);
-                                    }}).show();
-
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Intense_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-        
-        //Extension de durée (+1)
-        if ((settings.getBoolean("extension_dura",getResources().getBoolean(R.bool.extension_dura_switch_def)))&&(!spell.getDuration(getApplicationContext()).equals("instant"))&&(!spell.getDuration(getApplicationContext()).equals("permanente"))&&(!spell.getName().equals("Arrêt du temps")))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Extension de durée (+1)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Extension de durée ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend_dura(true);
-                                            spell.setRank(spell.getRank()-1);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend_dura(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Extend_dura(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-                    } else {
-                        spell.meta_Extend_dura(false);
-                       makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Extend_dura_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }        
-        
-        
-        //sort éloigné  +1
-        String [] all_range_far_ok={"contact","courte","moyenne"};
-        if ((settings.getBoolean("eloigne",getResources().getBoolean(R.bool.eloigne_switch_def)))&&(Arrays.asList(all_range_far_ok).contains(spell.getRange()))) {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Sort éloigné (+1)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            final String ori_range=spell.getRange();
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-
-                        if(spell.isPerfect())
-                        {
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Sort éloigné ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            int rank_prev=spell.getRank();
-                                            while (!spell.getRange().equals("longue")) {
-                                                spell.meta_Far(true);
-                                            }
-                                            spell.setRank(rank_prev);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Far(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Far(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-
-                    } else {
-                        new AlertDialog.Builder(SpellCastActivity.this)
-                                .setTitle("Demande de confirmation")
-                                .setMessage("Veux-tu utiliser Sort éloigné une fois de plus ?")
-                                .setIcon(android.R.drawable.ic_menu_help)
-                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        checkbox.setChecked(true);
-                                    }})
-                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        while(!ori_range.equals(spell.getRange())){
-                                            spell.meta_Far(false);
-                                        }
-                                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                                        makeInfos(infos,spell);
-                                    }}).show();
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Far_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-
-
-        //sort séléctif
-        if ((settings.getBoolean("select",getResources().getBoolean(R.bool.select_switch_def)))&&(spell.getN_dice()!=0))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Sort séléctif (+1)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Sort séléctif ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Select_Spell(true);
-                                            spell.setRank(spell.getRank()-1);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Select_Spell(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Select_Spell(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-                    } else {
-                        spell.meta_Select_Spell(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Select_Spell_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-
-
-        //sort silencieux
-        if ((settings.getBoolean("silence",getResources().getBoolean(R.bool.silence_switch_def))) && spell.getCompo().contains("V"))  {
-            final CheckBox checkbox=new CheckBox(getApplicationContext());
-            checkbox.setText("Sort silencieux (+1)");
-            checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            checkbox.setButtonTintList(colorStateList);
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        if(spell.isPerfect())
-                        {
-
-                            new AlertDialog.Builder(SpellCastActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Sort silencieux ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Silent(true);
-                                            spell.setRank(spell.getRank()-1);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Silent(true);
-                                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                                            makeInfos(infos, spell);
-                                        }}).show();
-                        }else {
-                            spell.meta_Silent(true);
-                            makeTitle(Spell_Title, spell, spell_per_day, getApplicationContext());
-                            makeInfos(infos, spell);
-                        }
-
-                    } else {
-                        spell.meta_Silent(false);
-                        makeTitle(Spell_Title,spell,spell_per_day,getApplicationContext());
-                        makeInfos(infos,spell);
-                    }
-                }
-            });
-            ImageButton image=new ImageButton(getApplicationContext());
-            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
-            image.setBackgroundColor(Color.TRANSPARENT);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    spell.meta_Silent_descr(getApplicationContext());
-                }
-            });
-            map_list_meta_check.put(checkbox,image);
-        }
-
-        return map_list_meta_check;
-    }
 
     private void switch_page(ViewSwitcher panel) {
         panel.showNext();
     }
 
+    private void switch_page_back(ViewSwitcher panel) {
+        panel.showPrevious();
+    }
 
 
-    private void makeInfos(TextView infos,Spell spell) {
+
+    private void makeInfos(final TextView infos,final Spell spell) {
         String resistance;
         if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
             resistance = spell.getSave_type();
@@ -1378,10 +598,11 @@ public class SpellCastActivity extends AppCompatActivity {
         infos.setTextColor(Color.GRAY);
     }
     
-    private void makeTitle(TextView Spell_Title,Spell spell,SpellPerDay spell_per_day,Context mC) {
+
+    private void makeTitle(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel,final Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+        Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
         String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
@@ -1393,6 +614,159 @@ public class SpellCastActivity extends AppCompatActivity {
             titre.setSpan(new ForegroundColorSpan(getColor(R.color.warning)),spell.getName().length(),titre_texte.length(), 0);// set color2
         }
         Spell_Title.setText(titre);
+
+        if (spell_per_day.checkAnyconvertible_available(mC) && !spell.isConverted()){
+            Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
+            Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 25,getResources().getDisplayMetrics())));
+            Spell_Title.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                        if(event.getRawX() >= Spell_Title.getRight() - Math.round(TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP, 25,getResources().getDisplayMetrics()))) {
+                            // your action for drawable click event
+                            new AlertDialog.Builder(SpellCastActivity.this)
+                                    .setTitle("Demande de confirmation")
+                                    .setMessage("Tu veux utiliser un slot convertible ?")
+                                    .setIcon(android.R.drawable.ic_menu_help)
+                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            Snackbar.make(Spell_Title, "OUAIS ON CONVERTI!!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+                                            spell.setConverted(true);
+                                            Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                                            Spell_Title.setOnTouchListener(null);
+                                            switch_page(panel);
+                                            construct_convertview(panel.getCurrentView(),spell,spell_per_day,mC);
+                                        }})
+                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                        }}).show();
+                            return true;
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
+
+    }
+
+
+    private void construct_convertview(View currentView, Spell spell, SpellPerDay spell_per_day, Context mC) {
+        ViewGroup test= (ViewGroup) currentView;
+
+        final LinearLayout convert_linear = new LinearLayout(this);
+        convert_linear.setGravity(Gravity.CENTER_HORIZONTAL);
+        convert_linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        convert_linear.setOrientation(LinearLayout.VERTICAL);
+
+        test.addView(convert_linear);
+
+        final LinearLayout convert_slots = new LinearLayout(this);
+        convert_slots.setGravity(Gravity.CENTER_HORIZONTAL);
+        //convert_slots.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        convert_slots.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        convert_slots.setOrientation(LinearLayout.HORIZONTAL);
+
+        convert_linear.addView(convert_slots);
+
+        int max_tier=0;
+        for(int i=0;i<=4;i++){
+            try{
+                if (spell_per_day.checkConvertible_available(i,mC)) {max_tier=i;}
+            }catch (Exception e){ }
+        }
+
+        if (max_tier==0) {return;}
+
+        List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+
+        for(int i=1;i<=max_tier;i++){
+            final CheckBox tier = new CheckBox(this);
+            tier.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank(i) + ")");
+            tier.setTextSize(16);
+            tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+            tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tier.setTextColor(Color.DKGRAY);
+
+            int[] colorClickBox=new int[]{Color.BLACK,Color.parseColor("#088A29")};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            tier.setButtonTintList(colorStateList);
+
+            tier.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    for (int i = convert_slots.getChildCount() - 1; i >= 0; i--) {
+                        final CheckBox child = (CheckBox) convert_slots.getChildAt(i);
+                        child.setTextColor(Color.DKGRAY);
+                        child.setChecked(false);
+                        }
+                    tier.setTextColor(Color.parseColor("#088A29"));
+                    //chose à faire sur les affichage meta dispo etc
+                    tier.setChecked(true);
+                    }
+
+            });
+
+            convert_slots.addView(tier);
+            list_check_rank.add(tier);
+
+        }
+
+
+
+
+
+
+
+
+    }
+
+    private Drawable changeColor(int img_id, String color) {
+        Drawable img = getResources().getDrawable(img_id);
+        int iColor = Color.parseColor(color);
+
+        int red   = (iColor & 0xFF0000) / 0xFFFF;
+        int green = (iColor & 0xFF00) / 0xFF;
+        int blue  = iColor & 0xFF;
+
+        float[] matrix = { 0, 0, 0, 0, red,
+                0, 0, 0, 0, green,
+                0, 0, 0, 0, blue,
+                0, 0, 0, 1, 0 };
+
+        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
+        img.setColorFilter(colorFilter);
+        return img;
+    }
+
+    private Drawable changeColor(int img_id, int color) {
+        Drawable img = getResources().getDrawable(img_id);
+        int iColor = color;
+
+        int red   = (iColor & 0xFF0000) / 0xFFFF;
+        int green = (iColor & 0xFF00) / 0xFF;
+        int blue  = iColor & 0xFF;
+
+        float[] matrix = { 0, 0, 0, 0, red,
+                0, 0, 0, 0, green,
+                0, 0, 0, 0, blue,
+                0, 0, 0, 1, 0 };
+
+        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
+        img.setColorFilter(colorFilter);
+        return img;
     }
 
     public void setSpellTitleColor(TextView text,Spell spell) {
