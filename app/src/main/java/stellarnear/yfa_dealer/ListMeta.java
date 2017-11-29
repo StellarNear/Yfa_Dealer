@@ -8,10 +8,10 @@ import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.SortedList;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -19,10 +19,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +32,9 @@ import java.util.Map;
 
 public class ListMeta extends AppCompatActivity {
 
-    public Map<CheckBox,ImageButton> all_meta (final Spell spell, final TextView Spell_Title, final TextView infos, final ViewSwitcher panel,final Context mC) {
-        Map<CheckBox,ImageButton> map_list_meta_check=new LinkedHashMap<>();
+    List<Pair_Meta_Rank> pair_meta_rank= new ArrayList<>();
+
+    public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos,final Context mC) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
         final SpellPerDay spell_per_day=new SpellPerDay(mC);
@@ -108,10 +110,10 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Rapid_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
-        // sort amélioré
+        // sort amélioré +4
         if ((settings.getBoolean("ameliore",mC.getResources().getBoolean(R.bool.ameliore_switch_def)))&&(spell.getDice_typ().contains("d")))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort Amélioré (+4)");
@@ -177,7 +179,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Enhance_Spell_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
         // sort à retardement +4
@@ -245,7 +247,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Delay_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
         //quintessence des sorts +3
@@ -313,7 +315,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Quint_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),3));
         }
 
         //extension d'effet +2
@@ -380,10 +382,10 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Extend_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),2));
         }
 
-        //flêche naturalisée
+        //flêche naturalisée +2
         // si le level du sort est inférieur ou egal au niveau de sort max de wedge && que la méta est active
         if ((spell.getBaseRank() <= to_int(settings.getString("wedge_max_lvl_spell",mC.getResources().getString(R.string.wedge_max_lvl_spell_def)))) && (settings.getBoolean("enchant_arrow",mC.getResources().getBoolean(R.bool.enchant_arrow_switch_def))))  {
             final CheckBox checkbox=new CheckBox(mC);
@@ -448,7 +450,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Enchant_arrow_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),2));
         }
 
         //augementation d'intensité +1
@@ -542,7 +544,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Intense_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
         //Extension de durée (+1)
@@ -609,7 +611,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Extend_dura_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
 
@@ -696,11 +698,11 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Far_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
 
-        //sort séléctif
+        //sort séléctif +1
         if ((settings.getBoolean("select",mC.getResources().getBoolean(R.bool.select_switch_def)))&&(spell.getN_dice()!=0))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort séléctif (+1)");
@@ -764,11 +766,11 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Select_Spell_descr(mC);
                 }
             });
-            map_list_meta_check.put(checkbox,image);
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
 
-        //sort silencieux
+        //sort silencieux +1
         if ((settings.getBoolean("silence",mC.getResources().getBoolean(R.bool.silence_switch_def))) && spell.getCompo().contains("V")) {
             final CheckBox checkbox = new CheckBox(mC);
             checkbox.setText("Sort silencieux (+1)");
@@ -834,11 +836,23 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Silent_descr(mC);
                 }
             });
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
-
-        return map_list_meta_check;
     }
 
+    public List<Pair_Meta_Rank> getAllMeta(){
+        return pair_meta_rank;
+    }
+
+    public List<Pair_Meta_Rank> getMeta_Rank(int rank){
+        List<Pair_Meta_Rank> selected_rank=new ArrayList<Pair_Meta_Rank>();
+        for (int i=0;i<pair_meta_rank.size();i++){
+            if(pair_meta_rank.get(i).getRank()<=rank){
+                selected_rank.add(pair_meta_rank.get(i));
+            }
+        }
+        return selected_rank;
+    }
 
     public Integer to_int(String key){
         Integer value;

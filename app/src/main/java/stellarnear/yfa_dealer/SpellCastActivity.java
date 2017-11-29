@@ -18,9 +18,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -94,10 +96,7 @@ public class SpellCastActivity extends AppCompatActivity {
             setSpellTitleColor(Spell_Title,spell);
             page2.addView(Spell_Title);
 
-            View h_sep = new View(this);
-            h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
-            h_sep.setBackgroundColor(Color.BLACK);
-            page2.addView(h_sep);
+            addHsep(page2,7,Color.BLACK);
 
 
             final ViewSwitcher panel = new ViewSwitcher(this);
@@ -120,8 +119,6 @@ public class SpellCastActivity extends AppCompatActivity {
             panel.setInAnimation(inFromRight);
             panel.setOutAnimation(outtoLeft);
             page2.addView(panel);
-
-            makeTitle(Spell_Title, spell, spell_per_day, panel ,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
 
             LinearLayout fragment1= new LinearLayout(this);
             fragment1.setOrientation(LinearLayout.VERTICAL);
@@ -157,10 +154,9 @@ public class SpellCastActivity extends AppCompatActivity {
             makeInfos(infos,spell);
             fragment1.addView(infos);
 
-            View h_sep_meta = new View(this);
-            h_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep_meta.setBackgroundColor(Color.GRAY);
-            fragment1.addView(h_sep_meta);
+            makeTitle(Spell_Title,infos, spell, spell_per_day, panel ,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
+
+            addHsep(fragment1,4,Color.GRAY);
 
             HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
             scroll_meta.setHorizontalScrollBarEnabled(false);
@@ -170,48 +166,36 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout grid=new LinearLayout(this);
             scroll_meta.addView(grid);
 
-            //Map<CheckBox,ImageButton> all_check_meta=construct_list_meta(spell,Spell_Title,infos,panel);
+            ListMeta all_meta = new ListMeta(spell,Spell_Title,infos,SpellCastActivity.this);
+            List<Pair_Meta_Rank> all_meta_list=all_meta.getAllMeta();
 
-            Map<CheckBox,ImageButton> all_check_meta = new ListMeta().all_meta(spell,Spell_Title,infos,panel,SpellCastActivity.this);
+            addVsep(grid,4,Color.GRAY);
 
-            View v_sep_meta = new View(this);
-            v_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-            v_sep_meta.setBackgroundColor(Color.GRAY);
-            grid.addView(v_sep_meta);
-            for (Map.Entry<CheckBox, ImageButton> entry : all_check_meta.entrySet()){
+            for (int iter=0;iter<all_meta_list.size();iter++){
 
-                CheckBox checkbox = entry.getKey();
+                CheckBox checkbox = all_meta_list.get(iter).getMeta().getCheckbox();
 
                 checkbox.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v) {
-                        makeTitle(Spell_Title, spell, spell_per_day, panel, getApplicationContext());
+                        makeTitle(Spell_Title,infos, spell, spell_per_day, panel, getApplicationContext());
                         makeInfos(infos, spell);
                     }
                 });     // a test à remplacer par le changetextlistener
 
                 grid.addView(checkbox);
-                LinearLayout container=new LinearLayout(this);
-                container.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
-                container.setGravity(Gravity.CENTER);
-                ImageButton image = entry.getValue();
-                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                ImageButton image = all_meta_list.get(iter).getMeta().getImgageButton();
+                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
                 image.setForegroundGravity(Gravity.CENTER);
                 image.setColorFilter(Color.GRAY);
-                container.addView(image);
-                grid.addView(container);
+                grid.addView(image);
 
-                View v_sep_meta2 = new View(this);
-                v_sep_meta2.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-                v_sep_meta2.setBackgroundColor(Color.GRAY);
-                grid.addView(v_sep_meta2);
+                addVsep(grid,4,Color.GRAY);
             }
 
-            View h_sep_meta2 = new View(this);
-            h_sep_meta2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep_meta2.setBackgroundColor(Color.GRAY);
-            fragment1.addView(h_sep_meta2);
+            addHsep(fragment1,4,Color.GRAY);
 
             SeekBar cast_slide = new SeekBar(this);
             cast_slide.setMax(100);
@@ -272,12 +256,23 @@ public class SpellCastActivity extends AppCompatActivity {
 
             //dans le switchview mettre tout les choix de meta magie descriptif du sort etc
 
-            View h_sep2 = new View(this);
-            h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,7));
-            h_sep2.setBackgroundColor(Color.BLACK);
-            page2.addView(h_sep2);
+            addHsep(page2,7,Color.BLACK);
 
         }
+    }
+
+    private void addHsep(LinearLayout lay, int e, int Color) {
+        View h_sep_meta = new View(this);
+        h_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,e));
+        h_sep_meta.setBackgroundColor(Color);
+        lay.addView(h_sep_meta);
+    }
+
+    private void addVsep(LinearLayout lay, int e, int Color) {
+        View v_sep_meta = new View(this);
+        v_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(e,LinearLayout.LayoutParams.MATCH_PARENT));
+        v_sep_meta.setBackgroundColor(Color);
+        lay.addView(v_sep_meta);
     }
 
     private void constructFrag2(LinearLayout fragment2,final Spell spell) {
@@ -599,7 +594,7 @@ public class SpellCastActivity extends AppCompatActivity {
     }
     
 
-    private void makeTitle(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel,final Context mC) {
+    private void makeTitle(final TextView Spell_Title, final TextView infos, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel,final Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
@@ -638,7 +633,7 @@ public class SpellCastActivity extends AppCompatActivity {
                                             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                                             Spell_Title.setOnTouchListener(null);
                                             switch_page(panel);
-                                            construct_convertview(panel.getCurrentView(),spell,spell_per_day,mC);
+                                            construct_convertview(panel.getCurrentView(),spell,spell_per_day,Spell_Title,infos,panel,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -654,19 +649,18 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
 
-    private void construct_convertview(View currentView, Spell spell, SpellPerDay spell_per_day, Context mC) {
-        ViewGroup test= (ViewGroup) currentView;
+    private void construct_convertview(final View currentView,final  Spell spell,final  SpellPerDay spell_per_day,final TextView Spell_Title,final TextView infos,final ViewSwitcher panel,final  Context mC) {
+        ViewGroup viewGrp= (ViewGroup) currentView;
 
         final LinearLayout convert_linear = new LinearLayout(this);
         convert_linear.setGravity(Gravity.CENTER_HORIZONTAL);
         convert_linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         convert_linear.setOrientation(LinearLayout.VERTICAL);
 
-        test.addView(convert_linear);
+        viewGrp.addView(convert_linear);
 
         final LinearLayout convert_slots = new LinearLayout(this);
         convert_slots.setGravity(Gravity.CENTER_HORIZONTAL);
-        //convert_slots.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         convert_slots.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         convert_slots.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -681,7 +675,22 @@ public class SpellCastActivity extends AppCompatActivity {
 
         if (max_tier==0) {return;}
 
-        List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+        final List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+
+        addHsep(convert_linear,4,Color.GRAY);
+
+        HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
+        scroll_meta.setHorizontalScrollBarEnabled(false);
+        scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        convert_linear.addView(scroll_meta);
+
+        final LinearLayout grid=new LinearLayout(this);
+        scroll_meta.addView(grid);
+
+
+        addHsep(convert_linear,4,Color.GRAY);
+        final ListMeta all_meta = new ListMeta(spell,Spell_Title,infos,SpellCastActivity.this);
+
 
         for(int i=1;i<=max_tier;i++){
             final CheckBox tier = new CheckBox(this);
@@ -715,6 +724,7 @@ public class SpellCastActivity extends AppCompatActivity {
                     tier.setTextColor(Color.parseColor("#088A29"));
                     //chose à faire sur les affichage meta dispo etc
                     tier.setChecked(true);
+                    construct_convertview_metas(grid,all_meta,list_check_rank);
                     }
 
             });
@@ -731,7 +741,61 @@ public class SpellCastActivity extends AppCompatActivity {
 
 
 
+
+
     }
+
+    private void construct_convertview_metas(LinearLayout grid, ListMeta all_meta, List<CheckBox> list_check_rank) {
+        grid.removeAllViews();
+
+        Integer selected_rank=0;
+        for (CheckBox checkbox : list_check_rank) {
+            if (checkbox.isChecked()) {
+                selected_rank=to_int(checkbox.getText().toString().substring(1,2));
+            }
+        }
+
+        int max_rank = (int) (selected_rank/2.0);
+
+        List<Pair_Meta_Rank> all_meta_rank_list=all_meta.getMeta_Rank(max_rank);
+
+
+
+        if (max_rank==0){
+
+            TextView no_meta= new TextView(this);
+            no_meta.setText("Aucune métamagie pour ce rang convertible");
+            no_meta.setTextColor(Color.GRAY);
+            grid.addView(no_meta);
+
+        } else {
+
+            addVsep(grid,4,Color.GRAY);
+
+            for (int iter = 0; iter < all_meta_rank_list.size(); iter++) {
+
+                CheckBox checkbox = all_meta_rank_list.get(iter).getMeta().getCheckbox();
+
+                checkbox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //dostuff
+                    }
+                });     // a test à remplacer par le changetextlistener
+
+                grid.addView(checkbox);
+
+                ImageButton image = all_meta_rank_list.get(iter).getMeta().getImgageButton();
+                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                image.setForegroundGravity(Gravity.TOP);
+                image.setColorFilter(Color.GRAY);
+                grid.addView(image);
+
+                addVsep(grid, 4, Color.GRAY);
+            }
+        }
+    }
+
 
     private Drawable changeColor(int img_id, String color) {
         Drawable img = getResources().getDrawable(img_id);
