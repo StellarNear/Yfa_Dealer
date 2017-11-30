@@ -663,8 +663,34 @@ public class SpellCastActivity extends AppCompatActivity {
         convert_slots.setGravity(Gravity.CENTER_HORIZONTAL);
         convert_slots.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         convert_slots.setOrientation(LinearLayout.HORIZONTAL);
-
         convert_linear.addView(convert_slots);
+
+        addHsep(convert_linear,4,Color.DKGRAY);
+
+        final LinearLayout convert_choices = new LinearLayout(this);
+        convert_choices.setGravity(Gravity.CENTER_HORIZONTAL);
+        convert_choices.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        convert_choices.setOrientation(LinearLayout.HORIZONTAL);
+        convert_linear.addView(convert_choices);
+
+        addHsep(convert_linear,4,Color.DKGRAY);
+
+        final LinearLayout convert_result = new LinearLayout(this);
+        convert_result.setGravity(Gravity.CENTER_HORIZONTAL);
+        convert_result.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        convert_result.setOrientation(LinearLayout.HORIZONTAL);
+        convert_linear.addView(convert_result);
+
+        addHsep(convert_linear,4,Color.DKGRAY);
+        
+        final LinearLayout convert_confirm = new LinearLayout(this);
+        convert_confirm.setGravity(Gravity.CENTER_HORIZONTAL);
+        convert_confirm.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        convert_confirm.setOrientation(LinearLayout.HORIZONTAL);
+        convert_linear.addView(convert_confirm);
+
+        addHsep(convert_linear,4,Color.DKGRAY);
+
 
         int max_tier=0;
         for(int i=0;i<=4;i++){
@@ -677,77 +703,62 @@ public class SpellCastActivity extends AppCompatActivity {
 
         final List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
 
-        addHsep(convert_linear,4,Color.GRAY);
-
-        HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
-        scroll_meta.setHorizontalScrollBarEnabled(false);
-        scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-        convert_linear.addView(scroll_meta);
-
-        final LinearLayout grid=new LinearLayout(this);
-        scroll_meta.addView(grid);
-
-
-        addHsep(convert_linear,4,Color.GRAY);
         final ListMeta all_meta = new ListMeta(spell,Spell_Title,infos,SpellCastActivity.this);
 
-
-        for(int i=1;i<=max_tier;i++){
+        for(int i=1;i<=max_tier;i++) {
             final CheckBox tier = new CheckBox(this);
             tier.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank(i) + ")");
             tier.setTextSize(16);
-            tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+            tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tier.setTextColor(Color.DKGRAY);
 
-            int[] colorClickBox=new int[]{Color.BLACK,Color.parseColor("#088A29")};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][] {
-                            new int[] { -android.R.attr.state_checked }, // unchecked
-                            new int[] {  android.R.attr.state_checked }  // checked
-                    },colorClickBox
-
-            );
-            tier.setButtonTintList(colorStateList);
-
-            tier.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    for (int i = convert_slots.getChildCount() - 1; i >= 0; i--) {
-                        final CheckBox child = (CheckBox) convert_slots.getChildAt(i);
-                        child.setTextColor(Color.DKGRAY);
-                        child.setChecked(false);
-                        }
-                    tier.setTextColor(Color.parseColor("#088A29"));
-                    //chose à faire sur les affichage meta dispo etc
-                    tier.setChecked(true);
-                    construct_convertview_metas(grid,all_meta,list_check_rank);
-                    }
-
-            });
+            setListnerTierSelect(tier,convert_choices,convert_slots,all_meta,list_check_rank,convert_result,convert_confirm);
 
             convert_slots.addView(tier);
             list_check_rank.add(tier);
 
         }
 
-
-
-
-
-
-
-
-
-
     }
 
-    private void construct_convertview_metas(LinearLayout grid, ListMeta all_meta, List<CheckBox> list_check_rank) {
-        grid.removeAllViews();
+    public void setListnerTierSelect(final CheckBox checkbox, final LinearLayout convert_choice, final LinearLayout convert_slots, final ListMeta all_meta,final List<CheckBox> list_check_rank,final LinearLayout convert_result, final LinearLayout convert_confirm) {
+        int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
+        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]{
+                        new int[]{-android.R.attr.state_checked}, // unchecked
+                        new int[]{android.R.attr.state_checked}  // checked
+                }, colorClickBox
+
+        );
+        checkbox.setButtonTintList(colorStateList);
+
+        checkbox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                for (int i = convert_slots.getChildCount() - 1; i >= 0; i--) {
+                    final CheckBox child = (CheckBox) convert_slots.getChildAt(i);
+                    child.setTextColor(Color.DKGRAY);
+                    child.setChecked(false);
+                }
+                checkbox.setTextColor(Color.parseColor("#088A29"));
+                //chose à faire sur les affichage meta dispo etc
+                checkbox.setChecked(true);
+                construct_convertview_choices(convert_choice, all_meta, list_check_rank,convert_result,convert_confirm);
+
+            }
+
+        });
+    }
+
+
+    private void construct_convertview_choices(LinearLayout convert_choice, ListMeta all_meta, List<CheckBox> list_check_rank,LinearLayout convert_result,LinearLayout convert_confirm) {
+        convert_choice.removeAllViews();
+        convert_result.removeAllViews();
+        convert_confirm.removeAllViews();
         Integer selected_rank=0;
         for (CheckBox checkbox : list_check_rank) {
             if (checkbox.isChecked()) {
@@ -755,22 +766,140 @@ public class SpellCastActivity extends AppCompatActivity {
             }
         }
 
+        final List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
+
+        HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
+        scroll_meta.setHorizontalScrollBarEnabled(false);
+        scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        convert_choice.addView(scroll_meta);
+        final LinearLayout grid=new LinearLayout(this);
+        scroll_meta.addView(grid);
+
+        ViewGroup gridGrp= (ViewGroup)grid;
+        gridGrp.removeAllViews();
+
+        addVsep(grid,4,Color.GRAY);
+
+        CheckBox checkMeta=new CheckBox(this);
+        checkMeta.setText("Métamagie ");
+        setListnerChoiceSelect(checkMeta,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        grid.addView(checkMeta);
+        list_check_choice.add(checkMeta);
+
+        addVsep(grid,4,Color.GRAY);
+
+        CheckBox checkNLS=new CheckBox(this);
+        checkNLS.setText("NLS +"+selected_rank+" ");
+        setListnerChoiceSelect(checkNLS,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        grid.addView(checkNLS);
+        list_check_choice.add(checkNLS);
+
+        addVsep(grid,4,Color.GRAY);
+
+        CheckBox checkResi=new CheckBox(this);
+        checkResi.setText("Test contre Résistance +"+2*selected_rank+" ");
+        setListnerChoiceSelect(checkResi,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        grid.addView(checkResi);
+        list_check_choice.add(checkResi);
+
+        addVsep(grid,4,Color.GRAY);
+
+        CheckBox checkSauv=new CheckBox(this);
+        checkSauv.setText("Test contre Sauvegarde +"+2*selected_rank+" ");
+        setListnerChoiceSelect(checkSauv,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        grid.addView(checkSauv);
+        list_check_choice.add(checkSauv);
+
+        addVsep(grid,4,Color.GRAY);
+
+        CheckBox checkMax=new CheckBox(this);
+        checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
+        setListnerChoiceSelect(checkMax,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        grid.addView(checkMax);
+        list_check_choice.add(checkMax);
+
+        addVsep(grid,4,Color.GRAY);
+
+
+
+    }
+
+    public void setListnerChoiceSelect(final CheckBox checkbox, final LinearLayout grid,final ListMeta all_meta,final int selected_rank,final List<CheckBox> list_check_choice,final LinearLayout convert_result,final LinearLayout convert_confirm) {
+        int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
+        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]{
+                        new int[]{-android.R.attr.state_checked}, // unchecked
+                        new int[]{android.R.attr.state_checked}  // checked
+                }, colorClickBox
+
+        );
+        checkbox.setButtonTintList(colorStateList);
+
+        checkbox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                for (int i = grid.getChildCount() - 1; i >= 0; i--) {
+                    if (grid.getChildAt(i) instanceof CheckBox) {
+                        final CheckBox child = (CheckBox) grid.getChildAt(i);
+                        child.setTextColor(Color.DKGRAY);
+                        child.setChecked(false);
+                    }
+                }
+                checkbox.setTextColor(Color.parseColor("#088A29"));
+                //chose à faire sur les affichage meta dispo etc
+                checkbox.setChecked(true);
+                triggerChoice(convert_result,all_meta,selected_rank,list_check_choice,convert_confirm);
+            }
+
+        });
+    }
+
+    private void triggerChoice(LinearLayout convert_result,ListMeta all_meta, int selected_rank, List<CheckBox> list_check_choice,final LinearLayout convert_confirm) {
+    convert_result.removeAllViews();
+
+        for (CheckBox check : list_check_choice)
+        {
+            if (check.getText().toString().contains("Métamagie") && check.isChecked()){
+                construct_convertview_metas(convert_result, all_meta,selected_rank);
+                construct_convertview_confirm(convert_confirm);
+            }
+            if (check.getText().toString().contains("Rési") && check.isChecked()){
+                construct_convertview_confirm(convert_confirm);
+            }
+
+        }
+    }
+
+
+    private void construct_convertview_metas(LinearLayout layout, ListMeta all_meta, int selected_rank) {
+        layout.removeAllViews();
+        HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
+        scroll_meta.setHorizontalScrollBarEnabled(false);
+        scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.addView(scroll_meta);
+        final LinearLayout grid2=new LinearLayout(this);
+        scroll_meta.addView(grid2);
+
+        ViewGroup grid2Grp= (ViewGroup)grid2;
+        grid2Grp.removeAllViews();
+
         int max_rank = (int) (selected_rank/2.0);
 
         List<Pair_Meta_Rank> all_meta_rank_list=all_meta.getMeta_Rank(max_rank);
-
-
 
         if (max_rank==0){
 
             TextView no_meta= new TextView(this);
             no_meta.setText("Aucune métamagie pour ce rang convertible");
             no_meta.setTextColor(Color.GRAY);
-            grid.addView(no_meta);
+            grid2.addView(no_meta);
 
         } else {
 
-            addVsep(grid,4,Color.GRAY);
+            addVsep(grid2,4,Color.GRAY);
 
             for (int iter = 0; iter < all_meta_rank_list.size(); iter++) {
 
@@ -781,19 +910,39 @@ public class SpellCastActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //dostuff
                     }
-                });     // a test à remplacer par le changetextlistener
+                });
 
-                grid.addView(checkbox);
+                if (checkbox.getParent()!=null) {
+                    ((ViewGroup)checkbox.getParent()).removeView(checkbox);
+                }
+                grid2.addView(checkbox);
 
                 ImageButton image = all_meta_rank_list.get(iter).getMeta().getImgageButton();
                 image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 image.setForegroundGravity(Gravity.TOP);
                 image.setColorFilter(Color.GRAY);
-                grid.addView(image);
+                if (image.getParent()!=null) {
+                    ((ViewGroup)image.getParent()).removeView(image);
+                }
+                grid2.addView(image);
 
-                addVsep(grid, 4, Color.GRAY);
+                addVsep(grid2, 4, Color.GRAY);
             }
         }
+    }
+
+    private void construct_convertview_confirm(LinearLayout convert_confirm) {
+        TextView confirm =new TextView(this);
+        confirm.setText("Confirmer cette convertion");
+        confirm.setTextColor(Color.parseColor("#088A29"));
+        confirm.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
+
+        if (confirm.getParent()!=null) {
+            ((ViewGroup)confirm.getParent()).removeView(confirm);
+        }
+        convert_confirm.addView(confirm);
+
+
     }
 
 
@@ -1027,6 +1176,7 @@ public class SpellCastActivity extends AppCompatActivity {
         startActivity(intent);      //lance l'affichage des detail
 
     }
+
 
 
 }
