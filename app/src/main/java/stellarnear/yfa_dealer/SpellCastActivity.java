@@ -276,7 +276,7 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     private void constructFrag2(LinearLayout fragment2,final Spell spell) {
-
+        fragment2.removeAllViews();
 
         if((spell.getDice_typ().contains("d3")||spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
             LinearLayout Colonne1 = new LinearLayout(this);
@@ -689,7 +689,7 @@ public class SpellCastActivity extends AppCompatActivity {
         convert_confirm.setOrientation(LinearLayout.HORIZONTAL);
         convert_linear.addView(convert_confirm);
 
-        addHsep(convert_linear,4,Color.DKGRAY);
+
 
 
         int max_tier=0;
@@ -713,7 +713,7 @@ public class SpellCastActivity extends AppCompatActivity {
             tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tier.setTextColor(Color.DKGRAY);
 
-            setListnerTierSelect(tier,convert_choices,convert_slots,all_meta,list_check_rank,convert_result,convert_confirm);
+            setListnerTierSelect(tier,convert_choices,convert_slots,all_meta,list_check_rank,convert_result,convert_confirm,panel);
 
             convert_slots.addView(tier);
             list_check_rank.add(tier);
@@ -722,7 +722,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
     }
 
-    public void setListnerTierSelect(final CheckBox checkbox, final LinearLayout convert_choice, final LinearLayout convert_slots, final ListMeta all_meta,final List<CheckBox> list_check_rank,final LinearLayout convert_result, final LinearLayout convert_confirm) {
+    public void setListnerTierSelect(final CheckBox checkbox, final LinearLayout convert_choice, final LinearLayout convert_slots, final ListMeta all_meta,final List<CheckBox> list_check_rank,final LinearLayout convert_result, final LinearLayout convert_confirm,final  ViewSwitcher panel) {
         int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
         //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
@@ -747,7 +747,7 @@ public class SpellCastActivity extends AppCompatActivity {
                 checkbox.setTextColor(Color.parseColor("#088A29"));
                 //chose à faire sur les affichage meta dispo etc
                 checkbox.setChecked(true);
-                construct_convertview_choices(convert_choice, all_meta, list_check_rank,convert_result,convert_confirm);
+                construct_convertview_choices(convert_choice, all_meta, list_check_rank,convert_result,convert_confirm,panel);
 
             }
 
@@ -755,7 +755,7 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
 
-    private void construct_convertview_choices(LinearLayout convert_choice, ListMeta all_meta, List<CheckBox> list_check_rank,LinearLayout convert_result,LinearLayout convert_confirm) {
+    private void construct_convertview_choices(LinearLayout convert_choice, ListMeta all_meta, List<CheckBox> list_check_rank,LinearLayout convert_result,LinearLayout convert_confirm,final  ViewSwitcher panel) {
         convert_choice.removeAllViews();
         convert_result.removeAllViews();
         convert_confirm.removeAllViews();
@@ -782,7 +782,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
         CheckBox checkMeta=new CheckBox(this);
         checkMeta.setText("Métamagie ");
-        setListnerChoiceSelect(checkMeta,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        setListnerChoiceSelect(checkMeta,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
         grid.addView(checkMeta);
         list_check_choice.add(checkMeta);
 
@@ -790,7 +790,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
         CheckBox checkNLS=new CheckBox(this);
         checkNLS.setText("NLS +"+selected_rank+" ");
-        setListnerChoiceSelect(checkNLS,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        setListnerChoiceSelect(checkNLS,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
         grid.addView(checkNLS);
         list_check_choice.add(checkNLS);
 
@@ -798,7 +798,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
         CheckBox checkResi=new CheckBox(this);
         checkResi.setText("Test contre Résistance +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkResi,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        setListnerChoiceSelect(checkResi,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
         grid.addView(checkResi);
         list_check_choice.add(checkResi);
 
@@ -806,7 +806,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
         CheckBox checkSauv=new CheckBox(this);
         checkSauv.setText("Test contre Sauvegarde +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkSauv,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        setListnerChoiceSelect(checkSauv,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
         grid.addView(checkSauv);
         list_check_choice.add(checkSauv);
 
@@ -814,7 +814,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
         CheckBox checkMax=new CheckBox(this);
         checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkMax,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm);
+        setListnerChoiceSelect(checkMax,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
         grid.addView(checkMax);
         list_check_choice.add(checkMax);
 
@@ -824,7 +824,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
     }
 
-    public void setListnerChoiceSelect(final CheckBox checkbox, final LinearLayout grid,final ListMeta all_meta,final int selected_rank,final List<CheckBox> list_check_choice,final LinearLayout convert_result,final LinearLayout convert_confirm) {
+    public void setListnerChoiceSelect(final CheckBox checkbox, final LinearLayout grid,final ListMeta all_meta,final int selected_rank,final List<CheckBox> list_check_choice,final LinearLayout convert_result,final LinearLayout convert_confirm,final  ViewSwitcher panel) {
         int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
         //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
@@ -851,23 +851,23 @@ public class SpellCastActivity extends AppCompatActivity {
                 checkbox.setTextColor(Color.parseColor("#088A29"));
                 //chose à faire sur les affichage meta dispo etc
                 checkbox.setChecked(true);
-                triggerChoice(convert_result,all_meta,selected_rank,list_check_choice,convert_confirm);
+                triggerChoice(convert_result,all_meta,selected_rank,list_check_choice,convert_confirm,panel);
             }
 
         });
     }
 
-    private void triggerChoice(LinearLayout convert_result,ListMeta all_meta, int selected_rank, List<CheckBox> list_check_choice,final LinearLayout convert_confirm) {
+    private void triggerChoice(LinearLayout convert_result,ListMeta all_meta, int selected_rank, List<CheckBox> list_check_choice,final LinearLayout convert_confirm,final  ViewSwitcher panel) {
     convert_result.removeAllViews();
 
         for (CheckBox check : list_check_choice)
         {
             if (check.getText().toString().contains("Métamagie") && check.isChecked()){
                 construct_convertview_metas(convert_result, all_meta,selected_rank);
-                construct_convertview_confirm(convert_confirm);
+                construct_convertview_confirm(convert_confirm,panel);
             }
             if (check.getText().toString().contains("Rési") && check.isChecked()){
-                construct_convertview_confirm(convert_confirm);
+                construct_convertview_confirm(convert_confirm,panel);
             }
 
         }
@@ -931,11 +931,19 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
-    private void construct_convertview_confirm(LinearLayout convert_confirm) {
+    private void construct_convertview_confirm(LinearLayout convert_confirm,final ViewSwitcher panel) {
         TextView confirm =new TextView(this);
         confirm.setText("Confirmer cette convertion");
+        confirm.setTextSize(14);
         confirm.setTextColor(Color.parseColor("#088A29"));
         confirm.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_page_back(panel);
+            }
+        });
+
 
         if (confirm.getParent()!=null) {
             ((ViewGroup)confirm.getParent()).removeView(confirm);
