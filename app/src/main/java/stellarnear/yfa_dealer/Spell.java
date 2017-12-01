@@ -355,7 +355,6 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     public void meta_Rapid(Boolean active) {
         if (active) {
-            this.ori_cast_time=this.cast_time;
             this.cast_time="rapide";
             this.rank+=4;
         } else {
@@ -436,7 +435,6 @@ public class Spell extends AppCompatActivity implements Serializable {
             // flêche naturalisée+2
     public void meta_Enchant_arrow(Boolean active) {
         if (active) {
-            this.ori_cast_time=this.cast_time;
             this.cast_time="complexe";
             this.rank+=2;
         } else {

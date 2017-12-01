@@ -175,14 +175,15 @@ public class SpellCastActivity extends AppCompatActivity {
 
                 CheckBox checkbox = all_meta_list.get(iter).getMeta().getCheckbox();
 
+                /*
                 checkbox.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v) {
-                        makeTitle(Spell_Title,infos, spell, spell_per_day, panel, getApplicationContext());
-                        makeInfos(infos, spell);
+                        //makeTitle(Spell_Title,infos, spell, spell_per_day, panel, SpellCastActivity.this);
+                        //makeInfos(infos, spell);
                     }
-                });     // a test à remplacer par le changetextlistener
+                });     */ //le slsitner sont directement dans les checkbox Object ListMeta
 
                 grid.addView(checkbox);
 
@@ -297,20 +298,11 @@ public class SpellCastActivity extends AppCompatActivity {
             Colonne4.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
             
             fragment2.addView(Colonne1);
-            View v_sep = new View(this);
-            v_sep.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-            v_sep.setBackgroundColor(Color.GRAY);
-            fragment2.addView(v_sep);
+            addVsep(fragment2,4,Color.GRAY);
             fragment2.addView(Colonne2);
-            View v_sep2 = new View(this);
-            v_sep2.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-            v_sep2.setBackgroundColor(Color.GRAY);
-            fragment2.addView(v_sep2);
+            addVsep(fragment2,4,Color.GRAY);
             fragment2.addView(Colonne3);
-            View v_sep3 = new View(this);
-            v_sep3.setLayoutParams(new LinearLayout.LayoutParams(4,LinearLayout.LayoutParams.MATCH_PARENT));
-            v_sep3.setBackgroundColor(Color.GRAY);
-            fragment2.addView(v_sep3);
+            addVsep(fragment2,4,Color.GRAY);
             fragment2.addView(Colonne4);
             
             TextView ligne_texteC1= new TextView(this);
@@ -530,20 +522,9 @@ public class SpellCastActivity extends AppCompatActivity {
         panel.showNext();
     }
 
-    private void switch_page_back(ViewSwitcher panel) {
-        panel.showPrevious();
-    }
-
 
 
     private void makeInfos(final TextView infos,final Spell spell) {
-        String resistance;
-        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
-            resistance = spell.getSave_type();
-
-        } else {
-            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
-        }
         
         String text="";
         Integer n_inf=0;
@@ -582,12 +563,23 @@ public class SpellCastActivity extends AppCompatActivity {
             text+="RM : "+spell.getRM()+", ";
             n_inf+=1;
         }
-        if(n_inf==3){text+="\n";n_inf=0;}
+        if(n_inf==3){text+="\n";}
+
+
+        String resistance;
+        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
+            resistance = spell.getSave_type();
+
+        } else {
+            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+        }
         if(!resistance.equals("")){
             text+="Jet de sauv : "+ resistance+", ";
-            n_inf+=1;
         }
+
+
         text = text.substring(0, text.length() - 2);
+        if(spell.getDmg_txt(getApplicationContext()).equals("")){text+="\n";}
         infos.setText(text);
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         infos.setTextColor(Color.GRAY);
@@ -614,6 +606,9 @@ public class SpellCastActivity extends AppCompatActivity {
             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
             Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 25,getResources().getDisplayMetrics())));
+
+            ConvertView convertView =new ConvertView(panel.getNextView(),spell,spell_per_day,Spell_Title,infos,panel,SpellCastActivity.this);
+
             Spell_Title.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -633,7 +628,6 @@ public class SpellCastActivity extends AppCompatActivity {
                                             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                                             Spell_Title.setOnTouchListener(null);
                                             switch_page(panel);
-                                            construct_convertview(panel.getCurrentView(),spell,spell_per_day,Spell_Title,infos,panel,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -649,309 +643,8 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
 
-    private void construct_convertview(final View currentView,final  Spell spell,final  SpellPerDay spell_per_day,final TextView Spell_Title,final TextView infos,final ViewSwitcher panel,final  Context mC) {
-        ViewGroup viewGrp= (ViewGroup) currentView;
 
-        final LinearLayout convert_linear = new LinearLayout(this);
-        convert_linear.setGravity(Gravity.CENTER_HORIZONTAL);
-        convert_linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        convert_linear.setOrientation(LinearLayout.VERTICAL);
 
-        viewGrp.addView(convert_linear);
-
-        final LinearLayout convert_slots = new LinearLayout(this);
-        convert_slots.setGravity(Gravity.CENTER_HORIZONTAL);
-        convert_slots.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        convert_slots.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_slots);
-
-        addHsep(convert_linear,4,Color.DKGRAY);
-
-        final LinearLayout convert_choices = new LinearLayout(this);
-        convert_choices.setGravity(Gravity.CENTER_HORIZONTAL);
-        convert_choices.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        convert_choices.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_choices);
-
-        addHsep(convert_linear,4,Color.DKGRAY);
-
-        final LinearLayout convert_result = new LinearLayout(this);
-        convert_result.setGravity(Gravity.CENTER_HORIZONTAL);
-        convert_result.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        convert_result.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_result);
-
-        addHsep(convert_linear,4,Color.DKGRAY);
-        
-        final LinearLayout convert_confirm = new LinearLayout(this);
-        convert_confirm.setGravity(Gravity.CENTER_HORIZONTAL);
-        convert_confirm.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        convert_confirm.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_confirm);
-
-
-
-
-        int max_tier=0;
-        for(int i=0;i<=4;i++){
-            try{
-                if (spell_per_day.checkConvertible_available(i,mC)) {max_tier=i;}
-            }catch (Exception e){ }
-        }
-
-        if (max_tier==0) {return;}
-
-        final List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
-
-        final ListMeta all_meta = new ListMeta(spell,Spell_Title,infos,SpellCastActivity.this);
-
-        for(int i=1;i<=max_tier;i++) {
-            final CheckBox tier = new CheckBox(this);
-            tier.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank(i) + ")");
-            tier.setTextSize(16);
-            tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            tier.setTextColor(Color.DKGRAY);
-
-            setListnerTierSelect(tier,convert_choices,convert_slots,all_meta,list_check_rank,convert_result,convert_confirm,panel);
-
-            convert_slots.addView(tier);
-            list_check_rank.add(tier);
-
-        }
-
-    }
-
-    public void setListnerTierSelect(final CheckBox checkbox, final LinearLayout convert_choice, final LinearLayout convert_slots, final ListMeta all_meta,final List<CheckBox> list_check_rank,final LinearLayout convert_result, final LinearLayout convert_confirm,final  ViewSwitcher panel) {
-        int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
-        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][]{
-                        new int[]{-android.R.attr.state_checked}, // unchecked
-                        new int[]{android.R.attr.state_checked}  // checked
-                }, colorClickBox
-
-        );
-        checkbox.setButtonTintList(colorStateList);
-
-        checkbox.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                for (int i = convert_slots.getChildCount() - 1; i >= 0; i--) {
-                    final CheckBox child = (CheckBox) convert_slots.getChildAt(i);
-                    child.setTextColor(Color.DKGRAY);
-                    child.setChecked(false);
-                }
-                checkbox.setTextColor(Color.parseColor("#088A29"));
-                //chose à faire sur les affichage meta dispo etc
-                checkbox.setChecked(true);
-                construct_convertview_choices(convert_choice, all_meta, list_check_rank,convert_result,convert_confirm,panel);
-
-            }
-
-        });
-    }
-
-
-    private void construct_convertview_choices(LinearLayout convert_choice, ListMeta all_meta, List<CheckBox> list_check_rank,LinearLayout convert_result,LinearLayout convert_confirm,final  ViewSwitcher panel) {
-        convert_choice.removeAllViews();
-        convert_result.removeAllViews();
-        convert_confirm.removeAllViews();
-        Integer selected_rank=0;
-        for (CheckBox checkbox : list_check_rank) {
-            if (checkbox.isChecked()) {
-                selected_rank=to_int(checkbox.getText().toString().substring(1,2));
-            }
-        }
-
-        final List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
-
-        HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
-        scroll_meta.setHorizontalScrollBarEnabled(false);
-        scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-        convert_choice.addView(scroll_meta);
-        final LinearLayout grid=new LinearLayout(this);
-        scroll_meta.addView(grid);
-
-        ViewGroup gridGrp= (ViewGroup)grid;
-        gridGrp.removeAllViews();
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkMeta=new CheckBox(this);
-        checkMeta.setText("Métamagie ");
-        setListnerChoiceSelect(checkMeta,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
-        grid.addView(checkMeta);
-        list_check_choice.add(checkMeta);
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkNLS=new CheckBox(this);
-        checkNLS.setText("NLS +"+selected_rank+" ");
-        setListnerChoiceSelect(checkNLS,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
-        grid.addView(checkNLS);
-        list_check_choice.add(checkNLS);
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkResi=new CheckBox(this);
-        checkResi.setText("Test contre Résistance +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkResi,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
-        grid.addView(checkResi);
-        list_check_choice.add(checkResi);
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkSauv=new CheckBox(this);
-        checkSauv.setText("Test contre Sauvegarde +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkSauv,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
-        grid.addView(checkSauv);
-        list_check_choice.add(checkSauv);
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkMax=new CheckBox(this);
-        checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkMax,grid,all_meta,selected_rank,list_check_choice,convert_result,convert_confirm,panel);
-        grid.addView(checkMax);
-        list_check_choice.add(checkMax);
-
-        addVsep(grid,4,Color.GRAY);
-
-
-
-    }
-
-    public void setListnerChoiceSelect(final CheckBox checkbox, final LinearLayout grid,final ListMeta all_meta,final int selected_rank,final List<CheckBox> list_check_choice,final LinearLayout convert_result,final LinearLayout convert_confirm,final  ViewSwitcher panel) {
-        int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
-        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][]{
-                        new int[]{-android.R.attr.state_checked}, // unchecked
-                        new int[]{android.R.attr.state_checked}  // checked
-                }, colorClickBox
-
-        );
-        checkbox.setButtonTintList(colorStateList);
-
-        checkbox.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                for (int i = grid.getChildCount() - 1; i >= 0; i--) {
-                    if (grid.getChildAt(i) instanceof CheckBox) {
-                        final CheckBox child = (CheckBox) grid.getChildAt(i);
-                        child.setTextColor(Color.DKGRAY);
-                        child.setChecked(false);
-                    }
-                }
-                checkbox.setTextColor(Color.parseColor("#088A29"));
-                //chose à faire sur les affichage meta dispo etc
-                checkbox.setChecked(true);
-                triggerChoice(convert_result,all_meta,selected_rank,list_check_choice,convert_confirm,panel);
-            }
-
-        });
-    }
-
-    private void triggerChoice(LinearLayout convert_result,ListMeta all_meta, int selected_rank, List<CheckBox> list_check_choice,final LinearLayout convert_confirm,final  ViewSwitcher panel) {
-    convert_result.removeAllViews();
-
-        for (CheckBox check : list_check_choice)
-        {
-            if (check.getText().toString().contains("Métamagie") && check.isChecked()){
-                construct_convertview_metas(convert_result, all_meta,selected_rank);
-                construct_convertview_confirm(convert_confirm,panel);
-            }
-            if (check.getText().toString().contains("Rési") && check.isChecked()){
-                construct_convertview_confirm(convert_confirm,panel);
-            }
-
-        }
-    }
-
-
-    private void construct_convertview_metas(LinearLayout layout, ListMeta all_meta, int selected_rank) {
-        layout.removeAllViews();
-        HorizontalScrollView scroll_meta= new HorizontalScrollView(this);
-        scroll_meta.setHorizontalScrollBarEnabled(false);
-        scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-        layout.addView(scroll_meta);
-        final LinearLayout grid2=new LinearLayout(this);
-        scroll_meta.addView(grid2);
-
-        ViewGroup grid2Grp= (ViewGroup)grid2;
-        grid2Grp.removeAllViews();
-
-        int max_rank = (int) (selected_rank/2.0);
-
-        List<Pair_Meta_Rank> all_meta_rank_list=all_meta.getMeta_Rank(max_rank);
-
-        if (max_rank==0){
-
-            TextView no_meta= new TextView(this);
-            no_meta.setText("Aucune métamagie pour ce rang convertible");
-            no_meta.setTextColor(Color.GRAY);
-            grid2.addView(no_meta);
-
-        } else {
-
-            addVsep(grid2,4,Color.GRAY);
-
-            for (int iter = 0; iter < all_meta_rank_list.size(); iter++) {
-
-                CheckBox checkbox = all_meta_rank_list.get(iter).getMeta().getCheckbox();
-
-                checkbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //dostuff
-                    }
-                });
-
-                if (checkbox.getParent()!=null) {
-                    ((ViewGroup)checkbox.getParent()).removeView(checkbox);
-                }
-                grid2.addView(checkbox);
-
-                ImageButton image = all_meta_rank_list.get(iter).getMeta().getImgageButton();
-                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                image.setForegroundGravity(Gravity.TOP);
-                image.setColorFilter(Color.GRAY);
-                if (image.getParent()!=null) {
-                    ((ViewGroup)image.getParent()).removeView(image);
-                }
-                grid2.addView(image);
-
-                addVsep(grid2, 4, Color.GRAY);
-            }
-        }
-    }
-
-    private void construct_convertview_confirm(LinearLayout convert_confirm,final ViewSwitcher panel) {
-        TextView confirm =new TextView(this);
-        confirm.setText("Confirmer cette convertion");
-        confirm.setTextSize(14);
-        confirm.setTextColor(Color.parseColor("#088A29"));
-        confirm.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch_page_back(panel);
-            }
-        });
-
-
-        if (confirm.getParent()!=null) {
-            ((ViewGroup)confirm.getParent()).removeView(confirm);
-        }
-        convert_confirm.addView(confirm);
-
-
-    }
 
 
     private Drawable changeColor(int img_id, String color) {

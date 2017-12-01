@@ -866,14 +866,6 @@ public class ListMeta extends AppCompatActivity {
 
 
     private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
-        String resistance;
-        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
-            resistance = spell.getSave_type();
-
-        } else {
-            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
-        }
-
         String text="";
         Integer n_inf=0;
         if(!spell.getDmg_txt(mC).equals("")){
@@ -911,12 +903,22 @@ public class ListMeta extends AppCompatActivity {
             text+="RM : "+spell.getRM()+", ";
             n_inf+=1;
         }
-        if(n_inf==3){text+="\n";n_inf=0;}
+        if(n_inf==3){text+="\n";}
+
+        String resistance;
+        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
+            resistance = spell.getSave_type();
+
+        } else {
+            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+        }
         if(!resistance.equals("")){
             text+="Jet de sauv : "+ resistance+", ";
-            n_inf+=1;
         }
+
+
         text = text.substring(0, text.length() - 2);
+        if(spell.getDmg_txt(mC).equals("")){text+="\n";}
         infos.setText(text);
     }
 
