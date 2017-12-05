@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.SortedList;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -19,12 +18,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Created by jchatron on 28/11/2017.
@@ -33,8 +30,10 @@ import java.util.Map;
 public class ListMeta extends AppCompatActivity {
 
     List<Pair_Meta_Rank> pair_meta_rank= new ArrayList<>();
+    boolean all_free=false;
 
-    public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos,final Context mC) {
+    public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos,final Context mC,boolean... all_free_arg) {
+        if(all_free_arg.length>0){all_free=all_free_arg[0];}
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
         final SpellPerDay spell_per_day=new SpellPerDay(mC);
@@ -62,9 +61,8 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        spell.meta_Rapid(true);
-                        refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Rapid(true,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
 
                         /*  Meta quickspell pas possible pour perfection
                         if(spell.isPerfect())
@@ -95,9 +93,8 @@ public class ListMeta extends AppCompatActivity {
                         }*/
 
                     } else {
-                        spell.meta_Rapid(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Rapid(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -135,7 +132,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
 
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -144,28 +141,23 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enhance_Spell(true);
-                                            spell.setRank(spell.getRank()-4);
+                                            spell.meta_Enhance_Spell(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enhance_Spell(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Enhance_Spell(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Enhance_Spell(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Enhance_Spell(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
                     } else {
-                        spell.meta_Enhance_Spell(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Enhance_Spell(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -204,7 +196,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -213,28 +205,23 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Delay(true);
-                                            spell.setRank(spell.getRank()-4);
+                                            spell.meta_Delay(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Delay(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Delay(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Delay(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Delay(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
                     } else {
-                        spell.meta_Delay(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Delay(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -271,7 +258,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -280,29 +267,24 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Quint(true);
-                                            spell.setRank(spell.getRank()-3);
+                                            spell.meta_Quint(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Quint(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Quint(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Quint(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Quint(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
 
                     } else {
-                        spell.meta_Quint(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Quint(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -339,7 +321,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -348,28 +330,23 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend(true);
-                                            spell.setRank(spell.getRank()-2);
+                                            spell.meta_Extend(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Extend(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Extend(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Extend(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
                     } else {
-                        spell.meta_Extend(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Extend(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -407,7 +384,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -416,28 +393,23 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enchant_arrow(true);
-                                            spell.setRank(spell.getRank()-2);
+                                            spell.meta_Enchant_arrow(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Enchant_arrow(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Enchant_arrow(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Enchant_arrow(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Enchant_arrow(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
                     } else {
-                        spell.meta_Enchant_arrow(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Enchant_arrow(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -476,7 +448,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         if(spell.getRank()<9) {
-                            if(spell.isPerfect())
+                            if(spell.isPerfect()&&!all_free)
                             {
                                 new AlertDialog.Builder(mC)
                                         .setTitle("Demande de confirmation")
@@ -484,35 +456,33 @@ public class ListMeta extends AppCompatActivity {
                                         .setIcon(android.R.drawable.ic_menu_help)
                                         .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                int rank_prev=spell.getRank();
-                                                while (spell.getRank()<9) {
-                                                    spell.meta_Intense(true);
+                                                int rank = spell.getRank();
+                                                int rank_cap = 9;
+                                                while (rank < rank_cap) {
+                                                    spell.meta_Intense(true,true);
+                                                    rank+=1;
                                                 }
-                                                spell.setRank(rank_prev);
                                                 spell.setPerfect(false);
                                                 checkbox.setClickable(false);
-                                                refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                                refreshInfos(infos, spell,mC);
+                                                refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                             }})
                                         .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                spell.meta_Intense(true);
-                                                refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                                refreshInfos(infos, spell,mC);
+                                                spell.meta_Intense(true,all_free);
+                                                refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                             }}).show();
                             }else {
-                                spell.meta_Intense(true);
-                                refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                refreshInfos(infos, spell,mC);
+                                spell.meta_Intense(true,all_free);
+                                refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                             }
                         } else {
                             String descr="Augmentation d'intensité ne permet pas de dépasser le rang 9.";
                             Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                            toast.show();;
+                            toast.show();
                         }
 
-                    } else {
+                    } else if (!all_free) {
                         new AlertDialog.Builder(mC)
                                 .setTitle("Demande de confirmation")
                                 .setMessage("Veux-tu utiliser Augmentation d'intensité une fois de plus ?")
@@ -525,13 +495,14 @@ public class ListMeta extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int whichButton) {
 
                                         while(!spell.getSave_val().equals(ori_save_val)){
-                                            spell.meta_Intense(false);
+                                            spell.meta_Intense(false,all_free);
                                         }
-
-                                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                                        refreshInfos(infos, spell,mC);
+                                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                     }}).show();
 
+                    } else {
+                        spell.meta_Intense(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -568,7 +539,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -577,28 +548,23 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend_dura(true);
-                                            spell.setRank(spell.getRank()-1);
+                                            spell.meta_Extend_dura(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Extend_dura(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Extend_dura(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Extend_dura(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Extend_dura(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
                     } else {
-                        spell.meta_Extend_dura(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Extend_dura(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -639,7 +605,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
 
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
                             new AlertDialog.Builder(mC)
                                     .setTitle("Demande de confirmation")
@@ -647,29 +613,24 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            int rank_prev=spell.getRank();
                                             while (!spell.getRange().equals("longue")) {
-                                                spell.meta_Far(true);
+                                                spell.meta_Far(true,true);
                                             }
-                                            spell.setRank(rank_prev);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Far(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Far(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Far(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Far(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
 
-                    } else {
+                    } else if (!all_free) {
                         new AlertDialog.Builder(mC)
                                 .setTitle("Demande de confirmation")
                                 .setMessage("Veux-tu utiliser Sort éloigné une fois de plus ?")
@@ -681,11 +642,13 @@ public class ListMeta extends AppCompatActivity {
                                 .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         while(!ori_range.equals(spell.getRange())){
-                                            spell.meta_Far(false);
+                                            spell.meta_Far(false,all_free);
                                         }
-                                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                                        refreshInfos(infos, spell,mC);
+                                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                     }}).show();
+                    } else {
+                        spell.meta_Far(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -723,7 +686,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect())
+                        if(spell.isPerfect()&&!all_free)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -732,28 +695,23 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Select_Spell(true);
-                                            spell.setRank(spell.getRank()-1);
+                                            spell.meta_Select_Spell(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Select_Spell(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
+                                            spell.meta_Select_Spell(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }}).show();
                         }else {
-                            spell.meta_Select_Spell(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
+                            spell.meta_Select_Spell(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
                     } else {
-                        spell.meta_Select_Spell(false);
-                        refreshTitle(Spell_Title,spell,spell_per_day,mC);
-                        refreshInfos(infos, spell,mC);
+                        spell.meta_Select_Spell(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -791,7 +749,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if (spell.isPerfect()) {
+                        if (spell.isPerfect()&&!all_free) {
 
                             new AlertDialog.Builder(mC)
                                     .setTitle("Demande de confirmation")
@@ -799,31 +757,26 @@ public class ListMeta extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Silent(true);
-                                            spell.setRank(spell.getRank() - 1);
+                                            spell.meta_Silent(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell, mC);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }
                                     })
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Silent(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell, mC);
+                                            spell.meta_Silent(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                                         }
                                     }).show();
                         } else {
-                            spell.meta_Silent(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell, mC);
+                            spell.meta_Silent(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                         }
 
                     } else {
-                        spell.meta_Silent(false);
-                        refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                        refreshInfos(infos, spell, mC);
+                        spell.meta_Silent(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
                     }
                 }
             });
@@ -864,6 +817,11 @@ public class ListMeta extends AppCompatActivity {
         return value;
     }
 
+    private void refreshAllTexts(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day,final TextView infos, final Context mC){
+        refreshInfos(infos, spell,mC);
+        refreshTitle( Spell_Title,spell, spell_per_day, mC);
+        //refreshRound();
+    }
 
     private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
         String text="";

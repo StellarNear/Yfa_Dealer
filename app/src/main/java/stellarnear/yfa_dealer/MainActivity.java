@@ -455,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
         //gd.setGradientRadius(200.0f);
 
         checkbox.setTextColor(Color.BLACK);
-        int[] colorClickBox=new int[]{Color.BLACK,Color.DKGRAY};
+        int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
         //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
         ColorStateList colorStateList = new ColorStateList(

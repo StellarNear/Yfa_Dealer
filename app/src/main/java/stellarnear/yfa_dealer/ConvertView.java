@@ -43,6 +43,9 @@ public class ConvertView extends AppCompatActivity {
    LinearLayout convert_confirm;
    ListMeta all_meta;
    Integer selected_rank;
+   List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+   List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
+   List<CheckBox> meta_selected=new ArrayList<>();
 
 
     public ConvertView(View currentView, Spell spell, SpellPerDay spell_per_day, TextView Spell_Title, TextView infos, ViewSwitcher panel, Context mC) {
@@ -104,8 +107,8 @@ public class ConvertView extends AppCompatActivity {
         resetConfirm();
 
 
-        final ListMeta all_meta = new ListMeta(spell,Spell_Title,infos,mC);
-        this.all_meta=all_meta;
+        final ListMeta all_meta_free = new ListMeta(spell,Spell_Title,infos,mC,true);
+        this.all_meta=all_meta_free;
 
         int max_tier=0;
         for(int i=0;i<=4;i++){
@@ -116,7 +119,7 @@ public class ConvertView extends AppCompatActivity {
 
         if (max_tier==0) {return;}
 
-        final List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+        //List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
 
         for(int i=1;i<=max_tier;i++) {
             final CheckBox tier = new CheckBox(mC);
@@ -126,7 +129,7 @@ public class ConvertView extends AppCompatActivity {
             tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tier.setTextColor(Color.DKGRAY);
 
-            setListnerTierSelect(tier,list_check_rank);
+            setListnerTierSelect(tier);
 
             convert_slots.addView(tier);
             list_check_rank.add(tier);
@@ -136,6 +139,7 @@ public class ConvertView extends AppCompatActivity {
     }
 
     private void resetChoice(){
+        resetMeta();
         convert_choices.removeAllViews();
         TextView choice=new TextView(mC);
         choice.setText("Choix de conversion");
@@ -144,6 +148,7 @@ public class ConvertView extends AppCompatActivity {
         convert_choices.addView(choice);
     }
     private void resetResult(){
+        resetMeta();
         convert_result.removeAllViews();
         TextView result=new TextView(mC);
         result.setText("Résultat de la conversion");
@@ -151,6 +156,14 @@ public class ConvertView extends AppCompatActivity {
         result.setTextColor(Color.GRAY);
         convert_result.addView(result);
     }
+
+    private void resetMeta() {
+        for (CheckBox check : meta_selected){
+            check.setTextColor(Color.GRAY);
+            check.setChecked(false);
+        }
+    }
+
     private void resetConfirm(){
         convert_confirm.removeAllViews();
         TextView confirm=new TextView(mC);
@@ -162,7 +175,7 @@ public class ConvertView extends AppCompatActivity {
 
 
 
-    public void setListnerTierSelect(final CheckBox checkbox,final List<CheckBox> list_check_rank) {
+    public void setListnerTierSelect(final CheckBox checkbox) {
         int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
         //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
@@ -180,16 +193,15 @@ public class ConvertView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected_rank=0;
-                for (CheckBox checkbox : list_check_rank) {
-                    if (checkbox.isChecked()) {
-                        selected_rank=to_int(checkbox.getText().toString().substring(1,2));
-                    }
+                if (checkbox.isChecked()) {
+                    selected_rank=to_int(checkbox.getText().toString().substring(1,2));
                 }
-                for (int i = convert_slots.getChildCount() - 1; i >= 0; i--) {
-                    final CheckBox child = (CheckBox) convert_slots.getChildAt(i);
-                    child.setTextColor(Color.DKGRAY);
-                    child.setChecked(false);
+
+                for (CheckBox check : list_check_rank) {
+                    check.setChecked(false);
+                    check.setTextColor(Color.DKGRAY);
                 }
+
                 checkbox.setTextColor(Color.parseColor("#088A29"));
                 //chose à faire sur les affichage meta dispo etc
                 checkbox.setChecked(true);
@@ -205,7 +217,7 @@ public class ConvertView extends AppCompatActivity {
         resetResult();resetConfirm();
         convert_choices.removeAllViews();
 
-        final List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
+        list_check_choice=new ArrayList<CheckBox>();
 
         HorizontalScrollView scroll_meta= new HorizontalScrollView(mC);
         scroll_meta.setHorizontalScrollBarEnabled(false);
@@ -227,8 +239,16 @@ public class ConvertView extends AppCompatActivity {
 
         addVsep(grid,4,Color.GRAY);
 
+        CheckBox checkSauv=new CheckBox(mC);
+        checkSauv.setText("Test contre Sauvegarde +"+(int) (selected_rank/2.0)+" ");
+        setListnerChoiceSelect(checkSauv,grid,list_check_choice);
+        grid.addView(checkSauv);
+        list_check_choice.add(checkSauv);
+
+        addVsep(grid,4,Color.GRAY);
+
         CheckBox checkNLS=new CheckBox(mC);
-        checkNLS.setText("NLS +"+selected_rank+" ");
+        checkNLS.setText("Niveau de lanceur de sort +"+selected_rank+" ");
         setListnerChoiceSelect(checkNLS,grid,list_check_choice);
         grid.addView(checkNLS);
         list_check_choice.add(checkNLS);
@@ -240,14 +260,6 @@ public class ConvertView extends AppCompatActivity {
         setListnerChoiceSelect(checkResi,grid,list_check_choice);
         grid.addView(checkResi);
         list_check_choice.add(checkResi);
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkSauv=new CheckBox(mC);
-        checkSauv.setText("Test contre Sauvegarde +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkSauv,grid,list_check_choice);
-        grid.addView(checkSauv);
-        list_check_choice.add(checkSauv);
 
         addVsep(grid,4,Color.GRAY);
 
@@ -288,23 +300,92 @@ public class ConvertView extends AppCompatActivity {
                 checkbox.setTextColor(Color.parseColor("#088A29"));
                 //chose à faire sur les affichage meta dispo etc
                 checkbox.setChecked(true);
-                triggerChoice(list_check_choice);
+                triggerChoice();
             }
 
         });
     }
 
-    private void triggerChoice(List<CheckBox>list_check_choice) {
+    private void triggerChoice() {
         resetResult();resetConfirm();
+        convert_result.removeAllViews();
 
         for (CheckBox check : list_check_choice)
         {
             if (check.getText().toString().contains("Métamagie") && check.isChecked()){
                 construct_convertview_metas();
-                construct_convertview_confirm();
             }
-            if (check.getText().toString().contains("Rési") && check.isChecked()){
+
+            if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
+                TextView result = new TextView(mC);
+                result.setTextColor(Color.parseColor("#088A29"));
+
+                String resistance;
+                String new_resistance;
+                if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
+                    resistance = spell.getSave_type();
+                    new_resistance=spell.getSave_type();
+                } else {
+                    resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+                    int new_resi_int=spell.getSave_val()+(int) (selected_rank/2.0);
+                    new_resistance =  spell.getSave_type() + "(" + new_resi_int + ")";
+                }
+
+                result.setText("Test contre Sauvegarde : "+resistance+" > "+new_resistance);
+
+                if (result.getParent()!=null) {
+                    ((ViewGroup)result.getParent()).removeView(result);
+                }
+                convert_result.addView(result);
+
                 construct_convertview_confirm();
+
+            }
+
+            if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
+                TextView result = new TextView(mC);
+                result.setTextColor(Color.parseColor("#088A29"));
+                int newNLS=spell.getCaster_lvl()+selected_rank;
+                result.setText("Niveau de lanceur de sort : "+spell.getCaster_lvl()+" > "+newNLS);
+
+                if (result.getParent()!=null) {
+                    ((ViewGroup)result.getParent()).removeView(result);
+                }
+                convert_result.addView(result);
+
+                construct_convertview_confirm();
+
+            }
+
+            if (check.getText().toString().contains("Résistance") && check.isChecked()){
+                TextView result = new TextView(mC);
+                result.setTextColor(Color.parseColor("#088A29"));
+                int newNLS_resi=spell.getCaster_lvl()+2*selected_rank;
+                result.setText("Test contre Résistance : 1d20+"+spell.getCaster_lvl()+" > 1d20+"+newNLS_resi);
+
+                if (result.getParent()!=null) {
+                    ((ViewGroup)result.getParent()).removeView(result);
+                }
+                convert_result.addView(result);
+
+                construct_convertview_confirm();
+
+            }
+
+
+
+            if (check.getText().toString().contains("Cap") && check.isChecked()){
+                TextView result = new TextView(mC);
+                result.setTextColor(Color.parseColor("#088A29"));
+                result.setText("Dégats : "+spell.getDmg_txt(mC)+" > "+spell.getDmg_txt_addDice(mC,2*selected_rank));
+
+                if (result.getParent()!=null) {
+                    ((ViewGroup)result.getParent()).removeView(result);
+                }
+                convert_result.addView(result);
+
+                construct_convertview_confirm();
+
             }
 
         }
@@ -312,6 +393,7 @@ public class ConvertView extends AppCompatActivity {
 
 
     private void construct_convertview_metas() {
+        resetMeta();
         resetConfirm();
         convert_result.removeAllViews();
 
@@ -339,15 +421,36 @@ public class ConvertView extends AppCompatActivity {
         } else {
 
             addVsep(grid2,4,Color.GRAY);
+            int[] colorClickBox = new int[]{Color.GRAY, Color.parseColor("#088A29")};
+            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][]{
+                            new int[]{-android.R.attr.state_checked}, // unchecked
+                            new int[]{android.R.attr.state_checked}  // checked
+                    }, colorClickBox
+
+            );
+
+            meta_selected = new ArrayList<CheckBox>();
             for (int iter = 0; iter < all_meta_rank_list.size(); iter++) {
 
-                CheckBox checkbox = all_meta_rank_list.get(iter).getMeta().getCheckbox();
+                final CheckBox checkbox = all_meta_rank_list.get(iter).getMeta().getCheckbox();
+                checkbox.setButtonTintList(colorStateList);
+
+                meta_selected.add(checkbox);
 
                 checkbox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //dostuff
+
+                        for (CheckBox check : meta_selected) {
+                            check.setTextColor(Color.GRAY);
+                            check.setChecked(false);
+                        }
+                        checkbox.setTextColor(Color.parseColor("#088A29"));
+                        checkbox.setChecked(true);
+                        construct_convertview_confirm();
                     }
                 });
 
@@ -373,7 +476,6 @@ public class ConvertView extends AppCompatActivity {
     private void construct_convertview_confirm() {
         convert_confirm.removeAllViews();
 
-
         TextView confirm =new TextView(mC);
         confirm.setText("Confirmer cette convertion");
         confirm.setTextSize(18);
@@ -382,10 +484,10 @@ public class ConvertView extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                applyConvert(); //si c'etait une méta elle est appliqué direct par la meta mais pour les autres il faut faire les cas
                 switch_page_back(panel);
             }
         });
-
 
         if (confirm.getParent()!=null) {
             ((ViewGroup)confirm.getParent()).removeView(confirm);
@@ -394,6 +496,12 @@ public class ConvertView extends AppCompatActivity {
 
 
     }
+
+    private void applyConvert() {
+        // on se sert list_check_choice;
+        // on modifie spell en fonction
+    }
+
     private Drawable changeColor(int img_id, String color) {
         Drawable img = mC.getResources().getDrawable(img_id);
         int iColor = Color.parseColor(color);

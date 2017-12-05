@@ -1,10 +1,8 @@
 package stellarnear.yfa_dealer;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -12,53 +10,37 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.Html;
-import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 
@@ -87,7 +69,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
 
         for (final Spell spell : selected_spells) {
-            spell.setSave_val(getApplicationContext()); //refresh si le charisme à bouger
+            spell.calcSave_val(getApplicationContext()); //refresh si le charisme à bouger
             spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
             final TextView Spell_Title = new TextView(this);
             final SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
@@ -607,7 +589,7 @@ public class SpellCastActivity extends AppCompatActivity {
             Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 25,getResources().getDisplayMetrics())));
 
-            ConvertView convertView =new ConvertView(panel.getNextView(),spell,spell_per_day,Spell_Title,infos,panel,SpellCastActivity.this);
+            new ConvertView(panel.getNextView(),spell,spell_per_day,Spell_Title,infos,panel,SpellCastActivity.this); //construit le fragement de vue de la conversion
 
             Spell_Title.setOnTouchListener(new View.OnTouchListener() {
                 @Override

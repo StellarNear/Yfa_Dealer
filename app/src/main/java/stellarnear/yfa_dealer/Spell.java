@@ -2,17 +2,12 @@ package stellarnear.yfa_dealer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.style.StrikethroughSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +33,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String rm;
     private String  save_type;
     private int     save_val;
+    private int ori_save_val;
     private int     rank;
     private int ori_rank;
     private String dmg_dice_roll_txt;
@@ -66,7 +62,8 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.save_type=save_type;
         this.rank=rank;
         this.ori_rank=rank;
-        setSave_val(mC);
+        calcSave_val(mC);
+        this.ori_save_val=this.save_val;
         setCaster_lvl(mC);
         this.n_cast=0;
         setPerfect(mC);
@@ -187,6 +184,27 @@ public class Spell extends AppCompatActivity implements Serializable {
         return dmg;
     }
 
+    public String getDmg_txt_addDice(Context mC,int nDiceAdded) {
+        if (this.n_dice==0) {return "";}
+        int n_dice_added = this.n_dice+nDiceAdded;
+        String dmg=n_dice_added+this.dice_type;
+
+        if(this.dice_type.contains("*d")){
+            Integer integer_dice = to_int(dice_type.replace("*d",""),"Type de dès",mC);
+            Integer dmg_int = n_dice_added * integer_dice;
+            dmg = String.valueOf(dmg_int);
+            return dmg;
+        }
+
+        if(this.dice_type.contains("/lvl")){
+            Integer lvl = this.caster_lvl;
+            Integer dmg_int = n_dice_added * lvl;
+            dmg = String.valueOf(dmg_int);
+            return dmg;
+        }
+        return dmg;
+    }
+
     public String getDmg_dice_roll_txt() {
         return this.dmg_dice_roll_txt;
     }
@@ -197,6 +215,10 @@ public class Spell extends AppCompatActivity implements Serializable {
     
     public Integer getBaseRank() {
         return this.ori_rank;
+    }
+
+    public int getCaster_lvl(){
+        return this.caster_lvl;
     }
 
     public boolean isPerfect() {
@@ -243,7 +265,11 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.rank=rank;
     }
 
-    public void setSave_val(Context mC){
+    public void setSave_val(int save_val){
+        this.save_val=save_val;
+    }
+
+    public void calcSave_val(Context mC){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
         String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
         Integer charisme = to_int(cha_txt,"Modificateur de charisme",mC);
@@ -319,7 +345,9 @@ public class Spell extends AppCompatActivity implements Serializable {
 
 
     // methode de meta magie actives
-    public void meta_Enhance_Spell(Boolean active) {
+    public void meta_Enhance_Spell(Boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
 
         if (active) {
             if(this.dice_type.contains("d4")){
@@ -330,7 +358,7 @@ public class Spell extends AppCompatActivity implements Serializable {
                 this.dice_type="d6";
                 this.n_dice=this.n_dice*2;
             }
-            this.rank+=4;
+            if(!free){this.rank+=4;}
         } else {
             if(this.dice_type.contains("d8")){
                 this.dice_type="d6";
@@ -340,7 +368,7 @@ public class Spell extends AppCompatActivity implements Serializable {
                 this.n_dice=this.n_dice/2;
                 this.dice_type="d8";
             }
-            this.rank-=4;
+            if(!free){this.rank-=4;}
         }
     }
 
@@ -353,13 +381,15 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
 
-    public void meta_Rapid(Boolean active) {
+    public void meta_Rapid(Boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         if (active) {
             this.cast_time="rapide";
-            this.rank+=4;
+            if(!free){this.rank+=4;}
         } else {
             this.cast_time=this.ori_cast_time;
-            this.rank-=4;
+                if(!free){this.rank-=4;}
         }
     }
     
@@ -374,11 +404,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
     
         // sort à retardement +4
-    public void meta_Delay(Boolean active) {
-        if (active) {
-            this.rank+=4;
-        } else {
-            this.rank-=4;
+    public void meta_Delay(Boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
+        if(!free) {
+            if (active) {
+                this.rank += 4;
+            } else {
+                this.rank -= 4;
+            }
         }
     }
 
@@ -393,13 +427,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
     //quintessence des sorts +3
-    public void meta_Quint(boolean active) {
+    public void meta_Quint(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         String resultat=this.dice_type;
         if (active) {
-            this.rank+=3;
+            if(!free){this.rank+=3;}
             resultat=resultat.replace("d","*d");
         } else {
-            this.rank-=3;
+            if(!free){this.rank-=3;}
             resultat=resultat.replace("*d","d");
         }
         this.dice_type=resultat;
@@ -415,12 +451,14 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     //extension d'effet+2
 
-    public void meta_Extend(boolean active) {
+    public void meta_Extend(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         if (active) {
-            this.rank+=2;
+            if(!free){this.rank+=2;}
             this.n_dice += (int)(this.n_dice/2.0);
         } else {
-            this.rank-=2;
+            if(!free){this.rank-=2;}
             this.n_dice=ori_n_dice;
         }
     }
@@ -433,13 +471,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
     
             // flêche naturalisée+2
-    public void meta_Enchant_arrow(Boolean active) {
+    public void meta_Enchant_arrow(Boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         if (active) {
             this.cast_time="complexe";
-            this.rank+=2;
+            if(!free){this.rank+=2;}
         } else {
             this.cast_time=this.ori_cast_time;
-            this.rank-=2;
+                if(!free){this.rank-=2;}
         }
     }
 
@@ -455,11 +495,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     
     
     //sort selectif +1
-    public void meta_Select_Spell(boolean active) {
-        if (active) {
-            this.rank+=1;
-        } else {
-            this.rank-=1;
+    public void meta_Select_Spell(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
+        if(!free) {
+            if (active) {
+                this.rank += 1;
+            } else {
+                this.rank -= 1;
+            }
         }
     }
     public void meta_Select_Spell_descr(Context mC) {
@@ -474,14 +518,16 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
 
-    public void meta_Silent(boolean active) {
+    public void meta_Silent(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
 
         if(active){
             this.compoBool[0] = false;
-            this.rank+=1;
+            if(!free){this.rank+=1;}
         } else {
             this.compoBool[0] = this.ori_compoBool[0];
-            this.rank-=1;
+            if(!free){this.rank-=1;}
         }
     }
 
@@ -496,14 +542,16 @@ public class Spell extends AppCompatActivity implements Serializable {
 
 
     //augmentation d'intensité pourra etre pris plusieurs fois
-    public void meta_Intense(boolean active) {
+    public void meta_Intense(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         if (active) {
             this.save_val+=1;
-            this.rank+=1;
+            if(!free){this.rank+=1;}
             this.caster_lvl+=1;
         } else {
             this.save_val-=1;
-            this.rank-=1;
+            if(!free){this.rank-=1;}
             this.caster_lvl-=1;
         }
     }
@@ -519,7 +567,9 @@ public class Spell extends AppCompatActivity implements Serializable {
     
     // extend durée+1
     
-    public void meta_Extend_dura(boolean active) {
+    public void meta_Extend_dura(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         if (active) {
             Pattern pattern = Pattern.compile("^([0-9]+)");  //si ca plante à test avec * à la place de +
             Matcher matcher = pattern.matcher(this.duration);
@@ -527,11 +577,11 @@ public class Spell extends AppCompatActivity implements Serializable {
             {
                 Integer int_dura = 2*to_int(matcher.group());
                 this.duration=this.duration.replaceAll(matcher.group(1),String.valueOf(int_dura));
-            }   
-            this.rank+=1;
+            }
+            if(!free){this.rank+=1;}
         } else {
             this.duration=this.ori_duration;
-            this.rank-=1;
+            if(!free){this.rank-=1;}
         }
     }
 
@@ -543,7 +593,9 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
     //sort éloigné
-    public void meta_Far(boolean active) {
+    public void meta_Far(boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
         String range=this.range;
         String [] all_range={"contact","courte","moyenne","longue"};
         for(int i=0;i<all_range.length;i++){
@@ -551,11 +603,11 @@ public class Spell extends AppCompatActivity implements Serializable {
                 if(active){
                     if (!all_range[i].equals("longue"))
                     {
-                        this.rank += 1;
+                        if(!free){this.rank += 1;}
                         range = all_range[i + 1];
                     }
                 } else {
-                    this.rank-=1;
+                    if(!free){this.rank-=1;}
                     range=all_range[i-1];
                 }
                 this.range=range;
@@ -573,6 +625,20 @@ public class Spell extends AppCompatActivity implements Serializable {
         toast.show();
     }
 
+
+
+
+    // CONVERSIONS
+    public void conv_NLS() {
+
+    }
+    public void conv_Sauv() {
+
+    }
+
+
+
+    // UTILITAIRES
 
 
     public Integer to_int(String key,String field,Context mC){
