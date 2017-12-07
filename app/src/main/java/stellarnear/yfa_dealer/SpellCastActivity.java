@@ -4,11 +4,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapRegionDecoder;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +23,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -35,18 +43,22 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
 public class SpellCastActivity extends AppCompatActivity {
 
-
+    Map<Spell,List<CheckBox>> map_spell_listMetas =new HashMap<Spell,List<CheckBox>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +77,6 @@ public class SpellCastActivity extends AppCompatActivity {
         Intent i = getIntent();
         List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
-
 
 
         for (final Spell spell : selected_spells) {
@@ -153,6 +164,8 @@ public class SpellCastActivity extends AppCompatActivity {
 
             addVsep(grid,4,Color.GRAY);
 
+            List<CheckBox> spell_all_meta=new ArrayList<>();
+
             for (int iter=0;iter<all_meta_list.size();iter++){
 
                 CheckBox checkbox = all_meta_list.get(iter).getMeta().getCheckbox();
@@ -168,6 +181,7 @@ public class SpellCastActivity extends AppCompatActivity {
                 });     */ //le slsitner sont directement dans les checkbox Object ListMeta
 
                 grid.addView(checkbox);
+                spell_all_meta.add(checkbox);
 
                 ImageButton image = all_meta_list.get(iter).getMeta().getImgageButton();
                 image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -177,6 +191,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
                 addVsep(grid,4,Color.GRAY);
             }
+            map_spell_listMetas.put(spell,spell_all_meta);
 
             addHsep(fragment1,4,Color.GRAY);
 
@@ -584,12 +599,12 @@ public class SpellCastActivity extends AppCompatActivity {
         }
         Spell_Title.setText(titre);
 
-        if (spell_per_day.checkAnyconvertible_available(mC) && !spell.isConverted()){
-            Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
+        if (spell_per_day.checkAnyconvertible_available() && !spell.isConverted()){
+            Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_repeat_black_24dp), null);
             Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 25,getResources().getDisplayMetrics())));
 
-            new ConvertView(panel.getNextView(),spell,spell_per_day,Spell_Title,infos,panel,SpellCastActivity.this); //construit le fragement de vue de la conversion
+
 
             Spell_Title.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -604,12 +619,24 @@ public class SpellCastActivity extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            Snackbar.make(Spell_Title, "OUAIS ON CONVERTI!!", Snackbar.LENGTH_LONG)
-                                                    .setAction("Action", null).show();
-                                            spell.setConverted(true);
-                                            Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                                            Spell_Title.setOnTouchListener(null);
-                                            switch_page(panel);
+                                            spell_per_day.load_list_spell_per_day(mC);
+                                            if (spell_per_day.checkAnyconvertible_available()) {
+                                                Snackbar.make(Spell_Title, "Ouverture du panneau de conversion", Snackbar.LENGTH_LONG)
+                                                        .setAction("Action", null).show();
+                                                new ConvertView(panel.getNextView(), spell, spell_per_day, Spell_Title, infos, panel, SpellCastActivity.this); //construit le fragement de vue de la conversion
+                                                uncheckMeta(map_spell_listMetas.get(spell));
+                                                spell.setConverted(true);
+                                                Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                                                Spell_Title.setOnTouchListener(null);
+                                                switch_page(panel);
+                                            } else {
+                                                String descr="Il n'y a pas d'emplacement de sort convertible de disponible...";
+                                                Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+                                                toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL,0,0);
+                                                toast.show();
+                                                Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                                                Spell_Title.setOnTouchListener(null);
+                                            }
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -624,10 +651,11 @@ public class SpellCastActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
+    private void uncheckMeta(List<CheckBox> checkBoxes) {
+        for (CheckBox check:checkBoxes){
+            check.setChecked(false);
+        }
+    }
 
     private Drawable changeColor(int img_id, String color) {
         Drawable img = getResources().getDrawable(img_id);

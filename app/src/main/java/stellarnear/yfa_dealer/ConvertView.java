@@ -3,10 +3,10 @@ package stellarnear.yfa_dealer;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -56,6 +55,7 @@ public class ConvertView extends AppCompatActivity {
         this.infos=infos;
         this.panel=panel;
         this.mC=mC;
+        spell_per_day.load_list_spell_per_day(mC);
 
         ViewGroup viewGrp= (ViewGroup) currentView;
 
@@ -110,31 +110,7 @@ public class ConvertView extends AppCompatActivity {
         final ListMeta all_meta_free = new ListMeta(spell,Spell_Title,infos,mC,true);
         this.all_meta=all_meta_free;
 
-        int max_tier=0;
-        for(int i=0;i<=4;i++){
-            try{
-                if (spell_per_day.checkConvertible_available(i,mC)) {max_tier=i;}
-            }catch (Exception e){ }
-        }
-
-        if (max_tier==0) {return;}
-
-        //List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
-
-        for(int i=1;i<=max_tier;i++) {
-            final CheckBox tier = new CheckBox(mC);
-            tier.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank(i) + ")");
-            tier.setTextSize(16);
-            tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            tier.setTextColor(Color.DKGRAY);
-
-            setListnerTierSelect(tier);
-
-            convert_slots.addView(tier);
-            list_check_rank.add(tier);
-
-        }
+        constructTierlist();
 
     }
 
@@ -173,7 +149,35 @@ public class ConvertView extends AppCompatActivity {
         convert_confirm.addView(confirm);
     }
 
+    private void constructTierlist() {
+        convert_slots.removeAllViews();
+        list_check_rank=new ArrayList<CheckBox>();
+        int max_tier=0;
+        for(int i=0;i<=4;i++){
+            try{
+                if (spell_per_day.checkConvertible_available(i)) {max_tier=i;}
+            }catch (Exception e){ }
+        }
+        if (max_tier==0) {return;}
 
+        for(int i=1;i<=max_tier;i++) {
+            if (spell_per_day.getSpell_per_day_rank_conv(i)==0) {continue;}
+            final CheckBox tier = new CheckBox(mC);
+            tier.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank_conv(i) + ")");
+            tier.setTextSize(16);
+            tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+            tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tier.setTextColor(Color.DKGRAY);
+
+            setListnerTierSelect(tier);
+
+            if (tier.getParent()!=null) {
+                ((ViewGroup)tier.getParent()).removeView(tier);
+            }
+            convert_slots.addView(tier);
+            list_check_rank.add(tier);
+        }
+    }
 
     public void setListnerTierSelect(final CheckBox checkbox) {
         int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
@@ -192,20 +196,23 @@ public class ConvertView extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                selected_rank=0;
-                if (checkbox.isChecked()) {
-                    selected_rank=to_int(checkbox.getText().toString().substring(1,2));
-                }
+                selected_rank = to_int(checkbox.getText().toString().substring(1, 2));
+                spell_per_day.load_list_spell_per_day(mC);
+                if (!spell_per_day.checkAnyconvertible_available(mC)) {
+                    switch_page_back(panel);
+                } else if (!spell_per_day.checkConvertible_available(selected_rank, mC)) {
+                    constructTierlist();
+                } else {
+                    for (CheckBox check : list_check_rank) {
+                        check.setChecked(false);
+                        check.setTextColor(Color.DKGRAY);
+                    }
+                    checkbox.setTextColor(Color.parseColor("#088A29"));
+                    //chose à faire sur les affichage meta dispo etc
+                    checkbox.setChecked(true);
 
-                for (CheckBox check : list_check_rank) {
-                    check.setChecked(false);
-                    check.setTextColor(Color.DKGRAY);
+                    construct_convertview_choices();
                 }
-
-                checkbox.setTextColor(Color.parseColor("#088A29"));
-                //chose à faire sur les affichage meta dispo etc
-                checkbox.setChecked(true);
-                construct_convertview_choices();
 
             }
 
@@ -480,7 +487,7 @@ public class ConvertView extends AppCompatActivity {
         confirm.setText("Confirmer cette convertion");
         confirm.setTextSize(18);
         confirm.setTextColor(Color.parseColor("#088A29"));
-        confirm.setCompoundDrawablesWithIntrinsicBounds(null, null, changeColor(R.drawable.ic_repeat_black_24dp,Color.parseColor("#088A29")), null);
+        confirm.setCompoundDrawablesWithIntrinsicBounds(null, null, mC.getDrawable(R.drawable.ic_repeat_black_24dp), null);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -500,42 +507,104 @@ public class ConvertView extends AppCompatActivity {
     private void applyConvert() {
         // on se sert list_check_choice;
         // on modifie spell en fonction
+        for (CheckBox check : list_check_choice)
+        {
+            if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
+                spell.conv_Sauv(selected_rank);
+            }
+
+            if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
+                spell.conv_NLS(selected_rank);
+            }
+
+            if (check.getText().toString().contains("Cap") && check.isChecked()){
+                spell.conv_Cap(selected_rank);
+            }
+        }
+        spell.storeOri();
+        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+        spell_per_day.castSpell_rank_conv(selected_rank);
+        spell_per_day.save_list_spell_per_day(mC);
     }
 
-    private Drawable changeColor(int img_id, String color) {
-        Drawable img = mC.getResources().getDrawable(img_id);
-        int iColor = Color.parseColor(color);
-
-        int red   = (iColor & 0xFF0000) / 0xFFFF;
-        int green = (iColor & 0xFF00) / 0xFF;
-        int blue  = iColor & 0xFF;
-
-        float[] matrix = { 0, 0, 0, 0, red,
-                0, 0, 0, 0, green,
-                0, 0, 0, 0, blue,
-                0, 0, 0, 1, 0 };
-
-        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
-        img.setColorFilter(colorFilter);
-        return img;
+    private void refreshAllTexts(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day,final TextView infos, final Context mC){
+        refreshInfos(infos, spell,mC);
+        refreshTitle( Spell_Title,spell, spell_per_day, mC);
+        //refreshRound();
     }
-    private Drawable changeColor(int img_id, int color) {
-        Drawable img = mC.getResources().getDrawable(img_id);
-        int iColor = color;
 
-        int red   = (iColor & 0xFF0000) / 0xFFFF;
-        int green = (iColor & 0xFF00) / 0xFF;
-        int blue  = iColor & 0xFF;
+    private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
+        String text="";
+        Integer n_inf=0;
+        if(!spell.getDmg_txt(mC).equals("")){
+            text+="Dégats : "+spell.getDmg_txt(mC)+", ";
+            n_inf+=1;
+        }
+        if(!spell.getDmg_type().equals("")){
+            text+="Type : "+ spell.getDmg_type()+", ";
+            n_inf+=1;
+        }
+        if(!spell.getRange_txt().equals("")){
+            text+="Portée : "+spell.getRange_txt()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+        if(!spell.getCompo().equals("")){
+            text+="Compos : "+spell.getCompo()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
 
-        float[] matrix = { 0, 0, 0, 0, red,
-                0, 0, 0, 0, green,
-                0, 0, 0, 0, blue,
-                0, 0, 0, 1, 0 };
+        if(!spell.getCast_tim().equals("")){
+            text+="Cast : "+ spell.getCast_tim()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
 
-        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
-        img.setColorFilter(colorFilter);
-        return img;
+        if(!spell.getDuration(mC).equals("")){
+            text+="Durée : "+spell.getDuration(mC)+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";n_inf=0;}
+
+        if(!spell.getRM().equals("")){
+            text+="RM : "+spell.getRM()+", ";
+            n_inf+=1;
+        }
+        if(n_inf==3){text+="\n";}
+
+        String resistance;
+        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
+            resistance = spell.getSave_type();
+
+        } else {
+            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+        }
+        if(!resistance.equals("")){
+            text+="Jet de sauv : "+ resistance+", ";
+        }
+
+
+        text = text.substring(0, text.length() - 2);
+        if(spell.getDmg_txt(mC).equals("")){text+="\n";}
+        infos.setText(text);
     }
+
+
+    private void refreshTitle(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day, final Context mC) {
+        String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
+        SpannableString titre=  new SpannableString(titre_texte);
+        titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
+        titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
+
+        if(spell_per_day.checkRank_available(spell.getRank(),mC)){
+            titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
+        } else {
+            titre.setSpan(new ForegroundColorSpan(mC.getColor(R.color.warning)),spell.getName().length(),titre_texte.length(), 0);// set color2
+        }
+        Spell_Title.setText(titre);
+    }
+
 
     private void switch_page_back(ViewSwitcher panel) {
         setAnimPanel(panel,"retour");

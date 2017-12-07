@@ -19,6 +19,8 @@
     <color name="acide">#d4f7d9</color>
     <color name="acide_dark">#3cdd54</color>
     <color name="warning">#CF0202</color>
+    <color name="transparent">#80000000</color>
+    <color name="conversion">#088A29</color>
 
 
 

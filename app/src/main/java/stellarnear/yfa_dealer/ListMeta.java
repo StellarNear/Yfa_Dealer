@@ -442,7 +442,6 @@ public class ListMeta extends AppCompatActivity {
             );
             checkbox.setButtonTintList(colorStateList);
 
-            final Integer ori_save_val=spell.getSave_val();
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -494,7 +493,7 @@ public class ListMeta extends AppCompatActivity {
                                 .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
 
-                                        while(!spell.getSave_val().equals(ori_save_val)){
+                                        while(!spell.getSave_val().equals(spell.getOri_Save_Val())){
                                             spell.meta_Intense(false,all_free);
                                         }
                                         refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
@@ -599,7 +598,6 @@ public class ListMeta extends AppCompatActivity {
             );
             checkbox.setButtonTintList(colorStateList);
 
-            final String ori_range=spell.getRange();
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -641,7 +639,7 @@ public class ListMeta extends AppCompatActivity {
                                     }})
                                 .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        while(!ori_range.equals(spell.getRange())){
+                                        while(!spell.getOri_Range().equals(spell.getRange())){
                                             spell.meta_Far(false,all_free);
                                         }
                                         refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);

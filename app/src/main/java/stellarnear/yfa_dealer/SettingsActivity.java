@@ -326,6 +326,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             editor.putString("n_rank_13",prefs.getString("n_rank_13_start",getString(R.string.n_rank_13_def)));
             editor.putString("n_rank_14",prefs.getString("n_rank_14_start",getString(R.string.n_rank_14_def)));
             editor.putString("n_rank_15",prefs.getString("n_rank_15_start",getString(R.string.n_rank_15_def)));
+
+            editor.putString("n_rank_1_conv",prefs.getString("n_rank_1_start_conv",getString(R.string.n_rank_1_def_conv)));
+            editor.putString("n_rank_2_conv",prefs.getString("n_rank_2_start_conv",getString(R.string.n_rank_2_def_conv)));
+            editor.putString("n_rank_3_conv",prefs.getString("n_rank_3_start_conv",getString(R.string.n_rank_3_def_conv)));
+            editor.putString("n_rank_4_conv",prefs.getString("n_rank_4_start_conv",getString(R.string.n_rank_4_def_conv)));
             editor.commit();
 
             String descr="Une nouvelle journée pleine de sortilèges t'attends.";

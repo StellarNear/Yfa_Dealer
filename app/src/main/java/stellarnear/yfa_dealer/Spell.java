@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     private int     ori_n_dice;
     private String  dmg_type;
     private String  range;
+    private String  ori_range;
     private String  cast_time;
     private String  ori_cast_time;
     private String  duration;
@@ -51,6 +53,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.ori_n_dice=n_dice;
         this.dmg_type=dmg_type;
         this.range=range;
+        this.ori_range=range;
         this.cast_time=cast_time;
         this.ori_cast_time=cast_time;
         this.duration=duration;
@@ -64,7 +67,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.ori_rank=rank;
         calcSave_val(mC);
         this.ori_save_val=this.save_val;
-        setCaster_lvl(mC);
+        calcCaster_lvl(mC);
         this.n_cast=0;
         setPerfect(mC);
         this.converted=false;
@@ -187,6 +190,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     public String getDmg_txt_addDice(Context mC,int nDiceAdded) {
         if (this.n_dice==0) {return "";}
         int n_dice_added = this.n_dice+nDiceAdded;
+        if (n_dice_added>this.caster_lvl) {n_dice_added=this.caster_lvl;} //on peux pas depasser le level de caster
         String dmg=n_dice_added+this.dice_type;
 
         if(this.dice_type.contains("*d")){
@@ -219,6 +223,14 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     public int getCaster_lvl(){
         return this.caster_lvl;
+    }
+
+    public Integer getOri_Save_Val() {
+        return this.ori_save_val;
+    }
+
+    public String getOri_Range() {
+        return this.ori_range;
     }
 
     public boolean isPerfect() {
@@ -277,7 +289,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.save_val=save_val_calc;
     }
 
-    public void setCaster_lvl(Context mC){
+    public void calcCaster_lvl(Context mC){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
         String lvl_txt=prefs.getString("nls_val",mC.getResources().getString(R.string.nls_val_def));
         Integer lvl = to_int(lvl_txt,"NLS",mC);
@@ -285,6 +297,10 @@ public class Spell extends AppCompatActivity implements Serializable {
         Integer lvl_bonus = to_int(lvl_bonus_txt,"NLS bonus",mC);
         Integer caster_lvl_calc=lvl+lvl_bonus;
         this.caster_lvl=caster_lvl_calc;
+    }
+
+    public void setCaster_lvl(int new_level){
+        this.caster_lvl=new_level;
     }
 
     public void setcompoBool(String compo) { //V,G,M
@@ -629,13 +645,29 @@ public class Spell extends AppCompatActivity implements Serializable {
 
 
     // CONVERSIONS
-    public void conv_NLS() {
-
-    }
-    public void conv_Sauv() {
-
+    public void conv_NLS(int selected_rank) {
+        this.caster_lvl+=selected_rank;
     }
 
+    public void conv_Sauv(int selected_rank) {
+        this.save_val+=(int) (selected_rank/2.0);
+    }
+
+    public void conv_Cap(int selected_rank) {
+        int n_dice_added = this.n_dice+2*selected_rank;
+        if (n_dice_added>this.caster_lvl) {n_dice_added=this.caster_lvl;} //on peux pas depasser le level de caster
+        this.n_dice=n_dice_added;
+    }
+
+    public void storeOri() {
+        this.ori_cast_time=this.cast_time;
+        this.ori_compoBool=this.compoBool;
+        this.ori_dice_type=this.dice_type;
+        this.ori_duration=this.duration;
+        this.ori_n_dice=this.n_dice;
+        this.ori_save_val=this.save_val;
+        this.ori_range=this.range;
+    }
 
 
     // UTILITAIRES
@@ -676,7 +708,4 @@ public class Spell extends AppCompatActivity implements Serializable {
         }
         return value;
     }
-
-
-
 }

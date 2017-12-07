@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -239,16 +240,28 @@ public class MainActivity extends AppCompatActivity {
             side_txt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
 
             int orientation = getResources().getConfiguration().orientation;  //1 pour portrait et 2 paysage
-
+            side_txt.setTextColor(Color.DKGRAY);
             if (orientation==1) {
                 side_txt.setText("T" + i + "\n(" + spell_per_day.getSpell_per_day_rank(i) + ")");
                 if (i==0){side_txt.setText("T"+i+"\n("+ DecimalFormatSymbols.getInstance().getInfinity()+")");}
+                if (spell_per_day.getSpell_per_day_rank_conv(i)>0) {
+                    String n_spell_conv_txt="T" + i + "\n(" + spell_per_day.getSpell_per_day_rank(i)+","+ spell_per_day.getSpell_per_day_rank_conv(i) + ")";
+                    String before_conv="T" + i + "\n(" + spell_per_day.getSpell_per_day_rank(i)+",";
+                    SpannableString n_spell_conv=  new SpannableString(n_spell_conv_txt);
+                    n_spell_conv.setSpan(new ForegroundColorSpan(getColor(R.color.conversion)),before_conv.length(),before_conv.length()+spell_per_day.getSpell_per_day_rank_conv(i).toString().length(), 0);// set color2
+                    side_txt.setText(n_spell_conv);
+                }
             } else {
                 side_txt.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank(i) + ")");
                 if (i==0){side_txt.setText("T"+i+" ("+ DecimalFormatSymbols.getInstance().getInfinity()+")");}
+                if (spell_per_day.getSpell_per_day_rank_conv(i)>0) {
+                    String n_spell_conv_txt="T" + i + " (" + spell_per_day.getSpell_per_day_rank(i)+","+ spell_per_day.getSpell_per_day_rank_conv(i) + ")";
+                    String before_conv="T" + i + " (" + spell_per_day.getSpell_per_day_rank(i)+",";
+                    SpannableString n_spell_conv=  new SpannableString(n_spell_conv_txt);
+                    n_spell_conv.setSpan(new ForegroundColorSpan(getColor(R.color.conversion)),before_conv.length(),before_conv.length()+spell_per_day.getSpell_per_day_rank_conv(i).toString().length(), 0);// set color2
+                    side_txt.setText(n_spell_conv);
+                }
             }
-
-            side_txt.setTextColor(Color.DKGRAY);
 
             side_txt.setOnClickListener(new View.OnClickListener() {
 

@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v2.0a"</string>
+    <string name="version">"v3.0"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+V3.0 ! Conversion de sort Out + Sort Convertible journalier + Comptage de rounds
+-Creation en cascade des layouts de selection dans un nouvel objet Conversion
+-Refresh et transert des informations entres les couches de conversion
+-Gestion des métagamie en dynamique
+-Gestion d'objets de classe Meta/Image d'aide
+-Appairage des Métamagies et des rangs d'augmentation
+-Effets des conversions appliqués sur le sort
+-Metamagie dans conversion possible et geré dynamiquement
+-Sauvegarde des modifs de conversion et retour au lancement du sort quand validé
+-Controle des sorts convertibles disponibles à plusieurs étapes
+-Sort convertible par jour
+-Lancement de sort normaux en priorité sur les slots convertibles
+----------------------------------------------------------------------------------
 V2.0a : fix mise en cache des images
 
 V2.0 !

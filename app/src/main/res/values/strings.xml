@@ -21,6 +21,10 @@
     <string name="n_rank_14_def">"0"</string>
     <string name="n_rank_15_def">"0"</string>
     <string name="wedge_max_lvl_spell_def">6</string>
+    <string name="n_rank_1_def_conv">0</string>
+    <string name="n_rank_2_def_conv">0</string>
+    <string name="n_rank_3_def_conv">4</string>
+    <string name="n_rank_4_def_conv">9</string>
 
 
     <string-array name="values">
