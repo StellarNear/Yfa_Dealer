@@ -81,9 +81,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                builPage2();
-
+                if (map_spell_check.isEmpty()){
+                    builPage2();
+                } else {
+                    Toast toast =  Toast.makeText(getApplicationContext(), "Sélectionnes au moins un sort ...", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
             }
         });
     }
