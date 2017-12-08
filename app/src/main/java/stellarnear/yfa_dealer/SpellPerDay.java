@@ -95,7 +95,11 @@ public class SpellPerDay extends AppCompatActivity {
         if(!(rank==0)){
             this.list_spell_per_day[rank-1]-=1;
 
-            if (this.list_spell_per_day[rank-1]<this.list_spell_per_day_conv[rank-1]){this.list_spell_per_day_conv[rank-1]=this.list_spell_per_day[rank-1];}
+            try { //si c'est un slot convertible on check qu'on en cast pas
+                if (this.list_spell_per_day[rank-1]<this.list_spell_per_day_conv[rank-1]){
+                    this.list_spell_per_day_conv[rank-1]=this.list_spell_per_day[rank-1];
+                }
+            } catch (Exception e) {}
         }
     }
     

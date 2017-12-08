@@ -237,20 +237,19 @@ public class ConvertView extends AppCompatActivity {
         gridGrp.removeAllViews();
 
         addVsep(grid,4,Color.GRAY);
+        CheckBox checkMax=new CheckBox(mC);
+        checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
+        setListnerChoiceSelect(checkMax,grid,list_check_choice);
+        grid.addView(checkMax);
+        list_check_choice.add(checkMax);
+
+        addVsep(grid,4,Color.GRAY);
 
         CheckBox checkMeta=new CheckBox(mC);
         checkMeta.setText("Métamagie ");
         setListnerChoiceSelect(checkMeta,grid,list_check_choice);
         grid.addView(checkMeta);
         list_check_choice.add(checkMeta);
-
-        addVsep(grid,4,Color.GRAY);
-
-        CheckBox checkSauv=new CheckBox(mC);
-        checkSauv.setText("Test contre Sauvegarde +"+(int) (selected_rank/2.0)+" ");
-        setListnerChoiceSelect(checkSauv,grid,list_check_choice);
-        grid.addView(checkSauv);
-        list_check_choice.add(checkSauv);
 
         addVsep(grid,4,Color.GRAY);
 
@@ -270,14 +269,13 @@ public class ConvertView extends AppCompatActivity {
 
         addVsep(grid,4,Color.GRAY);
 
-        CheckBox checkMax=new CheckBox(mC);
-        checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
-        setListnerChoiceSelect(checkMax,grid,list_check_choice);
-        grid.addView(checkMax);
-        list_check_choice.add(checkMax);
+        CheckBox checkSauv=new CheckBox(mC);
+        checkSauv.setText("Test contre Sauvegarde +"+(int) (selected_rank/2.0)+" ");
+        setListnerChoiceSelect(checkSauv,grid,list_check_choice);
+        grid.addView(checkSauv);
+        list_check_choice.add(checkSauv);
 
         addVsep(grid,4,Color.GRAY);
-
     }
 
     public void setListnerChoiceSelect(final CheckBox checkbox,final LinearLayout grid,final List<CheckBox> list_check_choice) {
@@ -327,18 +325,18 @@ public class ConvertView extends AppCompatActivity {
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
 
-                String resistance;
-                String new_resistance;
                 if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
-                    resistance = spell.getSave_type();
-                    new_resistance=spell.getSave_type();
+                    result.setText("Aucun effet sur ce sort");
                 } else {
-                    resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
-                    int new_resi_int=spell.getSave_val()+(int) (selected_rank/2.0);
-                    new_resistance =  spell.getSave_type() + "(" + new_resi_int + ")";
-                }
+                    String resistance;
+                    String new_resistance;
 
-                result.setText("Test contre Sauvegarde : "+resistance+" > "+new_resistance);
+                        resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+                        int new_resi_int = spell.getSave_val() + (int) (selected_rank / 2.0);
+                        new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
+
+                    result.setText("Test contre Sauvegarde : " + resistance + " > " + new_resistance);
+                }
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -379,12 +377,14 @@ public class ConvertView extends AppCompatActivity {
 
             }
 
-
-
             if (check.getText().toString().contains("Cap") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                result.setText("Dégats : "+spell.getDmg_txt(mC)+" > "+spell.getDmg_txt_addDice(mC,2*selected_rank));
+                if (spell.getDmg_txt(mC).equals("")) {
+                    result.setText("Ajouter " + 2 * selected_rank +" à la variable dépendante du NLS (cf. sort)");
+                } else {
+                    result.setText("Dégats : " + spell.getDmg_txt(mC) + " > " + spell.getDmg_txt_addDice(mC, selected_rank));
+                }
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);

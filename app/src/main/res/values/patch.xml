@@ -18,6 +18,8 @@ V3.0 ! Conversion de sort Out + Sort Convertible journalier + Comptage de rounds
 -Controle des sorts convertibles disponibles à plusieurs étapes
 -Sort convertible par jour
 -Lancement de sort normaux en priorité sur les slots convertibles
+-Les sorts on maintenant le cap dégats géré dynamiquement
+-Le cap est modifiable via conversion dynamiquement
 ----------------------------------------------------------------------------------
 V2.0a : fix mise en cache des images
 

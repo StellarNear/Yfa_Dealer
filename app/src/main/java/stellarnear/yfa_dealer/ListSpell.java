@@ -50,7 +50,8 @@ public class ListSpell extends AppCompatActivity {
                     AllSpells.add(new Spell(getValue("name",element2),
                                             getValue("descr",element2),
                                             getValue("dice_type",element2),
-                                            to_int(getValue("n_dice",element2)),
+                                            to_double(getValue("n_dice_per_lvl",element2)),
+                                            to_int(getValue("cap_dice",element2)),
                                             getValue("dmg_type",element2),
                                             getValue("range",element2),
                                             getValue("cast_time",element2),
@@ -95,6 +96,15 @@ public class ListSpell extends AppCompatActivity {
             value = Integer.parseInt(key);
         } catch (Exception e){
             value=0;
+        }
+        return value;
+    }
+    public Double to_double(String key){
+        Double value;
+        try {
+            value = Double.parseDouble(key);
+        } catch (Exception e){
+            value=0.0;
         }
         return value;
     }

@@ -25,8 +25,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.text.Html;
+import android.text.Layout;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
@@ -59,6 +62,7 @@ import java.util.Random;
 public class SpellCastActivity extends AppCompatActivity {
 
     Map<Spell,List<CheckBox>> map_spell_listMetas =new HashMap<Spell,List<CheckBox>>();
+    List<Spell> selected_spells;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +79,11 @@ public class SpellCastActivity extends AppCompatActivity {
         });
 
         Intent i = getIntent();
-        List<Spell> selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
+        selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
         LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
 
+        final TextView launching_txt=(TextView) findViewById(R.id.Titre2);
+        calcRounds(launching_txt);
 
         for (final Spell spell : selected_spells) {
             spell.calcSave_val(getApplicationContext()); //refresh si le charisme à bouger
@@ -170,15 +176,14 @@ public class SpellCastActivity extends AppCompatActivity {
 
                 CheckBox checkbox = all_meta_list.get(iter).getMeta().getCheckbox();
 
-                /*
+
                 checkbox.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v) {
-                        //makeTitle(Spell_Title,infos, spell, spell_per_day, panel, SpellCastActivity.this);
-                        //makeInfos(infos, spell);
+                        calcRounds(launching_txt);
                     }
-                });     */ //le slsitner sont directement dans les checkbox Object ListMeta
+                });      //le slsitner sont directement dans les checkbox Object ListMeta
 
                 grid.addView(checkbox);
                 spell_all_meta.add(checkbox);
@@ -220,6 +225,8 @@ public class SpellCastActivity extends AppCompatActivity {
                             spell_per_day.castSpell_rank(spell.getRank());
                             spell_per_day.save_list_spell_per_day(getApplicationContext());
                             constructFrag2(fragment2,spell);
+                            Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                            Spell_Title.setOnTouchListener(null);
                             switch_page(panel);
                                View view = (View) findViewById(R.id.page2);
                                 Snackbar.make(view, "Lancement du sort : "+spell.getName(), Snackbar.LENGTH_LONG)
@@ -257,6 +264,53 @@ public class SpellCastActivity extends AppCompatActivity {
             addHsep(page2,7,Color.BLACK);
 
         }
+    }
+
+    private void calcRounds(TextView launching_txt) {
+
+        int sum_action=0;
+        int n_convert=0;
+        int n_complexe=0;
+        int n_simple=0;
+        int n_rapide=0;
+        for (Spell spell : selected_spells){
+            switch (spell.getCast_tim()){
+                case "complexe":
+                    sum_action+=1;
+                    n_complexe+=1;
+                case "simple":
+                    sum_action+=1;
+                    n_simple+=1;
+                case "rapide":
+                    sum_action+=1;
+                    n_rapide+=1;
+            }
+            if (spell.isConverted()) {
+                n_convert += 1;
+            }
+        }
+
+        int n_round = (int) (Math.ceil(sum_action/3.0));
+
+        if (n_convert>n_round){
+            n_round=n_convert;
+        }
+        if (n_complexe>n_round){
+            n_round=n_complexe;
+        }
+        if (n_simple>n_round){
+            n_round=n_simple;
+        }
+        if((int)(Math.ceil(n_rapide/2.0))>n_round){
+            n_round=(int)(Math.ceil(n_rapide/2.0));
+        }
+
+        String part1="Lançement des sorts ";
+        String part2="["+n_round+" round(s)]";
+        launching_txt.setSingleLine(false);
+        SpannableString titre=  new SpannableString(part1+part2);
+        titre.setSpan(new RelativeSizeSpan(0.5f), part1.length(),titre.length(), 0); // set size1
+        launching_txt.setText(titre);
     }
 
     private void addHsep(LinearLayout lay, int e, int Color) {
@@ -321,9 +375,7 @@ public class SpellCastActivity extends AppCompatActivity {
             ligne_texteC3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne3.addView(ligne_texteC3);
  
-            
-            
-            
+
             LinearLayout L2 = new LinearLayout(this);
             L2.setOrientation(LinearLayout.HORIZONTAL);
             fragment2.addView(L2);
@@ -413,8 +465,6 @@ public class SpellCastActivity extends AppCompatActivity {
             txt_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
             fragment2.addView(txt_view);
         }
-
-
     }
 
     private Integer rand(Integer dice) {

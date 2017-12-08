@@ -291,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
 
             for(final Spell spell : rank_list){
                 final CheckBox checkbox=new CheckBox(getApplicationContext());
-
                 checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

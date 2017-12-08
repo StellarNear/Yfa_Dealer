@@ -20,8 +20,12 @@ public class Spell extends AppCompatActivity implements Serializable {
     private String  descr;
     private String  dice_type;
     private String  ori_dice_type;
+    private Double     n_dice_per_lvl;
+    private Double     ori_n_dice_per_lvl;
+    private int     cap_dice;
+    private int     ori_cap_dice;
     private int     n_dice;
-    private int     ori_n_dice;
+
     private String  dmg_type;
     private String  range;
     private String  ori_range;
@@ -44,13 +48,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     private boolean perfect;
     private boolean converted;
 
-    public Spell(String name, String descr, String dice_type, int n_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String name, String descr, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
         this.ori_dice_type=dice_type;
-        this.n_dice=n_dice;
-        this.ori_n_dice=n_dice;
+        this.n_dice_per_lvl=n_dice_per_lvl;
+        this.ori_n_dice_per_lvl=this.n_dice_per_lvl;
+        this.cap_dice=cap_dice;
+        this.ori_cap_dice=cap_dice;
         this.dmg_type=dmg_type;
         this.range=range;
         this.ori_range=range;
@@ -72,12 +78,17 @@ public class Spell extends AppCompatActivity implements Serializable {
         setPerfect(mC);
         this.converted=false;
 
+        calcN_dice();
+
+
         //tester si perfect dans meta si oui popup si il depense perfect on uprank gratos on rend le sort non perfect mais on desactive la box (plus cliquable) peut etre à faire
         // dans spellcastactivity du coup
         // si il dit non comportement normal il paye le rank
 
 
     }
+
+
 
     public Integer getRank(){
         return this.rank;
@@ -94,7 +105,7 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     //faire un get damage qui simplement concatene 4 et d6 mais en cas de truc spéciaux (comme / lvl ou jet maxé *etc il fait le calcul)
     public Integer  getN_dice(){
-        return this.n_dice;
+            return this.n_dice;
     }
 
     public String  getDmg_type(){
@@ -167,7 +178,9 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
     public String getDmg_txt(Context mC) {
+        calcN_dice();
         if (this.n_dice==0) {return "";}
+
         String dmg=this.n_dice+this.dice_type;
 
         if(this.dice_type.contains("*d")){
@@ -177,9 +190,8 @@ public class Spell extends AppCompatActivity implements Serializable {
             return dmg;
         }
 
-        if(this.dice_type.contains("/lvl")){
-            Integer lvl = this.caster_lvl;
-            Integer dmg_int = this.n_dice * lvl;
+        if(this.dice_type.contains("/lvl") && this.cap_dice==0){
+            Integer dmg_int = this.n_dice;
             dmg = String.valueOf(dmg_int);
             return dmg;
         }
@@ -187,22 +199,29 @@ public class Spell extends AppCompatActivity implements Serializable {
         return dmg;
     }
 
-    public String getDmg_txt_addDice(Context mC,int nDiceAdded) {
+    public String getDmg_txt_addDice(Context mC,int selected_rank) {
+        calcN_dice();
         if (this.n_dice==0) {return "";}
-        int n_dice_added = this.n_dice+nDiceAdded;
-        if (n_dice_added>this.caster_lvl) {n_dice_added=this.caster_lvl;} //on peux pas depasser le level de caster
-        String dmg=n_dice_added+this.dice_type;
+
+        int n_dice_add;
+
+         if ((this.caster_lvl*this.n_dice_per_lvl > this.cap_dice +selected_rank*2) && (this.cap_dice !=0)){
+             n_dice_add=this.cap_dice+selected_rank*2;
+        } else {
+             n_dice_add= (int) (this.caster_lvl*this.n_dice_per_lvl);
+        }
+
+        String dmg=n_dice_add+this.dice_type;
 
         if(this.dice_type.contains("*d")){
             Integer integer_dice = to_int(dice_type.replace("*d",""),"Type de dès",mC);
-            Integer dmg_int = n_dice_added * integer_dice;
+            Integer dmg_int = n_dice_add * integer_dice;
             dmg = String.valueOf(dmg_int);
             return dmg;
         }
 
-        if(this.dice_type.contains("/lvl")){
-            Integer lvl = this.caster_lvl;
-            Integer dmg_int = n_dice_added * lvl;
+        if(this.dice_type.contains("/lvl") && this.cap_dice==0){
+            Integer dmg_int = n_dice_add;
             dmg = String.valueOf(dmg_int);
             return dmg;
         }
@@ -297,6 +316,16 @@ public class Spell extends AppCompatActivity implements Serializable {
         Integer lvl_bonus = to_int(lvl_bonus_txt,"NLS bonus",mC);
         Integer caster_lvl_calc=lvl+lvl_bonus;
         this.caster_lvl=caster_lvl_calc;
+    }
+
+    private void calcN_dice() {
+        if (this.n_dice_per_lvl==0){
+            this.n_dice=0;
+        } else if ((this.caster_lvl*this.n_dice_per_lvl > this.cap_dice) && (this.cap_dice !=0)){
+            this.n_dice=this.cap_dice;
+        } else {
+            this.n_dice= (int) (this.caster_lvl*this.n_dice_per_lvl);
+        }
     }
 
     public void setCaster_lvl(int new_level){
@@ -472,11 +501,14 @@ public class Spell extends AppCompatActivity implements Serializable {
         if(free_arg.length>0){free=free_arg[0];}
         if (active) {
             if(!free){this.rank+=2;}
-            this.n_dice += (int)(this.n_dice/2.0);
+            this.n_dice_per_lvl += this.n_dice_per_lvl/2.0;
+            this.cap_dice+=(int) (this.cap_dice/2.0);
         } else {
             if(!free){this.rank-=2;}
-            this.n_dice=ori_n_dice;
+            this.n_dice_per_lvl=ori_n_dice_per_lvl;
+            this.cap_dice=this.ori_cap_dice;
         }
+        calcN_dice();
     }
     public void meta_Extend_descr(Context mC) {
         String descr="Toutes les variables numériques et aléatoires d’un sort bénéficiant d'une extension d’effet augmentent de 50%."+
@@ -564,11 +596,9 @@ public class Spell extends AppCompatActivity implements Serializable {
         if (active) {
             this.save_val+=1;
             if(!free){this.rank+=1;}
-            this.caster_lvl+=1;
         } else {
             this.save_val-=1;
             if(!free){this.rank-=1;}
-            this.caster_lvl-=1;
         }
     }
 
@@ -654,9 +684,13 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
     public void conv_Cap(int selected_rank) {
-        int n_dice_added = this.n_dice+2*selected_rank;
-        if (n_dice_added>this.caster_lvl) {n_dice_added=this.caster_lvl;} //on peux pas depasser le level de caster
-        this.n_dice=n_dice_added;
+        if (this.n_dice!=0 && this.cap_dice!=0) { //pour les sorts sans dégats ou sans cap on fait rien
+
+            int cap_dice_added = this.cap_dice+2 * selected_rank;
+
+            this.cap_dice = cap_dice_added;
+            calcN_dice();
+        }
     }
 
     public void storeOri() {
@@ -664,9 +698,10 @@ public class Spell extends AppCompatActivity implements Serializable {
         this.ori_compoBool=this.compoBool;
         this.ori_dice_type=this.dice_type;
         this.ori_duration=this.duration;
-        this.ori_n_dice=this.n_dice;
+        this.ori_n_dice_per_lvl=this.n_dice_per_lvl;
         this.ori_save_val=this.save_val;
         this.ori_range=this.range;
+        this.ori_cap_dice=cap_dice;
     }
 
 

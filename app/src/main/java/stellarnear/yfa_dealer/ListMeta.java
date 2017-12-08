@@ -818,7 +818,6 @@ public class ListMeta extends AppCompatActivity {
     private void refreshAllTexts(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day,final TextView infos, final Context mC){
         refreshInfos(infos, spell,mC);
         refreshTitle( Spell_Title,spell, spell_per_day, mC);
-        //refreshRound();
     }
 
     private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
