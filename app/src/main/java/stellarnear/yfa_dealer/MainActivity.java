@@ -81,7 +81,18 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (map_spell_check.isEmpty()){
+                Iterator iter = map_spell_check.keySet().iterator();
+                Boolean spell_casted=false;
+
+                while(iter.hasNext()) {
+                    Spell spell = (Spell) iter.next();
+                    CheckBox checkbox = (CheckBox) map_spell_check.get(spell);
+                    if (checkbox.isChecked()) {
+                        spell_casted=true;
+                    }
+                }
+
+                if (spell_casted){
                     builPage2();
                 } else {
                     Toast toast =  Toast.makeText(getApplicationContext(), "Sélectionnes au moins un sort ...", Toast.LENGTH_SHORT);
@@ -392,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SpellCastActivity.class);
             intent.putExtra("selected_spells", (Serializable) sel_list);
             startActivity(intent);
+            overridePendingTransition(R.anim.infromright,R.anim.nothing);
         } else { startActivity(new Intent(this, MainActivity.class));}
     }
 

@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             case android.R.id.home:
                 // app icon in action bar clicked; goto parent activity.
                 startActivity(new Intent(this, MainActivity.class));
+                overridePendingTransition(R.anim.infromleft,R.anim.nothing);
                 return true;
 
             default:

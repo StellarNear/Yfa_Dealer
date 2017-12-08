@@ -75,6 +75,7 @@ public class SpellCastActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(R.anim.infromleft,R.anim.nothing);
             }
         });
 
