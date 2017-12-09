@@ -274,17 +274,21 @@ public class SpellCastActivity extends AppCompatActivity {
         int n_complexe=0;
         int n_simple=0;
         int n_rapide=0;
+        int n_spells=0;
         for (Spell spell : selected_spells){
+            n_spells+=1;
             switch (spell.getCast_tim()){
                 case "complexe":
-                    sum_action+=1;
                     n_complexe+=1;
+                    break;
                 case "simple":
-                    sum_action+=1;
+                    sum_action+=2;
                     n_simple+=1;
+                    break;
                 case "rapide":
                     sum_action+=1;
                     n_rapide+=1;
+                    break;
             }
             if (spell.isConverted()) {
                 n_convert += 1;
@@ -292,23 +296,26 @@ public class SpellCastActivity extends AppCompatActivity {
         }
 
         int n_round = (int) (Math.ceil(sum_action/3.0));
+        n_round+=n_complexe;
 
         if (n_convert>n_round){
             n_round=n_convert;
         }
-        if (n_complexe>n_round){
-            n_round=n_complexe;
-        }
-        if (n_simple>n_round){
-            n_round=n_simple;
-        }
+
         if((int)(Math.ceil(n_rapide/2.0))>n_round){
             n_round=(int)(Math.ceil(n_rapide/2.0));
         }
 
+        if(n_simple>n_round){
+            n_round=n_simple;
+        }
+
+        if((int)(Math.ceil(n_spells/2.0))>n_round){
+            n_round=(int)(Math.ceil(n_spells/2.0));
+        }
+
         String part1="Lançement des sorts ";
         String part2="["+n_round+" round(s)]";
-        launching_txt.setSingleLine(false);
         SpannableString titre=  new SpannableString(part1+part2);
         titre.setSpan(new RelativeSizeSpan(0.5f), part1.length(),titre.length(), 0); // set size1
         launching_txt.setText(titre);

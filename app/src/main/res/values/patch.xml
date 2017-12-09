@@ -21,6 +21,8 @@ V3.0 ! Conversion de sort Out + Sort Convertible journalier + Comptage de rounds
 -Les sorts on maintenant le cap dégats géré dynamiquement
 -Le cap est modifiable via conversion dynamiquement
 -Transitions entres les activités par coulissement overlap
+-Comptage du nombre de rounds nécessaire pour la totalité des sorts séléctionnés
+-Prise en compte des règles de temps de cast : Rapide,Simple,Complexe et des conversions
 ----------------------------------------------------------------------------------
 V2.0a : fix mise en cache des images
 
@@ -91,7 +93,6 @@ Tout les dès de chaque élément OK
 ----------------------------------------------------------------------------------
 To do ideas :
 - mieux faire l'alignement dynamique de la grille de dès dans dmg_det
-- contrôle du lancement de plus que deux action simple en un round ? comptabilisé les round nécessaires aux lancements"
     </string>
 
 </resources>
