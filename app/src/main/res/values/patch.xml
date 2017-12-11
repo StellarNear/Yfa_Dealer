@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v3.0"</string>
+    <string name="version">"v3.1"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V3.1
+-Fix pour que le bouton back du téléphone soit géré avec animation et refresh par l'application
+----------------------------------------------------------------------------------
 V3.0 ! Conversion de sort Out + Sort Convertible journalier + Comptage de rounds
 -Creation en cascade des layouts de selection dans un nouvel objet Conversion
 -Refresh et transert des informations entres les couches de conversion

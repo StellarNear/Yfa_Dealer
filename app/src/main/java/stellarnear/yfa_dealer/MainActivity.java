@@ -54,17 +54,19 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
     Map<Spell,CheckBox> map_spell_check=new LinkedHashMap<Spell,CheckBox>();
     SpellPerDay spell_per_day;
+    boolean shouldExecuteOnResume;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        shouldExecuteOnResume = false;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setBackgroundResource(R.drawable.banner_background);
         setSupportActionBar(toolbar);
 
-        this.spell_per_day=new SpellPerDay(getApplicationContext());
 
+        this.spell_per_day=new SpellPerDay(getApplicationContext());
         this.spell_per_day.load_list_spell_per_day(getApplicationContext());
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean compact=settings.getBoolean("compact_list",getResources().getBoolean(R.bool.compact_list_switch_def));
@@ -101,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(shouldExecuteOnResume){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            overridePendingTransition(R.anim.infromleft,R.anim.nothing);
+        } else{
+            shouldExecuteOnResume = true;
+        }
     }
 
     private void buildPage1Compact() {

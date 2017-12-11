@@ -154,7 +154,7 @@ public class SpellCastActivity extends AppCompatActivity {
             makeInfos(infos,spell);
             fragment1.addView(infos);
 
-            makeTitle(Spell_Title,infos, spell, spell_per_day, panel ,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
+            makeTitle(launching_txt,Spell_Title,infos, spell, spell_per_day, panel ,getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
 
             addHsep(fragment1,4,Color.GRAY);
 
@@ -641,7 +641,7 @@ public class SpellCastActivity extends AppCompatActivity {
     }
     
 
-    private void makeTitle(final TextView Spell_Title, final TextView infos, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel,final Context mC) {
+    private void makeTitle(final TextView launching_txt, final TextView Spell_Title, final TextView infos, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel,final Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
@@ -684,6 +684,7 @@ public class SpellCastActivity extends AppCompatActivity {
                                                 new ConvertView(panel.getNextView(), spell, spell_per_day, Spell_Title, infos, panel, SpellCastActivity.this); //construit le fragement de vue de la conversion
                                                 uncheckMeta(map_spell_listMetas.get(spell));
                                                 spell.setConverted(true);
+                                                calcRounds(launching_txt);
                                                 Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                                                 Spell_Title.setOnTouchListener(null);
                                                 switch_page(panel);
