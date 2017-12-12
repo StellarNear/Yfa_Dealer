@@ -3,6 +3,7 @@ package stellarnear.yfa_dealer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapRegionDecoder;
@@ -78,6 +79,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.infromleft,R.anim.nothing);
             }
         });
+
+        if (getResources().getConfiguration().orientation==1){ //lock de l'ecran pour éviter des cast et reset étranges
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
 
         Intent i = getIntent();
         selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv

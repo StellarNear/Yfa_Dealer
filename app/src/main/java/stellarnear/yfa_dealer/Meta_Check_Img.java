@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by jchatron on 29/11/2017.
  */
 
-class Meta_Check_Img extends AppCompatActivity {
+public class Meta_Check_Img extends AppCompatActivity {
     CheckBox checkbox;
     ImageButton ImgBu;
 

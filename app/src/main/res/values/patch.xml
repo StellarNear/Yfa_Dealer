@@ -8,6 +8,8 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
 <string name="patch_list">"----------------------------------------------------------------------------------
 Patch note V3.1
 -Fix pour que le bouton back du téléphone soit géré avec animation et refresh par l'application
+-Fix vérrouillage de l'écran pendant le lancement des sorts pour éviter d'avoir des reset de sorts
+-Refresh du calcul des rounds lors des conversions
 ----------------------------------------------------------------------------------
 V3.0 ! Conversion de sort Out + Sort Convertible journalier + Comptage de rounds
 -Creation en cascade des layouts de selection dans un nouvel objet Conversion

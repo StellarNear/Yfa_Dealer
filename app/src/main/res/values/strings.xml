@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">"Yfa dealer"</string>
+    <string name="app_name">"Yfa Dealer"</string>
     <string name="action_settings">"Paramètres"</string>
     <string name="nls_val_def">"22"</string>
     <string name="charisme_def">"14"</string>
