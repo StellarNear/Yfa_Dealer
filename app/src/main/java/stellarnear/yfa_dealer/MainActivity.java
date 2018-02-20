@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                 while(iter.hasNext()) {
                     Spell spell = (Spell) iter.next();
-                    CheckBox checkbox = (CheckBox) map_spell_check.get(spell);
+                    CheckBox checkbox = map_spell_check.get(spell);
                     if (checkbox.isChecked()) {
                         spell_casted=true;
                     }
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
             final TextView Tier= new TextView(this);
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.BL_TR,
-                    new int[] {0xFF585858,0xFFE6E6E6});
+                    new int[] {0xFFd9d9d9,0xFFFFFFFF});
             gd.setCornerRadius(0f);
             Tier.setBackground(gd);
 
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
 
         while(iter.hasNext()) {
             Spell spell=(Spell)iter.next();
-            CheckBox checkbox=(CheckBox)map_spell_check.get(spell);
+            CheckBox checkbox= map_spell_check.get(spell);
             if (checkbox.isChecked()){
                 if (spell.getN_cast()>1){
                     multi_spell=true;
@@ -390,9 +390,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     private void builPage2() {
         List<Spell> sel_list= new ArrayList<Spell>();
         Iterator iter = map_spell_check.keySet().iterator();
@@ -400,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
 
         while(iter.hasNext()) {
             Spell spell=(Spell)iter.next();
-            CheckBox checkbox=(CheckBox)map_spell_check.get(spell);
+            CheckBox checkbox= map_spell_check.get(spell);
             if (checkbox.isChecked()){
                 sel_list.add(spell);
                 if (spell.getN_cast()>1){
@@ -413,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         }
         
         if (spell_casted) {
-            Intent intent = new Intent(getApplicationContext(), SpellCastActivity.class);
+            Intent intent = new Intent(this, SpellCastActivity.class);
             intent.putExtra("selected_spells", (Serializable) sel_list);
             startActivity(intent);
             overridePendingTransition(R.anim.infromright,R.anim.nothing);

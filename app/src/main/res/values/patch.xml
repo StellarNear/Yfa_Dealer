@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v3.1"</string>
+    <string name="version">"v3.2"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
-Patch note V3.1
+Patch notes V3.2
+-Ajout d'un écran de chargement
+-L'ombre du bouton afficher les dès détail de dégats n'est plus coupée
+-Allégement des couleurs dans la page lancement de sorts
+----------------------------------------------------------------------------------
+Patch notes V3.1
 -Fix pour que le bouton back du téléphone soit géré avec animation et refresh par l'application
 -Fix vérrouillage de l'écran pendant le lancement des sorts pour éviter d'avoir des reset de sorts
 -Refresh du calcul des rounds lors des conversions
@@ -41,30 +46,30 @@ Nouvelles fonctionnalités :
 -Lancement en cours liste les sorts en cours quand n_spell>1
 -Organisation alphabétique des sorts
 ----------------------------------------------------------------------------------
-Patch note V1.55
+Patch notes V1.55
 -auto détection du tier max (page1)
 -sauvegarde du n_sort_per_day_start (celui du nombre par jour n'est plus directement issu du xml mais bien depuis les settings)
 ----------------------------------------------------------------------------------
-Patch note V1.51
+Patch notes V1.51
 -fix arrêt du temps pas possible dans extension durée
 ----------------------------------------------------------------------------------
-Patch note V1.5
+Patch notes V1.5
 -ajout des meta : delay , extend durée et flèche naturalisée
 -smart picker des meta pour pas avoir de méta inutile
 ----------------------------------------------------------------------------------
-Patch note V1.4
+Patch notes V1.4
 -ajout spell rang 0
 -ajout les d3 (froid)
 ----------------------------------------------------------------------------------
-Patch note V1.3
+Patch notes V1.3
 -perfection magique fonctionnelle
 -perfection magique dynamiquement maximisée sur les métamagie stackable
 ----------------------------------------------------------------------------------
-Patch note V1.1a-b-c
+Patch notes V1.1a-b-c
 -UI fixing for cross tel
 -change def_val spell_per_day
 ----------------------------------------------------------------------------------
-Patch note V1.1
+Patch notes V1.1
 -bouton lancement page1>2 en haut
 -multi lancement de sort et métamagie
 -couleur checkbox pas transparente page 2

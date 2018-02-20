@@ -344,7 +344,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
     private void constructFrag2(LinearLayout fragment2,final Spell spell) {
         fragment2.removeAllViews();
-
+        fragment2.setClipChildren(false);
         if((spell.getDice_typ().contains("d3")||spell.getDice_typ().contains("d4")||spell.getDice_typ().contains("d6")||spell.getDice_typ().contains("d8"))&&(!spell.getDice_typ().contains("*d"))){
             LinearLayout Colonne1 = new LinearLayout(this);
             Colonne1.setOrientation(LinearLayout.VERTICAL);
