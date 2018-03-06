@@ -107,7 +107,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
 
             final ViewSwitcher panel = new ViewSwitcher(this);
-            Animation outtoLeft = new TranslateAnimation(  
+            Animation outtoLeft = new TranslateAnimation(
                     Animation.RELATIVE_TO_PARENT, 0.0f,
                     Animation.RELATIVE_TO_PARENT, -1.0f,
                     Animation.RELATIVE_TO_PARENT, 0.0f,
@@ -228,7 +228,7 @@ public class SpellCastActivity extends AppCompatActivity {
                         seekBar.setProgress(100);
                         SpellPerDay spell_per_day=new SpellPerDay(getApplicationContext());
                         spell_per_day.load_list_spell_per_day(getApplicationContext());
-                        
+
                         if(spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
                             spell_per_day.castSpell_rank(spell.getRank());
                             spell_per_day.save_list_spell_per_day(getApplicationContext());
@@ -242,7 +242,7 @@ public class SpellCastActivity extends AppCompatActivity {
                         } else {
                             seekBar.setProgress(0);
                         }
-                        
+
                     } else {
                         seekBar.setProgress(0);
                     }
@@ -362,7 +362,7 @@ public class SpellCastActivity extends AppCompatActivity {
             Colonne4.setOrientation(LinearLayout.VERTICAL);
             Colonne4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
             Colonne4.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-            
+
             fragment2.addView(Colonne1);
             addVsep(fragment2,4,Color.GRAY);
             fragment2.addView(Colonne2);
@@ -370,52 +370,52 @@ public class SpellCastActivity extends AppCompatActivity {
             fragment2.addView(Colonne3);
             addVsep(fragment2,4,Color.GRAY);
             fragment2.addView(Colonne4);
-            
+
             TextView ligne_texteC1= new TextView(this);
             ligne_texteC1.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
             ligne_texteC1.setText("Dégâts :");
             ligne_texteC1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne1.addView(ligne_texteC1);
-            
+
             TextView ligne_texteC2= new TextView(this);
             ligne_texteC2.setGravity(Gravity.CENTER_HORIZONTAL |Gravity.TOP);
             ligne_texteC2.setText("[Plage](%) :");
             ligne_texteC2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne2.addView(ligne_texteC2);
-            
+
             TextView ligne_texteC3= new TextView(this);
             ligne_texteC3.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
             ligne_texteC3.setText("Probabilité de\ndépassement :");
             ligne_texteC3.setSingleLine(false);
             ligne_texteC3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne3.addView(ligne_texteC3);
- 
+
 
             LinearLayout L2 = new LinearLayout(this);
             L2.setOrientation(LinearLayout.HORIZONTAL);
             fragment2.addView(L2);
             String[] all_text_dmg;
             all_text_dmg = calculDmg(spell);
-            
+
             TextView dmg_sum_txt=new TextView(this);
             dmg_sum_txt.setText(Html.fromHtml(all_text_dmg[0]));
             dmg_sum_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
             dmg_sum_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
             Colonne1.addView(dmg_sum_txt);
-            
+
            TextView dmg_range_txt=new TextView(this);
             dmg_range_txt.setText(Html.fromHtml(all_text_dmg[1]));
             dmg_range_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
             dmg_range_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             Colonne2.addView(dmg_range_txt);
-            
+
             TextView dmg_range_percent_txt=new TextView(this);
             dmg_range_percent_txt.setText(Html.fromHtml(all_text_dmg[2]));
             dmg_range_percent_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
             dmg_range_percent_txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             Colonne2.addView(dmg_range_percent_txt);
-            
-                 
+
+
             TextView dmg_proba_txt=new TextView(this);
             dmg_proba_txt.setText(Html.fromHtml(all_text_dmg[3]));
             dmg_proba_txt.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
@@ -447,7 +447,7 @@ public class SpellCastActivity extends AppCompatActivity {
             txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             txt_view.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP);
             enLigne.addView(txt_view);
-   
+
             String color="<font color=#000000>";
             switch (spell.getDmg_type()){
                     case ("acide"):
@@ -467,7 +467,7 @@ public class SpellCastActivity extends AppCompatActivity {
                         break;
             }
             TextView dmg_view= new TextView(this);
-            
+
             dmg_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
             dmg_view.setGravity(Gravity.CENTER_HORIZONTAL);
             dmg_view.setText(Html.fromHtml(color+spell.getDmg_txt(getApplicationContext())+"</font>"));
@@ -550,7 +550,7 @@ public class SpellCastActivity extends AppCompatActivity {
         Double proba=100.0-100.0*tableProba(nd3,nd4,nd6,nd8,dmg_sum);
 
         String text_dmg,text_range,text_dmg_percent,text_proba;
-  
+
         String color="<font color=#000000>";
         switch (spell.getDmg_type()){
             case ("acide"):
@@ -568,14 +568,14 @@ public class SpellCastActivity extends AppCompatActivity {
             case ("aucun"):
                 color="<font color=#A4A4A4>";
                 break;
-                
+
         }
 
         text_dmg=color+dmg_sum+"</font>";
         text_range=color+"["+dmg_min+"-"+dmg_max+"]</font>";
         text_dmg_percent=color+"("+percent +"%)</font>";
         text_proba=color+String.format("%.02f", proba) +"%</font>";
-        
+
         return new String[]{text_dmg, text_range, text_dmg_percent, text_proba};
     }
 
@@ -587,7 +587,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
 
     private void makeInfos(final TextView infos,final Spell spell) {
-        
+
         String text="";
         Integer n_inf=0;
         if(!spell.getDmg_txt(getApplicationContext()).equals("")){
@@ -608,19 +608,19 @@ public class SpellCastActivity extends AppCompatActivity {
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
-        
+
         if(!spell.getCast_tim().equals("")){
             text+="Cast : "+ spell.getCast_tim()+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
-        
+
          if(!spell.getDuration(getApplicationContext()).equals("")){
             text+="Durée : "+spell.getDuration(getApplicationContext())+", ";
             n_inf+=1;
         }
         if(n_inf==3){text+="\n";n_inf=0;}
-        
+
         if(!spell.getRM().equals("")){
             text+="RM : "+spell.getRM()+", ";
             n_inf+=1;
@@ -646,7 +646,7 @@ public class SpellCastActivity extends AppCompatActivity {
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         infos.setTextColor(Color.GRAY);
     }
-    
+
 
     private void makeTitle(final TextView launching_txt, final TextView Spell_Title, final TextView infos, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel,final Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -656,7 +656,7 @@ public class SpellCastActivity extends AppCompatActivity {
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
-        
+
         if(spell_per_day.checkRank_available(spell.getRank(),getApplicationContext())){
             titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
         } else {
@@ -694,6 +694,14 @@ public class SpellCastActivity extends AppCompatActivity {
                                                 calcRounds(launching_txt);
                                                 Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                                                 Spell_Title.setOnTouchListener(null);
+                                                Spell_Title.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        Toast toast = Toast.makeText(mC, spell.getDescr(), Toast.LENGTH_LONG);
+                                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                                        toast.show();
+                                                    }
+                                                });
                                                 switch_page(panel);
                                             } else {
                                                 String descr="Il n'y a pas d'emplacement de sort convertible de disponible...";
@@ -702,15 +710,36 @@ public class SpellCastActivity extends AppCompatActivity {
                                                 toast.show();
                                                 Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                                                 Spell_Title.setOnTouchListener(null);
+                                                Spell_Title.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        Toast toast = Toast.makeText(mC, spell.getDescr(), Toast.LENGTH_LONG);
+                                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                                        toast.show();
+                                                    }
+                                                });
                                             }
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                         }}).show();
                             return true;
+                        } else {
+                            Toast toast = Toast.makeText(mC, spell.getDescr(), Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL,0,0);
+                            toast.show();
                         }
                     }
                     return true;
+                }
+            });
+        } else {
+            Spell_Title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(mC, spell.getDescr(), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
                 }
             });
         }
@@ -721,42 +750,6 @@ public class SpellCastActivity extends AppCompatActivity {
         for (CheckBox check:checkBoxes){
             check.setChecked(false);
         }
-    }
-
-    private Drawable changeColor(int img_id, String color) {
-        Drawable img = getResources().getDrawable(img_id);
-        int iColor = Color.parseColor(color);
-
-        int red   = (iColor & 0xFF0000) / 0xFFFF;
-        int green = (iColor & 0xFF00) / 0xFF;
-        int blue  = iColor & 0xFF;
-
-        float[] matrix = { 0, 0, 0, 0, red,
-                0, 0, 0, 0, green,
-                0, 0, 0, 0, blue,
-                0, 0, 0, 1, 0 };
-
-        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
-        img.setColorFilter(colorFilter);
-        return img;
-    }
-
-    private Drawable changeColor(int img_id, int color) {
-        Drawable img = getResources().getDrawable(img_id);
-        int iColor = color;
-
-        int red   = (iColor & 0xFF0000) / 0xFFFF;
-        int green = (iColor & 0xFF00) / 0xFF;
-        int blue  = iColor & 0xFF;
-
-        float[] matrix = { 0, 0, 0, 0, red,
-                0, 0, 0, 0, green,
-                0, 0, 0, 0, blue,
-                0, 0, 0, 1, 0 };
-
-        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
-        img.setColorFilter(colorFilter);
-        return img;
     }
 
     public void setSpellTitleColor(TextView text,Spell spell) {
