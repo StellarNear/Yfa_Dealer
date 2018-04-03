@@ -629,6 +629,17 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     </spell>
 
     <spell>
+        <name>Absorption d'énergie</name>
+        <descr>Attaque de contact à distance. En cas de succès, la cible acquiert 2d4 niveaux négatifs temporaires. Vingt-quatre heures après avoir été affecté par le sort, le sujet doit effectuer un jet de Vigueur (contre le DD du sort) par niveau négatif acquis. A chaque jet de sauvegarde réussi, un niveau négatif disparaît sans plus de conséquences. En cas d’échec, le niveau négatif devient permanent.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <save_type>vig[partiel]</save_type>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
         <name>Arrêt du temps</name>
         <descr>Le personnage peut agir pendant 1d4+1 rounds de temps apparent. Feu, froid, gaz et autres, qu’ils soient magiques ou non, l’affectent toujours. Tant que l’arrêt du temps dure, les autres créatures sont invulnérables aux attaques et aux sorts du personnage. Tant que l’arrêt du temps dure, les autres créatures sont invulnérables aux attaques et aux sorts du personnage.</descr>
         <range>personnelle</range>

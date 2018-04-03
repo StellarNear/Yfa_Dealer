@@ -11,7 +11,7 @@
     <bool name="intense_switch_def">true</bool>
     <bool name="perfect_desint_def">true</bool>
     <bool name="enchant_arrow_switch_def">true</bool>
-    <bool name="delay_switch_def">false</bool>
+    <bool name="delay_switch_def">true</bool>
     <bool name="extension_dura_switch_def">true</bool>
     <bool name="compact_list_switch_def">false</bool>
 </resources>

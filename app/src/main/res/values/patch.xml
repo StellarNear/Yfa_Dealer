@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v3.3"</string>
+    <string name="version">"v3.4"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch notes V3.4
+-Ajout du sort Absorption d'energie
+-Mise à jour des paramètres défaut pour lvl 23
+----------------------------------------------------------------------------------
 Patch notes V3.3
 -Ajout d'un affichage de tooltip de description du sort en cliquant sur son nom (en gardant l'event click de la conversion de sort)
 ----------------------------------------------------------------------------------
