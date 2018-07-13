@@ -64,8 +64,19 @@
         style="?android:attr/borderlessButtonStyle"
         android:gravity="center_vertical"
         tools:ignore="ContentDescription"
-
           />
+        <ImageButton
+            android:id="@+id/fabEquip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_binoculars_white"
+            style="?android:attr/borderlessButtonStyle"
+            android:gravity="center_vertical"
+            tools:ignore="ContentDescription"
+            />
     </RelativeLayout>
 
 

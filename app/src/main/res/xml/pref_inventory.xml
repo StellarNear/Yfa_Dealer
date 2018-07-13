@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceScreen
+        android:key="show_equipment"
+        android:icon="@drawable/ic_binoculars"
+        android:summary="Affiche l'inventaire du personnage"
+        android:title="Examiner l'équipement" />
+
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="0"
+        android:key="money_plat"
+        android:title="Nombre de pièces de platine"
+        android:icon="@drawable/ic_platinium_coin"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="Valeur : %s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="0"
+        android:key="money_gold"
+        android:title="Nombre de pièces d'or"
+        android:icon="@drawable/ic_gold_coin"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="Valeur : %s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="0"
+        android:key="money_silver"
+        android:icon="@drawable/ic_silver_coin"
+        android:title="Nombre de pièces d'argent"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="Valeur : %s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="0"
+        android:icon="@drawable/ic_copper_coin"
+        android:key="money_copper"
+        android:title="Nombre de pièces de cuivre"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="Valeur : %s"/>
+
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:key="bag_unequipped_list"
+        android:icon="@drawable/ic_bag"
+        android:summary="Objets non équipés :\n%s"
+        android:title="Gestion des objets du sac"   />
+
+</PreferenceScreen>

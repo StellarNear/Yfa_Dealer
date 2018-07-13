@@ -3,4 +3,7 @@
     <integer name="staff_nkill_lightning_def">20</integer>
     <integer name="staff_nkill_frost_def">0</integer>
     <integer name="staff_nkill_fire_def">0</integer>
+
+    <integer name="percent_fullscreen_customdialog">90</integer>
+    <integer name="percent_fullscreen_customdialog_equipment_list">80</integer>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimaryLight">#d5e7f6</color>
     <color name="colorPrimary">#297DC7</color>
     <color name="colorPrimaryDark">#020142</color>
     <color name="colorAccent">#000000</color>
@@ -22,6 +23,14 @@
     <color name="transparent">#80000000</color>
     <color name="conversion">#088A29</color>
 
+    <color name="end_gradient_button_ok">#004d00</color>
+    <color name="start_gradient_button_ok">#0FBD40</color>
 
+    <color name="information">#81BEF7</color>
+    <color name="information_light">#d4e9ff</color>
+
+
+    <color name="start_gradient_money_inventory">@android:color/darker_gray</color>
+    <color name="end_gradient_money_inventory">#000000</color>
 
 </resources>

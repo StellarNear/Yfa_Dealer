@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<records>
+
+    <!-- SLOTS -->
+    <equipped_slot>
+        <name>Bandage d’Aldrassil</name>
+        <descr>+ 2 jet d’attaque,+1d8+2 dégats</descr>
+        <imgId>equipment_aldrassil</imgId>
+        <slotId>mainhand_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Amulette des poings invincibles (+5)</name>
+        <descr>+5 jet d’attaque et dégats</descr>
+        <value>100 000 po</value>
+        <imgId>equipment_neck</imgId>
+        <slotId>neck_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Anneau de régénération</name>
+        <descr>+1 pv / round , les membres repoussent, immunise aux saignements</descr>
+        <value>90000 po</value>
+        <imgId>equipment_regen_ring</imgId>
+        <slotId>ring2_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Anneau Aaleilis (l’exaltée)</name>
+        <descr>Premier éveil: +10%xp , Posture faucon en permanence</descr>
+        <imgId>equipment_aaleilis</imgId>
+        <slotId>ring1_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Brassard de consitution</name>
+        <descr>+4 constitution</descr>
+        <imgId>equipment_wrist</imgId>
+        <slotId>wrist_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Bottes de rapidité</name>
+        <descr>+1 réflexe +3 CA
+
++1 attaque une fois par jour</descr>
+        <imgId>equipment_feet</imgId>
+        <slotId>feet_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Cape de resistances draconique</name>
+        <descr>+5 à tout les jet de resistances</descr>
+        <value>25 000 po</value>
+        <imgId>equipment_cloak</imgId>
+        <slotId>shoulder_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Toge de défense draconique</name>
+        <descr>50 % de chance de rater la confirmation des critiques
+
+1/j : 21 de resistance degat physique et energie destruc. pendant 1 round (action libre)</descr>
+        <imgId>equipment_armor</imgId>
+        <slotId>body_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Bandeau d’inspiration </name>
+        <descr>+4 Sagesse</descr>
+        <imgId>equipment_headband</imgId>
+        <slotId>face_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Ceinture de force de geant </name>
+        <descr>+4 Force</descr>
+        <value>16 000 po</value>
+        <imgId>equipment_belt</imgId>
+        <slotId>belt_slot</slotId>
+    </equipped_slot>
+
+
+    <!-- SLOTLESS -->
+
+    <equipped_slotless>
+        <name>Pierres d'ioun de dextérité</name>
+        <descr>+2 dex</descr>
+        <value>8 000 po</value>
+        <imgId>equipment_ioun_dex</imgId>
+    </equipped_slotless>
+    <equipped_slotless>
+        <name>Pierres d'ioun d'intuition</name>
+        <descr>+1 CA</descr>
+        <value>5 000 po</value>
+        <imgId>equipment_ioun_ca</imgId>
+    </equipped_slotless>
+    <equipped_slotless>
+        <name>Pierres d'ioun</name>
+        <descr>+1 CA</descr>
+        <value>5 000 po</value>
+        <imgId>equipment_ioun_ca</imgId>
+    </equipped_slotless>
+    <equipped_slotless>
+        <name>Griffe du premier dragon du temps</name>
+        <descr>Tout dragon est amical</descr>
+        <imgId>equipment_dragonclaw</imgId>
+    </equipped_slotless>
+
+
+    <!-- BAG -->
+    <unequipped>diamant de ouf[2000 po]
+vielle chaussette(ca pue)[10pc]
+super potion rarissime[7 000 po](aucune idée de ce qu'elle fait)
+poudre d'aluminium(ca brille)[1 po]
+un parcheminn[10pa]
+un autre parchemin[10pa]</unequipped>
+</records>
+

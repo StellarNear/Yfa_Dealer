@@ -21,6 +21,12 @@
         android:summary="Valeurs de base du nombre de sorts journaliers par rang"/>
 
     <header
+        android:fragment="stellarnear.yfa_dealer.SettingsActivity$InventoryPreferenceFragment"
+        android:icon="@drawable/ic_locked_chest"
+        android:summary="Equipement et trésorerie"
+        android:title="Inventaire" />
+
+    <header
         android:fragment="stellarnear.yfa_dealer.SettingsActivity$StaffPreferenceFragment"
         android:icon="@drawable/ic_staff"
         android:title="Glaedäyes Ah-Yaedeyes"
