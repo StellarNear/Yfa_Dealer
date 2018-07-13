@@ -3,108 +3,133 @@
 
     <!-- SLOTS -->
     <equipped_slot>
-        <name>Bandage d’Aldrassil</name>
-        <descr>+ 2 jet d’attaque,+1d8+2 dégats</descr>
-        <imgId>equipment_aldrassil</imgId>
+        <name>Glaedäyes Ah-Yaedeyes</name>
+        <descr>Premier eveil : + 2 charisme</descr>
+        <imgId>equipment_glad</imgId>
         <slotId>mainhand_slot</slotId>
     </equipped_slot>
     <equipped_slot>
-        <name>Amulette des poings invincibles (+5)</name>
-        <descr>+5 jet d’attaque et dégats</descr>
-        <value>100 000 po</value>
+        <name>Bandeau d’intelligence</name>
+        <descr>+4 intelligence</descr>
+        <imgId>equipment_headband</imgId>
+        <value>16000po</value>
+        <slotId>face_slot</slotId>
+    </equipped_slot>
+
+    <equipped_slot>
+        <name>Brassard de dexterité</name>
+        <descr>+2 dexterité</descr>
+        <imgId>equipment_wrist</imgId>
+        <value>4000po</value>
+        <slotId>wrist_slot</slotId>
+    </equipped_slot>
+
+    <equipped_slot>
+        <name>Gant d'estimation</name>
+        <descr>+3 aux jets d'estimation</descr>
+        <imgId>equipment_gloves</imgId>
+        <slotId>hand_slot</slotId>
+    </equipped_slot>
+
+    <equipped_slot>
+        <name>Anneau de contrôle du feu angélique</name>
+        <descr></descr>
+        <imgId>equipment_fire_ring</imgId>
+        <value>200000po</value>
+        <slotId>ring1_slot</slotId>
+    </equipped_slot>
+
+    <equipped_slot>
+        <name>Anneau d'immunité à la foudre</name>
+        <descr></descr>
+        <imgId>equipment_thunder_ring</imgId>
+        <value>280000po</value>
+        <slotId>ring2_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Bottes elfiques</name>
+        <descr>+5 en discretion</descr>
+        <imgId>equipment_feet</imgId>
+        <value>2500po</value>
+        <slotId>feet_slot</slotId>
+    </equipped_slot>
+    <equipped_slot>
+        <name>Cape de charisme</name>
+        <descr>+6 charisme</descr>
+        <imgId>equipment_cloak</imgId>
+        <value>90000po</value>
+        <slotId>shoulder_slot</slotId>
+    </equipped_slot>
+
+    <equipped_slot>
+        <name>Main miraculeuse + anneau +2CA +2jet attaque</name>
+        <descr></descr>
+        <value>8000po+18000po</value>
         <imgId>equipment_neck</imgId>
         <slotId>neck_slot</slotId>
     </equipped_slot>
     <equipped_slot>
-        <name>Anneau de régénération</name>
-        <descr>+1 pv / round , les membres repoussent, immunise aux saignements</descr>
-        <value>90000 po</value>
-        <imgId>equipment_regen_ring</imgId>
-        <slotId>ring2_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Anneau Aaleilis (l’exaltée)</name>
-        <descr>Premier éveil: +10%xp , Posture faucon en permanence</descr>
-        <imgId>equipment_aaleilis</imgId>
-        <slotId>ring1_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Brassard de consitution</name>
-        <descr>+4 constitution</descr>
-        <imgId>equipment_wrist</imgId>
-        <slotId>wrist_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Bottes de rapidité</name>
-        <descr>+1 réflexe +3 CA
-
-+1 attaque une fois par jour</descr>
-        <imgId>equipment_feet</imgId>
-        <slotId>feet_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Cape de resistances draconique</name>
-        <descr>+5 à tout les jet de resistances</descr>
-        <value>25 000 po</value>
-        <imgId>equipment_cloak</imgId>
-        <slotId>shoulder_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Toge de défense draconique</name>
-        <descr>50 % de chance de rater la confirmation des critiques
-
-1/j : 21 de resistance degat physique et energie destruc. pendant 1 round (action libre)</descr>
-        <imgId>equipment_armor</imgId>
-        <slotId>body_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Bandeau d’inspiration </name>
-        <descr>+4 Sagesse</descr>
-        <imgId>equipment_headband</imgId>
-        <slotId>face_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
-        <name>Ceinture de force de geant </name>
-        <descr>+4 Force</descr>
-        <value>16 000 po</value>
+        <name>Centuron de consitution</name>
+        <descr>+8 consitution</descr>
+        <value>640000po</value>
         <imgId>equipment_belt</imgId>
         <slotId>belt_slot</slotId>
     </equipped_slot>
 
-
     <!-- SLOTLESS -->
 
     <equipped_slotless>
-        <name>Pierres d'ioun de dextérité</name>
-        <descr>+2 dex</descr>
-        <value>8 000 po</value>
-        <imgId>equipment_ioun_dex</imgId>
+        <name>Pierre porte bonheur</name>
+        <descr>+1 jets de sauvegarde</descr>
+        <imgId>equipment_lucky_stone</imgId>
+        <value>20000po</value>
     </equipped_slotless>
     <equipped_slotless>
-        <name>Pierres d'ioun d'intuition</name>
-        <descr>+1 CA</descr>
-        <value>5 000 po</value>
-        <imgId>equipment_ioun_ca</imgId>
+        <name>Pierre ioun orange</name>
+        <descr>+1 niveau de lanceur de sort</descr>
+        <imgId>equipment_orange_ioun</imgId>
+        <value>30000po</value>
     </equipped_slotless>
     <equipped_slotless>
-        <name>Pierres d'ioun</name>
-        <descr>+1 CA</descr>
-        <value>5 000 po</value>
-        <imgId>equipment_ioun_ca</imgId>
+        <name>Graine de karma et bénédiction</name>
+        <descr>Le personnage peut lancer bénédiction.</descr>
+        <value>9600po</value>
     </equipped_slotless>
-    <equipped_slotless>
-        <name>Griffe du premier dragon du temps</name>
-        <descr>Tout dragon est amical</descr>
-        <imgId>equipment_dragonclaw</imgId>
-    </equipped_slotless>
-
 
     <!-- BAG -->
-    <unequipped>diamant de ouf[2000 po]
-vielle chaussette(ca pue)[10pc]
-super potion rarissime[7 000 po](aucune idée de ce qu'elle fait)
-poudre d'aluminium(ca brille)[1 po]
-un parcheminn[10pa]
-un autre parchemin[10pa]</unequipped>
+    <unequipped>Sac de couchage
+        3 rations
+        outre à eau
+        Livre d'alchimie
+        Laboratoire portable
+        corde 12m
+        1 tenue de soirée
+        1 fut d'hydromel
+        140m² de peau translucide(mue)
+        1 fiole pleine de liquide verdâtre
+        1 plume de pyrohydre
+        1 amulette de détection de pensée
+        1 main miraculeuse
+        1 baguette d'identification (5 charges/j)
+        1 amulette de soin modéré(2d8/j)
+        1 amulette de résistance à la canalisation(maudit)
+        10 racines d'arbre-lune
+        1 baguettes de soins importants(50 charges)
+        1 potion vol
+        1 potion lumière du jour
+        5 potion grâce féline DEX
+        1 potion acuité visuelle
+        5 potion force du taureau FOR+4
+        4 potion splendeur de l'aigle CHA+4
+        1 potion sagesse du hibou SAG+4
+        1 potion potion de marche sur l'eau
+        2 potion soin léger
+        9 potion soin moyen
+        1 potion respiration sous l'eau
+        1 parchemin TP suprême
+        1 parchemin dissipation malédictions
+        4 parchemin détection du poison
+        1 parchemin éclair multiple
+        2 parchemin invisibilité suprême</unequipped>
 </records>
 

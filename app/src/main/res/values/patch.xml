@@ -17,7 +17,11 @@ Patch notes V4.0
 -Création d'icones de paramètre pour : Inventaire, Monnaie, Examiner equipement
 -Popup avec liste défilante d'objets pour les objets sans empalcement
 -Ajout d'un affichage du sac + monnaie (calul des grosses sommes k,M,G)
--Ajout d'une gestion du sac par édition d'une liste de texte simple qui est interprétée symboles () pour la description [] pour la valeur et {} pour un tag ; chaque nouvelle ligne est un objet
+-Ajout d'une gestion du sac par édition d'une liste de texte simple qui est interprété
+    Chaque nouvelle ligne est un nouvel objet
+    -symboles () pour la description
+    -[] pour la valeur
+    -{} pour un tag
 -Affichage des sommes (en po) par tag sur la liste du sac
 ----------------------------------------------------------------------------------
 Patch notes V3.5
