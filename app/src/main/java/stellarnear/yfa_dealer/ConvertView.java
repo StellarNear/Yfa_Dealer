@@ -153,7 +153,7 @@ public class ConvertView extends AppCompatActivity {
         convert_slots.removeAllViews();
         list_check_rank=new ArrayList<CheckBox>();
         int max_tier=0;
-        for(int i=0;i<=4;i++){
+        for(int i=0;i<=5;i++){
             try{
                 if (spell_per_day.checkConvertible_available(i)) {max_tier=i;}
             }catch (Exception e){ }

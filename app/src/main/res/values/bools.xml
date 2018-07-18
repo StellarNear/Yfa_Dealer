@@ -14,4 +14,5 @@
     <bool name="delay_switch_def">true</bool>
     <bool name="extension_dura_switch_def">true</bool>
     <bool name="compact_list_switch_def">false</bool>
+    <bool name="multispell_switch_def">true</bool>
 </resources>

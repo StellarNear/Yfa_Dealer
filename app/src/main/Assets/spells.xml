@@ -650,6 +650,18 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     </spell>
 
     <spell>
+        <name>Disjonction</name>
+        <descr>Tous les effets et objets magiques dans 12m ou un objet magique. Les sorts et effets magiques sont déconstruits et détruits, ce qui y met un terme comme s’ils avaient été affectés par une dissipation de la magie. Les objets magiques permanents doivent réussir un jet de Volonté pour éviter de devenir des objets ordinaires pendant la durée du sort. Il est également possible de cibler ce sort sur un unique objet (-5 au jet).</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V</compo>
+        <duration>1min/lvl</duration>
+        <save_type>vol[annule]</save_type>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
         <name>Prémonition</name>
         <descr>Averti dès qu’un péril menace la cible. +2 à la CA et aux jets de Réflexes si personnelle.</descr>
         <range>contact</range>

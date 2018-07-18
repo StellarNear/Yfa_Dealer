@@ -59,7 +59,7 @@ public class SpellPerDay extends AppCompatActivity {
 
     public void load_list_spell_per_day(Context mC) {
         int [] list_spell_per_day=new int[15];
-        int [] list_spell_per_day_conv=new int[4];
+        int [] list_spell_per_day_conv=new int[5];
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
        
         list_spell_per_day[0]=to_int(prefs.getString("n_rank_1",prefs.getString("n_rank_1_start",mC.getString(R.string.n_rank_1_def))));
@@ -83,6 +83,7 @@ public class SpellPerDay extends AppCompatActivity {
         list_spell_per_day_conv[1]=to_int(prefs.getString("n_rank_2_conv",prefs.getString("n_rank_2_start_conv",mC.getString(R.string.n_rank_2_def_conv))));
         list_spell_per_day_conv[2]=to_int(prefs.getString("n_rank_3_conv",prefs.getString("n_rank_3_start_conv",mC.getString(R.string.n_rank_3_def_conv))));
         list_spell_per_day_conv[3]=to_int(prefs.getString("n_rank_4_conv",prefs.getString("n_rank_4_start_conv",mC.getString(R.string.n_rank_4_def_conv))));
+        list_spell_per_day_conv[4]=to_int(prefs.getString("n_rank_5_conv",prefs.getString("n_rank_5_start_conv",mC.getString(R.string.n_rank_5_def_conv))));
         this.list_spell_per_day_conv=list_spell_per_day_conv;
     }
 

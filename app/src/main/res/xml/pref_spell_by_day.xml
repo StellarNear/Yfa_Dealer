@@ -140,6 +140,13 @@
         android:entryValues="@array/values"
         android:summary="Valeur : %s"
         android:defaultValue="@string/n_rank_4_def_conv"/>
+    <ListPreference
+        android:key="n_rank_5_start_conv"
+        android:title="Nombre de sort de rang 5 convertibles"
+        android:entries="@array/values"
+        android:entryValues="@array/values"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/n_rank_5_def_conv"/>
 
 </PreferenceCategory>
 </PreferenceScreen>

@@ -3,6 +3,7 @@ package stellarnear.yfa_dealer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -282,43 +284,83 @@ public class SpellCastActivity extends AppCompatActivity {
         int n_simple=0;
         int n_rapide=0;
         int n_spells=0;
-        for (Spell spell : selected_spells){
-            n_spells+=1;
-            switch (spell.getCast_tim()){
-                case "complexe":
-                    n_complexe+=1;
-                    break;
-                case "simple":
-                    sum_action+=2;
-                    n_simple+=1;
-                    break;
-                case "rapide":
-                    sum_action+=1;
-                    n_rapide+=1;
-                    break;
+        int n_round=0;
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean multicast=settings.getBoolean("multispell_switch",getResources().getBoolean(R.bool.multispell_switch_def));
+        if (multicast) {
+            for (Spell spell : selected_spells) {
+                n_spells += 1;
+                switch (spell.getCast_tim()) {
+                    case "complexe":
+                        n_complexe += 1;
+                        break;
+                    case "simple":
+                        sum_action += 4;
+                        n_simple += 1;
+                        break;
+                    case "rapide":
+                        sum_action += 1;
+                        n_rapide += 1;
+                        break;
+                }
+                if (spell.isConverted()) {
+                    n_convert += 1;
+                }
             }
-            if (spell.isConverted()) {
-                n_convert += 1;
+            n_round = (int) (Math.ceil(sum_action / 6.0));
+            n_round += n_complexe;
+            if (n_convert > n_round) {
+                n_round = n_convert;
             }
-        }
+            if ((int) (Math.ceil(n_rapide / 3.0)) > n_round) {
+                n_round = (int) (Math.ceil(n_rapide / 3.0));
+            }
+            if (n_simple > n_round) {
+                n_round = n_simple;
+            }
+            if ((int) (Math.ceil(n_spells / 3.0)) > n_round) {
+                n_round = (int) (Math.ceil(n_spells / 3.0));
+            }
+        } else {
+            for (Spell spell : selected_spells){
+                n_spells+=1;
+                switch (spell.getCast_tim()){
+                    case "complexe":
+                        n_complexe+=1;
+                        break;
+                    case "simple":
+                        sum_action+=2;
+                        n_simple+=1;
+                        break;
+                    case "rapide":
+                        sum_action+=1;
+                        n_rapide+=1;
+                        break;
+                }
+                if (spell.isConverted()) {
+                    n_convert += 1;
+                }
+            }
 
-        int n_round = (int) (Math.ceil(sum_action/3.0));
-        n_round+=n_complexe;
+            n_round = (int) (Math.ceil(sum_action/3.0));
+            n_round+=n_complexe;
 
-        if (n_convert>n_round){
-            n_round=n_convert;
-        }
+            if (n_convert>n_round){
+                n_round=n_convert;
+            }
 
-        if((int)(Math.ceil(n_rapide/2.0))>n_round){
-            n_round=(int)(Math.ceil(n_rapide/2.0));
-        }
+            if((int)(Math.ceil(n_rapide/2.0))>n_round){
+                n_round=(int)(Math.ceil(n_rapide/2.0));
+            }
 
-        if(n_simple>n_round){
-            n_round=n_simple;
-        }
+            if(n_simple>n_round){
+                n_round=n_simple;
+            }
 
-        if((int)(Math.ceil(n_spells/2.0))>n_round){
-            n_round=(int)(Math.ceil(n_spells/2.0));
+            if((int)(Math.ceil(n_spells/2.0))>n_round){
+                n_round=(int)(Math.ceil(n_spells/2.0));
+            }
+
         }
 
         String part1="Lançement des sorts ";

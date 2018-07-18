@@ -85,6 +85,14 @@
         android:title="Incantation silencieuse (+1)" />
 
     <SwitchPreference
+        android:defaultValue="@bool/multispell_switch_def"
+        android:key="multispell_switch"
+        android:summary="Permet de lancer un sort sous incantation rapide de plus par round"
+        android:title="Multisort" />
+
+
+
+    <SwitchPreference
         android:defaultValue="@bool/materiel_switch_def"
         android:key="materiel_switch"
         android:summary="Pas besoin de composantes matérielles pour lancer un sort"

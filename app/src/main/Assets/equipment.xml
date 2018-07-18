@@ -60,6 +60,13 @@
         <value>90000po</value>
         <slotId>shoulder_slot</slotId>
     </equipped_slot>
+    <equipped_slot>
+        <name>Robe d'archimage grise</name>
+        <descr>+ 5CA, 18 RM, +4 jets de sauvegarde, +2 niveau de lanceur de sort contre la RM</descr>
+        <imgId>equipment_robe</imgId>
+        <value>75000po</value>
+        <slotId>body_slot</slotId>
+    </equipped_slot>
 
     <equipped_slot>
         <name>Main miraculeuse + anneau +2CA +2jet attaque</name>

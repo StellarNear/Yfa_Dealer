@@ -202,7 +202,6 @@ public class AllEquipments {
         onlyButton.setLayoutParams(onlyButtonLL);
         onlyButton.setTextColor(mC.getColor(R.color.colorPrimaryLight));
         onlyButton.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
-
         setImageOnDialog(mA);
     }
 
@@ -226,7 +225,7 @@ public class AllEquipments {
                 @Override
                 public void onClick(View v) {
                     buildBag();
-                    toatListInfo(mA, listBag);
+                    showBag(mA);
                 }
             });
         }
@@ -280,7 +279,9 @@ public class AllEquipments {
             descr.setVisibility(View.GONE);
         }
 
-        tools.toastTooltipCustomView(mC, view, "long");
+        final CustomToast ct = new CustomToast(mC, view, "long");
+        ct.clickToHide(view.findViewById(R.id.toast_LinearLayout));
+        ct.showToast();
     }
 
     private void toatListInfo(Activity mA, List<Equipment> equipmentsList) {
@@ -321,7 +322,14 @@ public class AllEquipments {
             scrollLin.addView(yourLayout);
         }
 
-        tools.toastTooltipCustomView(mC, view, "long");
+        final CustomToast ct = new CustomToast(mC, view, "long");
+        view.findViewById(R.id.toast_list_title_frame).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ct.hideToast();
+            }
+        });
+        ct.showToast();
     }
 
 
@@ -346,7 +354,7 @@ public class AllEquipments {
 
 
     private void calculateTagsSums(LinearLayout tagMain) {
-        List<String> displayedTags=new ArrayList<>();
+        List<String> displayedTags = new ArrayList<>();
         if (listTags.size() > 0) {
             tagMain.removeAllViews();
             tagMain.setVisibility(View.VISIBLE);
@@ -389,6 +397,70 @@ public class AllEquipments {
             e.printStackTrace();
         }
         return po;
+    }
+
+
+    public void showBag(Activity mA) {
+        LayoutInflater inflater = mA.getLayoutInflater();
+        View bagView = inflater.inflate(R.layout.custom_toast_slotless_list_info, null);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mA, R.style.CustomDialog);
+        dialogBuilder.setView(bagView);
+        dialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked cancel button
+            }
+        });
+        AlertDialog alertDialog = dialogBuilder.create();
+        fillBagLayout(mA,bagView);
+        alertDialog.show();
+        Display display = mA.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        Float factor = mC.getResources().getInteger(R.integer.percent_fullscreen_customdialog) / 100f;
+        alertDialog.getWindow().setLayout((int) (factor * size.x), (int) (factor * size.y));
+        Button onlyButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        LinearLayout.LayoutParams onlyButtonLL = (LinearLayout.LayoutParams) onlyButton.getLayoutParams();
+        onlyButtonLL.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        onlyButton.setLayoutParams(onlyButtonLL);
+        onlyButton.setTextColor(mC.getColor(R.color.colorPrimaryLight));
+        onlyButton.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
+        setImageOnDialog(mA);
+    }
+
+    private void fillBagLayout(Activity mA, View bagView) {
+        LinearLayout money = (LinearLayout) bagView.findViewById(R.id.toast_list_money);
+        money.setVisibility(View.VISIBLE);
+        TextView title = (TextView) bagView.findViewById(R.id.toast_list_title);
+        title.setText("Inventaire du sac");
+        ((TextView) bagView.findViewById(R.id.money_plat_text)).setText(getMoney("money_plat"));
+        ((TextView) bagView.findViewById(R.id.money_gold_text)).setText(getMoney("money_gold"));
+        ((TextView) bagView.findViewById(R.id.money_silver_text)).setText(getMoney("money_silver"));
+        ((TextView) bagView.findViewById(R.id.money_copper_text)).setText(getMoney("money_copper"));
+        calculateTagsSums(((LinearLayout) bagView.findViewById(R.id.linearTagMoney)));
+
+        LinearLayout scrollLin = (LinearLayout) bagView.findViewById(R.id.toast_list_scroll_mainlin);
+        scrollLin.removeAllViews();
+        LayoutInflater inflater = mA.getLayoutInflater();
+        for (Equipment equi : listBag) {
+            View yourLayout = inflater.inflate(R.layout.custom_toast_slotless_list_element, null);
+            ImageView img = (ImageView) yourLayout.findViewById(R.id.toast_list_element_image);
+            if (equi.getImg() != null) {
+                img.setImageDrawable(equi.getImg());
+            } else {
+                img.setVisibility(View.GONE);
+            }
+            TextView name = (TextView) yourLayout.findViewById(R.id.toast_list_element_textName);
+            name.setText(equi.getName());
+            TextView value = (TextView) yourLayout.findViewById(R.id.toast_list_element_textVal);
+            value.setText("Valeur : " + equi.getValue());
+            TextView descr = (TextView) yourLayout.findViewById(R.id.toast_list_element_textDescr);
+            if (!equi.getDescr().equalsIgnoreCase("")) {
+                descr.setText(equi.getDescr());
+            } else {
+                descr.setVisibility(View.GONE);
+            }
+            scrollLin.addView(yourLayout);
+        }
     }
 }
 

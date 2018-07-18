@@ -14,7 +14,7 @@
     <string name="n_rank_7_def">"8"</string>
     <string name="n_rank_8_def">"8"</string>
     <string name="n_rank_9_def">"8"</string>
-    <string name="n_rank_10_def">"4"</string>
+    <string name="n_rank_10_def">"6"</string>
     <string name="n_rank_11_def">"0"</string>
     <string name="n_rank_12_def">"0"</string>
     <string name="n_rank_13_def">"0"</string>
@@ -25,6 +25,7 @@
     <string name="n_rank_2_def_conv">0</string>
     <string name="n_rank_3_def_conv">4</string>
     <string name="n_rank_4_def_conv">9</string>
+    <string name="n_rank_5_def_conv">2</string>
 
     <string name="kill_list_lightning_def">...</string>
     <string name="kill_list_frost_def" />
