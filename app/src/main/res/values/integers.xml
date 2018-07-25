@@ -9,14 +9,14 @@
     <integer name="custom_alert_long_duration_DEF">5000</integer>
 
     <integer name="ability_lvl_def">23</integer>
-    <integer name="current_xp_def">6830000</integer>
+    <integer name="current_xp_def">6838548</integer>
     <integer name="previous_level_def">6830000</integer>
     <integer name="next_level_def">9570000</integer>
     <integer name="add_current_xp_def">0</integer>
     <integer name="add_gold_def">0</integer>
-    <integer name="money_plat_def">0</integer>
-    <integer name="money_gold_def">0</integer>
-    <integer name="money_silver_def">0</integer>
+    <integer name="money_plat_def">20263</integer>
+    <integer name="money_gold_def">1659</integer>
+    <integer name="money_silver_def">6</integer>
     <integer name="money_copper_def">0</integer>
 
 </resources>
