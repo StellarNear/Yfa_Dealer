@@ -2,109 +2,126 @@
 <records>
 
     <!-- SLOTS -->
-    <equipped_slot>
+    <equipment>
         <name>Glaedäyes Ah-Yaedeyes</name>
         <descr>Premier eveil : + 2 charisme</descr>
         <imgId>equipment_glad</imgId>
         <slotId>mainhand_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Bandeau d’intelligence</name>
         <descr>+4 intelligence</descr>
         <imgId>equipment_headband</imgId>
         <value>16000po</value>
         <slotId>face_slot</slotId>
-    </equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
 
-    <equipped_slot>
+    <equipment>
         <name>Brassard de dexterité</name>
         <descr>+2 dexterité</descr>
         <imgId>equipment_wrist</imgId>
         <value>4000po</value>
         <slotId>wrist_slot</slotId>
-    </equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
 
-    <equipped_slot>
+    <equipment>
         <name>Gant d'estimation</name>
         <descr>+3 aux jets d'estimation</descr>
         <imgId>equipment_gloves</imgId>
         <slotId>hand_slot</slotId>
-    </equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
 
-    <equipped_slot>
+    <equipment>
         <name>Anneau de contrôle du feu angélique</name>
         <descr></descr>
         <imgId>equipment_fire_ring</imgId>
         <value>200000po</value>
         <slotId>ring1_slot</slotId>
-    </equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
 
-    <equipped_slot>
+    <equipment>
         <name>Anneau d'immunité à la foudre</name>
         <descr></descr>
         <imgId>equipment_thunder_ring</imgId>
         <value>280000po</value>
         <slotId>ring2_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Bottes elfiques</name>
         <descr>+5 en discretion</descr>
         <imgId>equipment_feet</imgId>
         <value>2500po</value>
         <slotId>feet_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Cape de charisme</name>
         <descr>+6 charisme</descr>
         <imgId>equipment_cloak</imgId>
         <value>90000po</value>
         <slotId>shoulder_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Robe d'archimage grise</name>
         <descr>+ 5CA, 18 RM, +4 jets de sauvegarde, +2 niveau de lanceur de sort contre la RM</descr>
         <imgId>equipment_robe</imgId>
         <value>75000po</value>
-        <slotId>body_slot</slotId>
-    </equipped_slot>
+        <slotId>armor_slot</slotId>
+        <equipped>true</equipped>
+    </equipment>
 
-    <equipped_slot>
+    <equipment>
         <name>Main miraculeuse + anneau +2CA +2jet attaque</name>
         <descr></descr>
         <value>8000po+18000po</value>
         <imgId>equipment_neck</imgId>
         <slotId>neck_slot</slotId>
-    </equipped_slot>
-    <equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Centuron de consitution</name>
         <descr>+8 consitution</descr>
         <value>640000po</value>
         <imgId>equipment_belt</imgId>
         <slotId>belt_slot</slotId>
-    </equipped_slot>
+        <equipped>true</equipped>
+    </equipment>
 
     <!-- SLOTLESS -->
 
-    <equipped_slotless>
+    <equipment>
         <name>Pierre porte bonheur</name>
         <descr>+1 jets de sauvegarde</descr>
         <imgId>equipment_lucky_stone</imgId>
         <value>20000po</value>
-    </equipped_slotless>
-    <equipped_slotless>
+        <slotId>other_slot</slotId>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Pierre ioun orange</name>
         <descr>+1 niveau de lanceur de sort</descr>
         <imgId>equipment_orange_ioun</imgId>
         <value>30000po</value>
-    </equipped_slotless>
-    <equipped_slotless>
+        <slotId>other_slot</slotId>
+        <equipped>true</equipped>
+    </equipment>
+    <equipment>
         <name>Graine de karma et bénédiction</name>
         <descr>Le personnage peut lancer bénédiction.</descr>
         <value>9600po</value>
-    </equipped_slotless>
+        <slotId>other_slot</slotId>
+        <equipped>true</equipped>
+    </equipment>
 
     <!-- BAG -->
-    <unequipped>Sac de couchage
+    <bag>Sac de couchage
         3 rations
         outre à eau
         Livre d'alchimie
@@ -137,6 +154,6 @@
         1 parchemin dissipation malédictions
         4 parchemin détection du poison
         1 parchemin éclair multiple
-        2 parchemin invisibilité suprême</unequipped>
+        2 parchemin invisibilité suprême</bag>
 </records>
 

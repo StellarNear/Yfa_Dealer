@@ -15,4 +15,5 @@
     <bool name="extension_dura_switch_def">true</bool>
     <bool name="compact_list_switch_def">false</bool>
     <bool name="multispell_switch_def">true</bool>
+    <bool name="switch_autoclose_dialog_DEF">true</bool>
 </resources>

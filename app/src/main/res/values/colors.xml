@@ -25,6 +25,8 @@
 
     <color name="end_gradient_button_ok">#004d00</color>
     <color name="start_gradient_button_ok">#0FBD40</color>
+    <color name="start_gradient_button_cancel">#822616</color>
+    <color name="end_gradient_button_cancel">#bd3e1e</color>
 
     <color name="information">#81BEF7</color>
     <color name="information_light">#d4e9ff</color>
@@ -33,4 +35,8 @@
     <color name="start_gradient_money_inventory">@android:color/darker_gray</color>
     <color name="end_gradient_money_inventory">#000000</color>
 
+    <color name="colorBackground">#d5e7f6</color>
+    <color name="validation">#0FBD40</color>
+    <color name="cancel">#FF0000</color>
+    <color name="gold">#FFD700</color>
 </resources>

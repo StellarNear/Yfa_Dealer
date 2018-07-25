@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private Map<Spell,CheckBox> map_spell_check=new LinkedHashMap<Spell,CheckBox>();
     private SpellPerDay spell_per_day;
     private boolean shouldExecuteOnResume;
-    private AllEquipments allEquipments;
+    public static Inventory inventory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setBackgroundResource(R.drawable.banner_background);
         setSupportActionBar(toolbar);
-        allEquipments=new AllEquipments(getApplicationContext());
+        inventory=new Inventory(getApplicationContext());
 
         this.spell_per_day=new SpellPerDay(getApplicationContext());
         this.spell_per_day.load_list_spell_per_day(getApplicationContext());
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         fabEquip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                allEquipments.showEquipment(MainActivity.this);
+                inventory.showEquipment(MainActivity.this,getApplicationContext());
             }});
     }
 

@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v4.1"</string>
+    <string name="version">"v5.0"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
-Patch notes V4.1
+Patch note V5.0
+#Menus
+-Ajout d'un système de Paramètres (settings) imbriqués (pour une navigation plus intuitive)
+-Ajout d'un menu Monnaie
+-Ajout d'un menu Inventaire (avec possibilité d'ouvrir l'équipement)
+-Création d'icones de paramètre pour : Inventaire, Monnaie, Examiner equipement, Charac de base, Ressoruces, CA , Jets de sauvegarde
+-Possibilité d'ajouter directement des pièces d'or
+-Ajout du menu d'experience (avec possibilité d'ajouter directement de l'xp)
+-Ajout d'une barre d'xp
+-Optimisation de perte de mémoire vive
+
+#Objets et Equipements
+-Création et importation de l'ensemble des images des placeholders et des images des objets d'Yfamura
+-Ajout d'un nouveau type de fenetre popup pour montrer l'équipement
+-Nouvelle objet dans le personnage pour gerer dynamiquement l'ensemble des objets à partir d'un parsing de XML
+-Affichage des objets présent (placeholder passe en vert)
+-Popup avec liste défilante d'objets pour les objets sans empalcement
+-En cliquant sur l'objet ouverture d'un toast avec les detail et l'image de l'objet
+-Gestion des objets en base de données embarquée sur le téléphone
+-Possibilité de créer de nouveaux objets dans le sac depuis les paramètres
+-Possibilité de créer de nouveaux équipements depuis les paramètres
+-Possibilité de changer de pièce équipée
+-Possibilité de supprimer des objets du sac dans les paramètres
+-Possibilité de supprimer des équipements (non portés) dans les paramètres
+-Ajout d'un affichage du sac + monnaie (calul des grosses sommes k,M,G)
+
+#Autre
+-Ajout d'une popup quand un nouveau record de dégats est fait !
+-Refonte du système de fenêtres temporaires (paramètrable dans option d'appli)
+----------------------------------------------------------------------------------
+Patch note V4.1
 -Ajout Dijonction dans les sort
 -Changement lié au level 23 (Conversion T5, changement de valeur par défaut de nombre de sort, don multicast)
 ----------------------------------------------------------------------------------
-Patch notes V4.0
+Patch note V4.0
 -Ajout d'un nouveau type de fenetre popup pour montrer l'équipement
 -Nouvelle objet dans le personnage pour gerer dynamiquement l'ensemble des objets à partir d'un parsing de XML
 -Affichage des objets présent (placeholder passe en vert)
@@ -28,23 +58,23 @@ Patch notes V4.0
     -{} pour un tag
 -Affichage des sommes (en po) par tag sur la liste du sac
 ----------------------------------------------------------------------------------
-Patch notes V3.5
+Patch note V3.5
 -Ajout du menu Glaedäyes (avec icone vectorielle)
 -Ajout des tableaux de chasse par éléments (avec icones vectorielles)
 ----------------------------------------------------------------------------------
-Patch notes V3.4
+Patch note V3.4
 -Ajout du sort Absorption d'energie
 -Mise à jour des paramètres défaut pour lvl 23
 ----------------------------------------------------------------------------------
-Patch notes V3.3
+Patch note V3.3
 -Ajout d'un affichage de tooltip de description du sort en cliquant sur son nom (en gardant l'event click de la conversion de sort)
 ----------------------------------------------------------------------------------
-Patch notes V3.2
+Patch note V3.2
 -Ajout d'un écran de chargement
 -L'ombre du bouton afficher les dès détail de dégats n'est plus coupée
 -Allégement des couleurs dans la page lancement de sorts
 ----------------------------------------------------------------------------------
-Patch notes V3.1
+Patch note V3.1
 -Fix pour que le bouton back du téléphone soit géré avec animation et refresh par l'application
 -Fix vérrouillage de l'écran pendant le lancement des sorts pour éviter d'avoir des reset de sorts
 -Refresh du calcul des rounds lors des conversions
@@ -79,30 +109,30 @@ Nouvelles fonctionnalités :
 -Lancement en cours liste les sorts en cours quand n_spell>1
 -Organisation alphabétique des sorts
 ----------------------------------------------------------------------------------
-Patch notes V1.55
+Patch note V1.55
 -auto détection du tier max (page1)
 -sauvegarde du n_sort_per_day_start (celui du nombre par jour n'est plus directement issu du xml mais bien depuis les settings)
 ----------------------------------------------------------------------------------
-Patch notes V1.51
+Patch note V1.51
 -fix arrêt du temps pas possible dans extension durée
 ----------------------------------------------------------------------------------
-Patch notes V1.5
+Patch note V1.5
 -ajout des meta : delay , extend durée et flèche naturalisée
 -smart picker des meta pour pas avoir de méta inutile
 ----------------------------------------------------------------------------------
-Patch notes V1.4
+Patch note V1.4
 -ajout spell rang 0
 -ajout les d3 (froid)
 ----------------------------------------------------------------------------------
-Patch notes V1.3
+Patch note V1.3
 -perfection magique fonctionnelle
 -perfection magique dynamiquement maximisée sur les métamagie stackable
 ----------------------------------------------------------------------------------
-Patch notes V1.1a-b-c
+Patch note V1.1a-b-c
 -UI fixing for cross tel
 -change def_val spell_per_day
 ----------------------------------------------------------------------------------
-Patch notes V1.1
+Patch note V1.1
 -bouton lancement page1>2 en haut
 -multi lancement de sort et métamagie
 -couleur checkbox pas transparente page 2

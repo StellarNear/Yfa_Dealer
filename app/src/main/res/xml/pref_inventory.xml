@@ -1,53 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <PreferenceScreen
         android:key="show_equipment"
         android:icon="@drawable/ic_binoculars"
-        android:summary="Affiche l'inventaire du personnage"
-        android:title="Examiner l'équipement" />
+        android:summary="On peut y intervertir les pièces d'équipment"
+        android:title="Afficher l'équipement" />
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="0"
-        android:key="money_plat"
-        android:title="Nombre de pièces de platine"
-        android:icon="@drawable/ic_platinium_coin"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:inputType="number"
-        android:summary="Valeur : %s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="0"
-        android:key="money_gold"
-        android:title="Nombre de pièces d'or"
-        android:icon="@drawable/ic_gold_coin"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:inputType="number"
-        android:summary="Valeur : %s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="0"
-        android:key="money_silver"
-        android:icon="@drawable/ic_silver_coin"
-        android:title="Nombre de pièces d'argent"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:inputType="number"
-        android:summary="Valeur : %s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="0"
-        android:icon="@drawable/ic_copper_coin"
-        android:key="money_copper"
-        android:title="Nombre de pièces de cuivre"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:inputType="number"
-        android:summary="Valeur : %s"/>
+    <PreferenceScreen
+        android:key="pref_inventory_equipment"
+        android:icon="@drawable/ic_battle_gear"
+        android:summary="Ajout/Suppression des objets équipable"
+        android:title="Gestion de l'équipement"   />
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:key="bag_unequipped_list"
+    <PreferenceScreen
+        android:key="pref_inventory_staff"
+        android:icon="@drawable/ic_staff"
+        android:title="Glaedäyes Ah-Yaedeyes"
+        android:summary="Tableau de chasse du bâton irisé"/>
+
+    <PreferenceScreen
+        android:key="pref_inventory_money"
+        android:icon="@drawable/ic_cash"
+        android:summary="Gestion des pièces de platine, or, argent, cuivre"
+        android:title="Monnaie" />
+
+    <PreferenceScreen
+        android:key="pref_inventory_bag"
         android:icon="@drawable/ic_bag"
-        android:summary="Objets non équipés :\n%s"
+        android:summary="Ajout/Suppression des objets non équipable"
         android:title="Gestion des objets du sac"   />
 
 </PreferenceScreen>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:key="pref_character_general"
+        android:icon="@drawable/ic_person_pin_black_24dp"
+        android:title="Caractéristiques générales"
+        android:summary="Statistiques générales du personnage"/>
+
+    <PreferenceScreen
+        android:key="pref_character_feat"
+        android:icon="@drawable/ic_playlist_add_check_black_24dp"
+        android:title="Dons actifs"
+        android:summary="Ensemble des dons connus et/ou actifs"
+         />
+
+    <PreferenceScreen
+        android:key="pref_character_spells"
+        android:icon="@drawable/ic_spell_book"
+        android:title="Nombre de sorts par jour"
+        android:summary="Valeurs de base du nombre de sorts journaliers par rang"/>
+
+    <PreferenceScreen
+        android:key="pref_character_xp"
+        android:icon="@drawable/ic_upgrade"
+        android:title="Experience"
+        android:summary="Gestion des points d'experience du personnage"
+        />
+
+</PreferenceScreen>

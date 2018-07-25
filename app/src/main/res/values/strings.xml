@@ -30,6 +30,7 @@
     <string name="kill_list_lightning_def">...</string>
     <string name="kill_list_frost_def" />
     <string name="kill_list_fire_def" />
+    <string name="setting_activity">Paramètres</string>
 
 
     <string-array name="values">
@@ -49,6 +50,45 @@
         <item>"13"</item>
         <item>"14"</item>
         <item>"15"</item>
+    </string-array>
+
+
+    <string-array name="slot_choice_val">
+        <item>eyes_slot</item>
+        <item>shoulder_slot</item>
+        <item>hand_slot</item>
+        <item>ring1_slot</item>
+        <item>mainhand_slot</item>
+        <item>helm_slot</item>
+        <item>neck_slot</item>
+        <item>armor_slot</item>
+        <item>belt_slot</item>
+        <item>feet_slot</item>
+        <item>face_slot</item>
+        <item>chest_slot</item>
+        <item>wrist_slot</item>
+        <item>ring2_slot</item>
+        <item>offhand_slot</item>
+        <item>other_slot</item>
+    </string-array>
+
+    <string-array name="slot_choice_name">
+        <item>Yeux</item>
+        <item>Epaules</item>
+        <item>Mains</item>
+        <item>Anneau 1</item>
+        <item>Main principale</item>
+        <item>Casque</item>
+        <item>Cou</item>
+        <item>Armure</item>
+        <item>Ceinture</item>
+        <item>Pieds</item>
+        <item>Visage</item>
+        <item>Corps</item>
+        <item>Poignets</item>
+        <item>Anneau 2</item>
+        <item>Main secondaire</item>
+        <item>Hors emplacement</item>
     </string-array>
 
 </resources>

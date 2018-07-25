@@ -7,15 +7,16 @@ import android.graphics.drawable.Drawable;
  * Created by jchatron on 04/01/2018.
  */
 
+
 public class Equipment {
     private String name;
     private String descr;
     private String value;
     private String slotId;
-    private Context mC;
-    private Drawable img;
+    private String img_path;
+    private Boolean equiped;
 
-    public Equipment(String name, String descr, String value, String imgIdTxt, String slotId, Context mC) {
+    public Equipment(String name,String descr,String value, String imgIdTxt,String slotId, Boolean equiped) {
         this.name = name;
         this.descr = descr;
         if (value.equalsIgnoreCase("")){
@@ -23,17 +24,9 @@ public class Equipment {
         } else {
             this.value=value;
         }
-
+        this.img_path=imgIdTxt;
         this.slotId = slotId;
-        this.mC = mC;
-        try {
-            int imgId = mC.getResources().getIdentifier(imgIdTxt, "drawable", mC.getPackageName());
-            this.img = mC.getDrawable(imgId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.img=null;
-        }
-
+        this.equiped=equiped;
     }
 
     public String getName() {
@@ -48,11 +41,31 @@ public class Equipment {
         return slotId;
     }
 
-    public Drawable getImg(){
-        return this.img;
+    public Drawable getImg(Context mC){  //pour la sauvegarde dans SHaredSetting on ne peut pas serialisé le contexte donc on le redonne à l'exec
+        Drawable draw =null;
+        try {
+            int imgId = mC.getResources().getIdentifier(this.img_path, "drawable", mC.getPackageName());
+            draw = mC.getDrawable(imgId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return draw;
     }
 
     public String getValue() {return this.value;}
 
+    public boolean isEquiped(){
+        Boolean val;
+        if (this.equiped!=null){
+            val=this.equiped;
+        } else {
+            val=false;
+        }
+        return val;
+    }
+
+    public void setEquiped(Boolean equiped) {
+        this.equiped = equiped;
+    }
 }
 
