@@ -418,7 +418,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
             TextView ligne_texteC1 = new TextView(this);
             ligne_texteC1.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
-            ligne_texteC1.setText("Dégâts :");
+            ligne_texteC1.setText("Dégâts :\n(record:"+spell.getHighscore(getApplicationContext())+")");
             ligne_texteC1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne1.addView(ligne_texteC1);
 
@@ -528,11 +528,10 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
-    private void checkHighScore(int dmg) {
+    private void checkHighScore(Spell spell,int dmg) {
         Tools tools = new Tools();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int highscore = settings.getInt("highscore", 0);
-        if (dmg > highscore) {
+        if (spell.isHighscore(getApplicationContext(),dmg)) {
             LayoutInflater inflater = SpellCastActivity.this.getLayoutInflater();
             final View layoutRecordVideo = inflater.inflate(R.layout.highscore, null);
             final CustomAlertDialog customVideo = new CustomAlertDialog(SpellCastActivity.this, getApplicationContext(), layoutRecordVideo);
@@ -614,7 +613,8 @@ public class SpellCastActivity extends AppCompatActivity {
             dmg_max += 8;
         }
 
-        checkHighScore(dmg_sum);
+        checkHighScore(spell,dmg_sum);
+
         spell.setDmg_dice_roll_txt(dice_txt);
 
         Integer percent = 0;

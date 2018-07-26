@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class Spell extends AppCompatActivity implements Serializable {
 
-
     private String  name;
     private String  descr;
     private String  dice_type;
@@ -84,8 +83,6 @@ public class Spell extends AppCompatActivity implements Serializable {
         //tester si perfect dans meta si oui popup si il depense perfect on uprank gratos on rend le sort non perfect mais on desactive la box (plus cliquable) peut etre à faire
         // dans spellcastactivity du coup
         // si il dit non comportement normal il paye le rank
-
-
     }
 
 
@@ -742,5 +739,22 @@ public class Spell extends AppCompatActivity implements Serializable {
             value=false;
         }
         return value;
+    }
+
+    public boolean isHighscore(Context mC,int val){
+        boolean returnVal=false;
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+        int highscore=settings.getInt(this.name,0);
+        if(val>highscore){
+            returnVal=true;
+            settings.edit().putInt(this.name,val).apply();
+        }
+        return returnVal;
+    }
+
+    public int getHighscore(Context mC){
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+        int highscore=settings.getInt(this.name,0);
+        return highscore;
     }
 }
