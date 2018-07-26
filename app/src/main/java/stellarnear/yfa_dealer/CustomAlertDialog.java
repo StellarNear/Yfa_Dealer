@@ -75,7 +75,7 @@ public class CustomAlertDialog {
         alert.dismiss();
     }
 
-    public void clickToHide(View view) {
+    public void clickToDismiss(View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

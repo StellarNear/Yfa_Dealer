@@ -6,7 +6,6 @@ import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import stellarnear.yfa_dealer.R;
 
 /**
  * Created by jchatron on 05/01/2018.
@@ -30,7 +29,7 @@ public class Inventory {
         View inventoryView = inflater.inflate(R.layout.equipment_dialog, null);
         equipWindow = new CustomAlertDialog(mA, mC, inventoryView);
         equipWindow.setPermanent(true);
-        equipWindow.clickToHide(inventoryView.findViewById(R.id.equipment_dialog_main_title_frame));
+        equipWindow.clickToDismiss(inventoryView.findViewById(R.id.equipment_dialog_main_title_frame));
         setImageOnDialog(mA,mC,inventoryView);
         equipWindow.showAlert();
     }

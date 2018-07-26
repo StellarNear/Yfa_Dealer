@@ -176,7 +176,7 @@ public class AllEquipments {
         LayoutInflater inflater = mA.getLayoutInflater();
         View view = inflater.inflate(R.layout.custom_toast_info, (ViewGroup) mA.findViewById(R.id.toast_RelativeLayout));
         CustomAlertDialog ct = new CustomAlertDialog(mA, mC, view);
-        ct.clickToHide(view.findViewById(R.id.toast_LinearLayout));
+        ct.clickToDismiss(view.findViewById(R.id.toast_LinearLayout));
 
         ImageView img = view.findViewById(R.id.toast_image);
         if (equi.getImg(mC) != null) {
@@ -262,7 +262,7 @@ public class AllEquipments {
         View view = inflater.inflate(R.layout.custom_toast_list_info, null);
         final CustomAlertDialog ca = new CustomAlertDialog(mA, mC, view);
         ca.setPermanent(true);
-        ca.clickToHide(view.findViewById(R.id.toast_list_title_frame));
+        ca.clickToDismiss(view.findViewById(R.id.toast_list_title_frame));
         if(selectToEquip){
             TextView title = view.findViewById(R.id.toast_list_title);
             title.setText("Rechanges possibles");

@@ -10,6 +10,8 @@ Patch note V5.1
 -Système de record par sort, en prenant en compte les maximisations(hors record)
 -Affichage du précedant record lors du lancement du sort
 -Sauvegarde des record dans la base de donnée embarquée
+-Metamagies affichées dans une popup séparée
+-Mémorisation des métamagies par sort différent
 ----------------------------------------------------------------------------------
 Patch note V5.0
 #Menus

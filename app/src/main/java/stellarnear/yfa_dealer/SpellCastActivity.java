@@ -6,18 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.BitmapRegionDecoder;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,11 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.text.Html;
-import android.text.Layout;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
@@ -42,13 +29,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 import android.widget.CheckBox;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -171,46 +159,32 @@ public class SpellCastActivity extends AppCompatActivity {
 
             addHsep(fragment1, 4, Color.GRAY);
 
-            HorizontalScrollView scroll_meta = new HorizontalScrollView(this);
-            scroll_meta.setHorizontalScrollBarEnabled(false);
-            scroll_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            fragment1.addView(scroll_meta);
 
-            LinearLayout grid = new LinearLayout(this);
-            scroll_meta.addView(grid);
+            LinearLayout metaClic = new LinearLayout(this);
+            metaClic.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            metaClic.setGravity(Gravity.CENTER);
+            ImageView metaImg =new ImageView(this);
+            metaImg.setImageDrawable(getDrawable(R.drawable.ic_metamagic_upgrade));
+            metaImg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            metaClic.addView(metaImg);
 
             ListMeta all_meta = new ListMeta(spell, Spell_Title, infos, SpellCastActivity.this);
-            List<Pair_Meta_Rank> all_meta_list = all_meta.getAllMeta();
-
-            addVsep(grid, 4, Color.GRAY);
-
-            List<CheckBox> spell_all_meta = new ArrayList<>();
-
-            for (int iter = 0; iter < all_meta_list.size(); iter++) {
-
-                CheckBox checkbox = all_meta_list.get(iter).getMeta().getCheckbox();
+            final List<Pair_Meta_Rank> all_meta_list = all_meta.getAllMeta();
 
 
-                checkbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        calcRounds(launching_txt);
-                    }
-                });      //le slsitner sont directement dans les checkbox Object ListMeta
-
-                grid.addView(checkbox);
-                spell_all_meta.add(checkbox);
-
-                ImageButton image = all_meta_list.get(iter).getMeta().getImgageButton();
-                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                image.setForegroundGravity(Gravity.CENTER);
-                image.setColorFilter(Color.GRAY);
-                grid.addView(image);
-
-                addVsep(grid, 4, Color.GRAY);
-            }
-            map_spell_listMetas.put(spell, spell_all_meta);
-
+           final TextView metaPopupText = new TextView(this);
+            metaPopupText.setText("Appliquer une métamagie");
+            metaPopupText.setTextSize(20);
+            metaPopupText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            metaPopupText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            metaClic.addView(metaPopupText);
+            metaClic.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   makeMetaPopup(spell,all_meta_list,launching_txt);
+               }
+           });
+            fragment1.addView(metaClic);
             addHsep(fragment1, 4, Color.GRAY);
 
             SeekBar cast_slide = new SeekBar(this);
@@ -277,6 +251,56 @@ public class SpellCastActivity extends AppCompatActivity {
             addHsep(page2, 7, Color.BLACK);
 
         }
+    }
+
+    private void makeMetaPopup(Spell spell, List<Pair_Meta_Rank> all_meta_list, TextView launching_txt) {
+        View allmetaView = constructAllMetaView(spell,all_meta_list,launching_txt);
+        final CustomAlertDialog metaPopup =new CustomAlertDialog(this,getApplicationContext(),allmetaView);
+        metaPopup.setPermanent(true);
+        metaPopup.clickToDismiss(allmetaView.findViewById(R.id.metamagie_back));
+        metaPopup.showAlert();
+    }
+
+    private View constructAllMetaView(Spell spell,List<Pair_Meta_Rank> all_meta_list,final TextView launching_txt) {
+        LayoutInflater inflate = getLayoutInflater();
+        map_spell_listMetas= new HashMap<Spell, List<CheckBox>>();
+        final View mainView = inflate.inflate(R.layout.metamagie_dialog, null);
+        LinearLayout mainLin = mainView.findViewById(R.id.metamagie_main_linear);
+        mainLin.removeAllViews();
+        List<CheckBox> spell_all_meta = new ArrayList<>();
+        for (Pair_Meta_Rank pair : all_meta_list){
+            LinearLayout metaLin = new LinearLayout(this);
+            metaLin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            metaLin.setGravity(Gravity.CENTER);
+            CheckBox check = pair.getMeta().getCheckbox();
+            spell_all_meta.add(check);
+            check.setTextColor(getColor(R.color.dark_gray));
+            ViewGroup parent = (ViewGroup) check.getParent();
+            if (parent != null) {
+                parent.removeView(check);
+            }
+            metaLin.addView(check);
+            check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    calcRounds(launching_txt);
+                }
+            });
+
+            ImageButton image = pair.getMeta().getImgageButton();
+            image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            image.setForegroundGravity(Gravity.CENTER);
+            image.setPadding(15,0,0,0);
+            image.setColorFilter(Color.GRAY);
+            ViewGroup parentImg = (ViewGroup) image.getParent();
+            if (parentImg != null) {
+                parentImg.removeView(image);
+            }
+            metaLin.addView(image);
+            map_spell_listMetas.put(spell, spell_all_meta);
+            mainLin.addView(metaLin);
+        }
+        return mainView;
     }
 
     private void calcRounds(TextView launching_txt) {

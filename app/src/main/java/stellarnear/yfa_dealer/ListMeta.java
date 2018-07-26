@@ -45,8 +45,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Incantation rapide (+4)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -115,8 +115,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort Amélioré (+4)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -180,8 +180,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort à retardement (+4)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -242,8 +242,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Quintessence des sorts (+3)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -305,8 +305,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Extension d'effet (+2)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -368,8 +368,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Flêche naturalisée (+2)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -430,8 +430,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Augmentation d'intensité (+1)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -522,8 +522,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Extension de durée (+1)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -586,8 +586,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort éloigné (+1)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -668,8 +668,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort séléctif (+1)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox=new int[]{Color.GRAY,Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][] {
@@ -731,8 +731,8 @@ public class ListMeta extends AppCompatActivity {
             final CheckBox checkbox = new CheckBox(mC);
             checkbox.setText("Sort silencieux (+1)");
             checkbox.setTextColor(Color.GRAY);
-            int[] colorClickBox = new int[]{Color.GRAY, Color.GRAY};
-            //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
+            int[] colorClickBox = new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
                     new int[][]{

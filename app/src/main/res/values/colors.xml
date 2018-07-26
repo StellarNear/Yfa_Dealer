@@ -39,4 +39,7 @@
     <color name="validation">#0FBD40</color>
     <color name="cancel">#FF0000</color>
     <color name="gold">#FFD700</color>
+
+    <color name="gray">#808080</color>
+    <color name="dark_gray">#404040</color>
 </resources>

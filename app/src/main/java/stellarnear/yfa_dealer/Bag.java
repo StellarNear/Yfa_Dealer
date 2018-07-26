@@ -233,7 +233,7 @@ public class Bag {
         View view = inflater.inflate(R.layout.custom_toast_list_info, null);
         final CustomAlertDialog ca = new CustomAlertDialog(mA, mC, view);
         ca.setPermanent(true);
-        ca.clickToHide(view.findViewById(R.id.toast_list_title_frame));
+        ca.clickToDismiss(view.findViewById(R.id.toast_list_title_frame));
 
             LinearLayout money = view.findViewById(R.id.toast_list_money);
             money.setVisibility(View.VISIBLE);
