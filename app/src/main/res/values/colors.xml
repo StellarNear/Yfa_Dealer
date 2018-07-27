@@ -42,5 +42,5 @@
 
     <color name="gray">#808080</color>
     <color name="dark_gray">#404040</color>
-    <color name="divider_pref">#e6e6e6</color>
+    <color name="divider_pref">#e0e0e0</color>
 </resources>
