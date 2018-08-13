@@ -554,30 +554,10 @@ public class SpellCastActivity extends AppCompatActivity {
 
     private void checkHighScore(Spell spell,int dmg) {
         Tools tools = new Tools();
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (spell.isHighscore(getApplicationContext(),dmg)) {
-            LayoutInflater inflater = SpellCastActivity.this.getLayoutInflater();
-            final View layoutRecordVideo = inflater.inflate(R.layout.highscore, null);
-            final CustomAlertDialog customVideo = new CustomAlertDialog(SpellCastActivity.this, getApplicationContext(), layoutRecordVideo);
-            customVideo.setPermanent(true);
-            final VideoView video = (VideoView) layoutRecordVideo.findViewById(R.id.highscore_video);
-            video.setVisibility(View.VISIBLE);
-            String fileName = "android.resource://" + SpellCastActivity.this.getPackageName() + "/raw/explosion";
-            video.setMediaController(null);
-            video.setVideoURI(Uri.parse(fileName));
-            customVideo.showAlert();
-            video.start();
-            tools.customToast(getApplicationContext(), String.valueOf(dmg) + " dégats !\nC'est un nouveau record !", "center");
-            settings.edit().putInt("highscore", dmg).apply();
-            video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    video.stopPlayback();
-                    customVideo.dismissAlert();
-                }
-            });
+            tools.playVideo(SpellCastActivity.this,getApplicationContext(),"/raw/explosion");
+            tools.customToast(getApplication(), String.valueOf(dmg) + " dégats !\nC'est un nouveau record !", "center");
         }
-
     }
 
     private Integer rand(Integer dice) {

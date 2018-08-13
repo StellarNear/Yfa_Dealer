@@ -30,7 +30,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SettingsFragment extends PreferenceFragment {
@@ -97,6 +99,8 @@ public class SettingsFragment extends PreferenceFragment {
                     addBagList();
                     break;
                 case "pref_character_xp":
+                    BigInteger xp = tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def))));
+                    checkLevel(xp);
                     refreshXpBar();
                     break;
             }
@@ -141,9 +145,11 @@ public class SettingsFragment extends PreferenceFragment {
                         @Override
                         public boolean onPreferenceChange(Preference preference, Object o) {
                             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
-                            int xp = tools.toInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def))));
-                            settings.edit().putString("current_xp", String.valueOf(xp + tools.toInt(o.toString()))).apply();
+                            BigInteger xp = tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def))));
+                            BigInteger addXp = tools.toBigInt(o.toString());
+                            settings.edit().putString("current_xp", xp.add(addXp).toString()).apply();
                             settings.edit().putString("add_current_xp", String.valueOf(0)).apply();
+                            checkLevel(xp, addXp);
                             getPreferenceScreen().removeAll();
                             addPreferencesFromResource(R.xml.pref_character_xp); //pour refresh le current
                             refreshXpBar();
@@ -151,14 +157,12 @@ public class SettingsFragment extends PreferenceFragment {
                         }
                     });
                     break;
-                case "ability_lvl":
                 case "current_xp":
-                case "previous_level":
-                case "next_level":
                     preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                         @Override
                         public boolean onPreferenceChange(Preference preference, Object o) {
                             settings.edit().putString(preference.getKey(), o.toString()).apply();
+                            checkLevel(tools.toBigInt(o.toString()));
                             getPreferenceScreen().removeAll();
                             addPreferencesFromResource(R.xml.pref_character_xp); //pour refresh le current
                             refreshXpBar();
@@ -166,7 +170,6 @@ public class SettingsFragment extends PreferenceFragment {
                         }
                     });
                     break;
-
                 case "create_bag_item":
                     createBagItem();
                     break;
@@ -606,6 +609,37 @@ public class SettingsFragment extends PreferenceFragment {
 
             }
         }, 50); //pour attendre le changement de preference visiblement ce n'est pas instantané
+    }
+
+    private void checkLevel(BigInteger currentXp, BigInteger... addXpInput) {
+        BigInteger addXp = addXpInput.length > 0 ? addXpInput[0] : BigInteger.ZERO;
+        List<String> listLvlXp = Arrays.asList(getResources().getStringArray(R.array.xp_lvl_needed));
+        List<Integer> listLvl = new ArrayList<>();
+        List<BigInteger> listXp = new ArrayList<>();
+        for (String line : listLvlXp) {
+            listLvl.add(tools.toInt(line.substring(0, line.indexOf(":"))));
+            listXp.add(tools.toBigInt(line.substring(line.indexOf(":") + 1, line.length())));
+        }
+
+        int newLvl = 0;
+        for (BigInteger xp : listXp) {
+            if ((currentXp.add(addXp)).compareTo(xp) >= 0) {
+                newLvl = listLvl.get(listXp.indexOf(xp));
+            }
+        }
+
+        Integer currentLvl = tools.toInt(settings.getString("ability_lvl", String.valueOf(getContext().getResources().getInteger(R.integer.ability_lvl_def))));
+        if (currentLvl != newLvl) {
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+            BigInteger previousLvlXp = listXp.get(listLvl.indexOf(newLvl));
+            BigInteger nextLvlXp = listXp.get(listLvl.indexOf(newLvl+1));
+
+            settings.edit().putString("previous_level", previousLvlXp.toString()).apply();
+            settings.edit().putString("next_level", nextLvlXp.toString()).apply();
+            settings.edit().putString("ability_lvl", String.valueOf(newLvl)).apply();
+            tools.playVideo(getActivity(),getContext(),"/raw/saiyan");
+            tools.customToast(getContext(), "Bravo tu as atteint le niveau "+String.valueOf(newLvl));
+        }
     }
 
 }

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v5.1"</string>
+    <string name="version">"v5.2"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V5.2
+-Calcul automatique du Niveau
+-Fix des couleurs des séparateurs dans les menus d'option
+----------------------------------------------------------------------------------
 Patch note V5.1
 -Système de record par sort, en prenant en compte les maximisations(hors record)
 -Affichage du précedant record lors du lancement du sort
