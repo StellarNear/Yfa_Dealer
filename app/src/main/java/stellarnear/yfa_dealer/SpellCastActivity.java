@@ -163,7 +163,7 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout metaClic = new LinearLayout(this);
             metaClic.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaClic.setGravity(Gravity.CENTER);
-            ImageView metaImg =new ImageView(this);
+            ImageView metaImg = new ImageView(this);
             metaImg.setImageDrawable(getDrawable(R.drawable.ic_metamagic_upgrade));
             metaImg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaClic.addView(metaImg);
@@ -172,18 +172,18 @@ public class SpellCastActivity extends AppCompatActivity {
             final List<Pair_Meta_Rank> all_meta_list = all_meta.getAllMeta();
 
 
-           final TextView metaPopupText = new TextView(this);
+            final TextView metaPopupText = new TextView(this);
             metaPopupText.setText("Appliquer une métamagie");
             metaPopupText.setTextSize(20);
             metaPopupText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaPopupText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             metaClic.addView(metaPopupText);
             metaClic.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   makeMetaPopup(spell,all_meta_list,launching_txt);
-               }
-           });
+                @Override
+                public void onClick(View view) {
+                    makeMetaPopup(spell, all_meta_list, launching_txt);
+                }
+            });
             fragment1.addView(metaClic);
             addHsep(fragment1, 4, Color.GRAY);
 
@@ -254,21 +254,21 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     private void makeMetaPopup(Spell spell, List<Pair_Meta_Rank> all_meta_list, TextView launching_txt) {
-        View allmetaView = constructAllMetaView(spell,all_meta_list,launching_txt);
-        final CustomAlertDialog metaPopup =new CustomAlertDialog(this,getApplicationContext(),allmetaView);
+        View allmetaView = constructAllMetaView(spell, all_meta_list, launching_txt);
+        final CustomAlertDialog metaPopup = new CustomAlertDialog(this, getApplicationContext(), allmetaView);
         metaPopup.setPermanent(true);
         metaPopup.clickToDismiss(allmetaView.findViewById(R.id.metamagie_back));
         metaPopup.showAlert();
     }
 
-    private View constructAllMetaView(Spell spell,List<Pair_Meta_Rank> all_meta_list,final TextView launching_txt) {
+    private View constructAllMetaView(Spell spell, List<Pair_Meta_Rank> all_meta_list, final TextView launching_txt) {
         LayoutInflater inflate = getLayoutInflater();
-        map_spell_listMetas= new HashMap<Spell, List<CheckBox>>();
+        map_spell_listMetas = new HashMap<Spell, List<CheckBox>>();
         final View mainView = inflate.inflate(R.layout.metamagie_dialog, null);
         LinearLayout mainLin = mainView.findViewById(R.id.metamagie_main_linear);
         mainLin.removeAllViews();
         List<CheckBox> spell_all_meta = new ArrayList<>();
-        for (Pair_Meta_Rank pair : all_meta_list){
+        for (Pair_Meta_Rank pair : all_meta_list) {
             LinearLayout metaLin = new LinearLayout(this);
             metaLin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaLin.setGravity(Gravity.CENTER);
@@ -290,7 +290,7 @@ public class SpellCastActivity extends AppCompatActivity {
             ImageButton image = pair.getMeta().getImgageButton();
             image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
             image.setForegroundGravity(Gravity.CENTER);
-            image.setPadding(15,0,0,0);
+            image.setPadding(15, 0, 0, 0);
             image.setColorFilter(Color.GRAY);
             ViewGroup parentImg = (ViewGroup) image.getParent();
             if (parentImg != null) {
@@ -442,7 +442,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
             TextView ligne_texteC1 = new TextView(this);
             ligne_texteC1.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
-            ligne_texteC1.setText("Dégâts :\n(record:"+spell.getHighscore(getApplicationContext())+")");
+            ligne_texteC1.setText("Dégâts :\n(record:" + spell.getHighscore(getApplicationContext()) + ")");
             ligne_texteC1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             Colonne1.addView(ligne_texteC1);
 
@@ -552,10 +552,10 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
-    private void checkHighScore(Spell spell,int dmg) {
+    private void checkHighScore(Spell spell, int dmg) {
         Tools tools = new Tools();
-        if (spell.isHighscore(getApplicationContext(),dmg)) {
-            tools.playVideo(SpellCastActivity.this,getApplicationContext(),"/raw/explosion");
+        if (spell.isHighscore(getApplicationContext(), dmg)) {
+            tools.playVideo(SpellCastActivity.this, getApplicationContext(), "/raw/explosion");
             tools.customToast(getApplication(), String.valueOf(dmg) + " dégats !\nC'est un nouveau record !", "center");
         }
     }
@@ -617,7 +617,7 @@ public class SpellCastActivity extends AppCompatActivity {
             dmg_max += 8;
         }
 
-        checkHighScore(spell,dmg_sum);
+        checkHighScore(spell, dmg_sum);
 
         spell.setDmg_dice_roll_txt(dice_txt);
 
@@ -843,8 +843,10 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     private void uncheckMeta(List<CheckBox> checkBoxes) {
-        for (CheckBox check : checkBoxes) {
-            check.setChecked(false);
+        if (checkBoxes != null) {
+            for (CheckBox check : checkBoxes) {
+                check.setChecked(false);
+            }
         }
     }
 

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v5.2"</string>
+    <string name="version">"v5.2a"</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V5.2a
+-Fix des crash lors des conversions de sorts lorsque aucune métamagie n'avait été appliquée sur le sort
+----------------------------------------------------------------------------------
 Patch note V5.2
 -Calcul automatique du Niveau
 -Fix des couleurs des séparateurs dans les menus d'option
