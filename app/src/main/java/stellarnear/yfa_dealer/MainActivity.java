@@ -15,12 +15,14 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -28,8 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -325,9 +329,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void current_spell_display(Context mC) {
-
         String display="Sort séléctionnés :\n";
-
         for(Spell spell : selectedSpells){
             display+=spell.getName()+"\n";
         }
@@ -340,10 +342,53 @@ public class MainActivity extends AppCompatActivity {
 
     private void builPage2() {
         if (!selectedSpells.isEmpty()) {
+
+            MyDragAndDrop myDragAndDrop = new MyDragAndDrop(getApplicationContext());
+
+            LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+            View mainView = inflater.inflate(R.layout.target_drag_drop,null);
+
+            CustomAlertDialog targetDialog = new CustomAlertDialog(this,getApplicationContext(),mainView);
+            targetDialog.setPermanent(true);
+            targetDialog.clickToHide(mainView.findViewById(R.id.target_frame));
+
+
+            LinearLayout spellListLin = mainView.findViewById(R.id.target_list_spells);
+            LinearLayout targetLin = mainView.findViewById(R.id.target_list_targets);
+
+            for (Spell spell : selectedSpells){
+                TextView t = new TextView(getApplicationContext());
+                t.setText(spell.getName());
+                t.setTextSize(18);
+                t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                myDragAndDrop.setTouchListner(t,spell);
+                spellListLin.addView(t);
+            }
+
+            List<String> targetList = Arrays.asList("target 1","target 2","target 3");
+            for (String tar : targetList){
+                LinearLayout fram = new LinearLayout(getApplicationContext());
+                fram.setGravity(Gravity.CENTER);
+                fram.setOrientation(LinearLayout.VERTICAL);
+                fram.setPadding(5,50,5,50);
+                fram.setBackground(getDrawable(R.drawable.target_basic_gradient));
+                TextView t = new TextView(getApplicationContext());
+                t.setText(tar);
+                t.setTextColor(Color.DKGRAY);
+                t.setTextSize(20);
+                t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                fram.addView(t);
+                myDragAndDrop.setDragListner(fram,); //à faire un truc ennemi
+                targetLin.addView(fram);
+            }
+
+            targetDialog.showAlert();
+
+            /*
             Intent intent = new Intent(this, SpellCastActivity.class);
             intent.putExtra("selected_spells", (Serializable) selectedSpells);
             startActivity(intent);
-            overridePendingTransition(R.anim.infromright,R.anim.nothing);
+            overridePendingTransition(R.anim.infromright,R.anim.nothing);*/
         } else { startActivity(new Intent(this, MainActivity.class));}
     }
 
@@ -369,39 +414,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void setCheckBoxColorCompact(CheckBox checkbox,Spell spell) {
-        int bord=0;
-        int centre=0;
-        boolean dmg_spell=true;
-        if (spell.getDmg_type().equals("aucun")) {bord=R.color.aucun_dark;centre=R.color.aucun;}
-        else if (spell.getDmg_type().equals("feu")) {bord=R.color.feu_dark;centre=R.color.feu;}
-        else if (spell.getDmg_type().equals("foudre")) {bord=R.color.foudre_dark;centre=R.color.foudre;}
-        else if (spell.getDmg_type().equals("froid")) {bord=R.color.froid_dark;centre=R.color.froid;}
-        else if (spell.getDmg_type().equals("acide")) {bord=R.color.acide_dark;centre=R.color.acide;}
-        else {bord=R.color.white;centre=R.color.white;dmg_spell=false;}
-
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.BL_TR,
-                new int[] {getColor(centre),getColor(bord)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
-        gd.setCornerRadius(0f);
-        gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
-        gd.setGradientRadius(200.0f);
-
-        checkbox.setTextColor(Color.BLACK);
-        int[] colorClickBox=new int[]{Color.DKGRAY,Color.DKGRAY};
-        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][] {
-                        new int[] { -android.R.attr.state_checked }, // unchecked
-                        new int[] {  android.R.attr.state_checked }  // checked
-                },colorClickBox
-
-        );
-        checkbox.setButtonTintList(colorStateList);
-        checkbox.setBackground(gd);
     }
 
     public void setCheckBoxColor(CheckBox checkbox,Spell spell) {
@@ -435,16 +447,6 @@ public class MainActivity extends AppCompatActivity {
         );
         checkbox.setButtonTintList(colorStateList);
         checkbox.setBackground(gd);
-    }
-
-    public Integer to_int(String key){
-        Integer value;
-        try {
-            value = Integer.parseInt(key);
-        } catch (Exception e){
-            value=0;
-        }
-        return value;
     }
 }
 
