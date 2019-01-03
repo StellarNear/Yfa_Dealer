@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                                         TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))){
                                     checkbox.setChecked(!checkbox.isChecked());
 
-                                }else if (event.getRawX() >= checkbox.getRight() - Math.round(TypedValue.applyDimension(
+                                } else if (event.getRawX() >= checkbox.getRight() - Math.round(TypedValue.applyDimension(
                                         TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))) {
                                     // your action for drawable click event
                                     if(yfa.getResourceValue("mythic_points")>0) {
@@ -287,6 +287,23 @@ public class MainActivity extends AppCompatActivity {
                     //map_spell_check.put(listAllMythicSpell.getSpellByName(spell.getName()),checkbox);
                 } else {
                     checkbox.setText(spell.getName());
+                    checkbox.setOnTouchListener(new View.OnTouchListener() {
+                                                    @Override
+                                                    public boolean onTouch(View v, MotionEvent event) {
+                                                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                            if (event.getRawX() <= checkbox.getLeft() + Math.round(TypedValue.applyDimension(
+                                                                    TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))) {
+                                                                checkbox.setChecked(!checkbox.isChecked());
+
+                                                            } else {
+                                                                Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
+                                                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                                                toast.show();
+                                                            }
+                                                        }
+                                                        return true;
+                                                    }
+                                                });
                     //map_spell_check.put(spell,checkbox);
                 }
             }

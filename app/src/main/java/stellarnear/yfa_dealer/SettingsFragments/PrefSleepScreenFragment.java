@@ -59,35 +59,7 @@ public class PrefSleepScreenFragment {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-                SharedPreferences.Editor editor = prefs.edit();
-
-                editor.putString("n_rank_1", prefs.getString("n_rank_1_start", String.valueOf(mC.getResources().getInteger(R.integer.n_rank_1_def))));
-                editor.putString("n_rank_2", prefs.getString("n_rank_2_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_2_def)))));
-                editor.putString("n_rank_3", prefs.getString("n_rank_3_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_3_def)))));
-                editor.putString("n_rank_4", prefs.getString("n_rank_4_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_4_def)))));
-                editor.putString("n_rank_5", prefs.getString("n_rank_5_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_5_def)))));
-                editor.putString("n_rank_6", prefs.getString("n_rank_6_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_6_def)))));
-                editor.putString("n_rank_7", prefs.getString("n_rank_7_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_7_def)))));
-                editor.putString("n_rank_8", prefs.getString("n_rank_8_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_8_def)))));
-                editor.putString("n_rank_9", prefs.getString("n_rank_9_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_9_def)))));
-                editor.putString("n_rank_10", prefs.getString("n_rank_10_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_10_def)))));
-                editor.putString("n_rank_11", prefs.getString("n_rank_11_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_11_def)))));
-                editor.putString("n_rank_12", prefs.getString("n_rank_12_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_12_def)))));
-                editor.putString("n_rank_13", prefs.getString("n_rank_13_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_13_def)))));
-                editor.putString("n_rank_14", prefs.getString("n_rank_14_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_14_def)))));
-                editor.putString("n_rank_15", prefs.getString("n_rank_15_start", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_15_def)))));
-
-                editor.putString("n_rank_1_conv", prefs.getString("n_rank_1_start_conv", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_1_conv_def)))));
-                editor.putString("n_rank_2_conv", prefs.getString("n_rank_2_start_conv", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_2_conv_def)))));
-                editor.putString("n_rank_3_conv", prefs.getString("n_rank_3_start_conv", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_3_conv_def)))));
-                editor.putString("n_rank_4_conv", prefs.getString("n_rank_4_start_conv", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_4_conv_def)))));
-                editor.putString("n_rank_5_conv", prefs.getString("n_rank_5_start_conv", String.valueOf(mC.getResources().getInteger((R.integer.n_rank_5_conv_def)))));
-                editor.apply();
-
                 yfa.getAllResources().sleepReset();
-
                 resetTemp();
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
                 Intent intent = new Intent(mA, MainActivity.class);

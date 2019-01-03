@@ -118,7 +118,7 @@ public class AllResources {
     public void castSpell(Integer selected_rank) {
         getResource("spell_rank_"+selected_rank).spend(1);
 
-        if(getResource("spell_conv_rank_"+selected_rank).getCurrent()>getResource("spell_rank_"+selected_rank).getCurrent()){
+        if(getResource("spell_conv_rank_"+selected_rank)!=null && (getResource("spell_conv_rank_"+selected_rank).getCurrent()>getResource("spell_rank_"+selected_rank).getCurrent())){
             getResource("spell_conv_rank_"+selected_rank).spend(1);
         }
     }
