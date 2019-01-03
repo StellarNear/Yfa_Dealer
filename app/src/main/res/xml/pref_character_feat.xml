@@ -45,10 +45,11 @@
         android:title="Flêche naturalisée (+2)" />
 
     <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/wedge_max_lvl_spell_def"
+        android:defaultValue="@integer/wedge_max_lvl_spell_def"
         android:key="wedge_max_lvl_spell"
         android:title="Niveau max de sort connu par l'archer-sylvestre"
         android:selectAllOnFocus="true"
+        android:inputType="number"
         android:singleLine="true"
         android:dependency="enchant_arrow"
         android:summary="Tier : %s"/>

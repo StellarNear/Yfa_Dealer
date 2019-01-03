@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Perso;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +22,11 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import stellarnear.yfa_dealer.CustomAlertDialog;
+import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.TinyDB;
+import stellarnear.yfa_dealer.Tools;
 
 
 /**
@@ -176,7 +181,7 @@ public class AllEquipments {
         LayoutInflater inflater = mA.getLayoutInflater();
         View view = inflater.inflate(R.layout.custom_toast_info, (ViewGroup) mA.findViewById(R.id.toast_RelativeLayout));
         CustomAlertDialog ct = new CustomAlertDialog(mA, mC, view);
-        ct.clickToDismiss(view.findViewById(R.id.toast_LinearLayout));
+        ct.clickToHide(view.findViewById(R.id.toast_LinearLayout));
 
         ImageView img = view.findViewById(R.id.toast_image);
         if (equi.getImg(mC) != null) {
@@ -262,7 +267,7 @@ public class AllEquipments {
         View view = inflater.inflate(R.layout.custom_toast_list_info, null);
         final CustomAlertDialog ca = new CustomAlertDialog(mA, mC, view);
         ca.setPermanent(true);
-        ca.clickToDismiss(view.findViewById(R.id.toast_list_title_frame));
+        ca.clickToHide(view.findViewById(R.id.toast_list_title_frame));
         if(selectToEquip){
             TextView title = view.findViewById(R.id.toast_list_title);
             title.setText("Rechanges possibles");

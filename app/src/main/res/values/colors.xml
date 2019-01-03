@@ -20,7 +20,7 @@
     <color name="acide">#d4f7d9</color>
     <color name="acide_dark">#3cdd54</color>
     <color name="warning">#CF0202</color>
-    <color name="transparent">#80000000</color>
+    <color name="transparent">#00000000</color>
     <color name="conversion">#088A29</color>
 
     <color name="end_gradient_button_ok">#004d00</color>
@@ -44,4 +44,10 @@
     <color name="gray">#808080</color>
     <color name="dark_gray">#404040</color>
     <color name="divider_pref">#e0e0e0</color>
+
+    <color name="gray50">#808080</color>
+    <color name="secondaryTextCustomDialog">@color/dark_gray</color>
+    <color name="start_gradient_button_basic">@android:color/darker_gray</color>
+    <color name="end_gradient_button_basic">@color/white</color>
+    <color name="secondaryDetailTextCustomDialog">@color/gray50</color>
 </resources>

@@ -40,6 +40,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import stellarnear.yfa_dealer.Perso.Equipment;
+
 
 public class TinyDB {
 

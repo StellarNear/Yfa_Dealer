@@ -41,19 +41,19 @@ public class Tools {
         return list;
     }
 
-    public BigInteger toBigInt(String key) {
-        BigInteger value = BigInteger.ZERO;
+    public Long toLong(String key) {
+        Long value = 0L;
         try {
-            value = new BigInteger(key);
+            value = Long.parseLong(key);
         } catch (Exception e) {
         }
         return value;
     }
 
-    public Long toLong(String key) {
-        Long value = 0L;
+    public BigInteger toBigInt(String key) {
+        BigInteger value = BigInteger.ZERO;
         try {
-            value = Long.parseLong(key);
+            value = new BigInteger(key);
         } catch (Exception e) {
         }
         return value;
@@ -96,7 +96,7 @@ public class Tools {
 
     }
 
-    public void playVideo(Activity activity, Context context, String rawPath) {
+    public void playVideo(Activity activity,Context context, String rawPath) {
         LayoutInflater inflater = activity.getLayoutInflater();
         final View layoutRecordVideo = inflater.inflate(R.layout.video_full_screen, null);
         final CustomAlertDialog customVideo = new CustomAlertDialog(activity, context, layoutRecordVideo);

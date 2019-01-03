@@ -1,9 +1,7 @@
 package stellarnear.yfa_dealer;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;

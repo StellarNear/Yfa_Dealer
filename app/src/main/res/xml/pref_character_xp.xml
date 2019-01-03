@@ -1,12 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:key="xp_bar"
-        android:layout="@layout/xp_bar"
+
+    <stellarnear.yfa_dealer.XpBarPreference
         android:selectable="false"
         />
-
-
 
     <stellarnear.yfa_dealer.EditTextPreference
         android:defaultValue="@integer/current_xp_def"
@@ -32,7 +29,7 @@
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
     <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/ability_lvl_def"
+        android:defaultValue="@integer/nls_val_def"
         android:key="ability_lvl"
         android:selectable="false"
         android:title="Niveau d'Yfamura"

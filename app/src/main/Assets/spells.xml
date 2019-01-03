@@ -661,6 +661,24 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <rank>9</rank>
     </spell>
 
+    <!--
+    <spell>
+        <name>Nuée de météores</name>
+        <descr>Avec une attaque de contact à distance projète quatre sphères, toute créature frappée par l’une des sphères subit 2d6 points de dégâts contondants (pas de jet de sauvegarde) et subit un malus de -4 au jet de sauvegarde sur les explosions suivantes. Chaque sphere explose sous la forme d’une étendue de 12 m de rayon et inflige 6d6 points de dégâts de feu (jet de reflexe par explosion pour demi-dégats la resistance ne s'aplique qu'une fois).</descr>
+        <range>longue</range>
+        <dice_type>d6</dice_type>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>foudre</dmg_type>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <duration>instant</duration>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <rank>9</rank>
+    </spell>
+    -->
+
     <spell>
         <name>Prémonition</name>
         <descr>Averti dès qu’un péril menace la cible. +2 à la CA et aux jets de Réflexes si personnelle.</descr>

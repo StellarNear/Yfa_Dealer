@@ -13,7 +13,8 @@
     <bool name="enchant_arrow_switch_def">true</bool>
     <bool name="delay_switch_def">true</bool>
     <bool name="extension_dura_switch_def">true</bool>
-    <bool name="compact_list_switch_def">false</bool>
     <bool name="multispell_switch_def">true</bool>
     <bool name="switch_autoclose_dialog_DEF">true</bool>
+    <bool name="switch_manual_diceroll_DEF">false</bool>
+    <bool name="myth_parangon_def">true</bool>
 </resources>

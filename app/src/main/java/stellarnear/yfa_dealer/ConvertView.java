@@ -23,39 +23,41 @@ import android.widget.ViewSwitcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.Spells.ListMeta;
+import stellarnear.yfa_dealer.Spells.Pair_Meta_Rank;
+import stellarnear.yfa_dealer.Spells.Spell;
+
 /**
  * Created by jchatron on 01/12/2017.
  */
 
 public class ConvertView extends AppCompatActivity {
 
-   View currentView;
-   Spell spell;
-   SpellPerDay spell_per_day;
-   TextView Spell_Title;
-   TextView infos;
-   ViewSwitcher panel;
-   Context mC;
-   LinearLayout convert_slots;
-   LinearLayout convert_choices;
-   LinearLayout convert_result;
-   LinearLayout convert_confirm;
-   ListMeta all_meta;
-   Integer selected_rank;
-   List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
-   List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
-   List<CheckBox> meta_selected=new ArrayList<>();
+   private Spell spell;
+   private TextView Spell_Title;
+   private TextView infos;
+   private ViewSwitcher panel;
+   private Context mC;
+   private LinearLayout convert_slots;
+   private LinearLayout convert_choices;
+   private LinearLayout convert_result;
+   private LinearLayout convert_confirm;
+   private ListMeta all_meta;
+   private Integer selected_rank;
+   private List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+   private List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
+   private List<CheckBox> meta_selected=new ArrayList<>();
+
+   private Perso yfa = MainActivity.yfa;
 
 
-    public ConvertView(View currentView, Spell spell, SpellPerDay spell_per_day, TextView Spell_Title, TextView infos, ViewSwitcher panel, Context mC) {
-        this.currentView=currentView;
+    public ConvertView(View currentView, Spell spell, TextView Spell_Title, TextView infos, ViewSwitcher panel, Context mC) {
         this.spell=spell;
-        this.spell_per_day=spell_per_day;
         this.Spell_Title=Spell_Title;
         this.infos=infos;
         this.panel=panel;
         this.mC=mC;
-        spell_per_day.load_list_spell_per_day(mC);
 
         ViewGroup viewGrp= (ViewGroup) currentView;
 
@@ -155,15 +157,15 @@ public class ConvertView extends AppCompatActivity {
         int max_tier=0;
         for(int i=0;i<=5;i++){
             try{
-                if (spell_per_day.checkConvertible_available(i)) {max_tier=i;}
+                if (yfa.getAllResources().checkConvertibleAvailable(i)) {max_tier=i;}
             }catch (Exception e){ }
         }
         if (max_tier==0) {return;}
 
         for(int i=1;i<=max_tier;i++) {
-            if (spell_per_day.getSpell_per_day_rank_conv(i)==0) {continue;}
+            if (yfa.getResourceValue("spell_conv_rank_"+i)==0) {continue;}
             final CheckBox tier = new CheckBox(mC);
-            tier.setText("T" + i + " (" + spell_per_day.getSpell_per_day_rank_conv(i) + ")");
+            tier.setText("T" + i + " (" + yfa.getResourceValue("spell_conv_rank_"+i) + ")");
             tier.setTextSize(16);
             tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -197,10 +199,9 @@ public class ConvertView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected_rank = to_int(checkbox.getText().toString().substring(1, 2));
-                spell_per_day.load_list_spell_per_day(mC);
-                if (!spell_per_day.checkAnyconvertible_available(mC)) {
+                if (!yfa.getAllResources().checkAnyConvertibleAvailable()) {
                     switch_page_back(panel);
-                } else if (!spell_per_day.checkConvertible_available(selected_rank, mC)) {
+                } else if (!yfa.getAllResources().checkConvertibleAvailable(selected_rank)) {
                     constructTierlist();
                 } else {
                     for (CheckBox check : list_check_rank) {
@@ -258,6 +259,14 @@ public class ConvertView extends AppCompatActivity {
         setListnerChoiceSelect(checkNLS,grid,list_check_choice);
         grid.addView(checkNLS);
         list_check_choice.add(checkNLS);
+
+        addVsep(grid,4,Color.GRAY);
+
+        CheckBox checkDissi=new CheckBox(mC);
+        checkDissi.setText("Test contre Dissipation +"+2*selected_rank+" ");
+        setListnerChoiceSelect(checkDissi,grid,list_check_choice);
+        grid.addView(checkDissi);
+        list_check_choice.add(checkDissi);
 
         addVsep(grid,4,Color.GRAY);
 
@@ -352,6 +361,31 @@ public class ConvertView extends AppCompatActivity {
                 result.setTextColor(Color.parseColor("#088A29"));
                 int newNLS=spell.getCaster_lvl()+selected_rank;
                 result.setText("Niveau de lanceur de sort : "+spell.getCaster_lvl()+" > "+newNLS);
+
+                if (result.getParent()!=null) {
+                    ((ViewGroup)result.getParent()).removeView(result);
+                }
+                convert_result.addView(result);
+
+                construct_convertview_confirm();
+
+            }
+
+            if (check.getText().toString().contains("Dissipation") && check.isChecked()){
+                TextView result = new TextView(mC);
+                result.setTextColor(Color.parseColor("#088A29"));
+                if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
+                    result.setText("Aucun effet sur ce sort");
+                } else {
+                    String resistance;
+                    String new_resistance;
+
+                    resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
+                    int new_resi_int = spell.getSave_val() + (int) (selected_rank * 2.0);
+                    new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
+
+                    result.setText("Test contre Dissipation : " + resistance + " > " + new_resistance);
+                }
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -522,14 +556,13 @@ public class ConvertView extends AppCompatActivity {
             }
         }
         spell.storeOri();
-        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
-        spell_per_day.castSpell_rank_conv(selected_rank);
-        spell_per_day.save_list_spell_per_day(mC);
+        refreshAllTexts(Spell_Title,spell,infos,mC);
+        yfa.castConvSpell(selected_rank);
     }
 
-    private void refreshAllTexts(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day,final TextView infos, final Context mC){
+    private void refreshAllTexts(final TextView Spell_Title, final Spell spell,final TextView infos, final Context mC){
         refreshInfos(infos, spell,mC);
-        refreshTitle( Spell_Title,spell, spell_per_day, mC);
+        refreshTitle( Spell_Title,spell, mC);
         //refreshRound();
     }
 
@@ -591,13 +624,13 @@ public class ConvertView extends AppCompatActivity {
     }
 
 
-    private void refreshTitle(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day, final Context mC) {
+    private void refreshTitle(final TextView Spell_Title, final Spell spell, final Context mC) {
         String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
 
-        if(spell_per_day.checkRank_available(spell.getRank(),mC)){
+        if(yfa.getAllResources().checkConvertibleAvailable(spell.getRank())){
             titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
         } else {
             titre.setSpan(new ForegroundColorSpan(mC.getColor(R.color.warning)),spell.getName().length(),titre_texte.length(), 0);// set color2

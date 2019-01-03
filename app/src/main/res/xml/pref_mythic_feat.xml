@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="@bool/myth_parangon_def"
+        android:key="myth_parangon"
+        android:summary="Le pouvoir mythique du personnage est encore plus puissant que celui de la plupart des autres entités mythiques."
+        android:title="Parangon mythique" />
+
+</PreferenceScreen>

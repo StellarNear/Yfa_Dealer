@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Perso;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,6 +24,11 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import stellarnear.yfa_dealer.CustomAlertDialog;
+import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.TinyDB;
+import stellarnear.yfa_dealer.Tools;
 
 
 public class Bag {
@@ -233,7 +238,7 @@ public class Bag {
         View view = inflater.inflate(R.layout.custom_toast_list_info, null);
         final CustomAlertDialog ca = new CustomAlertDialog(mA, mC, view);
         ca.setPermanent(true);
-        ca.clickToDismiss(view.findViewById(R.id.toast_list_title_frame));
+        ca.clickToHide(view.findViewById(R.id.toast_list_title_frame));
 
             LinearLayout money = view.findViewById(R.id.toast_list_money);
             money.setVisibility(View.VISIBLE);

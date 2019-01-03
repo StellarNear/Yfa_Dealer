@@ -1,13 +1,7 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Spells;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,13 +19,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ListSpell extends AppCompatActivity {
 
     private Context mContext;
-    public List<Spell> AllSpells = new ArrayList<Spell>();
-    public ListSpell(Context mC){
+    public List<Spell> allSpells = new ArrayList<Spell>();
+    public ListSpell(Context mC,String mode){
         mContext=mC;
     //construire la liste complete regarder xml parser
 
         try {
-            InputStream is = mContext.getAssets().open("spells.xml");
+            InputStream is = mContext.getAssets().open("spells"+mode+".xml");
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -47,7 +41,8 @@ public class ListSpell extends AppCompatActivity {
                 Node node = nList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
-                    AllSpells.add(new Spell(getValue("name",element2),
+                    allSpells.add(new Spell(getValue("ID",element2),
+                                            getValue("name",element2),
                                             getValue("descr",element2),
                                             getValue("dice_type",element2),
                                             to_double(getValue("n_dice_per_lvl",element2)),
@@ -68,7 +63,9 @@ public class ListSpell extends AppCompatActivity {
 
     }
 
-    public String getValue(String tag, Element element) {
+
+
+    private String getValue(String tag, Element element) {
         try {
             NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
             Node node = nodeList.item(0);
@@ -81,7 +78,7 @@ public class ListSpell extends AppCompatActivity {
     public List<Spell> selectRank(int rank){
         List<Spell> sel_list = new ArrayList<Spell>();
 
-        for(Spell spell : AllSpells){
+        for(Spell spell : allSpells){
             if (spell.getRank() == rank) {
                 sel_list.add(spell);
             }
@@ -89,6 +86,15 @@ public class ListSpell extends AppCompatActivity {
         return sel_list;
     }
 
+    public Spell getSpellByID(String name){
+        Spell spellAnswer = null;
+        for (Spell spell : allSpells){
+            if (spell.getID().equalsIgnoreCase(name)){
+                spellAnswer=spell;
+            }
+        }
+        return spellAnswer;
+    }
 
     public Integer to_int(String key){
         Integer value;

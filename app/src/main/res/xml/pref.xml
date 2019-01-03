@@ -7,7 +7,11 @@
         android:icon="@drawable/ic_person_black_24dp"
         android:title="Personnage"
         android:summary="Statistiques de base du personnage"/>
-
+    <PreferenceScreen
+        android:key="pref_mythic"
+        android:icon="@drawable/ic_embrassed_energy"
+        android:title="Mythique"
+        android:summary="Statistiques mythique du personnage"/>
 
     <PreferenceScreen
         android:key="pref_inventory"
@@ -20,6 +24,12 @@
         android:title="Gestion de l'application"
         android:summary="Paramètres et informations de l'application"
         android:icon="@drawable/ic_smartphone" />
+
+    <PreferenceScreen
+        android:key="pref_temp"
+        android:icon="@drawable/ic_timelapse_black_24dp"
+        android:summary="Améliorations non permanentes"
+        android:title="Bonus temporaires" />
 
     <PreferenceScreen
         android:key="sleep"

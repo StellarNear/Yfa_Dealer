@@ -2,24 +2,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/nls_val_def"
+        android:defaultValue="@integer/nls_val_def"
         android:key="nls_val"
         android:title="Niveau lanceur de sort"
         android:selectAllOnFocus="true"
+        android:inputType="number"
         android:singleLine="true"
         android:summary="Valeur : %s"/>
 
     <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/NLS_bonus_def"
-        android:key="NLS_bonus"
-        android:title="Bonus au NLS"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : %s"/>
-
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/charisme_def"
+        android:defaultValue="@integer/charisme_def"
         android:key="charisme"
+        android:inputType="number"
         android:title="Modificateur de charisme"
         android:selectAllOnFocus="true"
         android:singleLine="true"

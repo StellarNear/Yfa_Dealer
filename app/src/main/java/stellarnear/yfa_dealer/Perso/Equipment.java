@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Perso;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 

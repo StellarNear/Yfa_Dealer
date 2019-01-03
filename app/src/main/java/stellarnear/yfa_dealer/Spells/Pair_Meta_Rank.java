@@ -1,9 +1,4 @@
-package stellarnear.yfa_dealer;
-
-import android.widget.CheckBox;
-import android.widget.ImageButton;
-
-import java.util.Map;
+package stellarnear.yfa_dealer.Spells;
 
 /**
  * Created by jchatron on 29/11/2017.

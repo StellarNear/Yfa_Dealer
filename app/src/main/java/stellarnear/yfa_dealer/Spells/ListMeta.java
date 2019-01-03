@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Spells;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,9 +18,14 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
 
 
 /**
@@ -29,16 +34,13 @@ import java.util.List;
 
 public class ListMeta extends AppCompatActivity {
 
-    List<Pair_Meta_Rank> pair_meta_rank= new ArrayList<>();
-    boolean all_free=false;
+    private List<Pair_Meta_Rank> pair_meta_rank= new ArrayList<>();
+    private boolean all_free=false;
+    private Perso yfa = MainActivity.yfa;
 
-    public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos,final Context mC,boolean... all_free_arg) {
+    public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos, final Context mC, boolean... all_free_arg) {
         if(all_free_arg.length>0){all_free=all_free_arg[0];}
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-
-        final SpellPerDay spell_per_day=new SpellPerDay(mC);
-        spell_per_day.load_list_spell_per_day(mC);
-
         // incant rapide (+4)
 
         if (settings.getBoolean("rapid",mC.getResources().getBoolean(R.bool.rapid_switch_def)))  {
@@ -62,7 +64,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         spell.meta_Rapid(true,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
 
                         /*  Meta quickspell pas possible pour perfection
                         if(spell.isPerfect())
@@ -94,7 +96,7 @@ public class ListMeta extends AppCompatActivity {
 
                     } else {
                         spell.meta_Rapid(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -144,20 +146,20 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Enhance_Spell(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Enhance_Spell(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Enhance_Spell(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
                     } else {
                         spell.meta_Enhance_Spell(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -208,20 +210,20 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Delay(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Delay(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Delay(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
                     } else {
                         spell.meta_Delay(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -270,21 +272,21 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Quint(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Quint(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Quint(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
 
                     } else {
                         spell.meta_Quint(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -333,20 +335,20 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Extend(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Extend(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Extend(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
                     } else {
                         spell.meta_Extend(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -364,7 +366,7 @@ public class ListMeta extends AppCompatActivity {
 
         //flêche naturalisée +2
         // si le level du sort est inférieur ou egal au niveau de sort max de wedge && que la méta est active
-        if ((spell.getBaseRank() <= to_int(settings.getString("wedge_max_lvl_spell",mC.getResources().getString(R.string.wedge_max_lvl_spell_def)))) && (settings.getBoolean("enchant_arrow",mC.getResources().getBoolean(R.bool.enchant_arrow_switch_def))))  {
+        if ((spell.getBaseRank() <= to_int(settings.getString("wedge_max_lvl_spell",String.valueOf(mC.getResources().getInteger(R.integer.wedge_max_lvl_spell_def))))) && (settings.getBoolean("enchant_arrow",mC.getResources().getBoolean(R.bool.enchant_arrow_switch_def))))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Flêche naturalisée (+2)");
             checkbox.setTextColor(Color.GRAY);
@@ -396,20 +398,20 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Enchant_arrow(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Enchant_arrow(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Enchant_arrow(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
                     } else {
                         spell.meta_Enchant_arrow(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -463,16 +465,16 @@ public class ListMeta extends AppCompatActivity {
                                                 }
                                                 spell.setPerfect(false);
                                                 checkbox.setClickable(false);
-                                                refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                                refreshAllTexts(Spell_Title,spell,infos,mC);
                                             }})
                                         .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
                                                 spell.meta_Intense(true,all_free);
-                                                refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                                refreshAllTexts(Spell_Title,spell,infos,mC);
                                             }}).show();
                             }else {
                                 spell.meta_Intense(true,all_free);
-                                refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                refreshAllTexts(Spell_Title,spell,infos,mC);
                             }
                         } else {
                             String descr="Augmentation d'intensité ne permet pas de dépasser le rang 9.";
@@ -496,12 +498,12 @@ public class ListMeta extends AppCompatActivity {
                                         while(!spell.getSave_val().equals(spell.getOri_Save_Val())){
                                             spell.meta_Intense(false,all_free);
                                         }
-                                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                        refreshAllTexts(Spell_Title,spell,infos,mC);
                                     }}).show();
 
                     } else {
                         spell.meta_Intense(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -550,20 +552,20 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Extend_dura(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Extend_dura(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Extend_dura(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
                     } else {
                         spell.meta_Extend_dura(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -616,16 +618,16 @@ public class ListMeta extends AppCompatActivity {
                                             }
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Far(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Far(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
 
                     } else if (!all_free) {
@@ -642,11 +644,11 @@ public class ListMeta extends AppCompatActivity {
                                         while(!spell.getOri_Range().equals(spell.getRange())){
                                             spell.meta_Far(false,all_free);
                                         }
-                                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                        refreshAllTexts(Spell_Title,spell,infos,mC);
                                     }}).show();
                     } else {
                         spell.meta_Far(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -696,20 +698,20 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Select_Spell(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }})
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Select_Spell(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }}).show();
                         }else {
                             spell.meta_Select_Spell(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
                     } else {
                         spell.meta_Select_Spell(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -758,23 +760,23 @@ public class ListMeta extends AppCompatActivity {
                                             spell.meta_Silent(true,true);
                                             spell.setPerfect(false);
                                             checkbox.setClickable(false);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }
                                     })
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             spell.meta_Silent(true,all_free);
-                                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
                                         }
                                     }).show();
                         } else {
                             spell.meta_Silent(true,all_free);
-                            refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
                         }
 
                     } else {
                         spell.meta_Silent(false,all_free);
-                        refreshAllTexts(Spell_Title,spell,spell_per_day,infos,mC);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
                     }
                 }
             });
@@ -815,9 +817,9 @@ public class ListMeta extends AppCompatActivity {
         return value;
     }
 
-    private void refreshAllTexts(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day,final TextView infos, final Context mC){
+    private void refreshAllTexts(final TextView Spell_Title, final Spell spell, final TextView infos, final Context mC){
         refreshInfos(infos, spell,mC);
-        refreshTitle( Spell_Title,spell, spell_per_day, mC);
+        refreshTitle( Spell_Title,spell,  mC);
     }
 
     private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
@@ -878,13 +880,13 @@ public class ListMeta extends AppCompatActivity {
     }
 
 
-    private void refreshTitle(final TextView Spell_Title, final Spell spell, final SpellPerDay spell_per_day, final Context mC) {
+    private void refreshTitle(final TextView Spell_Title, final Spell spell, final Context mC) {
         String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
         SpannableString titre=  new SpannableString(titre_texte);
         titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
 
-        if(spell_per_day.checkRank_available(spell.getRank(),mC)){
+        if(yfa.getResourceValue("spell_rank_"+spell.getRank())>0){
             titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
         } else {
             titre.setSpan(new ForegroundColorSpan(mC.getColor(R.color.warning)),spell.getName().length(),titre_texte.length(), 0);// set color2

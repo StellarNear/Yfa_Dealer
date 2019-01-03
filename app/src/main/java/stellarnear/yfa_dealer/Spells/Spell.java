@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Spells;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,13 +9,16 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import stellarnear.yfa_dealer.R;
+
 
 public class Spell extends AppCompatActivity implements Serializable {
 
     private String  name;
+    private String ID;
     private String  descr;
     private String  dice_type;
     private String  ori_dice_type;
@@ -43,11 +46,15 @@ public class Spell extends AppCompatActivity implements Serializable {
     private int ori_rank;
     private String dmg_dice_roll_txt;
     private int caster_lvl;
-    private int n_cast;
     private boolean perfect;
     private boolean converted;
 
-    public Spell(String name, String descr, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String ID, String name, String descr, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+        if(ID.equalsIgnoreCase("")){
+            this.ID=name;
+        } else {
+            this.ID=ID;
+        }
         this.name=name;
         this.descr=descr;
         this.dice_type=dice_type;
@@ -73,7 +80,6 @@ public class Spell extends AppCompatActivity implements Serializable {
         calcSave_val(mC);
         this.ori_save_val=this.save_val;
         calcCaster_lvl(mC);
-        this.n_cast=0;
         setPerfect(mC);
         this.converted=false;
 
@@ -86,6 +92,9 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
 
 
+    public String getID() {
+        return ID;
+    }
 
     public Integer getRank(){
         return this.rank;
@@ -228,10 +237,6 @@ public class Spell extends AppCompatActivity implements Serializable {
     public String getDmg_dice_roll_txt() {
         return this.dmg_dice_roll_txt;
     }
-
-    public Integer getN_cast() {
-        return this.n_cast;
-    }
     
     public Integer getBaseRank() {
         return this.ori_rank;
@@ -299,7 +304,7 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     public void calcSave_val(Context mC){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
+        String cha_txt=prefs.getString("charisme",String.valueOf(mC.getResources().getInteger(R.integer.charisme_def)));
         Integer charisme = to_int(cha_txt,"Modificateur de charisme",mC);
         Integer save_val_calc=charisme+this.rank+10;
         this.save_val=save_val_calc;
@@ -307,12 +312,13 @@ public class Spell extends AppCompatActivity implements Serializable {
 
     public void calcCaster_lvl(Context mC){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        String lvl_txt=prefs.getString("nls_val",mC.getResources().getString(R.string.nls_val_def));
+        String lvl_txt=prefs.getString("nls_val",String.valueOf(mC.getResources().getInteger(R.integer.nls_val_def)));
         Integer lvl = to_int(lvl_txt,"NLS",mC);
-        String lvl_bonus_txt=prefs.getString("NLS_bonus",mC.getResources().getString(R.string.NLS_bonus_def));
-        Integer lvl_bonus = to_int(lvl_bonus_txt,"NLS bonus",mC);
-        Integer caster_lvl_calc=lvl+lvl_bonus;
-        this.caster_lvl=caster_lvl_calc;
+        if (prefs.getBoolean("karma_switch",false)){
+            lvl+=4;
+        }
+        lvl+=Integer.parseInt(prefs.getString("NLS_bonus",String.valueOf(0)));
+        this.caster_lvl=lvl;
     }
 
     private void calcN_dice() {
@@ -342,16 +348,10 @@ public class Spell extends AppCompatActivity implements Serializable {
             this.compoBool[2]=true;
             this.ori_compoBool[2]=true;
         }else {this.compoBool[2]=false; this.ori_compoBool[2]=false;}
-
     }
 
     public void setDmg_dice_roll_txt(String dmg_dice_roll_txt) {
         this.dmg_dice_roll_txt = dmg_dice_roll_txt;
-    }
-
-
-    public void setN_cast(Integer ncast) {
-        this.n_cast=ncast;
     }
 
     public void setPerfect(Context mC) {
@@ -553,7 +553,7 @@ public class Spell extends AppCompatActivity implements Serializable {
     }
     public void meta_Select_Spell_descr(Context mC) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        String cha_txt=prefs.getString("charisme",mC.getResources().getString(R.string.charisme_def));
+        String cha_txt=prefs.getString("charisme",String.valueOf(mC.getResources().getInteger(R.integer.charisme_def)));
         String descr="Lorsque le personnage lance un sort de zone sélectif, il peut choisir "+ cha_txt +" cibles situées dans la zone."+
                 " Les cibles choisies échappent aux effets du sort. Un sort sélectif occupe un emplacement de sort d’un niveau de plus"+
                 " que le niveau normal du sort.";
@@ -756,5 +756,9 @@ public class Spell extends AppCompatActivity implements Serializable {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         int highscore=settings.getInt(this.name,0);
         return highscore;
+    }
+
+    public boolean hasRM() {
+        return Boolean.valueOf(this.rm);
     }
 }

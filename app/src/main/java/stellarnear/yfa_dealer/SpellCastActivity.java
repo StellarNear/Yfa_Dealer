@@ -8,8 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +16,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -33,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,7 +37,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 import android.widget.ViewSwitcher;
 
 import java.math.BigDecimal;
@@ -53,11 +48,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.Spells.ListMeta;
+import stellarnear.yfa_dealer.Spells.Pair_Meta_Rank;
+import stellarnear.yfa_dealer.Spells.Spell;
+
 
 public class SpellCastActivity extends AppCompatActivity {
 
-    Map<Spell, List<CheckBox>> map_spell_listMetas = new HashMap<Spell, List<CheckBox>>();
-    List<Spell> selected_spells;
+    private Map<Spell, List<CheckBox>> map_spell_listMetas = new HashMap<Spell, List<CheckBox>>();
+    private List<Spell> selected_spells;
+    private Perso yfa = MainActivity.yfa;
+    private Tools tools=new Tools();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +93,6 @@ public class SpellCastActivity extends AppCompatActivity {
             spell.calcSave_val(getApplicationContext()); //refresh si le charisme à bouger
             spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
             final TextView Spell_Title = new TextView(this);
-            final SpellPerDay spell_per_day = new SpellPerDay(getApplicationContext());
-            spell_per_day.load_list_spell_per_day(getApplicationContext());
 
             setSpellTitleColor(Spell_Title, spell);
             page2.addView(Spell_Title);
@@ -135,6 +135,14 @@ public class SpellCastActivity extends AppCompatActivity {
 
             //construction fragement 1
 
+            LinearLayout line = new LinearLayout(this);
+            line.setOrientation(LinearLayout.HORIZONTAL);
+            line.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            line.setPadding(10,0,10,0);
+            LinearLayout subLine = new LinearLayout(this);
+            subLine.setOrientation(LinearLayout.VERTICAL);
+            subLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
             final TextView descri = new TextView(this);
             descri.setText(spell.getDescr());
             descri.setEllipsize(TextUtils.TruncateAt.MARQUEE);
@@ -150,12 +158,32 @@ public class SpellCastActivity extends AppCompatActivity {
             descri.setMarqueeRepeatLimit(-1);
             fragment1.addView(descri);
 
+            addHsep(fragment1, 4, Color.GRAY);
             final TextView infos = new TextView(this);
             infos.setSingleLine(false);
             makeInfos(infos, spell);
-            fragment1.addView(infos);
+            //subLine.addView(infos);
 
-            makeTitle(launching_txt, Spell_Title, infos, spell, spell_per_day, panel, getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
+            line.addView(infos);
+
+            if(spell.hasRM()) {
+                addVsep(line, 4, Color.GRAY);
+                ImageView img = new ImageView(this);
+                // img.setPadding(10,10,10,10);
+                img.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+                img.setImageDrawable(getApplicationContext().getDrawable(R.drawable.ic_surrounded_shield));
+                img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new TestAlertDialog(SpellCastActivity.this, getApplicationContext(), spell.getCaster_lvl());
+                    }
+                });
+                line.addView(img);
+            }
+
+            fragment1.addView(line);
+
+            makeTitle(launching_txt, Spell_Title, infos, spell,  panel, getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
 
             addHsep(fragment1, 4, Color.GRAY);
 
@@ -205,12 +233,9 @@ public class SpellCastActivity extends AppCompatActivity {
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     if (seekBar.getProgress() > 75) {
                         seekBar.setProgress(100);
-                        SpellPerDay spell_per_day = new SpellPerDay(getApplicationContext());
-                        spell_per_day.load_list_spell_per_day(getApplicationContext());
 
-                        if (spell_per_day.checkRank_available(spell.getRank(), getApplicationContext())) {
-                            spell_per_day.castSpell_rank(spell.getRank());
-                            spell_per_day.save_list_spell_per_day(getApplicationContext());
+                        if (spell.getRank()==0 ||yfa.getResourceValue("spell_rank_"+spell.getRank())>0) {
+                            if (spell.getRank()!=0){yfa.castSpell(spell.getRank());}
                             constructFrag2(fragment2, spell);
                             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                             Spell_Title.setOnTouchListener(null);
@@ -257,7 +282,7 @@ public class SpellCastActivity extends AppCompatActivity {
         View allmetaView = constructAllMetaView(spell, all_meta_list, launching_txt);
         final CustomAlertDialog metaPopup = new CustomAlertDialog(this, getApplicationContext(), allmetaView);
         metaPopup.setPermanent(true);
-        metaPopup.clickToDismiss(allmetaView.findViewById(R.id.metamagie_back));
+        metaPopup.clickToHide(allmetaView.findViewById(R.id.metamagie_back));
         metaPopup.showAlert();
     }
 
@@ -510,7 +535,7 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout enLigne = new LinearLayout(this);
             fragment2.setGravity(Gravity.CENTER_HORIZONTAL);
             enLigne.setOrientation(LinearLayout.VERTICAL);
-            //enLigne.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            enLigne.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
             fragment2.addView(enLigne);
             TextView txt_view = new TextView(this);
             txt_view.setText("Dégâts :");
@@ -743,7 +768,7 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
 
-    private void makeTitle(final TextView launching_txt, final TextView Spell_Title, final TextView infos, final Spell spell, final SpellPerDay spell_per_day, final ViewSwitcher panel, final Context mC) {
+    private void makeTitle(final TextView launching_txt, final TextView Spell_Title, final TextView infos, final Spell spell, final ViewSwitcher panel, final Context mC) {
         Spell_Title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         Spell_Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         Spell_Title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
@@ -752,19 +777,16 @@ public class SpellCastActivity extends AppCompatActivity {
         titre.setSpan(new RelativeSizeSpan(2f), 0, spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0, spell.getName().length(), 0);// set color1
 
-        if (spell_per_day.checkRank_available(spell.getRank(), getApplicationContext())) {
+        if (yfa.getResourceValue("spell_rank_"+spell.getRank())>0) {
             titre.setSpan(new ForegroundColorSpan(Color.BLACK), spell.getName().length(), titre_texte.length(), 0);// set color2
         } else {
             titre.setSpan(new ForegroundColorSpan(getColor(R.color.warning)), spell.getName().length(), titre_texte.length(), 0);// set color2
         }
         Spell_Title.setText(titre);
 
-        if (spell_per_day.checkAnyconvertible_available() && !spell.isConverted()) {
+        if (yfa.getAllResources().checkAnyConvertibleAvailable() && !spell.isConverted()) {
             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_repeat_black_24dp), null);
-            Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics())));
-
-
+           // Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics())));
             Spell_Title.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -778,11 +800,11 @@ public class SpellCastActivity extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_menu_help)
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell_per_day.load_list_spell_per_day(mC);
-                                            if (spell_per_day.checkAnyconvertible_available()) {
+
+                                            if (yfa.getAllResources().checkAnyConvertibleAvailable()) {
                                                 Snackbar.make(Spell_Title, "Ouverture du panneau de conversion", Snackbar.LENGTH_LONG)
                                                         .setAction("Action", null).show();
-                                                new ConvertView(panel.getNextView(), spell, spell_per_day, Spell_Title, infos, panel, SpellCastActivity.this); //construit le fragement de vue de la conversion
+                                                new ConvertView(panel.getNextView(), spell, Spell_Title, infos, panel, SpellCastActivity.this); //construit le fragement de vue de la conversion
                                                 uncheckMeta(map_spell_listMetas.get(spell));
                                                 spell.setConverted(true);
                                                 calcRounds(launching_txt);

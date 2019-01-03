@@ -29,7 +29,7 @@ public class CustomAlertDialog {
     }
 
     public void showAlert() {
-        alert = dialogBuilder.create();
+        if(alert==null){alert = dialogBuilder.create();}
         alert.show();
         if(positiveButton){applyStyleToOkButton();}
         if(cancelButton){applyStyleToCancelButton();}
@@ -75,7 +75,7 @@ public class CustomAlertDialog {
         alert.dismiss();
     }
 
-    public void clickToDismiss(View view) {
+    public void clickToHide(View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
