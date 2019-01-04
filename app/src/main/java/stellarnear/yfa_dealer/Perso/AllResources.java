@@ -90,7 +90,7 @@ public class AllResources {
     }
 
     public boolean checkSpellAvailable(Integer selected_rank) {
-        return getResource("spell_rank_"+selected_rank).getCurrent()>0;
+        return selected_rank==0 || getResource("spell_rank_"+selected_rank).getCurrent()>0;
     }
 
     public boolean checkConvertibleAvailable(Integer selected_rank) {

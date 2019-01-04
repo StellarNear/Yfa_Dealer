@@ -50,4 +50,6 @@
     <color name="start_gradient_button_basic">@android:color/darker_gray</color>
     <color name="end_gradient_button_basic">@color/white</color>
     <color name="secondaryDetailTextCustomDialog">@color/gray50</color>
+    <color name="start_gradient_background_spell">#d9d9d9</color>
+    <color name="end_gradient_background_spell">#ffffff</color>
 </resources>

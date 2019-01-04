@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v6.0"</string>
-    <string name="time_spend">78h</string>
+    <string name="time_spend">83h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
@@ -11,6 +11,8 @@ Patch note V6.0
 -Ajout du mode Mythique !
 -Gestion des points mythique dans une ressource dynamique
 -Ajout des sorts mythiques (Désintégration, Doigt de mort)
+-Ajout d'un tout nouveau systeme pour gerer le multicible !
+-Possibilité de Drag'N'Drop les sorts sur les cibles voulus !
 -En maintenant un clic sur un tier (navitagtion rapide de la page principale) on peut désormais effectuer un sort d'arcane libre
 -Le grain de Karma est désormais accessible dans un nouveau menu "buffs temporaires"
 -Ajout du mode de conversion arcanique conde la dissipation
@@ -19,6 +21,7 @@ Patch note V6.0
 -Ajout de la montée de puissance sur les dès
 -Prise en compte de la robe lors d'un test de NLS contre RM
 -Refonte totale du menu des paramètres pour être géré dans des activités séparées
+-Améliorations graphiques sur les cartouches de sorts
 ----------------------------------------------------------------------------------
 Patch note V5.2a
 -Fix des crash lors des conversions de sorts lorsque aucune métamagie n'avait été appliquée sur le sort

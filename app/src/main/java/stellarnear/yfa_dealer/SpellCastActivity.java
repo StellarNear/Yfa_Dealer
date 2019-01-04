@@ -7,12 +7,12 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +59,7 @@ public class SpellCastActivity extends AppCompatActivity {
     private Map<Spell, List<CheckBox>> map_spell_listMetas = new HashMap<Spell, List<CheckBox>>();
     private List<Spell> selected_spells;
     private Perso yfa = MainActivity.yfa;
+    private Targets targets = Targets.getInstance();
     private Tools tools=new Tools();
 
     @Override
@@ -82,22 +83,48 @@ public class SpellCastActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         }
 
-        Intent i = getIntent();
-        selected_spells = (List<Spell>) i.getSerializableExtra("selected_spells");   //recuperation des sorts selection dans mainActiv
-        LinearLayout page2 = (LinearLayout) findViewById(R.id.linear2);
+        selected_spells= targets.getAllSpellList();
 
-        final TextView launching_txt = (TextView) findViewById(R.id.Titre2);
-        calcRounds(launching_txt);
+        LinearLayout mainLin = (LinearLayout) findViewById(R.id.linear2);
 
-        for (final Spell spell : selected_spells) {
-            spell.calcSave_val(getApplicationContext()); //refresh si le charisme à bouger
+        for(String tar : targets.getTargetList()){
+            TextView textTar = new TextView(this);
+            textTar.setText(tar);
+            textTar.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.ic_gps_fixed_red_24dp),null,null,null);
+            textTar.setCompoundDrawablePadding(10);
+            textTar.setTextSize(20);
+            textTar.setTextColor(Color.DKGRAY);
+            textTar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            LinearLayout.LayoutParams para = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            textTar.setLayoutParams(para);
+
+            mainLin.addView(textTar);
+            addSpellsForTarget(mainLin,targets.getSpellListForTarget(tar));
+        }
+
+    }
+
+    private void addSpellsForTarget(LinearLayout mainLin,List<Spell> targetSpells) {
+        for (final Spell spell : targetSpells) {
+            final TextView launching_txt = (TextView) findViewById(R.id.Titre2);
+            calcRounds(launching_txt);
+            spell.calcSave_val(getApplicationContext()); //refresh si le charisme à bougé
             spell.meta_Materiel(getApplicationContext()); //refresh si le setting a bougé
+
+            LinearLayout page2 = new LinearLayout(this);
+            page2.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams para = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            para.setMargins(0, 10, 0, 10);
+            page2.setLayoutParams(para);
+            page2.setBackground(getDrawable(R.drawable.spell_back));
+            page2.setClipToPadding(true);
             final TextView Spell_Title = new TextView(this);
 
             setSpellTitleColor(Spell_Title, spell);
             page2.addView(Spell_Title);
 
-            addHsep(page2, 7, Color.BLACK);
+            // addHsep(page2,  (int) getResources().getDimension(R.dimen.bordure_spell_background), Color.DKGRAY);
 
 
             final ViewSwitcher panel = new ViewSwitcher(this);
@@ -138,7 +165,7 @@ public class SpellCastActivity extends AppCompatActivity {
             LinearLayout line = new LinearLayout(this);
             line.setOrientation(LinearLayout.HORIZONTAL);
             line.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            line.setPadding(10,0,10,0);
+            line.setPadding(10, 0, 10, 0);
             LinearLayout subLine = new LinearLayout(this);
             subLine.setOrientation(LinearLayout.VERTICAL);
             subLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -166,7 +193,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
             line.addView(infos);
 
-            if(spell.hasRM()) {
+            if (spell.hasRM()) {
                 addVsep(line, 4, Color.GRAY);
                 ImageView img = new ImageView(this);
                 // img.setPadding(10,10,10,10);
@@ -183,7 +210,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
             fragment1.addView(line);
 
-            makeTitle(launching_txt, Spell_Title, infos, spell,  panel, getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
+            makeTitle(launching_txt, Spell_Title, infos, spell, panel, getApplicationContext()); //fait le titre du cartouche avec le rang en petit et couleur warining si pas dispo
 
             addHsep(fragment1, 4, Color.GRAY);
 
@@ -203,6 +230,7 @@ public class SpellCastActivity extends AppCompatActivity {
             final TextView metaPopupText = new TextView(this);
             metaPopupText.setText("Appliquer une métamagie");
             metaPopupText.setTextSize(20);
+            metaPopupText.setTextColor(Color.DKGRAY);
             metaPopupText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaPopupText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             metaClic.addView(metaPopupText);
@@ -213,18 +241,12 @@ public class SpellCastActivity extends AppCompatActivity {
                 }
             });
             fragment1.addView(metaClic);
-            addHsep(fragment1, 4, Color.GRAY);
 
             SeekBar cast_slide = new SeekBar(this);
             cast_slide.setMax(100);
-            cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_black_24dp));
+            cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_gradient_24dp));
 
-
-            GradientDrawable gd_background = new GradientDrawable(
-                    GradientDrawable.Orientation.BL_TR,
-                    new int[]{0xFFBDBDBD, 0xFFFDEFEF});
-            gd_background.setCornerRadius(0f);
-            cast_slide.setBackground(gd_background);
+            cast_slide.setBackground(getDrawable(R.drawable.round_corner_slide));
 
             fragment1.addView(cast_slide);
             cast_slide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -234,8 +256,10 @@ public class SpellCastActivity extends AppCompatActivity {
                     if (seekBar.getProgress() > 75) {
                         seekBar.setProgress(100);
 
-                        if (spell.getRank()==0 ||yfa.getResourceValue("spell_rank_"+spell.getRank())>0) {
-                            if (spell.getRank()!=0){yfa.castSpell(spell.getRank());}
+                        if (spell.getRank() == 0 || yfa.getResourceValue("spell_rank_" + spell.getRank()) > 0) {
+                            if (spell.getRank() != 0) {
+                                yfa.castSpell(spell.getRank());
+                            }
                             constructFrag2(fragment2, spell);
                             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                             Spell_Title.setOnTouchListener(null);
@@ -262,18 +286,17 @@ public class SpellCastActivity extends AppCompatActivity {
                                               boolean fromUser) {
                     if (progress > 75) {
                         seekBar.setThumb(getDrawable(R.drawable.ic_wb_sunny_black_24dp));
-                        seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
+                        //seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
                     } else {
-                        seekBar.setThumb(getDrawable(R.drawable.ic_play_circle_filled_black_24dp));
-                        seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.black));
+                        seekBar.setThumb(getDrawable(R.drawable.ic_play_circle_filled_gradient_24dp));
+                        //seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.black));
                     }
 
                 }
             });
 
             //dans le switchview mettre tout les choix de meta magie descriptif du sort etc
-
-            addHsep(page2, 7, Color.BLACK);
+            mainLin.addView(page2);
 
         }
     }
@@ -424,7 +447,9 @@ public class SpellCastActivity extends AppCompatActivity {
 
     private void addHsep(LinearLayout lay, int e, int Color) {
         View h_sep_meta = new View(this);
-        h_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, e));
+        LinearLayout.LayoutParams para = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, e);
+        para.setMargins((int) getResources().getDimension(R.dimen.bordure_spell_background),0,(int) getResources().getDimension(R.dimen.bordure_spell_background),0);
+        h_sep_meta.setLayoutParams(para);
         h_sep_meta.setBackgroundColor(Color);
         lay.addView(h_sep_meta);
     }
@@ -764,7 +789,7 @@ public class SpellCastActivity extends AppCompatActivity {
         }
         infos.setText(text);
         infos.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        infos.setTextColor(Color.GRAY);
+        infos.setTextColor(Color.DKGRAY);
     }
 
 
@@ -777,7 +802,7 @@ public class SpellCastActivity extends AppCompatActivity {
         titre.setSpan(new RelativeSizeSpan(2f), 0, spell.getName().length(), 0); // set size1
         titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0, spell.getName().length(), 0);// set color1
 
-        if (yfa.getResourceValue("spell_rank_"+spell.getRank())>0) {
+        if (yfa.getAllResources().checkSpellAvailable(spell.getRank())) {
             titre.setSpan(new ForegroundColorSpan(Color.BLACK), spell.getName().length(), titre_texte.length(), 0);// set color2
         } else {
             titre.setSpan(new ForegroundColorSpan(getColor(R.color.warning)), spell.getName().length(), titre_texte.length(), 0);// set color2
@@ -786,7 +811,6 @@ public class SpellCastActivity extends AppCompatActivity {
 
         if (yfa.getAllResources().checkAnyConvertibleAvailable() && !spell.isConverted()) {
             Spell_Title.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_repeat_black_24dp), null);
-           // Spell_Title.setCompoundDrawablePadding(-Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics())));
             Spell_Title.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -873,48 +897,25 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     public void setSpellTitleColor(TextView text, Spell spell) {
-        int end = R.color.aucun;
-        int start = R.color.white;
+        Drawable gd =null;
 
         if (spell.getDmg_type().equals("aucun")) {
-            end = R.color.aucun_dark;
-            start = R.color.aucun;
-        }
-        if (spell.getDmg_type().equals("feu")) {
-            end = R.color.feu_dark;
-            start = R.color.feu;
-        }
-        if (spell.getDmg_type().equals("foudre")) {
-            end = R.color.foudre_dark;
-            start = R.color.foudre;
-        }
-        if (spell.getDmg_type().equals("froid")) {
-            end = R.color.froid_dark;
-            start = R.color.froid;
-        }
-        if (spell.getDmg_type().equals("acide")) {
-            end = R.color.acide_dark;
-            start = R.color.acide;
+            gd=getDrawable(R.drawable.round_corner_title_void);
+        }else  if (spell.getDmg_type().equals("feu")) {
+            gd=getDrawable(R.drawable.round_corner_title_fire);
+        }else if (spell.getDmg_type().equals("foudre")) {
+            gd=getDrawable(R.drawable.round_corner_title_thunder);
+        }else if (spell.getDmg_type().equals("froid")) {
+            gd=getDrawable(R.drawable.round_corner_title_cold);
+        } else if (spell.getDmg_type().equals("acide")) {
+            gd=getDrawable(R.drawable.round_corner_title_acid);
+        } else {
+            gd=getDrawable(R.drawable.round_corner_title);
         }
 
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.BL_TR,
-                new int[]{getColor(start), getColor(end)});
-        gd.setCornerRadius(0f);
         text.setTextColor(Color.BLACK);
         text.setBackground(gd);
     }
-
-    public Integer to_int(String key) {
-        Integer value;
-        try {
-            value = Integer.parseInt(key);
-        } catch (Exception e) {
-            value = 0;
-        }
-        return value;
-    }
-
 
     private Double tableProba(Integer nd3, Integer nd4, Integer nd6, Integer nd8, Integer sum) {
 

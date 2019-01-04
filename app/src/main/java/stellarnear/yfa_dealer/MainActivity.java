@@ -20,9 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -30,10 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,6 +44,7 @@ import stellarnear.yfa_dealer.Spells.Spell;
 public class MainActivity extends AppCompatActivity {
     private List<Spell> selectedSpells=new ArrayList<Spell>();
     private boolean shouldExecuteOnResume;
+    private Targets targets;
     public static Perso yfa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setBackgroundResource(R.drawable.banner_background);
         setSupportActionBar(toolbar);
         yfa=new Perso(getApplicationContext());
+        targets = Targets.getInstance();
 
         buildPage1();
 
@@ -65,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!selectedSpells.isEmpty()){
-                    builPage2();
+                    targets.clearTargets();
+                    testSpellSelection();
                 } else {
                     Toast toast =  Toast.makeText(getApplicationContext(), "Sélectionnes au moins un sort ...", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
@@ -181,23 +184,36 @@ public class MainActivity extends AppCompatActivity {
             side_txt.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Arcane libre")
-                            .setMessage("Veux tu lancer utiliser arcane libre pour lancer un sort de rang " + rank + " ?")
-                            .setIcon(android.R.drawable.ic_menu_help)
-                            .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    yfa.castSpell(rank);
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Arcane libre de rang " +rank+" lancé.", Toast.LENGTH_LONG);
-                                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                    toast.show();
-                                }
-                            })
-                            .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                }
-                            }).show();
+                    if(yfa.getResourceValue("mythic_points")>0) {
+
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Arcane libre")
+                                .setMessage("Veux tu lancer utiliser arcane libre pour lancer un sort de rang " + rank + " ?")
+                                .setIcon(android.R.drawable.ic_menu_help)
+                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Arcane libre de rang " + rank + " lancé.", Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                        toast.show();
+
+                                        yfa.castSpell(rank);
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                                        yfa.getAllResources().getResource("mythic_points").spend(1);
+                                        Toast toast2 = Toast.makeText(getApplicationContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
+                                        toast2.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                        toast2.show();
+                                    }
+                                })
+                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                    }
+                                }).show();
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    }
                     return true;
                 }
             });
@@ -218,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked){
-                            selectedSpells.add(spell);
+                            selectedSpells.add(new Spell(getApplicationContext(),spell));
                             current_spell_display(getApplicationContext());
                         }
 
@@ -292,22 +308,22 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     checkbox.setText(spell.getName());
                     checkbox.setOnTouchListener(new View.OnTouchListener() {
-                                                    @Override
-                                                    public boolean onTouch(View v, MotionEvent event) {
-                                                        if (event.getAction() == MotionEvent.ACTION_UP) {
-                                                            if (event.getRawX() <= checkbox.getLeft() + Math.round(TypedValue.applyDimension(
-                                                                    TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))) {
-                                                                checkbox.setChecked(!checkbox.isChecked());
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if (event.getAction() == MotionEvent.ACTION_UP) {
+                                if (event.getRawX() <= checkbox.getLeft() + Math.round(TypedValue.applyDimension(
+                                        TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))) {
+                                    checkbox.setChecked(!checkbox.isChecked());
 
-                                                            } else {
-                                                                Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
-                                                                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                                                toast.show();
-                                                            }
-                                                        }
-                                                        return true;
-                                                    }
-                                                });
+                                } else {
+                                    Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                    toast.show();
+                                }
+                            }
+                            return true;
+                        }
+                    });
                     //map_spell_check.put(spell,checkbox);
                 }
             }
@@ -340,56 +356,121 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void builPage2() {
+    private void testSpellSelection() {
         if (!selectedSpells.isEmpty()) {
-
-            MyDragAndDrop myDragAndDrop = new MyDragAndDrop(getApplicationContext());
-
-            LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-            View mainView = inflater.inflate(R.layout.target_drag_drop,null);
-
-            CustomAlertDialog targetDialog = new CustomAlertDialog(this,getApplicationContext(),mainView);
-            targetDialog.setPermanent(true);
-            targetDialog.clickToHide(mainView.findViewById(R.id.target_frame));
-
-
-            LinearLayout spellListLin = mainView.findViewById(R.id.target_list_spells);
-            LinearLayout targetLin = mainView.findViewById(R.id.target_list_targets);
-
-            for (Spell spell : selectedSpells){
-                TextView t = new TextView(getApplicationContext());
-                t.setText(spell.getName());
-                t.setTextSize(18);
-                t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                myDragAndDrop.setTouchListner(t,spell);
-                spellListLin.addView(t);
-            }
-
-            List<String> targetList = Arrays.asList("target 1","target 2","target 3");
-            for (String tar : targetList){
-                LinearLayout fram = new LinearLayout(getApplicationContext());
-                fram.setGravity(Gravity.CENTER);
-                fram.setOrientation(LinearLayout.VERTICAL);
-                fram.setPadding(5,50,5,50);
-                fram.setBackground(getDrawable(R.drawable.target_basic_gradient));
-                TextView t = new TextView(getApplicationContext());
-                t.setText(tar);
-                t.setTextColor(Color.DKGRAY);
-                t.setTextSize(20);
-                t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                fram.addView(t);
-                myDragAndDrop.setDragListner(fram,); //à faire un truc ennemi
-                targetLin.addView(fram);
-            }
-
-            targetDialog.showAlert();
-
-            /*
-            Intent intent = new Intent(this, SpellCastActivity.class);
-            intent.putExtra("selected_spells", (Serializable) selectedSpells);
-            startActivity(intent);
-            overridePendingTransition(R.anim.infromright,R.anim.nothing);*/
+            askNTarget();
         } else { startActivity(new Intent(this, MainActivity.class));}
+    }
+
+    private void askNTarget() {
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        View mainView = inflater.inflate(R.layout.target_naming,null);
+        CustomAlertDialog targetDialog = new CustomAlertDialog(this,getApplicationContext(),mainView);
+        final LinearLayout listName = mainView.findViewById(R.id.target_list_names);
+
+        targetDialog.setPermanent(true);
+        targetDialog.clickToHide(mainView.findViewById(R.id.target_frame));
+        targetDialog.addConfirmButton("Valider");
+        targetDialog.setAcceptEventListener(new CustomAlertDialog.OnAcceptEventListener() {
+            @Override
+            public void onEvent() {
+                if(listName.getChildCount()>1) {
+                    for (int index = 0; index < listName.getChildCount(); index++) {
+                        String nameTar = ((EditText) listName.getChildAt(index)).getText().toString();
+                        if (nameTar.equalsIgnoreCase("")) {
+                            nameTar=((EditText) listName.getChildAt(index)).getHint().toString();
+                        }
+                        targets.addTarget(nameTar);
+                    }
+                    showTargetDragAndDrop();
+                } else { //on assigne tout à mainTarget
+                    String nameTar = ((EditText) listName.getChildAt(0)).getText().toString();
+                    if (nameTar.equalsIgnoreCase("")) {
+                        nameTar=((EditText) listName.getChildAt(0)).getHint().toString();
+                    }
+                    targets.assignAllToMain(nameTar,selectedSpells);
+                    buildPage2();
+                }
+            }
+        });
+
+        Button addTarget = mainView.findViewById(R.id.addTarget);
+        addTarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText edit = new EditText(getApplicationContext());
+                edit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                int i = listName.getChildCount();
+                edit.setHint("Cible "+i);
+                edit.setMinEms(7);
+                listName.addView(edit);
+            }
+        });
+
+        targetDialog.showAlert();
+    }
+
+    private void showTargetDragAndDrop() {
+        MyDragAndDrop myDragAndDrop = new MyDragAndDrop(getApplicationContext());
+
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        View mainView = inflater.inflate(R.layout.target_drag_drop,null);
+
+        CustomAlertDialog targetDialog = new CustomAlertDialog(this,getApplicationContext(),mainView);
+        targetDialog.setPermanent(true);
+        targetDialog.clickToHide(mainView.findViewById(R.id.target_frame));
+
+
+        LinearLayout spellListLin = mainView.findViewById(R.id.target_list_spells);
+        LinearLayout targetLin = mainView.findViewById(R.id.target_list_targets);
+
+        for (Spell spell : selectedSpells){
+            TextView t = new TextView(getApplicationContext());
+            t.setText(spell.getName());
+            t.setTextSize(18);
+            t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            myDragAndDrop.setTouchListner(t,spell);
+            spellListLin.addView(t);
+        }
+
+        for (String tar : targets.getTargetList()){
+            LinearLayout fram = new LinearLayout(getApplicationContext());
+            fram.setGravity(Gravity.CENTER);
+            fram.setOrientation(LinearLayout.VERTICAL);
+            fram.setPadding(5,50,5,50);
+            fram.setBackground(getDrawable(R.drawable.target_basic_gradient));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT );
+            params.setMargins(0,5,0,0);
+            fram.setLayoutParams(params);
+            TextView t = new TextView(getApplicationContext());
+            t.setText(tar);
+            t.setTextColor(Color.DKGRAY);
+            t.setTextSize(20);
+            t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fram.addView(t);
+            myDragAndDrop.setDragListner(fram,tar); //à faire un truc ennemi
+            targetLin.addView(fram);
+        }
+        targetDialog.addConfirmButton("Valider");
+        targetDialog.setAcceptEventListener(new CustomAlertDialog.OnAcceptEventListener() {
+            @Override
+            public void onEvent() {
+                if (targets.anySpellAssigned()){
+                    buildPage2();
+                } else {
+                    Toast toast =  Toast.makeText(getApplicationContext(), "Aucun sort n'est attribué à une cible ...", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }
+        });
+        targetDialog.showAlert();
+    }
+    private void buildPage2(){
+        Intent intent = new Intent(this, SpellCastActivity.class);
+        //intent.putExtra("selected_spells", (Serializable) selectedSpells);
+        startActivity(intent);
+        overridePendingTransition(R.anim.infromright,R.anim.nothing);
     }
 
     @Override

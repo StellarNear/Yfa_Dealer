@@ -3,33 +3,40 @@ package stellarnear.yfa_dealer;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import stellarnear.yfa_dealer.Spells.Spell;
 
 public class MyDragAndDrop {
     private Context mC;
+    static private Spell currentSpell;
+    private Targets targets;
+
     public MyDragAndDrop(Context mC){
         this.mC=mC;
+        this.targets=Targets.getInstance();
     }
 
     public void setTouchListner(View v,Spell spell){
         v.setOnTouchListener(new MyTouchListner(spell));
     }
 
-    public void setDragListner(View v,){  //faire un truc ennemi
-        v.setOnDragListener(new MyDragListener());
+    public void setDragListner(View v,String target){  //faire un truc ennemi
+        v.setOnDragListener(new MyDragListener(target));
     }
 
 
     class MyTouchListner implements View.OnTouchListener {
-
+        private Spell spell;
         private MyTouchListner(Spell spell){
-
+            this.spell=spell;
         }
 
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -38,6 +45,7 @@ public class MyDragAndDrop {
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
                         view);
                 view.startDrag(data, shadowBuilder, view, 0);
+                currentSpell=spell;
                 return true;
             } else {
                 return false;
@@ -48,9 +56,10 @@ public class MyDragAndDrop {
     class MyDragListener implements View.OnDragListener {
         Drawable enterShape = mC.getResources().getDrawable(R.drawable.target_select_gradient);
         Drawable normalShape = mC.getResources().getDrawable(R.drawable.target_basic_gradient);
-
-        private MyDragListener( ){
-
+        private String target;
+        private MyDragListener(String target){
+            this.target=target;
+            targets.addTarget(target);
         }
 
         @Override
@@ -73,6 +82,10 @@ public class MyDragAndDrop {
                     LinearLayout container = (LinearLayout) v;
                     container.addView(view);
                     view.setVisibility(View.VISIBLE);
+
+                    targets.addSpellToTarget(target,currentSpell);
+
+                    toastAll();
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     v.setBackground(normalShape);
@@ -81,5 +94,19 @@ public class MyDragAndDrop {
             }
             return true;
         }
+    }
+
+    private void toastAll() {
+        String txt="Liste actuelle:\n";
+
+        for (String tar : targets.getTargetList()){
+            txt+=tar+":\n";
+            int i=1;
+            for (Spell spell : targets.getSpellListForTarget(tar)){
+                txt+="Spell "+i+" : "+spell.getName()+"\n";
+                i++;
+            }
+        }
+        Log.d("LIST",txt);
     }
 }

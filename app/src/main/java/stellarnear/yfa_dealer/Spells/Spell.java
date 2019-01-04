@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import stellarnear.yfa_dealer.R;
 
 
-public class Spell extends AppCompatActivity implements Serializable {
+public class Spell extends AppCompatActivity implements Serializable,Cloneable {
 
     private String  name;
     private String ID;
@@ -48,6 +48,42 @@ public class Spell extends AppCompatActivity implements Serializable {
     private int caster_lvl;
     private boolean perfect;
     private boolean converted;
+
+    public Spell(Context mC,Spell spell){ //copying spell
+        if(spell.ID.equalsIgnoreCase("")){
+            this.ID=spell.name;
+        } else {
+            this.ID=spell.ID;
+        }
+        this.name=spell.name;
+        this.descr=spell.descr;
+        this.dice_type=spell.dice_type;
+        this.ori_dice_type=spell.dice_type;
+        this.n_dice_per_lvl=spell.n_dice_per_lvl;
+        this.ori_n_dice_per_lvl=this.n_dice_per_lvl;
+        this.cap_dice=spell.cap_dice;
+        this.ori_cap_dice=spell.cap_dice;
+        this.dmg_type=spell.dmg_type;
+        this.range=spell.range;
+        this.ori_range=spell.range;
+        this.cast_time=spell.cast_time;
+        this.ori_cast_time=spell.cast_time;
+        this.duration=spell.duration;
+        this.ori_duration=spell.duration;
+        this.compo=spell.compo;
+        setcompoBool(this.compo);
+        meta_Materiel(mC);
+        this.rm=spell.rm;
+        this.save_type=spell.save_type;
+        this.rank=spell.rank;
+        this.ori_rank=spell.rank;
+        calcSave_val(mC);
+        this.ori_save_val=this.save_val;
+        calcCaster_lvl(mC);
+        setPerfect(mC);
+        this.converted=false;
+        calcN_dice();
+    }
 
     public Spell(String ID, String name, String descr, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         if(ID.equalsIgnoreCase("")){
@@ -82,10 +118,7 @@ public class Spell extends AppCompatActivity implements Serializable {
         calcCaster_lvl(mC);
         setPerfect(mC);
         this.converted=false;
-
         calcN_dice();
-
-
         //tester si perfect dans meta si oui popup si il depense perfect on uprank gratos on rend le sort non perfect mais on desactive la box (plus cliquable) peut etre à faire
         // dans spellcastactivity du coup
         // si il dit non comportement normal il paye le rank
