@@ -9,8 +9,8 @@
     <integer name="n_rank_7_def">8</integer>
     <integer name="n_rank_8_def">8</integer>
     <integer name="n_rank_9_def">8</integer>
-    <integer name="n_rank_10_def">6</integer>
-    <integer name="n_rank_11_def">0</integer>
+    <integer name="n_rank_10_def">7</integer>
+    <integer name="n_rank_11_def">4</integer>
     <integer name="n_rank_12_def">0</integer>
     <integer name="n_rank_13_def">0</integer>
     <integer name="n_rank_14_def">0</integer>
@@ -31,10 +31,10 @@
     <integer name="percent_fullscreen_customdialog_equipment_list">80</integer>
     <integer name="custom_alert_long_duration_DEF">5000</integer>
 
-    <integer name="nls_val_def">23</integer>
-    <integer name="current_xp_def">9412348</integer>
-    <integer name="previous_level_def">6830000</integer>
-    <integer name="next_level_def">9570000</integer>
+    <integer name="nls_val_def">24</integer>
+    <integer name="current_xp_def">12970764</integer>
+    <integer name="previous_level_def">9570000</integer>
+    <integer name="next_level_def">13600000</integer>
     <integer name="add_current_xp_def">0</integer>
     <integer name="add_gold_def">0</integer>
     <integer name="money_plat_def">20263</integer>
@@ -46,7 +46,7 @@
     <integer name="mythic_dice_def">6</integer>
 
     <integer name="charisme_def">14</integer>
-    <integer name="wedge_max_lvl_spell_def">6</integer>
+    <integer name="wedge_max_lvl_spell_def">7</integer>
     <integer name="percent_fullscreen_combat_launcher_dialog">95</integer>
 
 </resources>

@@ -350,6 +350,9 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
         if (prefs.getBoolean("karma_switch",false)){
             lvl+=4;
         }
+        if (prefs.getBoolean("ioun_stone",true)){
+            lvl+=1;
+        }
         lvl+=Integer.parseInt(prefs.getString("NLS_bonus",String.valueOf(0)));
         this.caster_lvl=lvl;
     }

@@ -10,6 +10,13 @@
         android:singleLine="true"
         android:summary="Valeur : %s"/>
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="ioun_stone"
+        android:summary="Pierre d'ioun orange (+1 NLS)"
+        android:title="Pierre d'ioun"
+        />
+
     <stellarnear.yfa_dealer.EditTextPreference
         android:defaultValue="@integer/charisme_def"
         android:key="charisme"
