@@ -201,7 +201,9 @@ public class SpellCastActivity extends AppCompatActivity {
                 img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new TestAlertDialog(SpellCastActivity.this, getApplicationContext(), spell.getCaster_lvl());
+                        int NLS_vs_RM = spell.getCaster_lvl();
+                        NLS_vs_RM+=spell.getConvVSRM();
+                        new TestAlertDialog(SpellCastActivity.this, getApplicationContext(), NLS_vs_RM);
                     }
                 });
                 line.addView(img);
@@ -243,9 +245,10 @@ public class SpellCastActivity extends AppCompatActivity {
 
             SeekBar cast_slide = new SeekBar(this);
             cast_slide.setMax(100);
-            cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_gradient_24dp));
 
+            cast_slide.setThumb(getDrawable(R.drawable.ic_play_circle_filled_gradient));
             cast_slide.setBackground(getDrawable(R.drawable.round_corner_slide));
+            cast_slide.setMinimumHeight(500);
 
             fragment1.addView(cast_slide);
             cast_slide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -287,7 +290,7 @@ public class SpellCastActivity extends AppCompatActivity {
                         seekBar.setThumb(getDrawable(R.drawable.ic_wb_sunny_black_24dp));
                         //seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.red));
                     } else {
-                        seekBar.setThumb(getDrawable(R.drawable.ic_play_circle_filled_gradient_24dp));
+                        seekBar.setThumb(getDrawable(R.drawable.ic_play_circle_filled_gradient));
                         //seekBar.setThumbTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.black));
                     }
 

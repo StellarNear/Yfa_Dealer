@@ -49,6 +49,8 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
     private boolean perfect;
     private boolean converted;
 
+    private int convVSRM;
+
     public Spell(Context mC,Spell spell){ //copying spell
         if(spell.ID.equalsIgnoreCase("")){
             this.ID=spell.name;
@@ -83,6 +85,7 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
         setPerfect(mC);
         this.converted=false;
         calcN_dice();
+        this.convVSRM=0;
     }
 
     public Spell(String ID, String name, String descr, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
@@ -291,6 +294,7 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
         return this.perfect;
     }
     public boolean isConverted() {        return this.converted;    }
+    public int getConvVSRM() {        return this.convVSRM;    }
 
     private void setName(String name){
         this.name=name;
@@ -392,7 +396,7 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
 
     public void setPerfect(Context mC) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        if (this.name.equals("Désintégration")) {
+        if (this.ID.equals("Désintégration")) {
             if (prefs.getBoolean("perfect_desint", mC.getResources().getBoolean(R.bool.perfect_desint_def))) {
                 this.perfect=true;
             }
@@ -405,6 +409,10 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
 
     public void setConverted (Boolean bool) {
         this.converted=bool;
+    }
+
+    public void setRMConverted (Integer val) {
+        this.convVSRM=val;
     }
 
     // methode de meta magie

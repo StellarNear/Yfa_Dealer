@@ -554,6 +554,10 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("Cap") && check.isChecked()){
                 spell.conv_Cap(selected_rank);
             }
+
+            if (check.getText().toString().contains("Résistance") && check.isChecked()){
+                spell.setRMConverted(selected_rank*2);
+            }
         }
         spell.storeOri();
         refreshAllTexts(Spell_Title,spell,infos,mC);

@@ -74,6 +74,9 @@ public class TestAlertDialog {
         }
 
         if(robe){ summaryDetail+=", Robe d'archimage grise (+2)";}
+
+        //TODO faire ici avec les carac d'un spell genre spell.isRMconverted()
+
         TextView detail = dialogView.findViewById(R.id.customDialogTestDetail);
         detail.setText(summaryDetail);
 
