@@ -153,7 +153,7 @@ public class SpellCastActivity extends AppCompatActivity {
             panel.addView(fragment1);
             final LinearLayout fragment2 = new LinearLayout(this);
             fragment2.setOrientation(LinearLayout.HORIZONTAL);
-            fragment2.setGravity(Gravity.CENTER_VERTICAL);
+            fragment2.setGravity(Gravity.CENTER);
             fragment2.setWeightSum(7);
             fragment2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             panel.addView(fragment2);
@@ -560,7 +560,6 @@ public class SpellCastActivity extends AppCompatActivity {
 
         } else if (!spell.getDmg_txt(getApplicationContext()).equals("")) {
             LinearLayout enLigne = new LinearLayout(this);
-            fragment2.setGravity(Gravity.CENTER_HORIZONTAL);
             enLigne.setOrientation(LinearLayout.VERTICAL);
             enLigne.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
             fragment2.addView(enLigne);
@@ -597,9 +596,9 @@ public class SpellCastActivity extends AppCompatActivity {
 
         } else {
             TextView txt_view = new TextView(this);
+            txt_view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             txt_view.setText("Sortilège " + spell.getName() + " lancé !");
             txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-            txt_view.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
             fragment2.addView(txt_view);
         }
     }

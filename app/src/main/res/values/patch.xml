@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v6.1"</string>
-    <string name="time_spend">86h</string>
+    <string name="version">"v6.2"</string>
+    <string name="time_spend">89h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V6.2
+-Rework SpellList
+-Ajout de la métamagie Sort Parfait
+-Ajout Nuées météores (et Mythique)
+-Gestion des sorts à sous projectiles
+-Ajout d'une forme de sommeil sans recharge des sorts ...
+----------------------------------------------------------------------------------
 Patch note V6.1
 -Ajout d'une animation de splashArt
 ----------------------------------------------------------------------------------

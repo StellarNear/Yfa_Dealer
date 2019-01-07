@@ -36,8 +36,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.ListSpell;
+import stellarnear.yfa_dealer.Spells.BuildListSpell;
 import stellarnear.yfa_dealer.Spells.Spell;
+import stellarnear.yfa_dealer.Spells.SpellList;
 
 public class MainActivity extends AppCompatActivity {
     private List<Spell> selectedSpells=new ArrayList<Spell>();
@@ -96,9 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildPage1() {
-        ListSpell listAllSpell = new ListSpell(getApplicationContext(),"");
-        final ListSpell listAllMythicSpell = new ListSpell(getApplicationContext(),"Mythic");
-        List<Spell> rank_list  = new ArrayList<Spell>();
+        final SpellList listAllSpell = new BuildListSpell(getApplicationContext(),"").getSpellList();
+        final SpellList listAllMythicSpell = new BuildListSpell(getApplicationContext(),"Mythic").getSpellList();
 
         int max_tier=0;
         for(int i=0;i<=19;i++){
@@ -223,16 +223,24 @@ public class MainActivity extends AppCompatActivity {
             h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
             h_sep.setBackgroundColor(Color.BLACK);
             Tiers.addView(h_sep);
-            rank_list= listAllSpell.selectRank(i);
+            SpellList rank_list= listAllSpell.filterByRank(i).filterDisplayable();
             if (rank_list.size()==0){ continue;}
 
-            for(final Spell spell : rank_list){
+            for(final Spell spell : rank_list.asList()){
                 final CheckBox checkbox=new CheckBox(getApplicationContext());
                 checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked){
-                            selectedSpells.add(new Spell(getApplicationContext(),spell));
+                            if(spell.getNSubSpell()>0){
+                                for (int i=1;i<=spell.getNSubSpell();i++){
+                                    Spell subSpellN=new Spell(getApplicationContext(),listAllSpell.getSpellByID(spell.getID()+"_sub"));
+                                    subSpellN.setSubName(i);
+                                    selectedSpells.add(subSpellN);
+                                }
+                            } else {
+                                selectedSpells.add(new Spell(getApplicationContext(),spell));
+                            }
                             current_spell_display(getApplicationContext());
                         }
 
@@ -278,8 +286,21 @@ public class MainActivity extends AppCompatActivity {
                                                 .setIcon(android.R.drawable.ic_menu_help)
                                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int whichButton) {
+
+                                                        if(spell.getNSubSpell()>0){
+                                                            for (int i=1;i<=spell.getNSubSpell();i++){
+                                                                Spell subSpellN=new Spell(getApplicationContext(),listAllMythicSpell.getSpellByID(spell.getID()+"_sub"));
+                                                                subSpellN.setSubName(i);
+                                                                selectedSpells.add(subSpellN);
+                                                            }
+                                                        } else {
+                                                            selectedSpells.add(listAllMythicSpell.getSpellByID(spell.getName()));
+                                                        }
+
                                                         yfa.getAllResources().getResource("mythic_points").spend(1);
-                                                        selectedSpells.add(listAllMythicSpell.getSpellByID(spell.getName()));
+                                                        Toast toast = Toast.makeText(getApplicationContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
+                                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                                        toast.show();
                                                         current_spell_display(getApplicationContext());
                                                     }
                                                 })
@@ -335,8 +356,10 @@ public class MainActivity extends AppCompatActivity {
     private void removeSpellFromSelection(Spell spell) {
         Iterator <Spell> s = selectedSpells.iterator();
         while(s.hasNext()){
-            String name = s.next().getName();
-            if (name.equalsIgnoreCase(spell.getName())){
+            Spell spellList=s.next();
+            boolean spellInList = spellList.getName().equalsIgnoreCase(spell.getName());
+            boolean subSpellInList = spell.getNSubSpell()>0 && spellList.getID().equalsIgnoreCase(spell.getName()+"_sub");
+            if(spellInList || subSpellInList){
                 s.remove();
             }
         }

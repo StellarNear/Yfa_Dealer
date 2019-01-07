@@ -7,6 +7,13 @@
         android:summary="Une métamagie sur Désintégration n'augementera pas son rang requis"
         android:title="Perfection (Désintégration)" />
 
+
+    <SwitchPreference
+        android:defaultValue="@bool/perfect_switch_def"
+        android:key="perfect"
+        android:summary="Les variables du sort maximisées puis doublées"
+        android:title="Sort parfait (+6)" />
+
     <SwitchPreference
         android:defaultValue="@bool/ameliore_switch_def"
         android:key="ameliore"
@@ -28,7 +35,7 @@
     <SwitchPreference
         android:defaultValue="@bool/quintessence_switch_def"
         android:key="quintessence"
-        android:summary="Les variables du sort sont au maximum"
+        android:summary="Les variables du sort maximisées"
         android:title="Quintessence des sorts (+3)" />
 
 

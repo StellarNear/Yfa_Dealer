@@ -122,4 +122,8 @@ public class AllResources {
             getResource("spell_conv_rank_"+selected_rank).spend(1);
         }
     }
+
+    public void halfSleepReset() {
+        getResource("mythic_points").resetCurrent();
+    }
 }

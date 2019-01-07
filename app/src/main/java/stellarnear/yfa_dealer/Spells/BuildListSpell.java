@@ -9,18 +9,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-public class ListSpell extends AppCompatActivity {
+public class BuildListSpell extends AppCompatActivity {
 
     private Context mContext;
-    public List<Spell> allSpells = new ArrayList<Spell>();
-    public ListSpell(Context mC,String mode){
+    public SpellList allSpells = new SpellList();
+    public BuildListSpell(Context mC, String mode){
         mContext=mC;
     //construire la liste complete regarder xml parser
 
@@ -41,9 +39,10 @@ public class ListSpell extends AppCompatActivity {
                 Node node = nList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
-                    allSpells.add(new Spell(getValue("ID",element2),
+                    allSpells.add(new Spell(getValue("id",element2),
                                             getValue("name",element2),
                                             getValue("descr",element2),
+                                            to_int(getValue("n_sub_spell",element2)),
                                             getValue("dice_type",element2),
                                             to_double(getValue("n_dice_per_lvl",element2)),
                                             to_int(getValue("cap_dice",element2)),
@@ -63,6 +62,10 @@ public class ListSpell extends AppCompatActivity {
 
     }
 
+    public SpellList getSpellList(){
+        return allSpells;
+    }
+
 
 
     private String getValue(String tag, Element element) {
@@ -73,27 +76,6 @@ public class ListSpell extends AppCompatActivity {
         } catch (Exception e){
             return "";
         }
-    }
-
-    public List<Spell> selectRank(int rank){
-        List<Spell> sel_list = new ArrayList<Spell>();
-
-        for(Spell spell : allSpells){
-            if (spell.getRank() == rank) {
-                sel_list.add(spell);
-            }
-        }
-        return sel_list;
-    }
-
-    public Spell getSpellByID(String name){
-        Spell spellAnswer = null;
-        for (Spell spell : allSpells){
-            if (spell.getID().equalsIgnoreCase(name)){
-                spellAnswer=spell;
-            }
-        }
-        return spellAnswer;
     }
 
     public Integer to_int(String key){

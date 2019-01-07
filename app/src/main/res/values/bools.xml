@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="perfect_switch_def">true</bool>
     <bool name="ameliore_switch_def">false</bool>
     <bool name="silence_switch_def">true</bool>
     <bool name="materiel_switch_def">true</bool>
@@ -17,4 +18,5 @@
     <bool name="switch_autoclose_dialog_DEF">true</bool>
     <bool name="switch_manual_diceroll_DEF">false</bool>
     <bool name="myth_parangon_def">true</bool>
+
 </resources>

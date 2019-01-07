@@ -42,7 +42,13 @@ public class PrefSleepScreenFragment {
                         sleep();
                     }
                 })
-                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Sans sorts", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        halfSleep();
+                    }
+                })
+                .setNeutralButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -62,6 +68,24 @@ public class PrefSleepScreenFragment {
                 yfa.getAllResources().sleepReset();
                 resetTemp();
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
+                Intent intent = new Intent(mA, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                mA.startActivity(intent);
+            }
+        }, time);
+    }
+
+    private void halfSleep() {
+        final Tools tools = new Tools();
+        tools.customToast(mC, "Fais de beaux rêves !", "center");
+        int time = 2000; // in milliseconds
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                yfa.getAllResources().halfSleepReset();
+                resetTemp();
+                tools.customToast(mC, "Une sans sortilèges t'attends...", "center");
                 Intent intent = new Intent(mA, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mA.startActivity(intent);

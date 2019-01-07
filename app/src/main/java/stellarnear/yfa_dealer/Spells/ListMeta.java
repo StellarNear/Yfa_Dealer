@@ -41,6 +41,72 @@ public class ListMeta extends AppCompatActivity {
     public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos, final Context mC, boolean... all_free_arg) {
         if(all_free_arg.length>0){all_free=all_free_arg[0];}
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+
+        // sort parfait +6
+        if ((settings.getBoolean("perfect",mC.getResources().getBoolean(R.bool.perfect_switch_def)))&&(spell.getDice_typ().contains("d")))  {
+            final CheckBox checkbox=new CheckBox(mC);
+            checkbox.setText("Sort Parfait (+6)");
+            checkbox.setTextColor(Color.GRAY);
+            int[] colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};
+            //if(!dmg_spell){colorClickBox=new int[]{mC.getColor(R.color.dark_gray),mC.getColor(R.color.dark_gray)};checkbox.setTextColor(Color.GRAY);}
+
+            ColorStateList colorStateList = new ColorStateList(
+                    new int[][] {
+                            new int[] { -android.R.attr.state_checked }, // unchecked
+                            new int[] {  android.R.attr.state_checked }  // checked
+                    },colorClickBox
+
+            );
+            checkbox.setButtonTintList(colorStateList);
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+6<=9)
+                        {
+
+                            new AlertDialog.Builder(mC)
+                                    .setTitle("Demande de confirmation")
+                                    .setMessage("Veux-tu utiliser ta perfection magique sur Sort Amélioré ?")
+                                    .setIcon(android.R.drawable.ic_menu_help)
+                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            spell.meta_Perfect_Spell(true,true);
+                                            spell.setPerfect(false);
+                                            checkbox.setClickable(false);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
+                                        }})
+                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            spell.meta_Perfect_Spell(true,all_free);
+                                            refreshAllTexts(Spell_Title,spell,infos,mC);
+                                        }}).show();
+                        } else {
+                            spell.meta_Perfect_Spell(true,all_free);
+                            refreshAllTexts(Spell_Title,spell,infos,mC);
+                        }
+                    } else {
+                        spell.meta_Perfect_Spell(false,all_free);
+                        refreshAllTexts(Spell_Title,spell,infos,mC);
+                    }
+                }
+            });
+
+            ImageButton image=new ImageButton(mC);
+            image.setImageResource(R.drawable.ic_info_outline_black_24dp);
+            image.setBackgroundColor(Color.TRANSPARENT);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    spell.meta_Perfect_Spell_descr(mC);
+                }
+            });
+            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),6));
+        }
+
+
         // incant rapide (+4)
 
         if (settings.getBoolean("rapid",mC.getResources().getBoolean(R.bool.rapid_switch_def)))  {
@@ -134,7 +200,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
 
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+4<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -176,6 +242,7 @@ public class ListMeta extends AppCompatActivity {
             pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
+
         // sort à retardement +4
 
         if (settings.getBoolean("delay",mC.getResources().getBoolean(R.bool.delay_switch_def)))  {
@@ -198,7 +265,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free  && spell.getBaseRank()+4<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -260,7 +327,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+3<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -323,7 +390,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+2<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -386,7 +453,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+2<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -449,7 +516,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         if(spell.getRank()<9) {
-                            if(spell.isPerfect()&&!all_free)
+                            if(spell.isPerfect()&&!all_free && spell.getBaseRank()+1<=9)
                             {
                                 new AlertDialog.Builder(mC)
                                         .setTitle("Demande de confirmation")
@@ -540,7 +607,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+1<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -605,7 +672,7 @@ public class ListMeta extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
 
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+1<=9)
                         {
                             new AlertDialog.Builder(mC)
                                     .setTitle("Demande de confirmation")
@@ -686,7 +753,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if(spell.isPerfect()&&!all_free)
+                        if(spell.isPerfect()&&!all_free && spell.getBaseRank()+1<=9)
                         {
 
                             new AlertDialog.Builder(mC)
@@ -749,7 +816,7 @@ public class ListMeta extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        if (spell.isPerfect()&&!all_free) {
+                        if (spell.isPerfect()&&!all_free && spell.getBaseRank()+1<=9) {
 
                             new AlertDialog.Builder(mC)
                                     .setTitle("Demande de confirmation")

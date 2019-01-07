@@ -51,6 +51,8 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
 
     private int convVSRM;
 
+    private int n_sub_spell;
+
     public Spell(Context mC,Spell spell){ //copying spell
         if(spell.ID.equalsIgnoreCase("")){
             this.ID=spell.name;
@@ -86,9 +88,10 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
         this.converted=false;
         calcN_dice();
         this.convVSRM=0;
+        this.n_sub_spell=spell.n_sub_spell;
     }
 
-    public Spell(String ID, String name, String descr, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String ID, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         if(ID.equalsIgnoreCase("")){
             this.ID=name;
         } else {
@@ -96,6 +99,7 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
         }
         this.name=name;
         this.descr=descr;
+        this.n_sub_spell=n_sub_spell;
         this.dice_type=dice_type;
         this.ori_dice_type=dice_type;
         this.n_dice_per_lvl=n_dice_per_lvl;
@@ -296,6 +300,10 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
     public boolean isConverted() {        return this.converted;    }
     public int getConvVSRM() {        return this.convVSRM;    }
 
+    public int getNSubSpell() {
+        return this.n_sub_spell;
+    }
+
     private void setName(String name){
         this.name=name;
     }
@@ -428,7 +436,33 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
         }
     }
 
+    // methode de meta magie actives
+    public void meta_Perfect_Spell(Boolean active,boolean... free_arg) {
+        boolean free=false;
+        if(free_arg.length>0){free=free_arg[0];}
+        String resultat=this.dice_type;
+        if (active) {
+            if(!free){this.rank+=6;}
+            resultat=resultat.replace("d","*d");
+            this.cap_dice=this.cap_dice*2; //TODO à refaire lors du refacto
+            this.n_dice_per_lvl=this.n_dice_per_lvl*2;
+        } else {
+            if(!free){this.rank-=6;}
+            resultat=resultat.replace("*d","d");
+            this.cap_dice=this.cap_dice/2;
+            this.n_dice_per_lvl=this.n_dice_per_lvl/2;
+        }
+        this.dice_type=resultat;
+    }
 
+    public void meta_Perfect_Spell_descr(Context mC) {
+        String descr="Toutes les variables numériques d’un sort parfait sont maximisées puis doublées. Un sort parfait cause le double des dommages maximum, "+
+                "soigne le double de PV maximum, double de nombre de cibles affectés par le sort… Les jets de sauvegarde et jets opposés ne sont pas affectés. "+
+                "Un sort parfait nécessite un emplacement de sort de six niveaux de plus que son niveau réel.";
+        Toast toast = Toast.makeText(mC, descr, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
 
     // methode de meta magie actives
     public void meta_Enhance_Spell(Boolean active,boolean... free_arg) {
@@ -804,5 +838,10 @@ public class Spell extends AppCompatActivity implements Serializable,Cloneable {
 
     public boolean hasRM() {
         return Boolean.valueOf(this.rm);
+    }
+
+
+    public void setSubName(int i) {
+        this.name=this.name+" "+i;
     }
 }
