@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.BuildListSpell;
+import stellarnear.yfa_dealer.Spells.BuildSpellList;
 import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Spells.SpellList;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        yfa.getAllResources().refreshMaxs();
+        yfa.refresh();
         if(shouldExecuteOnResume){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             overridePendingTransition(R.anim.infromleft,R.anim.nothing);
@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildPage1() {
-        final SpellList listAllSpell = new BuildListSpell(getApplicationContext(),"").getSpellList();
-        final SpellList listAllMythicSpell = new BuildListSpell(getApplicationContext(),"Mythic").getSpellList();
+        final SpellList listAllSpell = new BuildSpellList(getApplicationContext(),"").getSpellList();
+        final SpellList listAllMythicSpell = new BuildSpellList(getApplicationContext(),"Mythic").getSpellList();
 
         int max_tier=0;
         for(int i=0;i<=19;i++){

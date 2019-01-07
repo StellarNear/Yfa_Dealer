@@ -32,15 +32,20 @@ import stellarnear.yfa_dealer.R;
  * Created by jchatron on 28/11/2017.
  */
 
-public class ListMeta extends AppCompatActivity {
+public class _oldListMeta extends AppCompatActivity {
 
-    private List<Pair_Meta_Rank> pair_meta_rank= new ArrayList<>();
+    private List<_oldPair_Meta_Rank> pair_meta_rank= new ArrayList<>();
     private boolean all_free=false;
     private Perso yfa = MainActivity.yfa;
 
-    public ListMeta(final Spell spell, final TextView Spell_Title, final TextView infos, final Context mC, boolean... all_free_arg) {
+    /*
+
+    public _oldListMeta(final Spell spell, final TextView Spell_Title, final TextView infos, final Context mC, boolean... all_free_arg) {
+
         if(all_free_arg.length>0){all_free=all_free_arg[0];}
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+
+
 
         // sort parfait +6
         if ((settings.getBoolean("perfect",mC.getResources().getBoolean(R.bool.perfect_switch_def)))&&(spell.getDice_typ().contains("d")))  {
@@ -103,7 +108,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Perfect_Spell_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),6));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),6));
         }
 
 
@@ -131,35 +136,6 @@ public class ListMeta extends AppCompatActivity {
                     if (isChecked) {
                         spell.meta_Rapid(true,all_free);
                         refreshAllTexts(Spell_Title,spell,infos,mC);
-
-                        /*  Meta quickspell pas possible pour perfection
-                        if(spell.isPerfect())
-                        {
-                            new AlertDialog.Builder(mC)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser ta perfection magique sur Incantation rapide ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Rapid(true);
-                                            spell.setRank(spell.getRank()-4);
-                                            spell.setPerfect(false);
-                                            checkbox.setClickable(false);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            spell.meta_Rapid(true);
-                                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                                            refreshInfos(infos, spell,mC);
-                                        }}).show();
-                        }else {
-                            spell.meta_Rapid(true);
-                            refreshTitle(Spell_Title, spell, spell_per_day, mC);
-                            refreshInfos(infos, spell,mC);
-                        }*/
-
                     } else {
                         spell.meta_Rapid(false,all_free);
                         refreshAllTexts(Spell_Title,spell,infos,mC);
@@ -175,7 +151,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Rapid_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
         // sort amélioré +4
@@ -239,7 +215,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Enhance_Spell_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
 
@@ -303,7 +279,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Delay_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),4));
         }
 
         //quintessence des sorts +3
@@ -366,7 +342,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Quint_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),3));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),3));
         }
 
         //extension d'effet +2
@@ -428,7 +404,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Extend_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),2));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),2));
         }
 
         //flêche naturalisée +2
@@ -491,7 +467,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Enchant_arrow_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),2));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),2));
         }
 
         //augementation d'intensité +1
@@ -583,7 +559,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Intense_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
         //Extension de durée (+1)
@@ -645,7 +621,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Extend_dura_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
 
@@ -728,7 +704,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Far_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
 
@@ -791,7 +767,7 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Select_Spell_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
 
 
@@ -856,16 +832,17 @@ public class ListMeta extends AppCompatActivity {
                     spell.meta_Silent_descr(mC);
                 }
             });
-            pair_meta_rank.add(new Pair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
+            pair_meta_rank.add(new _oldPair_Meta_Rank(new Meta_Check_Img(checkbox,image),1));
         }
+
     }
 
-    public List<Pair_Meta_Rank> getAllMeta(){
+    public List<_oldPair_Meta_Rank> getAllMeta(){
         return pair_meta_rank;
     }
 
-    public List<Pair_Meta_Rank> getMeta_Rank(int rank){
-        List<Pair_Meta_Rank> selected_rank=new ArrayList<Pair_Meta_Rank>();
+    public List<_oldPair_Meta_Rank> getMeta_Rank(int rank){
+        List<_oldPair_Meta_Rank> selected_rank=new ArrayList<_oldPair_Meta_Rank>();
         for (int i=0;i<pair_meta_rank.size();i++){
             if(pair_meta_rank.get(i).getRank()<=rank){
                 selected_rank.add(pair_meta_rank.get(i));
@@ -961,5 +938,5 @@ public class ListMeta extends AppCompatActivity {
         Spell_Title.setText(titre);
     }
 
-
+  */
 }

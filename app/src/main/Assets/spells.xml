@@ -4,7 +4,6 @@
         <name>Destruction de mort-vivant</name>
         <descr>Rayon d’énergie positive. Le personnage doit réussir une attaque de contact à distance pour atteindre le mort-vivant.</descr>
         <dice_type>d6</dice_type>
-        <n_dice_per_lvl>1</n_dice_per_lvl>
         <cap_dice>1</cap_dice>
         <dmg_type>aucun</dmg_type>
         <range>courte</range>
@@ -78,7 +77,6 @@
         <name>Rayon de givre</name>
         <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
         <dice_type>d3</dice_type>
-        <n_dice_per_lvl>1</n_dice_per_lvl>
         <cap_dice>1</cap_dice>
         <dmg_type>froid</dmg_type>
         <range>courte</range>
@@ -151,6 +149,7 @@
         <dice_type>d6</dice_type>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <cap_dice>5</cap_dice>
+        <contact>true</contact>
         <dmg_type>foudre</dmg_type>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -174,6 +173,7 @@
         <descr>Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.  Il peut répartir ses différents projectiles entre plusieurs cibles, mais chacun ne peut atteindre qu’un seul adversaire. Il doit indiquer toutes ses cibles avant d’effectuer d’éventuels tests de résistance à la magie ou de faire ses jets de dégâts.</descr>
         <dice_type>d4</dice_type>
         <n_dice_per_lvl>1</n_dice_per_lvl>
+        <flat_dmg>1</flat_dmg>
         <cap_dice>1</cap_dice>
         <dmg_type>aucun</dmg_type>
         <range>moyenne</range>
@@ -241,6 +241,7 @@
         <descr>Ce rayon inflige 4d6 points de dégâts de feu. On les tire simultanément sur une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres..</descr>
         <dice_type>d6</dice_type>
         <cap_dice>4</cap_dice>
+        <contact>true</contact>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>feu</dmg_type>
         <range>courte</range>
@@ -272,6 +273,7 @@
         <n_dice_per_lvl>0.5</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
         <range>contact</range>
+        <contact>true</contact>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G</compo>
@@ -290,6 +292,7 @@
         <range>longue</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
+        <area>6m</area>
         <compo>V,G,M</compo>
         <rm>true</rm>
         <save_type>ref[1/2]</save_type>
@@ -442,7 +445,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Jet d'acide</name>
-        <descr>Un jet d’acide jaillit de la main tendue du personnage et inflige des dégâts d’acide à toutes les créatures situées dans la zone. L’acide continue de brûler pendant 1 round et inflige la moitié des dégâts pour toute créature qui a raté son jet de sauvegarde contre le sort (un second jet de Réflexes, fait au tour de la créature, annule les dégâts supplémentaires).</descr>
+        <descr>Un jet d’acide jaillit de la main tendue du personnage et inflige des dégâts d’acide à toutes les créatures situées dans la zone (ligne 18m). L’acide continue de brûler pendant 1 round et inflige la moitié des dégâts pour toute créature qui a raté son jet de sauvegarde contre le sort (un second jet de Réflexes, fait au tour de la créature, annule les dégâts supplémentaires).</descr>
         <dice_type>d6</dice_type>
         <cap_dice>15</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
@@ -486,6 +489,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <cap_dice>40</cap_dice>
         <n_dice_per_lvl>2</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
+        <contact>true</contact>
         <range>moyenne</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
@@ -707,7 +711,9 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G</compo>
+        <area>12m</area>
         <duration>instant</duration>
+        <contact>true</contact>
         <rm>true</rm>
         <save_type>ref[1/2]</save_type>
         <rank>9</rank>

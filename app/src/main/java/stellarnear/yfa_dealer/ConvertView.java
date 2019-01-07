@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.ListMeta;
-import stellarnear.yfa_dealer.Spells.Pair_Meta_Rank;
+import stellarnear.yfa_dealer.Spells.MetaList;
+import stellarnear.yfa_dealer.Spells._oldPair_Meta_Rank;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 /**
@@ -43,7 +43,7 @@ public class ConvertView extends AppCompatActivity {
    private LinearLayout convert_choices;
    private LinearLayout convert_result;
    private LinearLayout convert_confirm;
-   private ListMeta all_meta;
+   private MetaList all_meta;
    private Integer selected_rank;
    private List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
    private List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
@@ -109,7 +109,7 @@ public class ConvertView extends AppCompatActivity {
         resetConfirm();
 
 
-        final ListMeta all_meta_free = new ListMeta(spell,Spell_Title,infos,mC,true);
+        final MetaList all_meta_free = new MetaList(spell,Spell_Title,infos,mC,true);
         this.all_meta=all_meta_free;
 
         constructTierlist();
@@ -450,7 +450,7 @@ public class ConvertView extends AppCompatActivity {
 
         int max_rank = (int) (selected_rank/2.0);
 
-        List<Pair_Meta_Rank> all_meta_rank_list=all_meta.getMeta_Rank(max_rank);
+        List<_oldPair_Meta_Rank> all_meta_rank_list=all_meta.getMeta_Rank(max_rank);
 
         if (max_rank==0){
 

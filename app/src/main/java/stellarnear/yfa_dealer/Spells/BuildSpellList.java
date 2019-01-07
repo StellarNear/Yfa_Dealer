@@ -13,17 +13,20 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_dealer.Tools;
 
-public class BuildListSpell extends AppCompatActivity {
 
-    private Context mContext;
+public class BuildSpellList extends AppCompatActivity {
+
     public SpellList allSpells = new SpellList();
-    public BuildListSpell(Context mC, String mode){
-        mContext=mC;
+    private Tools tools=new Tools();
+
+    public BuildSpellList(Context mC, String mode){
+
     //construire la liste complete regarder xml parser
 
         try {
-            InputStream is = mContext.getAssets().open("spells"+mode+".xml");
+            InputStream is = mC.getAssets().open("spells"+mode+".xml");
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -42,10 +45,10 @@ public class BuildListSpell extends AppCompatActivity {
                     allSpells.add(new Spell(getValue("id",element2),
                                             getValue("name",element2),
                                             getValue("descr",element2),
-                                            to_int(getValue("n_sub_spell",element2)),
+                                            tools.toInt(getValue("n_sub_spell",element2)),
                                             getValue("dice_type",element2),
-                                            to_double(getValue("n_dice_per_lvl",element2)),
-                                            to_int(getValue("cap_dice",element2)),
+                                            tools.toDouble(getValue("n_dice_per_lvl",element2)),
+                                            tools.toInt(getValue("cap_dice",element2)),
                                             getValue("dmg_type",element2),
                                             getValue("range",element2),
                                             getValue("cast_time",element2),
@@ -53,7 +56,7 @@ public class BuildListSpell extends AppCompatActivity {
                                             getValue("compo",element2),
                                             getValue("rm",element2),
                                             getValue("save_type",element2),
-                                            to_int(getValue("rank",element2)),
+                                            tools.toInt(getValue("rank",element2)),
                                             mC));
                 }
             }
@@ -66,8 +69,6 @@ public class BuildListSpell extends AppCompatActivity {
         return allSpells;
     }
 
-
-
     private String getValue(String tag, Element element) {
         try {
             NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
@@ -78,33 +79,5 @@ public class BuildListSpell extends AppCompatActivity {
         }
     }
 
-    public Integer to_int(String key){
-        Integer value;
-        try {
-            value = Integer.parseInt(key);
-        } catch (Exception e){
-            value=0;
-        }
-        return value;
-    }
-    public Double to_double(String key){
-        Double value;
-        try {
-            value = Double.parseDouble(key);
-        } catch (Exception e){
-            value=0.0;
-        }
-        return value;
-    }
-
-    public Boolean to_bool(String key){
-        Boolean value;
-        try {
-            value = Boolean.parseBoolean(key);
-        } catch (Exception e){
-            value=false;
-        }
-        return value;
-    }
     //methode pour recuperaer une liste de nom basé sur un rank en bouclant sur les element de la liste Allspells
 }

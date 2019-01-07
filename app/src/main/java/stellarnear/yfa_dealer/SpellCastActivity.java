@@ -48,8 +48,8 @@ import java.util.Map;
 import java.util.Random;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.ListMeta;
-import stellarnear.yfa_dealer.Spells.Pair_Meta_Rank;
+import stellarnear.yfa_dealer.Spells.MetaList;
+import stellarnear.yfa_dealer.Spells._oldPair_Meta_Rank;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 
@@ -224,8 +224,8 @@ public class SpellCastActivity extends AppCompatActivity {
             metaImg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaClic.addView(metaImg);
 
-            ListMeta all_meta = new ListMeta(spell, Spell_Title, infos, SpellCastActivity.this);
-            final List<Pair_Meta_Rank> all_meta_list = all_meta.getAllMeta();
+            MetaList all_meta = new MetaList(spell, Spell_Title, infos, SpellCastActivity.this);
+            final List<_oldPair_Meta_Rank> all_meta_list = all_meta.getAllMeta();
 
 
             final TextView metaPopupText = new TextView(this);
@@ -303,7 +303,7 @@ public class SpellCastActivity extends AppCompatActivity {
         }
     }
 
-    private void makeMetaPopup(Spell spell, List<Pair_Meta_Rank> all_meta_list, TextView launching_txt) {
+    private void makeMetaPopup(Spell spell, List<_oldPair_Meta_Rank> all_meta_list, TextView launching_txt) {
         View allmetaView = constructAllMetaView(spell, all_meta_list, launching_txt);
         final CustomAlertDialog metaPopup = new CustomAlertDialog(this, getApplicationContext(), allmetaView);
         metaPopup.setPermanent(true);
@@ -311,14 +311,14 @@ public class SpellCastActivity extends AppCompatActivity {
         metaPopup.showAlert();
     }
 
-    private View constructAllMetaView(Spell spell, List<Pair_Meta_Rank> all_meta_list, final TextView launching_txt) {
+    private View constructAllMetaView(Spell spell, List<_oldPair_Meta_Rank> all_meta_list, final TextView launching_txt) {
         LayoutInflater inflate = getLayoutInflater();
         map_spell_listMetas = new HashMap<Spell, List<CheckBox>>();
         final View mainView = inflate.inflate(R.layout.metamagie_dialog, null);
         LinearLayout mainLin = mainView.findViewById(R.id.metamagie_main_linear);
         mainLin.removeAllViews();
         List<CheckBox> spell_all_meta = new ArrayList<>();
-        for (Pair_Meta_Rank pair : all_meta_list) {
+        for (_oldPair_Meta_Rank pair : all_meta_list) {
             LinearLayout metaLin = new LinearLayout(this);
             metaLin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaLin.setGravity(Gravity.CENTER);
