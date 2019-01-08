@@ -12,15 +12,32 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/spell_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_title"
+            android:gravity="center"
+            android:background="@drawable/round_corner_title">
+
+        <TextView
+            android:id="@+id/spell_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
             android:text="Dummy Title"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/current_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/general_margin"
+                android:text="(rang : 6)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <ViewSwitcher
             android:layout_width="match_parent"
@@ -58,6 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:minHeight="50dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -65,6 +83,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
+                        android:layout_margin="@dimen/general_margin"
                         android:text="Dégats:xdx, Type:bla, Portée:33m, Compo:V.G, Cast:simple, Durée:instant, RM:oui, Sauvegarde:aucun"
                         android:textAlignment="center" />
 

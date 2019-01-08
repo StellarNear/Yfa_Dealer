@@ -8,7 +8,9 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +32,7 @@ public class Spell {
     private String  cast_time;
     private String  duration;
 
-    private Boolean[] compoBool=new Boolean[3]; //V,G,M
+    private List<String> compoList=new ArrayList<>();
 
     private String rm;
     private String  save_type;
@@ -58,7 +60,7 @@ public class Spell {
         this.range=spell.range;
         this.cast_time=spell.cast_time;
         this.duration=spell.duration;
-        this.compoBool=spell.compoBool;
+        this.compoList=spell.compoList;
         this.rm=spell.rm;
         this.save_type=spell.save_type;
         this.rank=spell.rank;
@@ -102,15 +104,7 @@ public class Spell {
     }
 
     private void calcCompo(String compo) {
-        if(compo.contains("V")){
-            compoBool[0]=true;
-        }
-        if(compo.contains("G")){
-            compoBool[1]=true;
-        }
-        if(compo.contains("M")){
-            compoBool[2]=true;
-        }
+        compoList.addAll(Arrays.asList(compo.split(",")));
     }
 
 
@@ -123,11 +117,11 @@ public class Spell {
     }
 
     public boolean hasCompo(){
-        return compoBool[0]||compoBool[1]||compoBool[2];
+        return compoList.size()>0;
     }
 
-    public Boolean[] getCompoBool() {
-        return compoBool;
+    public List<String> getCompoList() {
+        return compoList;
     }
 
     public Integer getRank(){

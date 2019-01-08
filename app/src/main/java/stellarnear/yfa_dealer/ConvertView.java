@@ -26,10 +26,8 @@ import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Spells.BuildMetaList;
-import stellarnear.yfa_dealer.Spells.Calculation;
 import stellarnear.yfa_dealer.Spells.MetaList;
 import stellarnear.yfa_dealer.Spells.Metamagic;
-import stellarnear.yfa_dealer.Spells._oldPair_Meta_Rank;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 /**

@@ -44,7 +44,7 @@
     </metamagic>
     <metamagic>
         <id>meta_select</id>
-        <name>"Sort séléctif</name>
+        <name>Sort séléctif</name>
         <descr>Lorsque le personnage lance un sort de zone sélectif, il peut choisir des cibles situées dans la zone. Les cibles choisies échappent aux effets du sort. Un sort sélectif occupe un emplacement de sort d’un niveau de plus que le niveau normal du sort.</descr>
         <uprank>1</uprank>
     </metamagic>

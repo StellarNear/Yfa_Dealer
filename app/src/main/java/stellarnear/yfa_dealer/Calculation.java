@@ -1,15 +1,19 @@
-package stellarnear.yfa_dealer.Spells;
+package stellarnear.yfa_dealer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.Spells.Metamagic;
+import stellarnear.yfa_dealer.Spells.Spell;
+import stellarnear.yfa_dealer.Spells.SpellList;
 import stellarnear.yfa_dealer.Tools;
 
 public class Calculation {
@@ -84,79 +88,61 @@ public class Calculation {
                 val = (int) (casterLevel(spell) * spell.getN_dice_per_lvl());
             }
         }
+        if(spell.getMetaList().metaIdIsActive("meta_enhance") && tools.toInt(spell.getDice_type())==8){
+                val = val * 2;
+        }
         return val;
     }
 
-    public String damageTxt(Spell spell) {
-        int nDice=nDice(spell);
-        String dmg="";
-        if(nDice!=0){
-            dmg=nDice+"d"+spell.getDice_type();
+    public int diceType(Spell spell){
+        int val = tools.toInt(spell.getDice_type());
+        if(spell.getMetaList().metaIdIsActive("meta_enhance")){
+            if(val==4){
+                val=6;
+            } else if(val==6){
+                val=8;
+            } else if(val==8) {
+                val = 6;
+            }
         }
-
-        if(spell.getDice_type().contains("lvl")){
-            Integer dmg_int = nDice;
-            dmg = String.valueOf(dmg_int);
-        } else  if(spell.getMetaList().metaIdIsActive("meta_max")){
-            Integer integer_dice = tools.toInt(spell.getDice_type());
-            Integer dmg_int =nDice * integer_dice;
-            dmg = String.valueOf(dmg_int);
-        }else  if(spell.getMetaList().metaIdIsActive("meta_perfect")){
-            Integer integer_dice = tools.toInt(spell.getDice_type());
-            Integer dmg_int =nDice * integer_dice*2;
-            dmg = String.valueOf(dmg_int);
-        }
-        return dmg;
+        return val;
     }
 
-    public String rangeTxt(Spell spell) {
+    public int currentRank(Spell spell){
+        int val=spell.getRank();
+        for(Metamagic meta : spell.getMetaList().filterActive().asList()){
+            val+=meta.getUprank();
+        }
+        return val;
+    }
+
+    public Double range(Spell spell) {
         String range=spell.getRange();
         List<String> rangesLvl = Arrays.asList("contact", "courte", "moyenne", "longue" );
 
+        Double distDouble =-1.0;
         int indexRange = rangesLvl.indexOf(range);
         if(spell.getMetaList().metaIdIsActive("meta_range") && rangesLvl.contains(range) && !range.equalsIgnoreCase("longue")){
             indexRange+=1;
         }
         if (indexRange>=0) {
             Integer lvl = casterLevel(spell);
-            Double dist_doubl =0.0;
             switch(rangesLvl.get(indexRange)) {
+                case ("contact"):
+                    distDouble=0.0;
+                    break;
                 case ("courte"):
-                    dist_doubl=7.5+1.5*(lvl/2.0);
+                    distDouble=7.5+1.5*(lvl/2.0);
                     break;
                 case ("moyenne"):
-                    dist_doubl=30.0+3.0*lvl;
+                    distDouble=30.0+3.0*lvl;
                     break;
                 case ("longue"):
-                    dist_doubl=120.0+lvl*12.0;
+                    distDouble=120.0+lvl*12.0;
                     break;
             }
-            range= String.valueOf(dist_doubl)+"m";
         }
-        return range;
-    }
-
-    public String compoTxt(Spell spell) {
-        String val="";
-        if(spell.getCompoBool()[0]){val+="V,";}
-        if(spell.getCompoBool()[1]){val+="G,";}
-        if(spell.getCompoBool()[2]){val+="M,";}
-        if (val.endsWith(",")){val=val.substring(0, val.length() - 1);}
-        return val;
-    }
-
-    public String durationTxt(Spell spell) {
-        String dura=spell.getDuration();
-        Integer result= tools.toInt(dura.replaceAll("[^0-9?!]",""));
-        String duration_unit = dura.replaceAll("[0-9?!]","");
-        if(dura.contains("/lvl")){
-            Integer lvl =  casterLevel(spell);
-            result = result * lvl;
-            duration_unit = dura.replaceAll("/lvl","").replaceAll("[0-9?!]","");
-        }
-        if(spell.getMetaList().metaIdIsActive("meta_duration")){ result=result*2; }
-        dura = result+duration_unit;
-        return dura;
+        return distDouble;
     }
 
     public int calcRounds(Context mC,SpellList spellList) {
