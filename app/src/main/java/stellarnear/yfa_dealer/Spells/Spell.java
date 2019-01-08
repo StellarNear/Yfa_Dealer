@@ -37,22 +37,18 @@ public class Spell {
 
     private int     rank;
     private boolean perfect;
-    private boolean converted;
 
     private int     n_sub_spell;
 
     private SharedPreferences settings;
 
     private MetaList metaList;
+    private ArcaneConversion conversion=null;
 
     //private Tools tools=new Tools();
 
-    public Spell(Context mC,Spell spell){ //copying spell
-        if(spell.id.equalsIgnoreCase("")){
-            this.id=spell.name;
-        } else {
-            this.id=spell.id;
-        }
+    public Spell(Spell spell){ //copying spell
+        this.id=spell.id;
         this.name=spell.name;
         this.descr=spell.descr;
         this.dice_type=spell.dice_type;
@@ -66,18 +62,11 @@ public class Spell {
         this.rm=spell.rm;
         this.save_type=spell.save_type;
         this.rank=spell.rank;
-
-        if (this.id.equals("Désintégration")) {
-            if (settings.getBoolean("perfect_desint", mC.getResources().getBoolean(R.bool.perfect_desint_def))) {
-                this.perfect=true;
-            }
-        }
-
-        this.converted=false;
-
+        this.perfect=spell.perfect;
         this.n_sub_spell=spell.n_sub_spell;
-
+        this.conversion=spell.conversion;
         this.metaList=spell.metaList;
+        this.settings=spell.settings;
     }
 
     public Spell(String id, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
@@ -102,10 +91,14 @@ public class Spell {
         this.rm=rm;
         this.save_type=save_type;
         this.rank=rank;
+        if (this.id.equals("Désintégration")) {
+            if (settings.getBoolean("perfect_desint", mC.getResources().getBoolean(R.bool.perfect_desint_def))) {
+                this.perfect=true;
+            }
+        }
 
-        //this.convertion=null ; //TODO : un objet conversion ?  genre apres on peut faire if spell.getConvBytID("resistanc").isActive()
-
-        this.metaList=new BuildMetaList(mC).getMetaList();
+        this.conversion=new ArcaneConversion();
+        this.metaList= BuildMetaList.getInstance(mC).getMetaList();
     }
 
     private void calcCompo(String compo) {
@@ -125,6 +118,18 @@ public class Spell {
         return id;
     }
 
+    public String getDuration() {
+        return duration;
+    }
+
+    public boolean hasCompo(){
+        return compoBool[0]||compoBool[1]||compoBool[2];
+    }
+
+    public Boolean[] getCompoBool() {
+        return compoBool;
+    }
+
     public Integer getRank(){
         return this.rank;
     }
@@ -134,15 +139,20 @@ public class Spell {
     public String  getDescr(){
         return this.descr;
     }
-    public String  getDice_typ(){
+    public String getDice_type(){
         return this.dice_type;
     }
+
+    public Double getN_dice_per_lvl() {
+        return n_dice_per_lvl;
+    }
+    public int getCap_dice() {
+        return this.cap_dice;
+    }
+
     public String  getSave_type(){
         return this.save_type;
     }
-    public Integer  getSave_val(){
-        return 0;
-    } //TODO gerer ailleurs probablement
     public String  getDmg_type(){
         return this.dmg_type;
     }
@@ -150,12 +160,17 @@ public class Spell {
         return this.range;
     }
 
+    public String getCast_time() {
+        return cast_time;
+    }
 
     public boolean isPerfect() {
         return this.perfect;
     }
 
-    public boolean isConverted() {        return this.converted;    }
+    public ArcaneConversion getConversion(){
+        return this.conversion;
+    }
 
     public int getNSubSpell() {
         return this.n_sub_spell;
@@ -180,8 +195,18 @@ public class Spell {
         return Boolean.valueOf(this.rm);
     }
 
+    public MetaList getMetaList() {
+        return metaList;
+    }
 
     public void setSubName(int i) {
         this.name=this.name+" "+i;
     }
+
+    public void setConversion(ArcaneConversion conv){
+        this.conversion=conv;
+    }
+
+
+
 }

@@ -48,7 +48,7 @@ public class _oldListMeta extends AppCompatActivity {
 
 
         // sort parfait +6
-        if ((settings.getBoolean("perfect",mC.getResources().getBoolean(R.bool.perfect_switch_def)))&&(spell.getDice_typ().contains("d")))  {
+        if ((settings.getBoolean("perfect",mC.getResources().getBoolean(R.bool.perfect_switch_def)))&&(spell.getDice_type().contains("d")))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort Parfait (+6)");
             checkbox.setTextColor(Color.GRAY);
@@ -155,7 +155,7 @@ public class _oldListMeta extends AppCompatActivity {
         }
 
         // sort amélioré +4
-        if ((settings.getBoolean("ameliore",mC.getResources().getBoolean(R.bool.ameliore_switch_def)))&&(spell.getDice_typ().contains("d")))  {
+        if ((settings.getBoolean("ameliore",mC.getResources().getBoolean(R.bool.ameliore_switch_def)))&&(spell.getDice_type().contains("d")))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Sort Amélioré (+4)");
             checkbox.setTextColor(Color.GRAY);
@@ -283,7 +283,7 @@ public class _oldListMeta extends AppCompatActivity {
         }
 
         //quintessence des sorts +3
-        if ((settings.getBoolean("quintessence",mC.getResources().getBoolean(R.bool.quintessence_switch_def)))&&(spell.getDice_typ().contains("d")))  {
+        if ((settings.getBoolean("quintessence",mC.getResources().getBoolean(R.bool.quintessence_switch_def)))&&(spell.getDice_type().contains("d")))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Quintessence des sorts (+3)");
             checkbox.setTextColor(Color.GRAY);
@@ -346,7 +346,7 @@ public class _oldListMeta extends AppCompatActivity {
         }
 
         //extension d'effet +2
-        if ((settings.getBoolean("extension",mC.getResources().getBoolean(R.bool.extension_switch_def)))&&(spell.getDice_typ().contains("d")))  {
+        if ((settings.getBoolean("extension",mC.getResources().getBoolean(R.bool.extension_switch_def)))&&(spell.getDice_type().contains("d")))  {
             final CheckBox checkbox=new CheckBox(mC);
             checkbox.setText("Extension d'effet (+2)");
             checkbox.setTextColor(Color.GRAY);

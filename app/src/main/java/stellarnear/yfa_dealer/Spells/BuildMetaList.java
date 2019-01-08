@@ -15,11 +15,20 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import stellarnear.yfa_dealer.Tools;
 
 public class BuildMetaList {
-    private MetaList metaList;
 
+    private static BuildMetaList instance = null;
+    private MetaList metaList;
     private Tools tools=new Tools();
 
-    public BuildMetaList(Context mC){
+    public static BuildMetaList getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
+        if (instance==null){
+            instance = new BuildMetaList(mC);
+        }
+        return instance;
+    }
+
+
+    private BuildMetaList(Context mC){
         metaList=new MetaList();
 
         //construire la liste complete regarder xml parser
@@ -33,7 +42,7 @@ public class BuildMetaList {
             Element element=doc.getDocumentElement();
             element.normalize();
 
-            NodeList nList = doc.getElementsByTagName("spell");
+            NodeList nList = doc.getElementsByTagName("metamagic");
 
             for (int i=0; i<nList.getLength(); i++) {
 
@@ -44,8 +53,8 @@ public class BuildMetaList {
                             getValue("name",element2),
                             getValue("descr",element2),
                             tools.toInt(getValue("uprank",element2)),
-                            tools.toBool(getValue("multicast",element2)),
-                            false));
+                            tools.toBool(getValue("multicast",element2))
+                    ));
                 }
             }
 
@@ -63,6 +72,6 @@ public class BuildMetaList {
     }
 
     public MetaList getMetaList() {
-        return metaList;
+        return new MetaList(this.metaList);
     }
 }

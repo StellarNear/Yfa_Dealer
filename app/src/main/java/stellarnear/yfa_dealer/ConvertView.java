@@ -1,5 +1,6 @@
 package stellarnear.yfa_dealer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -24,7 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.Spells.BuildMetaList;
+import stellarnear.yfa_dealer.Spells.Calculation;
 import stellarnear.yfa_dealer.Spells.MetaList;
+import stellarnear.yfa_dealer.Spells.Metamagic;
 import stellarnear.yfa_dealer.Spells._oldPair_Meta_Rank;
 import stellarnear.yfa_dealer.Spells.Spell;
 
@@ -34,30 +38,34 @@ import stellarnear.yfa_dealer.Spells.Spell;
 
 public class ConvertView extends AppCompatActivity {
 
-   private Spell spell;
-   private TextView Spell_Title;
-   private TextView infos;
-   private ViewSwitcher panel;
-   private Context mC;
-   private LinearLayout convert_slots;
-   private LinearLayout convert_choices;
-   private LinearLayout convert_result;
-   private LinearLayout convert_confirm;
-   private MetaList all_meta;
-   private Integer selected_rank;
-   private List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
-   private List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
-   private List<CheckBox> meta_selected=new ArrayList<>();
+    private Spell spell;
+    private TextView Spell_Title;
+    private TextView infos;
+    private ViewSwitcher panel;
+    private Context mC;
+    private Activity mA;
+    private LinearLayout convert_slots;
+    private LinearLayout convert_choices;
+    private LinearLayout convert_result;
+    private LinearLayout convert_confirm;
+    private MetaList all_meta;
+    private Integer selected_rank;
+    private List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
+    private List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
+    private List<CheckBox> meta_selected=new ArrayList<>();
 
-   private Perso yfa = MainActivity.yfa;
+    private Perso yfa = MainActivity.yfa;
+    private Tools tools=new Tools();
+    private Calculation calculation=new Calculation();
 
 
-    public ConvertView(View currentView, Spell spell, TextView Spell_Title, TextView infos, ViewSwitcher panel, Context mC) {
+    public ConvertView(View currentView, Spell spell, TextView Spell_Title, TextView infos, ViewSwitcher panel, Context mC, Activity mA) {
         this.spell=spell;
         this.Spell_Title=Spell_Title;
         this.infos=infos;
         this.panel=panel;
         this.mC=mC;
+        this.mA=mA;
 
         ViewGroup viewGrp= (ViewGroup) currentView;
 
@@ -108,9 +116,7 @@ public class ConvertView extends AppCompatActivity {
         this.convert_confirm=convert_confirm;
         resetConfirm();
 
-
-        final MetaList all_meta_free = new MetaList(spell,Spell_Title,infos,mC,true);
-        this.all_meta=all_meta_free;
+        this.all_meta=BuildMetaList.getInstance(mC).getMetaList();
 
         constructTierlist();
 
@@ -198,7 +204,7 @@ public class ConvertView extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                selected_rank = to_int(checkbox.getText().toString().substring(1, 2));
+                selected_rank = tools.toInt(checkbox.getText().toString().substring(1, 2));
                 if (!yfa.getAllResources().checkAnyConvertibleAvailable()) {
                     switch_page_back(panel);
                 } else if (!yfa.getAllResources().checkConvertibleAvailable(selected_rank)) {
@@ -339,10 +345,10 @@ public class ConvertView extends AppCompatActivity {
                 } else {
                     String resistance;
                     String new_resistance;
-
-                        resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
-                        int new_resi_int = spell.getSave_val() + (int) (selected_rank / 2.0);
-                        new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
+                    int base_resistance =  calculation.saveVal(spell,true);
+                    resistance = spell.getSave_type() + "(" + base_resistance + ")";
+                    int new_resi_int = calculation.saveVal(spell);
+                    new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
 
                     result.setText("Test contre Sauvegarde : " + resistance + " > " + new_resistance);
                 }
@@ -359,8 +365,8 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                int newNLS=spell.getCaster_lvl()+selected_rank;
-                result.setText("Niveau de lanceur de sort : "+spell.getCaster_lvl()+" > "+newNLS);
+                int newNLS=calculation.casterLevel(spell);
+                result.setText("Niveau de lanceur de sort : "+calculation.casterLevel(spell,true)+" > "+newNLS);
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -379,9 +385,9 @@ public class ConvertView extends AppCompatActivity {
                 } else {
                     String resistance;
                     String new_resistance;
-
-                    resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
-                    int new_resi_int = spell.getSave_val() + (int) (selected_rank * 2.0);
+                    int base_resistance =  calculation.saveVal(spell,true);
+                    resistance = spell.getSave_type() + "(" + base_resistance + ")";
+                    int new_resi_int = calculation.saveVal(spell);
                     new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
 
                     result.setText("Test contre Dissipation : " + resistance + " > " + new_resistance);
@@ -399,8 +405,8 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("Résistance") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                int newNLS_resi=spell.getCaster_lvl()+2*selected_rank;
-                result.setText("Test contre Résistance : 1d20+"+spell.getCaster_lvl()+" > 1d20+"+newNLS_resi);
+                int newNLS_resi=calculation.casterLevelSR(spell);
+                result.setText("Test contre Résistance : 1d20+"+calculation.casterLevel(spell,true)+" > 1d20+"+newNLS_resi);
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -414,11 +420,11 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("Cap") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                if (spell.getDmg_txt(mC).equals("")) {
+                /*if (spell.getDmg_txt(mC).equals("")) {
                     result.setText("Ajouter " + 2 * selected_rank +" à la variable dépendante du NLS (cf. sort)");
                 } else {
                     result.setText("Dégats : " + spell.getDmg_txt(mC) + " > " + spell.getDmg_txt_addDice(mC, selected_rank));
-                }
+                }*/
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -450,10 +456,9 @@ public class ConvertView extends AppCompatActivity {
 
         int max_rank = (int) (selected_rank/2.0);
 
-        List<_oldPair_Meta_Rank> all_meta_rank_list=all_meta.getMeta_Rank(max_rank);
+        MetaList metaListAvailable=all_meta.filterMaxRank(max_rank);
 
         if (max_rank==0){
-
             TextView no_meta= new TextView(mC);
             no_meta.setText("Aucune métamagie pour ce rang convertible");
             no_meta.setTextColor(Color.GRAY);
@@ -473,10 +478,8 @@ public class ConvertView extends AppCompatActivity {
 
             );
 
-            meta_selected = new ArrayList<CheckBox>();
-            for (int iter = 0; iter < all_meta_rank_list.size(); iter++) {
-
-                final CheckBox checkbox = all_meta_rank_list.get(iter).getMeta().getCheckbox();
+            for(final Metamagic meta : metaListAvailable.asList()) {
+                final CheckBox checkbox = meta.getCheckBox(mA,mC);
                 checkbox.setButtonTintList(colorStateList);
 
                 meta_selected.add(checkbox);
@@ -500,7 +503,13 @@ public class ConvertView extends AppCompatActivity {
                 }
                 grid2.addView(checkbox);
 
-                ImageButton image = all_meta_rank_list.get(iter).getMeta().getImgageButton();
+                ImageButton image = new ImageButton(mC);
+                image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tools.customToast(mC,meta.getDescription(),"center");
+                    }
+                });
                 image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 image.setForegroundGravity(Gravity.TOP);
                 image.setColorFilter(Color.GRAY);
@@ -544,22 +553,22 @@ public class ConvertView extends AppCompatActivity {
         for (CheckBox check : list_check_choice)
         {
             if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
-                spell.conv_Sauv(selected_rank);
+                //spell.conv_Sauv(selected_rank);
             }
 
             if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
-                spell.conv_NLS(selected_rank);
+                //spell.conv_NLS(selected_rank);
             }
 
             if (check.getText().toString().contains("Cap") && check.isChecked()){
-                spell.conv_Cap(selected_rank);
+                //spell.conv_Cap(selected_rank);
             }
 
             if (check.getText().toString().contains("Résistance") && check.isChecked()){
-                spell.setRMConverted(selected_rank*2);
+                //spell.setRMConverted(selected_rank*2);
             }
         }
-        spell.storeOri();
+        //spell.storeOri();
         refreshAllTexts(Spell_Title,spell,infos,mC);
         yfa.castConvSpell(selected_rank);
     }
@@ -573,6 +582,8 @@ public class ConvertView extends AppCompatActivity {
     private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
         String text="";
         Integer n_inf=0;
+
+        /*
         if(!spell.getDmg_txt(mC).equals("")){
             text+="Dégats : "+spell.getDmg_txt(mC)+", ";
             n_inf+=1;
@@ -624,6 +635,8 @@ public class ConvertView extends AppCompatActivity {
 
         text = text.substring(0, text.length() - 2);
         if(spell.getDmg_txt(mC).equals("")){text+="\n";}
+        */
+
         infos.setText(text);
     }
 
@@ -718,15 +731,5 @@ public class ConvertView extends AppCompatActivity {
 
         lay.addView(v_sep_meta);
     }
-    public Integer to_int(String key){
-        Integer value;
-        try {
-            value = Integer.parseInt(key);
-        } catch (Exception e){
-            value=0;
-        }
-        return value;
-    }
-
 
 }

@@ -21,7 +21,7 @@ public class BuildSpellList extends AppCompatActivity {
     public SpellList allSpells = new SpellList();
     private Tools tools=new Tools();
 
-    public BuildSpellList(Context mC, String mode){
+    public BuildSpellList(Context mC, String mode){  // on construit la liste qu'une fois dans MainActivity donc pas besoin de singleton
 
     //construire la liste complete regarder xml parser
 
@@ -67,7 +67,7 @@ public class BuildSpellList extends AppCompatActivity {
 
     public SpellList getSpellList(){
         return allSpells;
-    }
+    } //pas besoin de clonner la liste car on clone apres le spell
 
     private String getValue(String tag, Element element) {
         try {
@@ -79,5 +79,4 @@ public class BuildSpellList extends AppCompatActivity {
         }
     }
 
-    //methode pour recuperaer une liste de nom basé sur un rank en bouclant sur les element de la liste Allspells
 }

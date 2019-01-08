@@ -234,12 +234,12 @@ public class MainActivity extends AppCompatActivity {
                         if (isChecked){
                             if(spell.getNSubSpell()>0){
                                 for (int i=1;i<=spell.getNSubSpell();i++){
-                                    Spell subSpellN=new Spell(getApplicationContext(),listAllSpell.getSpellByID(spell.getID()+"_sub"));
+                                    Spell subSpellN=new Spell(listAllSpell.getSpellByID(spell.getID()+"_sub"));
                                     subSpellN.setSubName(i);
                                     selectedSpells.add(subSpellN);
                                 }
                             } else {
-                                selectedSpells.add(new Spell(getApplicationContext(),spell));
+                                selectedSpells.add(new Spell(spell));
                             }
                             current_spell_display(getApplicationContext());
                         }
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                         if(spell.getNSubSpell()>0){
                                                             for (int i=1;i<=spell.getNSubSpell();i++){
-                                                                Spell subSpellN=new Spell(getApplicationContext(),listAllMythicSpell.getSpellByID(spell.getID()+"_sub"));
+                                                                Spell subSpellN=new Spell(listAllMythicSpell.getSpellByID(spell.getID()+"_sub"));
                                                                 subSpellN.setSubName(i);
                                                                 selectedSpells.add(subSpellN);
                                                             }

@@ -149,7 +149,7 @@ public class _oldSpell extends AppCompatActivity implements Serializable,Cloneab
         return this.dice_type;
     }
 
-    //faire un get damage qui simplement concatene 4 et d6 mais en cas de truc spéciaux (comme / lvl ou jet maxé *etc il fait le calcul)
+    //faire un get damageTxt qui simplement concatene 4 et d6 mais en cas de truc spéciaux (comme / lvl ou jet maxé *etc il fait le calcul)
     public Integer  getN_dice(){
             return this.n_dice;
     }

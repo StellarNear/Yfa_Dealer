@@ -3,7 +3,7 @@
     <spell>
         <name>Destruction de mort-vivant</name>
         <descr>Rayon d’énergie positive. Le personnage doit réussir une attaque de contact à distance pour atteindre le mort-vivant.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>1</cap_dice>
         <dmg_type>aucun</dmg_type>
         <range>courte</range>
@@ -76,7 +76,7 @@
     <spell>
         <name>Rayon de givre</name>
         <descr>Un rayon de givre jaillit du doigt tendu du mage, qui doit réussir une attaque de contact à distance pour atteindre sa cible.</descr>
-        <dice_type>d3</dice_type>
+        <dice_type>3</dice_type>
         <cap_dice>1</cap_dice>
         <dmg_type>froid</dmg_type>
         <range>courte</range>
@@ -146,7 +146,7 @@
     <spell>
         <name>Décharge électrique</name>
         <descr>Attaque de contact au corps à corps qui, en cas de réussite inflige des dégâts. Si la cible porte une armure métallique (ou porte une arme faite principalement de métal), le lanceur de sorts bénéficie d’un bonus de +3 au jet d’attaque.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <cap_dice>5</cap_dice>
         <contact>true</contact>
@@ -171,7 +171,7 @@
         <id>Projectiles magiques_sub</id>
         <name>Projectile magique</name>
         <descr>Le projectile touche automatiquement, même si la créature visée se trouve au corps à corps ou bénéficie d’un camouflage ou d’un abri autre que total.  Il peut répartir ses différents projectiles entre plusieurs cibles, mais chacun ne peut atteindre qu’un seul adversaire. Il doit indiquer toutes ses cibles avant d’effectuer d’éventuels tests de résistance à la magie ou de faire ses jets de dégâts.</descr>
-        <dice_type>d4</dice_type>
+        <dice_type>4</dice_type>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <flat_dmg>1</flat_dmg>
         <cap_dice>1</cap_dice>
@@ -239,7 +239,7 @@
         <id>Rayons ardents_sub</id>
         <name>Rayon ardent</name>
         <descr>Ce rayon inflige 4d6 points de dégâts de feu. On les tire simultanément sur une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres..</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>4</cap_dice>
         <contact>true</contact>
         <n_dice_per_lvl>1</n_dice_per_lvl>
@@ -268,7 +268,7 @@
     <spell>
         <name>Baiser du vampire</name>
         <descr>Attaque de contact au corps à corps, le lanceur de sorts gagne autant de points de vie temporaires. Ces points de vie ne peuvent toutefois dépasser le nombre actuel de points de vie de la cible + sa valeur de Constitution (ce qui peut suffire à la tuer). Les points de vie temporaires disparaissent au bout d’une heure.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>10</cap_dice>
         <n_dice_per_lvl>0.5</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
@@ -285,7 +285,7 @@
     <spell>
         <name>Boule de feu</name>
         <descr>Boule de feu dont la zone de l'explostion est de 6m de rayon. Le personnage désigne la cible du doigt et choisit l’endroit où il souhaite que l’explosion se produise. </descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>10</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>feu</dmg_type>
@@ -315,7 +315,7 @@
     <spell>
         <name>Éclair</name>
         <descr>Violente décharge électrique qui inflige des dégâts d’électricité à toutes les créatures situées en ligne droite jusqu'à 36m.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>10</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>foudre</dmg_type>
@@ -420,7 +420,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     <spell>
         <name>Cône de froid</name>
         <descr>Cône de froid crée une vague de froid glacial naissant dans la main tendue du magicien et prenant la forme d’un cône. Toutes les créatures situées dans la zone d’effet subissent les dégâts de froid.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>15</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>froid</dmg_type>
@@ -446,7 +446,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     <spell>
         <name>Jet d'acide</name>
         <descr>Un jet d’acide jaillit de la main tendue du personnage et inflige des dégâts d’acide à toutes les créatures situées dans la zone (ligne 18m). L’acide continue de brûler pendant 1 round et inflige la moitié des dégâts pour toute créature qui a raté son jet de sauvegarde contre le sort (un second jet de Réflexes, fait au tour de la créature, annule les dégâts supplémentaires).</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>15</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>acide</dmg_type>
@@ -485,7 +485,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     <spell>
         <name>Désintégration</name>
         <descr>Attaque de contact à distance. Si le rayon réduit une créature à 0 point de vie ou moins, celle-ci est désintégrée. Son équipement n’est cependant pas affecté.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>40</cap_dice>
         <n_dice_per_lvl>2</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
@@ -526,7 +526,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     <spell>
         <name>Éclair multiple</name>
         <descr>Un éclair qui multiple se divise dès qu’il frappe sa première cible. Puis il se divise pour toucher au maximum 20 cibles infligeant autant de dégats à ces cibles. Le DD du jet de Réflexes des éclairs secondaires est réduit de 2 points par rapport à celui de l’éclair originel.</descr>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>20</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>foudre</dmg_type>
@@ -542,7 +542,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     <spell>
         <name>Doigt de mort</name>
         <descr>Ce sort inflige 10 points de dégâts par niveau de lanceur de sorts. Si la cible réussit son jet de sauvegarde, elle perd seulement 3d6 points de vie+1 par niveau de lanceur de sorts.</descr>
-        <dice_type>/lvl</dice_type>
+        <dice_type>lvl</dice_type>
         <n_dice_per_lvl>10</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
         <range>courte</range>
@@ -634,7 +634,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     <spell>
         <name>Nuées d'orage</name>
         <descr>Des éclairs jaillissent dans toutes les directions. Ils n'abîment pas la végétation naturelle ni les créatures que le personnage souhaite exclure. Infligeant des dégâts et étourdi pendant 1 round. Un jet de sauvegarde réussi réduit ces dégâts de moitié et annule l'étourdissement.</descr>
-        <dice_type>d8</dice_type>
+        <dice_type>8</dice_type>
         <cap_dice>20</cap_dice>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>foudre</dmg_type>
@@ -704,7 +704,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <name>Météore</name>
         <descr>Si l'attaque de contact à distance touche, la cible subit 2d6 points de dégâts contondants (pas de jet de sauvegarde) et subit un malus de -4 au jet de sauvegarde sur l'explosion suivante. Explosion : 12 m de rayon et inflige 6d6 points de dégâts de feu (jet de reflexe pour demi-dégats la resistance ne s'applique qu'une fois si d'autre il y a d'autre météores sur la meme cible).</descr>
         <range>longue</range>
-        <dice_type>d6</dice_type>
+        <dice_type>6</dice_type>
         <cap_dice>6</cap_dice>
         <n_dice_per_lvl>6</n_dice_per_lvl>
         <dmg_type>foudre</dmg_type>

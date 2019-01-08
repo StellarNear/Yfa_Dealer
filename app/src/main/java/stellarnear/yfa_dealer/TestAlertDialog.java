@@ -20,7 +20,8 @@ import android.widget.TextView;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Rolls.Dice;
 import stellarnear.yfa_dealer.Rolls.WheelDicePicker;
-
+import stellarnear.yfa_dealer.Spells.Calculation;
+import stellarnear.yfa_dealer.Spells.Spell;
 
 
 public class TestAlertDialog {
@@ -31,13 +32,17 @@ public class TestAlertDialog {
     private WheelDicePicker wheelPicker;
     private View dialogView;
     private View dialogViewWheelPicker;
-    private int NLS;
+    private Spell spell;
+    private Calculation calculation=new Calculation();
+    private int sumScore;
+
     private boolean robe=false;
 
-    public TestAlertDialog(Activity mA, Context mC, int NLS) {
+    public TestAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;
         this.mC=mC;
-        this.NLS = NLS;
+        this.spell = spell;
+        this.sumScore = 0;
         buildAlertDialog();
         showAlertDialog();
     }
@@ -54,28 +59,22 @@ public class TestAlertDialog {
         title.setText(titleTxt);
 
 
-        int sumScore= NLS;
+        sumScore= calculation.casterLevelSR(spell);
         Perso yfa =MainActivity.yfa;
         robe = yfa.getInventory().getAllEquipments().getEquipmentsEquiped("armor_slot").getName().equalsIgnoreCase("Robe d'archimage grise");
         if(robe){
             sumScore+=2;
         }
-        String summaryTxt="Niveau lanceur de sort : "+String.valueOf(sumScore);
+        String summaryTxt="Test contre RM : "+String.valueOf(sumScore);
         TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
         summary.setText(summaryTxt);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         String summaryDetail="";
-        if(settings.getBoolean("karma_switch",false)){
-            summaryDetail="Base : "+String.valueOf(NLS-4)+" ";
-            summaryDetail+=", Grain de Karma (+4)";
-        } else {
-            summaryDetail="Base : "+String.valueOf(NLS)+" "; //oui c'est moche il faut gerer tout les calcul au niveau du perso proprement ...
-        }
+        summaryDetail="Niveau lanceur de sort : "+String.valueOf(calculation.casterLevelSR(spell))+" "; //oui c'est moche il faut gerer tout les calcul au niveau du perso proprement ...
 
         if(robe){ summaryDetail+=", Robe d'archimage grise (+2)";}
 
-        //TODO faire ici avec les carac d'un spell genre spell.isRMconverted()
 
         TextView detail = dialogView.findViewById(R.id.customDialogTestDetail);
         detail.setText(summaryDetail);
@@ -163,7 +162,7 @@ public class TestAlertDialog {
         onlyButton.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
 
         resultTitle.setText("Résultat du test de niveau de lanceur de sort :");
-        int sumResult=dice.getRandValue()+ NLS;
+        int sumResult=dice.getRandValue()+ calculation.casterLevelSR(spell);
         if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
         if(robe){sumResult+=2;}
 
@@ -173,8 +172,7 @@ public class TestAlertDialog {
         dice.setMythicEventListener(new Dice.OnMythicEventListener() {
             @Override
             public void onEvent() {
-                int sumResult=dice.getRandValue()+ NLS;
-                if(robe){sumResult+=2;}
+                int sumResult=dice.getRandValue()+ sumScore;
                 if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
                 result.setText(String.valueOf(sumResult));
             }

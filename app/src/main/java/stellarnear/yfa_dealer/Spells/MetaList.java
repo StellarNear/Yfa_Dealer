@@ -1,6 +1,8 @@
 package stellarnear.yfa_dealer.Spells;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.CheckBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,13 @@ public class MetaList extends AppCompatActivity {
 
     public MetaList(){
         listMeta = new ArrayList<>();
+    }
+
+    public MetaList(MetaList metaList){ //pour clonner la metalist
+        this.listMeta = new ArrayList<>();
+        for (Metamagic meta : metaList.listMeta){
+            this.listMeta.add(new Metamagic(meta));
+        }
     }
 
     public void add(Metamagic metamagic){
@@ -33,5 +42,35 @@ public class MetaList extends AppCompatActivity {
 
     public List<Metamagic> asList(){
         return listMeta;
+    }
+
+    public MetaList filterMaxRank(int maxRank) {
+        MetaList metaList = new MetaList();
+        for (Metamagic meta : this.listMeta){
+            if(meta.getUprank()<=maxRank){
+                metaList.add(meta);
+            }
+        }
+        return metaList;
+    }
+
+    public MetaList filterActive() {
+        MetaList metaList = new MetaList();
+        for (Metamagic meta : this.listMeta){
+            if(meta.isActive()){
+                metaList.add(meta);
+            }
+        }
+        return metaList;
+    }
+
+    public boolean metaIdIsActive(String metaId){
+        boolean val=false;
+        for (Metamagic meta : this.listMeta){
+            if(meta.getId().equalsIgnoreCase(metaId) && meta.isActive()){
+                val=true;
+            }
+        }
+        return val;
     }
 }

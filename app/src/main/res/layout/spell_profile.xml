@@ -1,0 +1,235 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/general_margin"
+        android:background="@drawable/spell_back"
+        android:clipToPadding="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/spell_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_title"
+            android:text="Dummy Title"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <ViewSwitcher
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <LinearLayout
+                android:id="@+id/general_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/general_margin"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:fadingEdge="horizontal"
+                    android:text="Descriptif super long qui remplit bien plus qu'un ecran et qui normalement va tourner aeaeaze" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/infos"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Dégats:xdx, Type:bla, Portée:33m, Compo:V.G, Cast:simple, Durée:instant, RM:oui, Sauvegarde:aucun"
+                        android:textAlignment="center" />
+
+                    <LinearLayout
+                        android:layout_width="4px"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <ImageView
+                        android:id="@+id/sr_test_img"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:src="@drawable/ic_surrounded_shield" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/metamagic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_metamagic_upgrade" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/general_margin"
+                        android:text="Appliquer une métamagie"
+                        android:textAlignment="center"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/cast_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_slide"
+                    android:max="100"
+                    android:minHeight="30dp"
+                    android:thumb="@drawable/ic_play_circle_filled_gradient" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/all_results"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="7"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="15sp"
+                        android:text="Dégats :"/>
+                    <TextView
+                        android:id="@+id/highscore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="13sp"
+                        android:text="(record : xxx)"/>
+
+                    <TextView
+                        android:id="@+id/damage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        android:text="200"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="[Plage](%)"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/damage_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:text="[x-xx](xx%)"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="15sp"
+                        android:text="Probabilité de dépassement :"/>
+
+                    <TextView
+                        android:id="@+id/proba"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="25sp"
+                        android:text="xx.xx%"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/lightgray"
+                        android:src="@drawable/ic_more_horiz_black_24dp"
+                        />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </ViewSwitcher>
+    </LinearLayout>
+</RelativeLayout>

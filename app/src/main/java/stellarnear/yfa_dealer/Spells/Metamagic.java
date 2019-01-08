@@ -1,20 +1,78 @@
 package stellarnear.yfa_dealer.Spells;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+
 public class Metamagic {
     private String id;
     private String name;
     private String description;
+    private CheckBox check=null;
     private int uprank;
     private boolean multicast=false;
-    private boolean state;
+    private int nCast;
+    private OnRefreshEventListener mListener;
 
-    public Metamagic(String id,String name,String description,int uprank,boolean multicast,boolean state){
+    public Metamagic(Metamagic meta){ //pour cloner
+        this.id=meta.id;
+        this.name=meta.name;
+        this.description=meta.description;
+        this.uprank=meta.uprank;
+        this.multicast=meta.multicast;
+        this.nCast=meta.nCast;
+    }
+
+    public Metamagic(String id,String name,String description,int uprank,boolean multicast){
         this.id=id;
         this.name=name;
         this.description=description;
         this.uprank=uprank;
         this.multicast=multicast;
-        this.state=state;
+        this.nCast=0;
+    }
+
+    public CheckBox getCheckBox(final Activity mA,final Context mC){
+        if (check==null) {
+            check = new CheckBox(mC);
+            check.setText(name +" (+"+uprank+")");
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        nCast += 1;
+                    } else {
+                        if (multicast) {
+                            new AlertDialog.Builder(mA)
+                                    .setTitle("Demande de confirmation")
+                                    .setMessage("Veux-tu utiliser " + name + " une fois de plus ?")
+                                    .setIcon(android.R.drawable.ic_menu_help)
+                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            check.setChecked(true);
+                                            nCast += 1;
+                                            mListener.onEvent();
+                                        }
+                                    })
+                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            check.setChecked(false);
+                                            nCast = 0;
+                                            mListener.onEvent();
+                                        }
+                                    }).show();
+                        } else {
+                            nCast = 0;
+                        }
+                    }
+                    mListener.onEvent();
+                }
+            });
+        }
+        return check;
     }
 
     public String getId() {
@@ -37,11 +95,19 @@ public class Metamagic {
         return multicast;
     }
 
-    public boolean isActive() {
-        return state;
+    public int getnCast() {
+        return nCast;
     }
 
-    public void setState(Boolean bool){
-        this.state=bool;
+    public boolean isActive() {
+        return nCast>0;
+    }
+
+    public interface OnRefreshEventListener {
+        void onEvent();
+    }
+
+    public void setRefreshEventListener(OnRefreshEventListener eventListener) {
+        mListener = eventListener;
     }
 }
