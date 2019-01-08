@@ -54,7 +54,7 @@
             android:id="@+id/n_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[3 rounds]"
+            android:text="[x rounds]"
             android:layout_marginStart="@dimen/general_margin"
             android:textSize="12sp"
             android:textColor="@android:color/white"

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.Spells.ArcaneConversion;
 import stellarnear.yfa_dealer.Spells.BuildMetaList;
 import stellarnear.yfa_dealer.Spells.MetaList;
 import stellarnear.yfa_dealer.Spells.Metamagic;
@@ -37,11 +38,9 @@ import stellarnear.yfa_dealer.Spells.Spell;
 public class ConvertView extends AppCompatActivity {
 
     private Spell spell;
-    private TextView Spell_Title;
-    private TextView infos;
-    private ViewSwitcher panel;
     private Context mC;
     private Activity mA;
+    private ViewSwitcher panel;
     private LinearLayout convert_slots;
     private LinearLayout convert_choices;
     private LinearLayout convert_result;
@@ -56,17 +55,13 @@ public class ConvertView extends AppCompatActivity {
     private Tools tools=new Tools();
     private Calculation calculation=new Calculation();
 
-
-    public ConvertView(View currentView, Spell spell, TextView Spell_Title, TextView infos, ViewSwitcher panel, Context mC, Activity mA) {
+    public ConvertView(ViewSwitcher panel, Spell spell, Context mC,Activity mA) {
         this.spell=spell;
-        this.Spell_Title=Spell_Title;
-        this.infos=infos;
-        this.panel=panel;
         this.mC=mC;
         this.mA=mA;
-
-        ViewGroup viewGrp= (ViewGroup) currentView;
-
+        this.panel=panel;
+        ViewGroup viewGrp= (ViewGroup) panel.getNextView();
+        viewGrp.removeAllViews();
         final LinearLayout convert_linear = new LinearLayout(mC);
         convert_linear.setGravity(Gravity.CENTER_HORIZONTAL);
         convert_linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -92,7 +87,6 @@ public class ConvertView extends AppCompatActivity {
         this.convert_choices=convert_choices;
         resetChoice();
 
-
         addHsep(convert_linear,4,Color.DKGRAY);
 
         final LinearLayout convert_result = new LinearLayout(mC);
@@ -117,7 +111,6 @@ public class ConvertView extends AppCompatActivity {
         this.all_meta=BuildMetaList.getInstance(mC).getMetaList();
 
         constructTierlist();
-
     }
 
     private void resetChoice(){
@@ -204,7 +197,7 @@ public class ConvertView extends AppCompatActivity {
             public void onClick(View v) {
                 selected_rank = tools.toInt(checkbox.getText().toString().substring(1, 2));
                 if (!yfa.getAllResources().checkAnyConvertibleAvailable()) {
-                    switch_page_back(panel);
+                    switch_page_back();
                 } else if (!yfa.getAllResources().checkConvertibleAvailable(selected_rank)) {
                     constructTierlist();
                 } else {
@@ -418,11 +411,6 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("Cap") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                /*if (spell.getDmg_txt(mC).equals("")) {
-                    result.setText("Ajouter " + 2 * selected_rank +" à la variable dépendante du NLS (cf. sort)");
-                } else {
-                    result.setText("Dégats : " + spell.getDmg_txt(mC) + " > " + spell.getDmg_txt_addDice(mC, selected_rank));
-                }*/
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -533,7 +521,7 @@ public class ConvertView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 applyConvert(); //si c'etait une méta elle est appliqué direct par la meta mais pour les autres il faut faire les cas
-                switch_page_back(panel);
+                switch_page_back();
             }
         });
 
@@ -551,110 +539,27 @@ public class ConvertView extends AppCompatActivity {
         for (CheckBox check : list_check_choice)
         {
             if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
-                //spell.conv_Sauv(selected_rank);
+                spell.setConversion(new ArcaneConversion("save",selected_rank));
             }
 
             if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
-                //spell.conv_NLS(selected_rank);
+                spell.setConversion(new ArcaneConversion("caster_level",selected_rank));
             }
 
             if (check.getText().toString().contains("Cap") && check.isChecked()){
-                //spell.conv_Cap(selected_rank);
+                spell.setConversion(new ArcaneConversion("raise_cap",selected_rank));
             }
 
             if (check.getText().toString().contains("Résistance") && check.isChecked()){
-                //spell.setRMConverted(selected_rank*2);
+                spell.setConversion(new ArcaneConversion("spell_resistance",selected_rank));
+            }
+            if (check.getText().toString().contains("Dissipation") && check.isChecked()){
+                spell.setConversion(new ArcaneConversion("dispel",selected_rank));
             }
         }
-        //spell.storeOri();
-        refreshAllTexts(Spell_Title,spell,infos,mC);
-        yfa.castConvSpell(selected_rank);
     }
 
-    private void refreshAllTexts(final TextView Spell_Title, final Spell spell,final TextView infos, final Context mC){
-        refreshInfos(infos, spell,mC);
-        refreshTitle( Spell_Title,spell, mC);
-        //refreshRound();
-    }
-
-    private void refreshInfos(final TextView infos, final Spell spell, final Context mC) {
-        String text="";
-        Integer n_inf=0;
-
-        /*
-        if(!spell.getDmg_txt(mC).equals("")){
-            text+="Dégats : "+spell.getDmg_txt(mC)+", ";
-            n_inf+=1;
-        }
-        if(!spell.getDmg_type().equals("")){
-            text+="Type : "+ spell.getDmg_type()+", ";
-            n_inf+=1;
-        }
-        if(!spell.getRange_txt().equals("")){
-            text+="Portée : "+spell.getRange_txt()+", ";
-            n_inf+=1;
-        }
-        if(n_inf==3){text+="\n";n_inf=0;}
-        if(!spell.getCompo().equals("")){
-            text+="Compos : "+spell.getCompo()+", ";
-            n_inf+=1;
-        }
-        if(n_inf==3){text+="\n";n_inf=0;}
-
-        if(!spell.getCast_tim().equals("")){
-            text+="Cast : "+ spell.getCast_tim()+", ";
-            n_inf+=1;
-        }
-        if(n_inf==3){text+="\n";n_inf=0;}
-
-        if(!spell.getDuration(mC).equals("")){
-            text+="Durée : "+spell.getDuration(mC)+", ";
-            n_inf+=1;
-        }
-        if(n_inf==3){text+="\n";n_inf=0;}
-
-        if(!spell.getRM().equals("")){
-            text+="RM : "+spell.getRM()+", ";
-            n_inf+=1;
-        }
-        if(n_inf==3){text+="\n";}
-
-        String resistance;
-        if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
-            resistance = spell.getSave_type();
-
-        } else {
-            resistance = spell.getSave_type() + "(" + spell.getSave_val() + ")";
-        }
-        if(!resistance.equals("")){
-            text+="Jet de sauv : "+ resistance+", ";
-        }
-
-
-        text = text.substring(0, text.length() - 2);
-        if(spell.getDmg_txt(mC).equals("")){text+="\n";}
-        */
-
-        infos.setText(text);
-    }
-
-
-    private void refreshTitle(final TextView Spell_Title, final Spell spell, final Context mC) {
-        String titre_texte=spell.getName()+" (rang : "+spell.getRank()+")";
-        SpannableString titre=  new SpannableString(titre_texte);
-        titre.setSpan(new RelativeSizeSpan(2f), 0,spell.getName().length(), 0); // set size1
-        titre.setSpan(new ForegroundColorSpan(Color.BLACK), 0,spell.getName().length(), 0);// set color1
-
-        if(yfa.getAllResources().checkConvertibleAvailable(spell.getRank())){
-            titre.setSpan(new ForegroundColorSpan(Color.BLACK),spell.getName().length(),titre_texte.length(), 0);// set color2
-        } else {
-            titre.setSpan(new ForegroundColorSpan(mC.getColor(R.color.warning)),spell.getName().length(),titre_texte.length(), 0);// set color2
-        }
-        Spell_Title.setText(titre);
-    }
-
-
-    private void switch_page_back(ViewSwitcher panel) {
+    private void switch_page_back() {
         setAnimPanel(panel,"retour");
         panel.showPrevious();
         setAnimPanel(panel,"aller");

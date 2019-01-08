@@ -25,6 +25,9 @@ public class SpellCastActivity extends AppCompatActivity {
     private Targets targets = Targets.getInstance();
     private Tools tools=new Tools();
     private Calculation calculation=new Calculation();
+    private TextView round;
+    private LinearLayout mainLin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,8 @@ public class SpellCastActivity extends AppCompatActivity {
 
         selected_spells= targets.getAllSpellList();
 
-        LinearLayout mainLin = (LinearLayout) findViewById(R.id.linear2);
+        mainLin = (LinearLayout) findViewById(R.id.linear2);
+        round = (TextView) findViewById(R.id.n_round);
 
         for(String tar : targets.getTargetList()){
             TextView textTar = new TextView(this);
@@ -63,18 +67,26 @@ public class SpellCastActivity extends AppCompatActivity {
             textTar.setLayoutParams(para);
 
             mainLin.addView(textTar);
-            addSpellsForTarget(mainLin,targets.getSpellListForTarget(tar));
+            addSpellsForTarget(targets.getSpellListForTarget(tar));
         }
-
-        calculation.calcRounds(getApplicationContext(),selected_spells);
-
+        refreshRound();
     }
 
-    private void addSpellsForTarget(LinearLayout mainLin,List<Spell> targetSpells) {
+    private void addSpellsForTarget(List<Spell> targetSpells) {
         for (final Spell spell : targetSpells) {
             SpellProfileFactory spellProfileFactory = new SpellProfileFactory(SpellCastActivity.this,getApplicationContext(),spell);
             mainLin.addView(spellProfileFactory.getProfile());
+            spellProfileFactory.setRefreshEventListener(new SpellProfileFactory.OnRefreshEventListener() {
+                @Override
+                public void onEvent() {
+                    refreshRound();
+                }
+            });
         }
+    }
+
+    private void refreshRound() {
+        round.setText("["+calculation.calcRounds(getApplicationContext(),selected_spells)+" rounds]");
     }
 }
 

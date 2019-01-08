@@ -30,7 +30,6 @@ public class Calculation {
         if(spell.getMetaList().metaIdIsActive("meta_heighten")){
             val+=spell.getMetaList().getMetaByID("meta_heighten").getnCast() * spell.getMetaList().getMetaByID("meta_heighten").getUprank();
         }
-
         if(!noConv){
             if(spell.getConversion().getArcaneId().equalsIgnoreCase("save")){
                 val+=(int) (spell.getConversion().getRank()/2.0);
@@ -39,7 +38,6 @@ public class Calculation {
                 val+=(int) (spell.getConversion().getRank()*2.0);
             }
         }
-
         return val;
     }
 
@@ -90,6 +88,9 @@ public class Calculation {
         }
         if(spell.getMetaList().metaIdIsActive("meta_enhance") && tools.toInt(spell.getDice_type())==8){
                 val = val * 2;
+        }
+        if(spell.getMetaList().metaIdIsActive("meta_extend")){
+            val = (int)(val * 1.5);
         }
         return val;
     }
@@ -158,7 +159,7 @@ public class Calculation {
         if (multicast) {
             for (Spell spell : spellList.asList()) {
                 n_spells += 1;
-                switch (spell.getCast_time()) {
+                switch (getCastTimeTxt(spell)) {
                     case "complexe":
                         n_complexe += 1;
                         break;
@@ -192,7 +193,7 @@ public class Calculation {
         } else {
             for (Spell spell : spellList.asList()) {
                 n_spells += 1;
-                switch (spell.getCast_time()) {
+                switch (getCastTimeTxt(spell)) {
                     case "complexe":
                         n_complexe += 1;
                         break;
@@ -209,27 +210,29 @@ public class Calculation {
                     n_convert += 1;
                 }
             }
-
             n_round = (int) (Math.ceil(sum_action / 3.0));
             n_round += n_complexe;
-
             if (n_convert > n_round) {
                 n_round = n_convert;
             }
-
             if ((int) (Math.ceil(n_rapide / 2.0)) > n_round) {
                 n_round = (int) (Math.ceil(n_rapide / 2.0));
             }
-
             if (n_simple > n_round) {
                 n_round = n_simple;
             }
-
             if ((int) (Math.ceil(n_spells / 2.0)) > n_round) {
                 n_round = (int) (Math.ceil(n_spells / 2.0));
             }
         }
         return n_round;
+    }
+    public String getCastTimeTxt(Spell spell) {
+        String val=spell.getCast_time();
+        if(val.equalsIgnoreCase("simple")&&spell.getMetaList().metaIdIsActive("meta_quicken")){
+            val="rapide";
+        }
+        return val;
     }
 
 }
