@@ -8,11 +8,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -23,6 +26,8 @@ import stellarnear.yfa_dealer.DisplayedText;
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.ResultBuilder;
+import stellarnear.yfa_dealer.SliderBuilder;
 import stellarnear.yfa_dealer.TestAlertDialog;
 import stellarnear.yfa_dealer.Tools;
 
@@ -31,6 +36,9 @@ public class SpellProfileFactory {
     private Context mC;
     private Spell spell;
     private View profile;
+    private ViewSwitcher panel;
+    private boolean convDisplayed=false;
+    private CustomAlertDialog metaPopup;
 
     private Calculation calculation=new Calculation();
     private DisplayedText displayText =new DisplayedText();
@@ -51,7 +59,7 @@ public class SpellProfileFactory {
         return profile;
     }
 
-    private void refreshProfile(){
+    public void refreshProfile(){
 
         ((TextView)profile.findViewById(R.id.spell_name)).setText(spell.getName());
         testSpellForColorTitle();
@@ -84,21 +92,70 @@ public class SpellProfileFactory {
             @Override
             public void onClick(View view) {
                 makeMetaPopup(spell);
+                showMetaPopup();
             }
         });
 
-        final ViewSwitcher panel = ((ViewSwitcher)profile.findViewById(R.id.view_switcher));
-        ((ImageView)profile.findViewById(R.id.button_conversion)).setOnClickListener(new View.OnClickListener() {
+        SliderBuilder sliderBuild =new SliderBuilder(mC,spell);
+        sliderBuild.setSlider((SeekBar) profile.findViewById(R.id.slider));
+        sliderBuild.setCastEventListener(new SliderBuilder.OnCastEventListener() {
             @Override
-            public void onClick(View view) {
-
-                new ConvertView(panel, spell, mC,mA);
-
-                panel.showNext();
+            public void onEvent() {
+                ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+                ((LinearLayout)profile.findViewById(R.id.second_panel)).removeAllViews();
+                new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.second_panel));
+                flipView();
             }
         });
 
+        panel = ((ViewSwitcher)profile.findViewById(R.id.view_switcher));
 
+        if(!spell.getConversion().getArcaneId().equalsIgnoreCase("")){
+            ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+        } else {
+            ((ImageView) profile.findViewById(R.id.button_conversion)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ConvertView convertView = new ConvertView(panel, spell, mC, mA);
+                    flipView();
+                    convertView.setValidationEventListener(new ConvertView.OnValidationEventListener() {
+                        @Override
+                        public void onEvent() {
+                            refreshProfile();
+                            flipView();
+                            mListener.onEvent();
+                            ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+                            ((LinearLayout) profile.findViewById(R.id.second_panel)).removeAllViews();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private void flipView() {
+        if(!convDisplayed){flipNext();}else {flipPrevious();}
+    }
+
+    private void flipNext() {
+        convDisplayed=true;
+        panel.clearAnimation();
+        ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
+        ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
+        Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
+        Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
+        panel.setInAnimation(in);  panel.setOutAnimation(out);
+        panel.showNext();
+    }
+    private void flipPrevious() {
+        convDisplayed=false;
+        panel.clearAnimation();
+        ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
+        ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
+        Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
+        Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
+        panel.setInAnimation(in);  panel.setOutAnimation(out);
+        panel.showPrevious();
     }
 
     private void testSpellForColorTitle() {
@@ -129,6 +186,9 @@ public class SpellProfileFactory {
         }
         if (!spell.getRange().equals("")) {
             text += "Portée\u00A0:\u00A0" + displayText.rangeTxt(spell)+ ", ";
+        }
+        if (!spell.getArea().equals("")) {
+            text += "Zone\u00A0:\u00A0" + spell.getArea()+ ", ";
         }
         if (!displayText.compoTxt(mC,spell).equalsIgnoreCase("")) {
             text += "Compos\u00A0:\u00A0" + displayText.compoTxt(mC,spell) + ", ";
@@ -205,13 +265,14 @@ public class SpellProfileFactory {
             metaLin.addView(image);
             mainLin.addView(metaLin);
         }
-        final CustomAlertDialog metaPopup = new CustomAlertDialog(mA, mC, mainView);
+        metaPopup = new CustomAlertDialog(mA, mC, mainView);
         metaPopup.setPermanent(true);
         metaPopup.clickToHide(mainView.findViewById(R.id.metamagie_back));
-        metaPopup.showAlert();
     }
 
-
+    private void showMetaPopup(){
+        metaPopup.showAlert();
+    }
 
     public interface OnRefreshEventListener {
         void onEvent();

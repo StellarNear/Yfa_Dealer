@@ -73,4 +73,8 @@ public class MetaList extends AppCompatActivity {
         }
         return val;
     }
+
+    public void activateFromConversion(String id) {
+        getMetaByID(id).activateFromConversion();
+    }
 }

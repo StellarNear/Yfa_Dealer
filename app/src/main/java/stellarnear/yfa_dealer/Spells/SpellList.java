@@ -62,4 +62,13 @@ public class SpellList extends AppCompatActivity {
     }
 
 
+    public boolean haveBindedSpells() {
+        Boolean bool = false;
+        for (Spell spell : listSpells){
+            if (spell.isBinded()){
+                bool=true;
+            }
+        }
+        return bool;
+    }
 }

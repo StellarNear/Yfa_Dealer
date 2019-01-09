@@ -5,15 +5,9 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -46,6 +40,7 @@ public class ConvertView extends AppCompatActivity {
     private LinearLayout convert_result;
     private LinearLayout convert_confirm;
     private MetaList all_meta;
+    private Metamagic currentMetaSelected;
     private Integer selected_rank;
     private List<CheckBox> list_check_rank=new ArrayList<CheckBox>();
     private List<CheckBox> list_check_choice=new ArrayList<CheckBox>();
@@ -55,62 +50,36 @@ public class ConvertView extends AppCompatActivity {
     private Tools tools=new Tools();
     private Calculation calculation=new Calculation();
 
+    private OnValidationEventListener mListener;
+
     public ConvertView(ViewSwitcher panel, Spell spell, Context mC,Activity mA) {
         this.spell=spell;
         this.mC=mC;
         this.mA=mA;
         this.panel=panel;
-        ViewGroup viewGrp= (ViewGroup) panel.getNextView();
-        viewGrp.removeAllViews();
-        final LinearLayout convert_linear = new LinearLayout(mC);
-        convert_linear.setGravity(Gravity.CENTER_HORIZONTAL);
-        convert_linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        convert_linear.setWeightSum(4);
-        convert_linear.setOrientation(LinearLayout.VERTICAL);
 
-        viewGrp.addView(convert_linear);
-
-        final LinearLayout convert_slots = new LinearLayout(mC);
-        convert_slots.setGravity(Gravity.CENTER);
-        convert_slots.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        convert_slots.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_slots);
-        this.convert_slots=convert_slots;
-
-        addHsep(convert_linear,4, Color.DKGRAY);
-
-        final LinearLayout convert_choices = new LinearLayout(mC);
-        convert_choices.setGravity(Gravity.CENTER);
-        convert_choices.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        convert_choices.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_choices);
-        this.convert_choices=convert_choices;
+        convert_slots = panel.findViewById(R.id.convert_slots);
+        convert_choices = panel.findViewById(R.id.convert_choices);
         resetChoice();
 
-        addHsep(convert_linear,4,Color.DKGRAY);
-
-        final LinearLayout convert_result = new LinearLayout(mC);
-        convert_result.setGravity(Gravity.CENTER);
-        convert_result.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        convert_result.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_result);
-        this.convert_result=convert_result;
+        convert_result= panel.findViewById(R.id.convert_result);
         resetResult();
 
+        convert_confirm = panel.findViewById(R.id.convert_confirm);
 
-        addHsep(convert_linear,4,Color.DKGRAY);
-
-        final LinearLayout convert_confirm = new LinearLayout(mC);
-        convert_confirm.setGravity(Gravity.CENTER);
-        convert_confirm.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        convert_confirm.setOrientation(LinearLayout.HORIZONTAL);
-        convert_linear.addView(convert_confirm);
-        this.convert_confirm=convert_confirm;
         resetConfirm();
 
         this.all_meta=BuildMetaList.getInstance(mC).getMetaList();
 
         constructTierlist();
+    }
+
+    public interface OnValidationEventListener {
+        void onEvent();
+    }
+
+    public void setValidationEventListener(OnValidationEventListener eventListener) {
+        mListener = eventListener;
     }
 
     private void resetChoice(){
@@ -134,7 +103,7 @@ public class ConvertView extends AppCompatActivity {
 
     private void resetMeta() {
         for (CheckBox check : meta_selected){
-            check.setTextColor(Color.GRAY);
+            check.setTextColor(Color.DKGRAY);
             check.setChecked(false);
         }
     }
@@ -152,7 +121,7 @@ public class ConvertView extends AppCompatActivity {
         convert_slots.removeAllViews();
         list_check_rank=new ArrayList<CheckBox>();
         int max_tier=0;
-        for(int i=0;i<=5;i++){
+        for(int i=0;i<=6;i++){
             try{
                 if (yfa.getAllResources().checkConvertibleAvailable(i)) {max_tier=i;}
             }catch (Exception e){ }
@@ -196,9 +165,7 @@ public class ConvertView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected_rank = tools.toInt(checkbox.getText().toString().substring(1, 2));
-                if (!yfa.getAllResources().checkAnyConvertibleAvailable()) {
-                    switch_page_back();
-                } else if (!yfa.getAllResources().checkConvertibleAvailable(selected_rank)) {
+                if (!yfa.getAllResources().checkConvertibleAvailable(selected_rank)) {
                     constructTierlist();
                 } else {
                     for (CheckBox check : list_check_rank) {
@@ -234,7 +201,7 @@ public class ConvertView extends AppCompatActivity {
         ViewGroup gridGrp= (ViewGroup)grid;
         gridGrp.removeAllViews();
 
-        addVsep(grid,4,Color.GRAY);
+
         CheckBox checkMax=new CheckBox(mC);
         checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
         setListnerChoiceSelect(checkMax,grid,list_check_choice);
@@ -281,7 +248,6 @@ public class ConvertView extends AppCompatActivity {
         grid.addView(checkSauv);
         list_check_choice.add(checkSauv);
 
-        addVsep(grid,4,Color.GRAY);
     }
 
     public void setListnerChoiceSelect(final CheckBox checkbox,final LinearLayout grid,final List<CheckBox> list_check_choice) {
@@ -336,10 +302,9 @@ public class ConvertView extends AppCompatActivity {
                 } else {
                     String resistance;
                     String new_resistance;
-                    int base_resistance =  calculation.saveVal(spell,true);
+                    int base_resistance =  calculation.saveVal(spell);
                     resistance = spell.getSave_type() + "(" + base_resistance + ")";
-                    int new_resi_int = calculation.saveVal(spell);
-                    new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
+                    new_resistance = spell.getSave_type() + "(" + String.valueOf(base_resistance + (int) (selected_rank/2.0)) + ")";
 
                     result.setText("Test contre Sauvegarde : " + resistance + " > " + new_resistance);
                 }
@@ -356,8 +321,8 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                int newNLS=calculation.casterLevel(spell);
-                result.setText("Niveau de lanceur de sort : "+calculation.casterLevel(spell,true)+" > "+newNLS);
+                int NLS=calculation.casterLevel(spell);
+                result.setText("Niveau de lanceur de sort : "+ NLS +" > "+String.valueOf(NLS +selected_rank));
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -376,10 +341,9 @@ public class ConvertView extends AppCompatActivity {
                 } else {
                     String resistance;
                     String new_resistance;
-                    int base_resistance =  calculation.saveVal(spell,true);
+                    int base_resistance =  calculation.saveVal(spell);
                     resistance = spell.getSave_type() + "(" + base_resistance + ")";
-                    int new_resi_int = calculation.saveVal(spell);
-                    new_resistance = spell.getSave_type() + "(" + new_resi_int + ")";
+                    new_resistance = spell.getSave_type() + "(" + String.valueOf(base_resistance+2*selected_rank) + ")";
 
                     result.setText("Test contre Dissipation : " + resistance + " > " + new_resistance);
                 }
@@ -396,8 +360,8 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("Résistance") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
-                int newNLS_resi=calculation.casterLevelSR(spell);
-                result.setText("Test contre Résistance : 1d20+"+calculation.casterLevel(spell,true)+" > 1d20+"+newNLS_resi);
+                int newNLS_resi=calculation.casterLevelSR(spell)+selected_rank*2;
+                result.setText("Test contre Résistance : 1d20+"+calculation.casterLevel(spell)+" > 1d20+"+newNLS_resi);
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -411,6 +375,13 @@ public class ConvertView extends AppCompatActivity {
             if (check.getText().toString().contains("Cap") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
+                if (calculation.nDice(spell)<=0) {
+                    result.setText("Ajouter " + 2 * selected_rank +" à la variable dépendante du NLS (cf. sort)");
+                } else if (spell.getDice_type().equalsIgnoreCase("lvl")) {
+                    result.setText("Aucun effet sur ce sort");
+                }  else {
+                    result.setText("Dégats : " + calculation.nDice(spell)+"d"+calculation.diceType(spell) + " > " + String.valueOf(calculation.nDice(spell)+2*selected_rank)+"d"+calculation.diceType(spell) );
+                }
 
                 if (result.getParent()!=null) {
                     ((ViewGroup)result.getParent()).removeView(result);
@@ -452,8 +423,8 @@ public class ConvertView extends AppCompatActivity {
 
         } else {
 
-            addVsep(grid2,4,Color.GRAY);
-            int[] colorClickBox = new int[]{Color.GRAY, Color.parseColor("#088A29")};
+
+            int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
             //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
             ColorStateList colorStateList = new ColorStateList(
@@ -464,9 +435,14 @@ public class ConvertView extends AppCompatActivity {
 
             );
 
+            boolean firstMeta=true;
             for(final Metamagic meta : metaListAvailable.asList()) {
                 final CheckBox checkbox = meta.getCheckBox(mA,mC);
                 checkbox.setButtonTintList(colorStateList);
+                if(!firstMeta){
+                    addVsep(grid2, 4, Color.GRAY);
+                }
+                firstMeta=false;
 
                 meta_selected.add(checkbox);
 
@@ -475,11 +451,12 @@ public class ConvertView extends AppCompatActivity {
                     public void onClick(View v) {
 
                         for (CheckBox check : meta_selected) {
-                            check.setTextColor(Color.GRAY);
+                            check.setTextColor(Color.DKGRAY);
                             check.setChecked(false);
                         }
                         checkbox.setTextColor(Color.parseColor("#088A29"));
                         checkbox.setChecked(true);
+                        currentMetaSelected=meta;
                         construct_convertview_confirm();
                     }
                 });
@@ -490,21 +467,25 @@ public class ConvertView extends AppCompatActivity {
                 grid2.addView(checkbox);
 
                 ImageButton image = new ImageButton(mC);
+                image.setImageDrawable(mC.getDrawable(R.drawable.ic_info_outline_black_24dp));
+                LinearLayout.LayoutParams para = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                image.setLayoutParams(para);
+                image.setForegroundGravity(Gravity.CENTER);
+                image.setPadding(15, 0, 0, 0);
+                image.setColorFilter(Color.GRAY);
+                image.setBackgroundColor(mC.getColor(R.color.transparent));
                 image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         tools.customToast(mC,meta.getDescription(),"center");
                     }
                 });
-                image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                image.setForegroundGravity(Gravity.TOP);
-                image.setColorFilter(Color.GRAY);
                 if (image.getParent()!=null) {
                     ((ViewGroup)image.getParent()).removeView(image);
                 }
                 grid2.addView(image);
 
-                addVsep(grid2, 4, Color.GRAY);
+
             }
         }
     }
@@ -521,7 +502,7 @@ public class ConvertView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 applyConvert(); //si c'etait une méta elle est appliqué direct par la meta mais pour les autres il faut faire les cas
-                switch_page_back();
+                mListener.onEvent();
             }
         });
 
@@ -539,87 +520,26 @@ public class ConvertView extends AppCompatActivity {
         for (CheckBox check : list_check_choice)
         {
             if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
-                spell.setConversion(new ArcaneConversion("save",selected_rank));
-            }
-
-            if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
-                spell.setConversion(new ArcaneConversion("caster_level",selected_rank));
-            }
-
-            if (check.getText().toString().contains("Cap") && check.isChecked()){
-                spell.setConversion(new ArcaneConversion("raise_cap",selected_rank));
-            }
-
-            if (check.getText().toString().contains("Résistance") && check.isChecked()){
-                spell.setConversion(new ArcaneConversion("spell_resistance",selected_rank));
-            }
-            if (check.getText().toString().contains("Dissipation") && check.isChecked()){
-                spell.setConversion(new ArcaneConversion("dispel",selected_rank));
+                spell.getConversion().setArcaneId("save");
+                spell.getConversion().setRank(selected_rank);
+            } else if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
+                spell.getConversion().setArcaneId("caster_level");
+                spell.getConversion().setRank(selected_rank);
+            }else if (check.getText().toString().contains("Cap") && check.isChecked()){
+                spell.getConversion().setArcaneId("raise_cap");
+                spell.getConversion().setRank(selected_rank);
+            }else if (check.getText().toString().contains("Résistance") && check.isChecked()){
+                spell.getConversion().setArcaneId("spell_resistance");
+                spell.getConversion().setRank(selected_rank);
+            }else if (check.getText().toString().contains("Dissipation") && check.isChecked()){
+                spell.getConversion().setArcaneId("dispel");
+                spell.getConversion().setRank(selected_rank);
+            }else if (check.getText().toString().contains("Métamagie") && check.isChecked()){
+                spell.getConversion().setArcaneId("metamagic_"+currentMetaSelected.getId());
+                spell.getConversion().setRank(selected_rank);
+                spell.getMetaList().activateFromConversion(currentMetaSelected.getId());
             }
         }
-    }
-
-    private void switch_page_back() {
-        setAnimPanel(panel,"retour");
-        panel.showPrevious();
-        setAnimPanel(panel,"aller");
-    }
-
-    private void setAnimPanel(ViewSwitcher panel, String mode) {
-        if (mode.equals("aller")) {
-            Animation outtoLeft = new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, -1.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation de sortie vers la gauche
-            outtoLeft.setDuration(500);
-            outtoLeft.setInterpolator(new AccelerateInterpolator());
-
-            Animation inFromRight = new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, +1.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation d'entree par la droite
-            inFromRight.setDuration(500);
-            inFromRight.setInterpolator(new AccelerateInterpolator());
-
-            panel.setInAnimation(inFromRight);
-            panel.setOutAnimation(outtoLeft);
-        }else {
-            Animation outtoRight = new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, +1.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation de sortie vers la gauche
-            outtoRight.setDuration(500);
-            outtoRight.setInterpolator(new AccelerateInterpolator());
-
-            Animation inFromLeft = new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, -1.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation d'entree par la droite
-            inFromLeft.setDuration(500);
-            inFromLeft.setInterpolator(new AccelerateInterpolator());
-
-            panel.setInAnimation(inFromLeft);
-            panel.setOutAnimation(outtoRight);
-        }
-    }
-
-
-    private void addHsep(LinearLayout lay, int e, int Color) {
-
-        View h_sep_meta = new View(mC);
-        if (h_sep_meta.getParent()!=null) {
-            ((ViewGroup)h_sep_meta.getParent()).removeView(h_sep_meta);
-        }
-
-        h_sep_meta.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,e));
-        h_sep_meta.setBackgroundColor(Color);
-
-
-        lay.addView(h_sep_meta);
     }
 
     private void addVsep(LinearLayout lay, int e, int Color) {

@@ -17,4 +17,5 @@
     <dimen name="bordure_spell_background">2dp</dimen>
     <dimen name="radius_corner_spell">5dp</dimen>
     <dimen name="min_target_placeholder_width">7</dimen>
+    <dimen name="height_spell_profile">150dp</dimen>
 </resources>

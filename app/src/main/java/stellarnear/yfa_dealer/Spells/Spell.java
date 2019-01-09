@@ -29,6 +29,7 @@ public class Spell {
 
     private String  dmg_type;
     private String  range;
+    private String area;
     private String  cast_time;
     private String  duration;
 
@@ -47,6 +48,8 @@ public class Spell {
     private MetaList metaList;
     private ArcaneConversion conversion=null;
 
+    private boolean binded=false;
+
     //private Tools tools=new Tools();
 
     public Spell(Spell spell){ //copying spell
@@ -58,6 +61,7 @@ public class Spell {
         this.cap_dice=spell.cap_dice;
         this.dmg_type=spell.dmg_type;
         this.range=spell.range;
+        this.area=spell.area;
         this.cast_time=spell.cast_time;
         this.duration=spell.duration;
         this.compoList=spell.compoList;
@@ -66,12 +70,12 @@ public class Spell {
         this.rank=spell.rank;
         this.perfect=spell.perfect;
         this.n_sub_spell=spell.n_sub_spell;
-        this.conversion=spell.conversion;
-        this.metaList=spell.metaList;
+        this.conversion=new ArcaneConversion(spell.conversion);
+        this.metaList=new MetaList(spell.metaList);
         this.settings=spell.settings;
     }
 
-    public Spell(String id, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String id, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
         if(id.equalsIgnoreCase("")){
@@ -87,6 +91,7 @@ public class Spell {
         this.cap_dice=cap_dice;
         this.dmg_type=dmg_type;
         this.range=range;
+        this.area=area;
         this.cast_time=cast_time;
         this.duration=duration;
         calcCompo(compo);
@@ -153,6 +158,7 @@ public class Spell {
     public String getRange(){
         return this.range;
     }
+    public String getArea(){ return this.area; }
 
     public String getCast_time() {
         return cast_time;
@@ -197,10 +203,15 @@ public class Spell {
         this.name=this.name+" "+i;
     }
 
-    public void setConversion(ArcaneConversion conv){
-        this.conversion=conv;
+    public boolean isBinded() {
+        return binded;
     }
 
+    public void bindTo(Spell previousSpellToBind) {  //pour les sub spell pour que les meta et conversion s'applique partout
+        this.metaList=previousSpellToBind.metaList;
+        this.conversion=previousSpellToBind.conversion;
+        this.binded=true;
+    }
 
 
 }

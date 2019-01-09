@@ -29,11 +29,13 @@
                     android:id="@+id/spell_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:singleLine="true"
                     android:text="Dummy Title"
+                    android:maxWidth="250dp"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="22sp"
+
                     />
 
                 <TextView
@@ -58,19 +60,18 @@
         <ViewSwitcher
             android:id="@+id/view_switcher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
+            android:focusableInTouchMode="false"
+            android:layout_height="@dimen/height_spell_profile">
 
             <LinearLayout
-                android:id="@+id/general_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/first_panel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_spell_profile"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/description"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/general_margin"
                     android:singleLine="true"
@@ -93,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:minHeight="50dp"
+                    android:weightSum="5"
                     android:orientation="horizontal">
 
                     <TextView
@@ -148,121 +150,86 @@
                 </LinearLayout>
 
                 <SeekBar
-                    android:id="@+id/cast_bar"
+                    android:id="@+id/slider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:background="@drawable/round_corner_slide"
+                    android:layout_weight="1"
+                    android:progress="1"
                     android:max="100"
                     android:minHeight="30dp"
-                    android:thumb="@drawable/ic_play_circle_filled_gradient" />
+                    android:thumb="@drawable/thumb_unselect" />
             </LinearLayout>
+
             <LinearLayout
-                android:id="@+id/all_results"
+                android:id="@+id/second_panel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="7"
+                android:layout_height="@dimen/height_spell_profile"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="15sp"
-                        android:text="Dégats :"/>
-                    <TextView
-                        android:id="@+id/highscore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="13sp"
-                        android:text="(record : xxx)"/>
-
-                    <TextView
-                        android:id="@+id/damage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="30sp"
-                        android:text="200"/>
-
-
-                </LinearLayout>
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="[Plage](%)"
-                        android:textSize="15sp"/>
-
-                    <TextView
-                        android:id="@+id/damage_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="20sp"
-                        android:text="[x-xx](xx%)"/>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="15sp"
-                        android:text="Probabilité de dépassement :"/>
-
-                    <TextView
-                        android:id="@+id/proba"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="25sp"
-                        android:text="xx.xx%"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:id="@+id/convert_slots"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
                     android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/lightgray"
-                        android:src="@drawable/ic_more_horiz_black_24dp"
-                        />
-
+                    android:orientation="horizontal">
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
 
+                <LinearLayout
+                    android:id="@+id/convert_choices"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/convert_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/convert_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
 
             </LinearLayout>
 

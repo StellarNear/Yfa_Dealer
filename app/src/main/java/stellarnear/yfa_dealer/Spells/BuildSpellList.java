@@ -23,7 +23,7 @@ public class BuildSpellList extends AppCompatActivity {
 
     public BuildSpellList(Context mC, String mode){  // on construit la liste qu'une fois dans MainActivity donc pas besoin de singleton
 
-    //construire la liste complete regarder xml parser
+        //construire la liste complete regarder xml parser
 
         try {
             InputStream is = mC.getAssets().open("spells"+mode+".xml");
@@ -43,21 +43,22 @@ public class BuildSpellList extends AppCompatActivity {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
                     allSpells.add(new Spell(getValue("id",element2),
-                                            getValue("name",element2),
-                                            getValue("descr",element2),
-                                            tools.toInt(getValue("n_sub_spell",element2)),
-                                            getValue("dice_type",element2),
-                                            tools.toDouble(getValue("n_dice_per_lvl",element2)),
-                                            tools.toInt(getValue("cap_dice",element2)),
-                                            getValue("dmg_type",element2),
-                                            getValue("range",element2),
-                                            getValue("cast_time",element2),
-                                            getValue("duration",element2),
-                                            getValue("compo",element2),
-                                            getValue("rm",element2),
-                                            getValue("save_type",element2),
-                                            tools.toInt(getValue("rank",element2)),
-                                            mC));
+                            getValue("name",element2),
+                            getValue("descr",element2),
+                            tools.toInt(getValue("n_sub_spell",element2)),
+                            getValue("dice_type",element2),
+                            tools.toDouble(getValue("n_dice_per_lvl",element2)),
+                            tools.toInt(getValue("cap_dice",element2)),
+                            getValue("dmg_type",element2),
+                            getValue("range",element2),
+                            getValue("area",element2),
+                            getValue("cast_time",element2),
+                            getValue("duration",element2),
+                            getValue("compo",element2),
+                            getValue("rm",element2),
+                            getValue("save_type",element2),
+                            tools.toInt(getValue("rank",element2)),
+                            mC));
                 }
             }
 

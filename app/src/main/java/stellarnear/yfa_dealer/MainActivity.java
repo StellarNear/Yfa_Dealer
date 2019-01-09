@@ -233,9 +233,15 @@ public class MainActivity extends AppCompatActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked){
                             if(spell.getNSubSpell()>0){
+                                Spell previousSpellToBind=null;
                                 for (int i=1;i<=spell.getNSubSpell();i++){
                                     Spell subSpellN=new Spell(listAllSpell.getSpellByID(spell.getID()+"_sub"));
                                     subSpellN.setSubName(i);
+
+                                    if(previousSpellToBind!=null){
+                                        subSpellN.bindTo(previousSpellToBind);
+                                    }
+                                    previousSpellToBind=subSpellN;
                                     selectedSpells.add(subSpellN);
                                 }
                             } else {

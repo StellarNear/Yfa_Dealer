@@ -22,54 +22,48 @@ public class Calculation {
 
     public Calculation(){  }
 
-    public int saveVal(Spell spell, boolean... withoutConversion){
-        Boolean noConv = withoutConversion.length > 0 ? withoutConversion[0] : false;
+    public int saveVal(Spell spell){
         int val=10;
         val+=yfa.getCharismaMod();
         val+=spell.getRank();
         if(spell.getMetaList().metaIdIsActive("meta_heighten")){
             val+=spell.getMetaList().getMetaByID("meta_heighten").getnCast() * spell.getMetaList().getMetaByID("meta_heighten").getUprank();
         }
-        if(!noConv){
-            if(spell.getConversion().getArcaneId().equalsIgnoreCase("save")){
-                val+=(int) (spell.getConversion().getRank()/2.0);
-            }
-            if(spell.getConversion().getArcaneId().equalsIgnoreCase("dispel")){
-                val+=(int) (spell.getConversion().getRank()*2.0);
-            }
+        if(spell.getConversion().getArcaneId().equalsIgnoreCase("save")){
+            val+=(int) (spell.getConversion().getRank()/2.0);
         }
+        if(spell.getConversion().getArcaneId().equalsIgnoreCase("dispel")){
+            val+=(int) (spell.getConversion().getRank()*2.0);
+        }
+
         return val;
     }
 
 
-    public int casterLevel(Spell spell,boolean... withoutConversion){
-        Boolean noConv = withoutConversion.length > 0 ? withoutConversion[0] : false;
+    public int casterLevel(Spell spell){
         int val=yfa.getCasterLevel();
         if(spell.getMetaList().metaIdIsActive("meta_heighten")){
             val+=spell.getMetaList().getMetaByID("meta_heighten").getnCast() * spell.getMetaList().getMetaByID("meta_heighten").getUprank();
         }
-        if(!noConv){
-            if(spell.getConversion().getArcaneId().equalsIgnoreCase("caster_level")){
-                val+=spell.getConversion().getRank();
-            }
+
+        if(spell.getConversion().getArcaneId().equalsIgnoreCase("caster_level")){
+            val+=spell.getConversion().getRank();
         }
+
         return val;
     }
 
 
-    public int casterLevelSR(Spell spell,boolean... withoutConversion){
-        Boolean noConv = withoutConversion.length > 0 ? withoutConversion[0] : false;
+    public int casterLevelSR(Spell spell){
         int val=yfa.getCasterLevel();
         if(spell.getMetaList().metaIdIsActive("meta_heighten")){
             val+=spell.getMetaList().getMetaByID("meta_heighten").getnCast() * spell.getMetaList().getMetaByID("meta_heighten").getUprank();
         }
-        if(!noConv) {
-            if (spell.getConversion().getArcaneId().equalsIgnoreCase("caster_level")) {
-                val += spell.getConversion().getRank();
-            }
-            if (spell.getConversion().getArcaneId().equalsIgnoreCase("spell_resistance")) {
-                val += spell.getConversion().getRank() * 2;
-            }
+        if (spell.getConversion().getArcaneId().equalsIgnoreCase("caster_level")) {
+            val += spell.getConversion().getRank();
+        }
+        if (spell.getConversion().getArcaneId().equalsIgnoreCase("spell_resistance")) {
+            val += spell.getConversion().getRank() * 2;
         }
 
         return val;
@@ -81,13 +75,17 @@ public class Calculation {
             val = spell.getCap_dice();
         }else {
             if ((casterLevel(spell) * spell.getN_dice_per_lvl() > spell.getCap_dice()) && (spell.getCap_dice() != 0)) {
-                val = spell.getCap_dice();
+                if(spell.getConversion().getArcaneId().equalsIgnoreCase("raise_cap")){
+                    val = spell.getCap_dice() + 2*spell.getConversion().getRank();
+                } else {
+                    val = spell.getCap_dice();
+                }
             } else {
                 val = (int) (casterLevel(spell) * spell.getN_dice_per_lvl());
             }
         }
-        if(spell.getMetaList().metaIdIsActive("meta_enhance") && tools.toInt(spell.getDice_type())==8){
-                val = val * 2;
+        if(spell.getMetaList().metaIdIsActive("meta_enhance") && tools.toInt(spell.getDice_type())==8){ //car on passe à 2d6
+            val = val * 2;
         }
         if(spell.getMetaList().metaIdIsActive("meta_extend")){
             val = (int)(val * 1.5);
@@ -112,7 +110,13 @@ public class Calculation {
     public int currentRank(Spell spell){
         int val=spell.getRank();
         for(Metamagic meta : spell.getMetaList().filterActive().asList()){
-            val+=meta.getUprank();
+            if(spell.getConversion().getArcaneId().contains("metamagic")){ //une méta peut etre gratuite venant de conversion arcanique
+                if(!spell.getConversion().getArcaneId().contains(meta.getId())){
+                    val += meta.getUprank();
+                }
+            } else {
+                val += meta.getUprank();
+            }
         }
         return val;
     }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
@@ -27,6 +28,8 @@ public class SpellCastActivity extends AppCompatActivity {
     private Calculation calculation=new Calculation();
     private TextView round;
     private LinearLayout mainLin;
+
+    private List<SpellProfileFactory> allProfiles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class SpellCastActivity extends AppCompatActivity {
 
             mainLin.addView(textTar);
             addSpellsForTarget(targets.getSpellListForTarget(tar));
+
         }
         refreshRound();
     }
@@ -75,13 +79,23 @@ public class SpellCastActivity extends AppCompatActivity {
     private void addSpellsForTarget(List<Spell> targetSpells) {
         for (final Spell spell : targetSpells) {
             SpellProfileFactory spellProfileFactory = new SpellProfileFactory(SpellCastActivity.this,getApplicationContext(),spell);
+            allProfiles.add(spellProfileFactory);
             mainLin.addView(spellProfileFactory.getProfile());
             spellProfileFactory.setRefreshEventListener(new SpellProfileFactory.OnRefreshEventListener() {
                 @Override
                 public void onEvent() {
                     refreshRound();
+                    if(selected_spells.haveBindedSpells()){
+                        refreshAllProfiles();
+                    }
                 }
             });
+        }
+    }
+
+    private void refreshAllProfiles() {
+        for(SpellProfileFactory spellFacto : allProfiles){
+            spellFacto.refreshProfile();
         }
     }
 

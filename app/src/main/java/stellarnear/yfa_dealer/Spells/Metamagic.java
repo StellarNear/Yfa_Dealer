@@ -54,21 +54,21 @@ public class Metamagic {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             check.setChecked(true);
                                             nCast += 1;
-                                            mListener.onEvent();
+                                            if(mListener!=null){mListener.onEvent();}
                                         }
                                     })
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             check.setChecked(false);
                                             nCast = 0;
-                                            mListener.onEvent();
+                                            if(mListener!=null){mListener.onEvent();}
                                         }
                                     }).show();
                         } else {
                             nCast = 0;
                         }
                     }
-                    mListener.onEvent();
+                    if(mListener!=null){mListener.onEvent();}
                 }
             });
         }
@@ -101,6 +101,15 @@ public class Metamagic {
 
     public boolean isActive() {
         return nCast>0;
+    }
+
+    public void activateFromConversion() {
+        this.nCast=1;
+        if (!(check==null)) {
+            check.setOnClickListener(null);
+            check.setChecked(true);
+            check.setEnabled(false);
+        }
     }
 
     public interface OnRefreshEventListener {
