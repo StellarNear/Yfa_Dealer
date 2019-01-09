@@ -65,6 +65,10 @@ public class SpellProfileFactory {
         testSpellForColorTitle();
 
         ((TextView)profile.findViewById(R.id.current_rank)).setText("(rang : "+calculation.currentRank(spell)+")");
+        if(spell.getRank()>=9 || spell.getRank()+spell.getMetaList().getMetaByID("meta_heighten").getnCast()>=9 ){
+            spell.getMetaList().getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
+        }
+
         if(!yfa.getAllResources().checkSpellAvailable(calculation.currentRank(spell))){
             ((TextView)profile.findViewById(R.id.current_rank)).setTextColor(Color.RED);
         }else {

@@ -115,7 +115,7 @@ public class Calculation {
                     val += meta.getUprank();
                 }
             } else {
-                val += meta.getUprank();
+                val += meta.getUprank()*meta.getnCast();
             }
         }
         return val;

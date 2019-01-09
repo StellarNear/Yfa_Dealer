@@ -53,7 +53,6 @@ public class Metamagic {
                                     .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             check.setChecked(true);
-                                            nCast += 1;
                                             if(mListener!=null){mListener.onEvent();}
                                         }
                                     })
