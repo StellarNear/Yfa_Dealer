@@ -149,7 +149,7 @@
         <dice_type>6</dice_type>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <cap_dice>5</cap_dice>
-        <contact>true</contact>
+        <contact>melee</contact>
         <dmg_type>foudre</dmg_type>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -229,7 +229,7 @@
 
     <spell>
         <name>Rayons ardents</name>
-        <descr>Attaque de contact au corps à corps qui, en cas de réussite lance 3 rayons infligeant chacun des dégâts. Peut viser une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres.</descr>
+        <descr>Attaque de contact à distance qui, en cas de réussite lance 3 rayons infligeant chacun des dégâts. Peut viser une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres.</descr>
         <n_sub_spell>3</n_sub_spell>
         <dmg_type>feu</dmg_type>
         <rank>2</rank>
@@ -241,7 +241,7 @@
         <descr>Ce rayon inflige 4d6 points de dégâts de feu. On les tire simultanément sur une ou plusieurs cibles, mais tous doivent viser des sujets situés à 9 m ou moins les uns des autres..</descr>
         <dice_type>6</dice_type>
         <cap_dice>4</cap_dice>
-        <contact>true</contact>
+        <contact>distance</contact>
         <n_dice_per_lvl>1</n_dice_per_lvl>
         <dmg_type>feu</dmg_type>
         <range>courte</range>
@@ -273,7 +273,7 @@
         <n_dice_per_lvl>0.5</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
         <range>contact</range>
-        <contact>true</contact>
+        <contact>melee</contact>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
         <compo>V,G</compo>
@@ -489,7 +489,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <cap_dice>40</cap_dice>
         <n_dice_per_lvl>2</n_dice_per_lvl>
         <dmg_type>aucun</dmg_type>
-        <contact>true</contact>
+        <contact>distance</contact>
         <range>moyenne</range>
         <cast_time>simple</cast_time>
         <duration>instant</duration>
@@ -713,7 +713,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <compo>V,G</compo>
         <area>12m</area>
         <duration>instant</duration>
-        <contact>true</contact>
+        <contact>distance</contact>
         <rm>true</rm>
         <save_type>ref[1/2]</save_type>
         <rank>9</rank>

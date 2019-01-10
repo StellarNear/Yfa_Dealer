@@ -1,12 +1,15 @@
 package stellarnear.yfa_dealer.Spells;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -31,6 +34,7 @@ public class Spell {
 
     private String  dmg_type;
     private String  range;
+    private String contact;
     private String area;
     private String  cast_time;
     private String  duration;
@@ -42,6 +46,7 @@ public class Spell {
 
     private int     rank;
     private boolean perfect;
+    private String perfectMetaId="";
 
     private int     n_sub_spell;
 
@@ -63,6 +68,7 @@ public class Spell {
         this.cap_dice=spell.cap_dice;
         this.dmg_type=spell.dmg_type;
         this.range=spell.range;
+        this.contact=spell.contact;
         this.area=spell.area;
         this.cast_time=spell.cast_time;
         this.duration=spell.duration;
@@ -71,13 +77,14 @@ public class Spell {
         this.save_type=spell.save_type;
         this.rank=spell.rank;
         this.perfect=spell.perfect;
+        this.perfectMetaId=spell.perfectMetaId;
         this.n_sub_spell=spell.n_sub_spell;
         this.conversion=new ArcaneConversion(spell.conversion);
         this.metaList=new MetaList(spell.metaList);
         this.settings=spell.settings;
     }
 
-    public Spell(String id, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String id, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
         if(id.equalsIgnoreCase("")){
@@ -93,6 +100,7 @@ public class Spell {
         this.cap_dice=cap_dice;
         this.dmg_type=dmg_type;
         this.range=range;
+        this.contact=contact;
         this.area=area;
         this.cast_time=cast_time;
         this.duration=duration;
@@ -160,6 +168,9 @@ public class Spell {
     public String getRange(){
         return this.range;
     }
+    public String getContact(){
+        return this.contact;
+    }
     public String getArea(){ return this.area; }
 
     public String getCast_time() {
@@ -201,8 +212,9 @@ public class Spell {
         return metaList;
     }
 
-    public CheckBox getCheckboxeForMetaId( Activity mA, Context mC,String metaId){
-        CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC);
+    public CheckBox getCheckboxeForMetaId(final Activity mA,final Context mC, final String metaId, Boolean... fromArcanicConversion){
+        Boolean fromConv = fromArcanicConversion.length > 0 ? fromArcanicConversion[0] : false;
+        final CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC,fromArcanicConversion);
 
         if(this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
             metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
@@ -228,6 +240,41 @@ public class Spell {
         if(!this.cast_time.equalsIgnoreCase("simple") && metaId.equalsIgnoreCase("meta_quicken")){
             check.setEnabled(false);
         }
+        if(this.perfect && this.rank+metaList.getMetaByID(metaId).getUprank()<=9 && !fromConv){
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean active) {
+                    if(active) {
+
+                        if (perfect) { //pour recheck sur les autre meta afficher que le sort est toujours parfait
+                            new AlertDialog.Builder(mA)
+                                    .setTitle("Demande de confirmation")
+                                    .setMessage("Veux-tu utiliser ta perfection magique sur cette métamagie ?")
+                                    .setIcon(android.R.drawable.ic_menu_help)
+                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            metaList.getMetaByID(metaId).active();
+                                            perfectMetaId = metaId;
+                                            check.setClickable(false);
+                                            perfect = false;
+                                        }
+                                    })
+                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            metaList.getMetaByID(metaId).active();
+                                        }
+                                    }).show();
+                        } else {
+                            metaList.getMetaByID(metaId).active();
+                        }
+                    } else {
+                        metaList.getMetaByID(metaId).desactive();
+                    }
+                }
+            });
+
+        }
+
         return check;
     }
 

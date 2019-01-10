@@ -58,6 +58,14 @@ public class Perso {
         return  tools.toInt(prefs.getString("charisme",String.valueOf(mC.getResources().getInteger(R.integer.charisme_def))));
     }
 
+    public int getStrMod() {
+        return tools.toInt(prefs.getString("force",String.valueOf(mC.getResources().getInteger(R.integer.force_def))));
+    }
+
+    public int getDexMod() {
+        return tools.toInt(prefs.getString("dexterite",String.valueOf(mC.getResources().getInteger(R.integer.dexterite_def))));
+    }
+
     public int getCasterLevel() {
         int val=0;
         val+= tools.toInt(prefs.getString("nls_val",String.valueOf(mC.getResources().getInteger(R.integer.nls_val_def))));
@@ -70,4 +78,6 @@ public class Perso {
         val+=tools.toInt(prefs.getString("NLS_bonus",String.valueOf(0)));
         return val;
     }
+
+
 }

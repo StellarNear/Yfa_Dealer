@@ -495,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void buildPage2(){
         Intent intent = new Intent(this, SpellCastActivity.class);
-        //intent.putExtra("selected_spells", (Serializable) selectedSpells);
         startActivity(intent);
         overridePendingTransition(R.anim.infromright,R.anim.nothing);
     }
@@ -527,24 +526,21 @@ public class MainActivity extends AppCompatActivity {
     public void setCheckBoxColor(CheckBox checkbox,Spell spell) {
         int bord=0;
         int centre=0;
-        boolean dmg_spell=true;
+
         if (spell.getDmg_type().equals("aucun")) {centre=R.color.aucun_dark;bord=R.color.aucun;}
         else if (spell.getDmg_type().equals("feu")) {centre=R.color.feu_dark;bord=R.color.feu;}
         else if (spell.getDmg_type().equals("foudre")) {centre=R.color.foudre_dark;bord=R.color.foudre;}
         else if (spell.getDmg_type().equals("froid")) {centre=R.color.froid_dark;bord=R.color.froid;}
         else if (spell.getDmg_type().equals("acide")) {centre=R.color.acide_dark;bord=R.color.acide;}
-        else {centre=R.color.white;bord=R.color.white;dmg_spell=false;}
+        else {centre=R.color.white;bord=R.color.white;}
 
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[] {getColor(bord),getColor(centre)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
         gd.setCornerRadius(0f);
-        //gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
-        //gd.setGradientRadius(200.0f);
 
         checkbox.setTextColor(Color.BLACK);
         int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
-        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
         ColorStateList colorStateList = new ColorStateList(
                 new int[][] {

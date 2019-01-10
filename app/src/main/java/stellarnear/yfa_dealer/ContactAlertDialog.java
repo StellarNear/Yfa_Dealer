@@ -23,24 +23,30 @@ import stellarnear.yfa_dealer.Rolls.WheelDicePicker;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 
-public class TestAlertDialog {
+public class ContactAlertDialog {
     private Activity mA;
     private Context mC;
     private AlertDialog alertDialog;
+    private AlertDialog alertDialogWheelPicker;
+    private WheelDicePicker wheelPicker;
     private View dialogView;
-    private Spell spell;
+    private View dialogViewWheelPicker;
+    private String mode;
     private Calculation calculation=new Calculation();
     private int sumScore;
 
-    private boolean robe=false;
+    private Perso yfa = MainActivity.yfa;
 
-    public TestAlertDialog(Activity mA, Context mC, Spell spell) {
+    private OnSuccessEventListener mListener;
+
+    private Tools tools = new Tools();
+
+    public ContactAlertDialog(Activity mA, Context mC, String mode) {
         this.mA=mA;
         this.mC=mC;
-        this.spell = spell;
+        this.mode = mode;
         this.sumScore = 0;
         buildAlertDialog();
-        showAlertDialog();
     }
 
     private void buildAlertDialog() {
@@ -49,27 +55,25 @@ public class TestAlertDialog {
         ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
         icon.setImageDrawable(mC.getDrawable(R.drawable.ic_surrounded_shield));
 
-        String titleTxt = "Test du niveau de lanceur de sort :\n";
-        TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
+        String titleTxt = "Test de contact "+(mode.equalsIgnoreCase("melee") ? "au corps à corps" : "à distance") +" :\n";
+        final TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
         title.setSingleLine(false);
         title.setText(titleTxt);
 
+        String summaryDetail="";
 
-        sumScore= calculation.casterLevelSR(spell);
-        Perso yfa =MainActivity.yfa;
-        robe = yfa.getInventory().getAllEquipments().getEquipmentsEquiped("armor_slot").getName().equalsIgnoreCase("Robe d'archimage grise");
-        if(robe){
-            sumScore+=2;
+
+        sumScore= 0;
+        if(mode.equalsIgnoreCase("melee")){
+            sumScore+=yfa.getStrMod();
+            summaryDetail="Bonus force ("+yfa.getStrMod()+")";
+        } else {
+            sumScore+=yfa.getDexMod();
+            summaryDetail="Bonus dexterité ("+yfa.getDexMod()+")";
         }
-        String summaryTxt="Test contre RM : "+String.valueOf(sumScore);
+        String summaryTxt="Test contact : "+String.valueOf(sumScore);
         TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
         summary.setText(summaryTxt);
-
-        String summaryDetail="";
-        summaryDetail="Niveau lanceur de sort : "+String.valueOf(calculation.casterLevelSR(spell))+" "; //oui c'est moche il faut gerer tout les calcul au niveau du perso proprement ...
-
-        if(robe){ summaryDetail+=", Robe d'archimage grise (+2)";}
-
 
         TextView detail = dialogView.findViewById(R.id.customDialogTestDetail);
         detail.setText(summaryDetail);
@@ -108,6 +112,13 @@ public class TestAlertDialog {
                 // User clicked cancel button
             }
         });
+
+        dialogBuilder.setPositiveButton("Succès", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if(mListener!=null){mListener.onEvent();}
+                tools.customToast(mC,"Bravo ! il va prendre cher");
+            }
+        });
         alertDialog = dialogBuilder.create();
     }
 
@@ -130,17 +141,26 @@ public class TestAlertDialog {
 
     public void showAlertDialog(){
         alertDialog.show();
+
+        Button failButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        LinearLayout.LayoutParams onlyButtonLL = (LinearLayout.LayoutParams) failButton.getLayoutParams();
+        onlyButtonLL.width=ViewGroup.LayoutParams.WRAP_CONTENT;
+        onlyButtonLL.setMargins(10,0,10,0);
+        failButton.setLayoutParams(onlyButtonLL);
+        failButton.setTextColor(mC.getColor(R.color.colorBackground));
+        failButton.setBackground(mC.getDrawable(R.drawable.button_cancel_gradient));
+
+        Button success = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        success.setLayoutParams(onlyButtonLL);
+        success.setTextColor(mC.getColor(R.color.colorBackground));
+        success.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
+        success.setVisibility(View.GONE);
+
         Display display = mA.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         Float factor = mC.getResources().getInteger(R.integer.percent_fullscreen_customdialog)/100f;
         alertDialog.getWindow().setLayout((int) (factor*size.x), (int)(factor*size.y));
-        Button onlyButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        LinearLayout.LayoutParams onlyButtonLL = (LinearLayout.LayoutParams) onlyButton.getLayoutParams();
-        onlyButtonLL.width=ViewGroup.LayoutParams.WRAP_CONTENT;
-        onlyButton.setLayoutParams(onlyButtonLL);
-        onlyButton.setTextColor(mC.getColor(R.color.colorBackground));
-        onlyButton.setBackground(mC.getDrawable(R.drawable.button_cancel_gradient));
     }
 
     private void endSkillCalculation(final Dice dice) {
@@ -152,14 +172,10 @@ public class TestAlertDialog {
         TextView callToAction = dialogView.findViewById(R.id.customDialogTestCallToAction);
         callToAction.setTextColor(mC.getColor(R.color.secondaryTextCustomDialog));
 
-        Button onlyButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        onlyButton.setText("Ok");
-        onlyButton.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
 
-        resultTitle.setText("Résultat du test de niveau de lanceur de sort :");
-        int sumResult=dice.getRandValue()+ calculation.casterLevelSR(spell);
+        resultTitle.setText("Résultat du test decontact :");
+        int sumResult=dice.getRandValue()+ sumScore;
         if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
-        if(robe){sumResult+=2;}
 
         final TextView result = dialogView.findViewById(R.id.customDialogTestResult);
         result.setText(String.valueOf(sumResult));
@@ -173,7 +189,28 @@ public class TestAlertDialog {
             }
         });
 
-        callToAction.setText("Fin du test de\nniveau de lanceur de sort.");
+        callToAction.setText("Fin du test de contact.");
+
+        Button failButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        failButton.setText("Raté");
+        failButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tools.customToast(mC,"Mince ... prochaine fois ca touche !");
+                alertDialog.dismiss();
+            }
+        });
+
+        Button success = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        success.setVisibility(View.VISIBLE);
+    }
+
+    public interface OnSuccessEventListener {
+        void onEvent();
+    }
+
+    public void setSuccessEventListener(OnSuccessEventListener eventListener) {
+        mListener = eventListener;
     }
 }
 

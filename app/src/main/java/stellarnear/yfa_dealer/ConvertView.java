@@ -102,6 +102,7 @@ public class ConvertView extends AppCompatActivity {
     }
 
     private void resetMeta() {
+        currentMetaSelected=null;
         for (CheckBox check : meta_selected){
             check.setTextColor(Color.DKGRAY);
             check.setChecked(false);
@@ -149,8 +150,6 @@ public class ConvertView extends AppCompatActivity {
 
     public void setListnerTierSelect(final CheckBox checkbox) {
         int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
-        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
-
         ColorStateList colorStateList = new ColorStateList(
                 new int[][]{
                         new int[]{-android.R.attr.state_checked}, // unchecked
@@ -437,7 +436,7 @@ public class ConvertView extends AppCompatActivity {
 
             boolean firstMeta=true;
             for(final Metamagic meta : metaListAvailable.asList()) {
-                final CheckBox checkbox = spell.getCheckboxeForMetaId(mA,mC,meta.getId());
+                final CheckBox checkbox = spell.getCheckboxeForMetaId(mA,mC,meta.getId(),true);
                 if(checkbox.isEnabled()){checkbox.setButtonTintList(colorStateList);}
                 if(!firstMeta){
                     addVsep(grid2, 4, Color.GRAY);
@@ -450,13 +449,20 @@ public class ConvertView extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        for (CheckBox check : meta_selected) {
-                            check.setTextColor(Color.DKGRAY);
-                            check.setChecked(false);
-                        }
                         checkbox.setTextColor(Color.parseColor("#088A29"));
-                        checkbox.setChecked(true);
+
+                        if(currentMetaSelected!=null){ //re rend la derniere checkbox clickable
+                            spell.getCheckboxeForMetaId(mA,mC,currentMetaSelected.getId(),true).setEnabled(true);
+                        }
                         currentMetaSelected=meta;
+                        checkbox.setEnabled(false); //evite de deselectionner
+
+                        for (CheckBox check : meta_selected) {
+                            if(check!=checkbox) {
+                                check.setTextColor(Color.DKGRAY);
+                                check.setChecked(false);
+                            }
+                        }
                         construct_convertview_confirm();
                     }
                 });

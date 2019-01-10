@@ -25,6 +25,22 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="Valeur : +%s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@integer/force_def"
+        android:key="force"
+        android:inputType="number"
+        android:title="Modificateur de force"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : +%s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@integer/dexterite_def"
+        android:key="dexterite"
+        android:inputType="number"
+        android:title="Modificateur de dextérité"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : +%s"/>
 
 
 </PreferenceScreen>

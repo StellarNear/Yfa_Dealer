@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import stellarnear.yfa_dealer.Calculation;
+import stellarnear.yfa_dealer.ContactAlertDialog;
 import stellarnear.yfa_dealer.ConvertView;
 import stellarnear.yfa_dealer.CustomAlertDialog;
 import stellarnear.yfa_dealer.DisplayedText;
@@ -96,6 +97,26 @@ public class SpellProfileFactory {
                 showMetaPopup();
             }
         });
+
+        if(!spell.getContact().equalsIgnoreCase("")){
+            ((LinearLayout)profile.findViewById(R.id.contact)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ContactAlertDialog contactDialog = new ContactAlertDialog(mA, mC,spell.getContact());
+                    contactDialog.showAlertDialog();
+                    contactDialog.setSuccessEventListener(new ContactAlertDialog.OnSuccessEventListener() {
+                        @Override
+                        public void onEvent() {
+                            ((LinearLayout)profile.findViewById(R.id.contact)).setVisibility(View.GONE);
+                            ((SeekBar) profile.findViewById(R.id.slider)).setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+        } else {
+            ((LinearLayout)profile.findViewById(R.id.contact)).setVisibility(View.GONE);
+            ((SeekBar) profile.findViewById(R.id.slider)).setVisibility(View.VISIBLE);
+        }
 
         SliderBuilder sliderBuild =new SliderBuilder(mC,spell);
         sliderBuild.setSlider((SeekBar) profile.findViewById(R.id.slider));
