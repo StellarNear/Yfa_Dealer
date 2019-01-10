@@ -1,10 +1,12 @@
 package stellarnear.yfa_dealer.Spells;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -197,6 +199,36 @@ public class Spell {
 
     public MetaList getMetaList() {
         return metaList;
+    }
+
+    public CheckBox getCheckboxeForMetaId( Activity mA, Context mC,String metaId){
+        CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC);
+
+        if(this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
+            metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
+        }
+
+        if(this.dmg_type.equalsIgnoreCase("") && metaId.equalsIgnoreCase("meta_enhance")){
+            check.setEnabled(false);
+        }
+
+        List<String> rangesDisable = Arrays.asList("contact","personnelle");
+        if(rangesDisable.contains(this.range) && metaId.equalsIgnoreCase("meta_select")){
+            check.setEnabled(false);
+        }
+
+        List<String> rangesAccepted = Arrays.asList("contact","courte","moyenne");
+        if(!rangesAccepted.contains(this.range) && metaId.equalsIgnoreCase("meta_range")){
+            check.setEnabled(false);
+        }
+        List<String> durationAccepted = Arrays.asList("instant","permanente");
+        if(!durationAccepted.contains(this.duration) && metaId.equalsIgnoreCase("meta_duration")){
+            check.setEnabled(false);
+        }
+        if(!this.cast_time.equalsIgnoreCase("simple") && metaId.equalsIgnoreCase("meta_quicken")){
+            check.setEnabled(false);
+        }
+        return check;
     }
 
     public void setSubName(int i) {

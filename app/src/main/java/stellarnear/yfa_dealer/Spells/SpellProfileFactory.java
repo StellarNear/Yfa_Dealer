@@ -65,9 +65,6 @@ public class SpellProfileFactory {
         testSpellForColorTitle();
 
         ((TextView)profile.findViewById(R.id.current_rank)).setText("(rang : "+calculation.currentRank(spell)+")");
-        if(spell.getRank()>=9 || spell.getRank()+spell.getMetaList().getMetaByID("meta_heighten").getnCast()>=9 ){
-            spell.getMetaList().getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
-        }
 
         if(!yfa.getAllResources().checkSpellAvailable(calculation.currentRank(spell))){
             ((TextView)profile.findViewById(R.id.current_rank)).setTextColor(Color.RED);
@@ -231,7 +228,7 @@ public class SpellProfileFactory {
             LinearLayout metaLin = new LinearLayout(mC);
             metaLin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaLin.setGravity(Gravity.CENTER);
-            CheckBox check = meta.getCheckBox(mA,mC);
+            CheckBox check = spell.getCheckboxeForMetaId(mA,mC,meta.getId());
 
             check.setTextColor(mC.getColor(R.color.dark_gray));
             ViewGroup parent = (ViewGroup) check.getParent();

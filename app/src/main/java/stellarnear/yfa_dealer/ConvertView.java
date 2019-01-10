@@ -437,8 +437,8 @@ public class ConvertView extends AppCompatActivity {
 
             boolean firstMeta=true;
             for(final Metamagic meta : metaListAvailable.asList()) {
-                final CheckBox checkbox = meta.getCheckBox(mA,mC);
-                checkbox.setButtonTintList(colorStateList);
+                final CheckBox checkbox = spell.getCheckboxeForMetaId(mA,mC,meta.getId());
+                if(checkbox.isEnabled()){checkbox.setButtonTintList(colorStateList);}
                 if(!firstMeta){
                     addVsep(grid2, 4, Color.GRAY);
                 }
