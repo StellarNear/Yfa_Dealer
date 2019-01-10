@@ -56,7 +56,7 @@ public class ContactAlertDialog {
         LayoutInflater inflater = mA.getLayoutInflater();
         dialogView = inflater.inflate(R.layout.custom_alert_dialog, null);
         ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
-        icon.setImageDrawable(mC.getDrawable(R.drawable.ic_surrounded_shield));
+        icon.setImageDrawable(mC.getDrawable(R.drawable.ic_filter_center_focus_black_24dp));
 
         String titleTxt = "Test de contact "+(mode.equalsIgnoreCase("melee") ? "au corps à corps" : "à distance") +" :\n";
         final TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
@@ -76,7 +76,7 @@ public class ContactAlertDialog {
         }
         if(yfa.getResourceValue("true_strike")>0){
             sumScore+=20;
-            summaryDetail="\nCoup au But (+20)";
+            summaryDetail+="\nCoup au But (+20)";
         }
         String summaryTxt="Test contact : "+String.valueOf(sumScore);
         TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
