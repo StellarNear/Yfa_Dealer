@@ -17,6 +17,10 @@ public class SpellList extends AppCompatActivity {
         listSpells.add(spell);
     }
 
+    public void addAll(List<Spell> spells) {
+        listSpells.addAll(spells);
+    }
+
     public SpellList filterByRank(int rank){
         SpellList sel_list = new SpellList();
 
@@ -55,5 +59,16 @@ public class SpellList extends AppCompatActivity {
 
     public List<Spell> asList() {
         return listSpells;
+    }
+
+
+    public boolean haveBindedSpells() {
+        Boolean bool = false;
+        for (Spell spell : listSpells){
+            if (spell.isBinded()){
+                bool=true;
+            }
+        }
+        return bool;
     }
 }

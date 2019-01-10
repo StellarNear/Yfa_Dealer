@@ -52,4 +52,5 @@
     <color name="secondaryDetailTextCustomDialog">@color/gray50</color>
     <color name="start_gradient_background_spell">#d9d9d9</color>
     <color name="end_gradient_background_spell">#ffffff</color>
+    <color name="lightgray">#dddddd</color>
 </resources>

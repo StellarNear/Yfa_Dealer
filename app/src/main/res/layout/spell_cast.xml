@@ -27,23 +27,41 @@
 
 
 
-
-    <TextView
-        android:id="@+id/Titre2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lançement des sorts"
-        android:textAlignment="center"
-        android:textSize="25sp"
+        android:orientation="horizontal"
         app:layout_anchor="@+id/toolbar2"
         app:layout_anchorGravity="bottom"
         android:layout_gravity="bottom"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:background="@android:color/black"
+        android:gravity="center"
+       >
+    <TextView
+        android:id="@+id/Titre2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lançement des sorts"
+        android:textAlignment="center"
+        android:textSize="25sp"
         android:textColor="@android:color/white"
 
         />
+
+        <TextView
+            android:id="@+id/n_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[x rounds]"
+            android:layout_marginStart="@dimen/general_margin"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+
+            />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

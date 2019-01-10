@@ -118,4 +118,13 @@ public class Tools {
     }
 
 
+    public Double toDouble(String key) {
+        Double value;
+        try {
+            value = Double.parseDouble(key);
+        } catch (Exception e){
+            value=0.0;
+        }
+        return value;
+    }
 }

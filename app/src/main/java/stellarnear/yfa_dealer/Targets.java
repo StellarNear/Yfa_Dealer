@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import stellarnear.yfa_dealer.Spells.Spell;
+import stellarnear.yfa_dealer.Spells.SpellList;
 
 public class Targets {
     private static Targets instance = new Targets();
@@ -61,8 +62,8 @@ public class Targets {
         mapTargetListSpell = new HashMap<String, List<Spell>>();
     }
 
-    public List<Spell> getAllSpellList() {
-        List<Spell> allSpell= new ArrayList<>();
+    public SpellList getAllSpellList() {
+        SpellList allSpell= new SpellList();
         for(String tar:allTargets){
             allSpell.addAll(mapTargetListSpell.get(tar));
         }

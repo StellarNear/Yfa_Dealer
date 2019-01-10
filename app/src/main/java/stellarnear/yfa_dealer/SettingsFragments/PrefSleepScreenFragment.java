@@ -65,6 +65,7 @@ public class PrefSleepScreenFragment {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
+                yfa.refresh();
                 yfa.getAllResources().sleepReset();
                 resetTemp();
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
@@ -83,9 +84,10 @@ public class PrefSleepScreenFragment {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
+                yfa.refresh();
                 yfa.getAllResources().halfSleepReset();
                 resetTemp();
-                tools.customToast(mC, "Une sans sortilèges t'attends...", "center");
+                tools.customToast(mC, "Une journée sans sortilèges t'attends...", "center");
                 Intent intent = new Intent(mA, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mA.startActivity(intent);

@@ -148,7 +148,7 @@
         android:summary="Valeur : %s"
         android:defaultValue="@integer/n_rank_5_conv_def"/>
     <ListPreference
-        android:key="n_rank_5_conv"
+        android:key="n_rank_6_conv"
         android:title="Nombre de sort de rang 6 convertibles"
         android:entries="@array/values"
         android:entryValues="@array/values"

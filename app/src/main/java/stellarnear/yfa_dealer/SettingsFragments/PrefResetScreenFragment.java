@@ -60,6 +60,7 @@ public class PrefResetScreenFragment {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
                 editor.commit();
+                yfa.refresh();
                 yfa.getAllResources().sleepReset();
                 yfa.getInventory().resetInventory();
                 tools.customToast(mC, "Remise à zero des paramètres de l'application", "center");

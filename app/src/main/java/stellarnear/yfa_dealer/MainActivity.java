@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.BuildListSpell;
+import stellarnear.yfa_dealer.Spells.BuildSpellList;
 import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Spells.SpellList;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        yfa.getAllResources().refreshMaxs();
+        yfa.refresh();
         if(shouldExecuteOnResume){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             overridePendingTransition(R.anim.infromleft,R.anim.nothing);
@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildPage1() {
-        final SpellList listAllSpell = new BuildListSpell(getApplicationContext(),"").getSpellList();
-        final SpellList listAllMythicSpell = new BuildListSpell(getApplicationContext(),"Mythic").getSpellList();
+        final SpellList listAllSpell = new BuildSpellList(getApplicationContext(),"").getSpellList();
+        final SpellList listAllMythicSpell = new BuildSpellList(getApplicationContext(),"Mythic").getSpellList();
 
         int max_tier=0;
         for(int i=0;i<=19;i++){
@@ -233,13 +233,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked){
                             if(spell.getNSubSpell()>0){
+                                Spell previousSpellToBind=null;
                                 for (int i=1;i<=spell.getNSubSpell();i++){
-                                    Spell subSpellN=new Spell(getApplicationContext(),listAllSpell.getSpellByID(spell.getID()+"_sub"));
+                                    Spell subSpellN=new Spell(listAllSpell.getSpellByID(spell.getID()+"_sub"));
                                     subSpellN.setSubName(i);
+
+                                    if(previousSpellToBind!=null){
+                                        subSpellN.bindTo(previousSpellToBind);
+                                    }
+                                    previousSpellToBind=subSpellN;
                                     selectedSpells.add(subSpellN);
                                 }
                             } else {
-                                selectedSpells.add(new Spell(getApplicationContext(),spell));
+                                selectedSpells.add(new Spell(spell));
                             }
                             current_spell_display(getApplicationContext());
                         }
@@ -289,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                         if(spell.getNSubSpell()>0){
                                                             for (int i=1;i<=spell.getNSubSpell();i++){
-                                                                Spell subSpellN=new Spell(getApplicationContext(),listAllMythicSpell.getSpellByID(spell.getID()+"_sub"));
+                                                                Spell subSpellN=new Spell(listAllMythicSpell.getSpellByID(spell.getID()+"_sub"));
                                                                 subSpellN.setSubName(i);
                                                                 selectedSpells.add(subSpellN);
                                                             }
@@ -489,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void buildPage2(){
         Intent intent = new Intent(this, SpellCastActivity.class);
-        //intent.putExtra("selected_spells", (Serializable) selectedSpells);
         startActivity(intent);
         overridePendingTransition(R.anim.infromright,R.anim.nothing);
     }
@@ -521,24 +526,21 @@ public class MainActivity extends AppCompatActivity {
     public void setCheckBoxColor(CheckBox checkbox,Spell spell) {
         int bord=0;
         int centre=0;
-        boolean dmg_spell=true;
+
         if (spell.getDmg_type().equals("aucun")) {centre=R.color.aucun_dark;bord=R.color.aucun;}
         else if (spell.getDmg_type().equals("feu")) {centre=R.color.feu_dark;bord=R.color.feu;}
         else if (spell.getDmg_type().equals("foudre")) {centre=R.color.foudre_dark;bord=R.color.foudre;}
         else if (spell.getDmg_type().equals("froid")) {centre=R.color.froid_dark;bord=R.color.froid;}
         else if (spell.getDmg_type().equals("acide")) {centre=R.color.acide_dark;bord=R.color.acide;}
-        else {centre=R.color.white;bord=R.color.white;dmg_spell=false;}
+        else {centre=R.color.white;bord=R.color.white;}
 
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[] {getColor(bord),getColor(centre)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
         gd.setCornerRadius(0f);
-        //gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
-        //gd.setGradientRadius(200.0f);
 
         checkbox.setTextColor(Color.BLACK);
         int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
-        //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
         ColorStateList colorStateList = new ColorStateList(
                 new int[][] {
