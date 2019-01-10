@@ -237,6 +237,9 @@ public class Spell {
         if(!this.cast_time.equalsIgnoreCase("simple") && metaId.equalsIgnoreCase("meta_quicken")){
             check.setEnabled(false);
         }
+        if(!this.compoList.contains("V") && metaId.equalsIgnoreCase("meta_silent")){
+            check.setEnabled(false);
+        }
         if(this.perfect && this.rank+metaList.getMetaByID(metaId).getUprank()<=9 && !fromConv){
             check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
