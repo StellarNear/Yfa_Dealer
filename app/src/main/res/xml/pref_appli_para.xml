@@ -4,7 +4,7 @@
     <SwitchPreference
         android:defaultValue="@bool/switch_manual_diceroll_DEF"
         android:key="switch_manual_diceroll"
-        android:title="Lancement manuel des dès (test NLS)"/>
+        android:title="Lancement manuel des dès"/>
 
     <SwitchPreference
         android:defaultValue="@bool/switch_autoclose_dialog_DEF"
