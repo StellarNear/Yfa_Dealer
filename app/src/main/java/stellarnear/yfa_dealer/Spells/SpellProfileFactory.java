@@ -3,6 +3,7 @@ package stellarnear.yfa_dealer.Spells;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -97,12 +98,17 @@ public class SpellProfileFactory {
                 showMetaPopup();
             }
         });
+        if(spell.isCast()){
+            ((LinearLayout)profile.findViewById(R.id.metamagic)).setEnabled(false);
+            ((TextView)profile.findViewById(R.id.text_meta)).setTextColor(Color.GRAY);
+            ((ImageView)profile.findViewById(R.id.symbol_meta)).getDrawable().mutate().setColorFilter(Color.GRAY,PorterDuff.Mode.SRC_IN);
+        }
 
         if(!spell.getContact().equalsIgnoreCase("")){
             ((LinearLayout)profile.findViewById(R.id.contact)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ContactAlertDialog contactDialog = new ContactAlertDialog(mA, mC,spell.getContact());
+                    ContactAlertDialog contactDialog = new ContactAlertDialog(mA, mC,spell);
                     contactDialog.showAlertDialog();
                     contactDialog.setSuccessEventListener(new ContactAlertDialog.OnSuccessEventListener() {
                         @Override
@@ -123,6 +129,7 @@ public class SpellProfileFactory {
         sliderBuild.setCastEventListener(new SliderBuilder.OnCastEventListener() {
             @Override
             public void onEvent() {
+                if(mListener!=null){mListener.onEvent();}
                 ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                 ((LinearLayout)profile.findViewById(R.id.second_panel)).removeAllViews();
                 new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.second_panel));
@@ -132,7 +139,7 @@ public class SpellProfileFactory {
 
         panel = ((ViewSwitcher)profile.findViewById(R.id.view_switcher));
 
-        if(!spell.getConversion().getArcaneId().equalsIgnoreCase("")){
+        if(!spell.getConversion().getArcaneId().equalsIgnoreCase("") || spell.isCast()){
             ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
         } else {
             ((ImageView) profile.findViewById(R.id.button_conversion)).setOnClickListener(new View.OnClickListener() {
@@ -145,7 +152,7 @@ public class SpellProfileFactory {
                         public void onEvent() {
                             refreshProfile();
                             flipView();
-                            mListener.onEvent();
+                            if(mListener!=null){mListener.onEvent();}
                             ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                             ((LinearLayout) profile.findViewById(R.id.second_panel)).removeAllViews();
                         }
@@ -260,7 +267,7 @@ public class SpellProfileFactory {
                 @Override
                 public void onEvent() {
                     refreshProfile();
-                    mListener.onEvent();
+                    if(mListener!=null){mListener.onEvent();}
                 }
             });
             metaLin.addView(check);

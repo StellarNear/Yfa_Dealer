@@ -135,11 +135,13 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:id="@+id/symbol_meta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_metamagic_upgrade" />
 
                     <TextView
+                        android:id="@+id/text_meta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/general_margin"

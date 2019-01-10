@@ -45,6 +45,10 @@ public class AllResources {
             listResources.add(rankRes);
             mapIDRes.put(rankRes.getId(), rankRes);
         }
+
+        Resource strike = new Resource("Coup au but","true_strike",mC);
+        listResources.add(strike);
+        mapIDRes.put(strike.getId(), strike);
     }
 
     public List<Resource> getResourcesList() {
@@ -75,6 +79,7 @@ public class AllResources {
             getResource("spell_conv_rank_"+rankConv).setMax(readResource("n_rank_"+rankConv+"_conv"));
         }
 
+        getResource("true_strike").setMax(0);
     }
 
     private void loadCurrent() {

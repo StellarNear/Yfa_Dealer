@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Rolls.Dice;
-import stellarnear.yfa_dealer.Rolls.WheelDicePicker;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 

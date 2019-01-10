@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import stellarnear.yfa_dealer.Calculation;
 import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Tools;
 
 /**
@@ -18,6 +20,7 @@ public class Perso {
     private Tools tools=new Tools();
     private Context mC;
     private SharedPreferences prefs;
+    private Calculation calculation=new Calculation();
 
     public Perso(Context mC) {
         inventory = new Inventory(mC);
@@ -53,6 +56,16 @@ public class Perso {
     public void castSpell(Integer selected_rank) {
         allResources.castSpell(selected_rank);
     }
+    public void castSpell(Spell spell) {
+        if (!spell.isCast()){
+            spell.cast();
+            allResources.castSpell(calculation.currentRank(spell));
+            if (spell.getID().equalsIgnoreCase("true_strike")) {
+                getAllResources().getResource("true_strike").earn(1);
+            }
+        }
+    }
+
 
     public int getCharismaMod() {
         return  tools.toInt(prefs.getString("charisme",String.valueOf(mC.getResources().getInteger(R.integer.charisme_def))));

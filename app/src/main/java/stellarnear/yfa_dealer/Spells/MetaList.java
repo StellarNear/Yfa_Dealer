@@ -1,8 +1,6 @@
 package stellarnear.yfa_dealer.Spells;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.CheckBox;
 
 import java.util.ArrayList;
 import java.util.List;

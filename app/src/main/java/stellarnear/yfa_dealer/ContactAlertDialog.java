@@ -34,6 +34,8 @@ public class ContactAlertDialog {
     private String mode;
     private Calculation calculation=new Calculation();
     private int sumScore;
+    private Spell spell;
+    private Dice dice;
 
     private Perso yfa = MainActivity.yfa;
 
@@ -41,10 +43,11 @@ public class ContactAlertDialog {
 
     private Tools tools = new Tools();
 
-    public ContactAlertDialog(Activity mA, Context mC, String mode) {
+    public ContactAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;
         this.mC=mC;
-        this.mode = mode;
+        this.spell=spell;
+        this.mode = spell.getContact();
         this.sumScore = 0;
         buildAlertDialog();
     }
@@ -66,10 +69,14 @@ public class ContactAlertDialog {
         sumScore= 0;
         if(mode.equalsIgnoreCase("melee")){
             sumScore+=yfa.getStrMod();
-            summaryDetail="Bonus force ("+yfa.getStrMod()+")";
+            summaryDetail="Bonus force ("+(yfa.getStrMod()>0?"+":"")+yfa.getStrMod()+")";
         } else {
             sumScore+=yfa.getDexMod();
-            summaryDetail="Bonus dexterité ("+yfa.getDexMod()+")";
+            summaryDetail="Bonus dexterité ("+(yfa.getDexMod()>0?"+":"")+yfa.getDexMod()+")";
+        }
+        if(yfa.getResourceValue("true_strike")>0){
+            sumScore+=20;
+            summaryDetail="\nCoup au But (+20)";
         }
         String summaryTxt="Test contact : "+String.valueOf(sumScore);
         TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
@@ -116,6 +123,7 @@ public class ContactAlertDialog {
         dialogBuilder.setPositiveButton("Succès", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if(mListener!=null){mListener.onEvent();}
+                if(dice.getRandValue()==20){spell.makeCrit();}
                 tools.customToast(mC,"Bravo ! il va prendre cher");
             }
         });
@@ -124,7 +132,9 @@ public class ContactAlertDialog {
 
     private void startRoll() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        final Dice dice = new Dice(mA,mC,20);
+        yfa.getAllResources().getResource("true_strike").spend(1);
+
+        dice = new Dice(mA,mC,20);
         if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_DEF))){
             dice.rand(true);
             dice.setRefreshEventListener(new Dice.OnRefreshEventListener() {

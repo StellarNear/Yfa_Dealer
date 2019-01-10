@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.ArcaneConversion;
 import stellarnear.yfa_dealer.Spells.BuildMetaList;
 import stellarnear.yfa_dealer.Spells.MetaList;
 import stellarnear.yfa_dealer.Spells.Metamagic;

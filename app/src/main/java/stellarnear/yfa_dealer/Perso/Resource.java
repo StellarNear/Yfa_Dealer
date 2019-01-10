@@ -51,6 +51,10 @@ public class Resource {
         saveCurrentToSettings();
     }
 
+    public void earn(Integer gain){
+        this.current+=gain;
+    }
+
     public void resetCurrent() {
         this.current = this.max;
         saveCurrentToSettings();

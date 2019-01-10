@@ -13,6 +13,7 @@ public class SliderBuilder {
     private Context mC;
     private Calculation calculation=new Calculation();
     private OnCastEventListener mListener;
+    private Tools tools=new Tools();
 
     public SliderBuilder(Context mC,Spell spell){
         this.mC=mC;
@@ -25,9 +26,9 @@ public class SliderBuilder {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (seekBar.getProgress() > 75) {
                     seekBar.setProgress(100);
-                    if (spell.getRank() == 0 || yfa.getResourceValue("spell_rank_" + spell.getRank()) > 0) {
+                    if (spell.getRank() == 0 || yfa.getResourceValue("spell_rank_" + calculation.currentRank(spell)) > 0) {
                         if (spell.getRank() != 0) {
-                            yfa.castSpell(calculation.currentRank(spell));
+                            yfa.castSpell(spell);
                         }
                         if(!spell.getConversion().getArcaneId().equalsIgnoreCase("")){
                             yfa.castConvSpell(spell.getConversion().getRank());
@@ -37,6 +38,7 @@ public class SliderBuilder {
                                 .setAction("Action", null).show();
                     } else {
                         seekBar.setProgress(1);
+                        tools.customToast(mC,"Tu n'as pas d'emplacement de sort "+calculation.currentRank(spell)+" de disponible...");
                     }
                 } else {
                     seekBar.setProgress(1);

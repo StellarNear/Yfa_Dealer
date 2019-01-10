@@ -135,6 +135,7 @@
     
     <spell>
         <name>Coup au but</name>
+        <id>true_strike</id>
         <descr>Bonus de +20 au prochain jet d'attaque. De plus, il n’a aucune chance de manquer une cible camouflée.</descr>
         <range>personelle</range>
         <cast_time>simple</cast_time>

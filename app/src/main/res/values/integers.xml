@@ -46,9 +46,10 @@
     <integer name="mythic_dice_def">6</integer>
 
     <integer name="charisme_def">14</integer>
+    <integer name="force_def">-1</integer>
+    <integer name="dexterite_def">3</integer>
     <integer name="wedge_max_lvl_spell_def">7</integer>
     <integer name="percent_fullscreen_combat_launcher_dialog">95</integer>
-    <integer name="force_def">-1</integer>
-    <integer name="dexterite_def">2</integer>
+
 
 </resources>

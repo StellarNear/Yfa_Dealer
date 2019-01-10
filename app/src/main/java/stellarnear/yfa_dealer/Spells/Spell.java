@@ -6,21 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import stellarnear.yfa_dealer.R;
-import stellarnear.yfa_dealer.Tools;
 
 
 public class Spell {
@@ -56,6 +49,8 @@ public class Spell {
     private ArcaneConversion conversion=null;
 
     private boolean binded=false;
+    private Cast cast;
+    private boolean crit=false;
 
     //private Tools tools=new Tools();
 
@@ -81,6 +76,7 @@ public class Spell {
         this.n_sub_spell=spell.n_sub_spell;
         this.conversion=new ArcaneConversion(spell.conversion);
         this.metaList=new MetaList(spell.metaList);
+        this.cast =new Cast();
         this.settings=spell.settings;
     }
 
@@ -116,6 +112,7 @@ public class Spell {
 
         this.conversion=new ArcaneConversion();
         this.metaList= BuildMetaList.getInstance(mC).getMetaList();
+        this.cast =new Cast();
     }
 
     private void calcCompo(String compo) {
@@ -289,8 +286,24 @@ public class Spell {
     public void bindTo(Spell previousSpellToBind) {  //pour les sub spell pour que les meta et conversion s'applique partout
         this.metaList=previousSpellToBind.metaList;
         this.conversion=previousSpellToBind.conversion;
+        this.cast =previousSpellToBind.cast;
         this.binded=true;
     }
 
+    public void cast(){
+        cast.cast();
+    }
 
+    public boolean isCast(){
+        return cast.isCast();
+    }
+
+
+    public void makeCrit() {
+        this.crit=true;
+    }
+
+    public boolean isCrit(){
+        return this.crit;
+    }
 }

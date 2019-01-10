@@ -5,13 +5,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.Metamagic;
 import stellarnear.yfa_dealer.Spells.Spell;
-import stellarnear.yfa_dealer.Spells.SpellList;
 
 public class DisplayedText {
     private Perso yfa=MainActivity.yfa;

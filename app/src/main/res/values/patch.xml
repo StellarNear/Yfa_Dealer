@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v7.0"</string>
-    <string name="time_spend">102h</string>
+    <string name="time_spend">112h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
 Patch note V7.0
+-Gestion des jets de contact à distance et corps à corps
+-Gestion d'un sort Coup au but présent !
+-Gestion des crits de sort !
+-Display des dès dynamique dans les resultats dégats
+-Masquage des métamagie inutiles !
+-Gestion intelligente des meta et conversions sur les sous-projectiles !
 -Profils de sorts générés via template
 -Refacto complet des objets : Sort, Métamagie, ConversionArcanique, CalculInfos
 ----------------------------------------------------------------------------------
