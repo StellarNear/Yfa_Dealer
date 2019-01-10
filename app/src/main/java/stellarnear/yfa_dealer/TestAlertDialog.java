@@ -65,7 +65,7 @@ public class TestAlertDialog {
         summary.setText(summaryTxt);
 
         String summaryDetail="";
-        summaryDetail="Niveau lanceur de sort : "+String.valueOf(calculation.casterLevelSR(spell))+" "; //oui c'est moche il faut gerer tout les calcul au niveau du perso proprement ...
+        summaryDetail="NLS : "+String.valueOf(calculation.casterLevelSR(spell))+" "; //oui c'est moche il faut gerer tout les calcul au niveau du perso proprement ...
 
         if(robe){ summaryDetail+=", Robe d'archimage grise (+2)";}
 
