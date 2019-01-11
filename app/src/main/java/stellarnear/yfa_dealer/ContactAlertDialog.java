@@ -183,7 +183,7 @@ public class ContactAlertDialog {
         callToAction.setTextColor(mC.getColor(R.color.secondaryTextCustomDialog));
 
 
-        resultTitle.setText("Résultat du test decontact :");
+        resultTitle.setText("Résultat du test de contact :");
         int sumResult=dice.getRandValue()+ sumScore;
         if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
 
