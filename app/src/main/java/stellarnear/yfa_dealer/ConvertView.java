@@ -375,7 +375,7 @@ public class ConvertView extends AppCompatActivity {
                 result.setTextColor(Color.parseColor("#088A29"));
                 if (calculation.nDice(spell)<=0) {
                     result.setText("Ajouter " + 2 * selected_rank +" à la variable dépendante du NLS (cf. sort)");
-                } else if (spell.getDice_type().equalsIgnoreCase("lvl")) {
+                } else if (spell.getDice_type().equalsIgnoreCase("lvl") || spell.getN_dice_per_lvl()==0) {
                     result.setText("Aucun effet sur ce sort");
                 }  else {
                     result.setText("Dégats : " + calculation.nDice(spell)+"d"+calculation.diceType(spell) + " > " + String.valueOf(calculation.nDice(spell)+2*selected_rank)+"d"+calculation.diceType(spell) );
