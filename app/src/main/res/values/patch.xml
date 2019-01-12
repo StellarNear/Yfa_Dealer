@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v7.0"</string>
-    <string name="time_spend">112h</string>
+    <string name="time_spend">114h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
@@ -12,6 +12,7 @@ Patch note V7.0
 -Gestion d'un sort Coup au but présent !
 -Gestion des crits de sort !
 -Display des dès dynamique dans les resultats dégats
+-Ajout des 70+ images en fond transparents ...
 -Masquage des métamagie inutiles !
 -Gestion intelligente des meta et conversions sur les sous-projectiles !
 -Profils de sorts générés via template

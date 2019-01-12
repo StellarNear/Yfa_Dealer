@@ -69,16 +69,34 @@ public class Tools {
     }
 
     public Drawable resize(Context mC, Drawable image, int pixelSizeIcon) {
-        Bitmap b = ((BitmapDrawable) image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixelSizeIcon, pixelSizeIcon, false);
-        return new BitmapDrawable(mC.getResources(), bitmapResized);
+        Drawable draw=mC.getDrawable(R.drawable.mire_test);
+        try {
+            Bitmap b = ((BitmapDrawable) image).getBitmap();
+            Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixelSizeIcon, pixelSizeIcon, false);
+            draw =new BitmapDrawable(mC.getResources(), bitmapResized);
+        } catch (Exception e) {
+            Bitmap b = ((BitmapDrawable) draw).getBitmap();
+            Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixelSizeIcon, pixelSizeIcon, false);
+            draw =new BitmapDrawable(mC.getResources(), bitmapResized);
+            e.printStackTrace();
+        }
+        return draw;
     }
 
     public Drawable resize(Context mC, int imageId, int pixel_size_icon) {
-        Drawable image = mC.getDrawable(imageId);
-        Bitmap b = ((BitmapDrawable) image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixel_size_icon, pixel_size_icon, false);
-        return new BitmapDrawable(mC.getResources(), bitmapResized);
+        Drawable image = mC.getDrawable(R.drawable.mire_test);
+        try {
+            image = mC.getDrawable(imageId);
+            Bitmap b = ((BitmapDrawable) image).getBitmap();
+            Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixel_size_icon, pixel_size_icon, false);
+            image = new BitmapDrawable(mC.getResources(), bitmapResized);
+        } catch (Exception e) {
+            Bitmap b = ((BitmapDrawable) image).getBitmap();
+            Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixel_size_icon, pixel_size_icon, false);
+            image = new BitmapDrawable(mC.getResources(), bitmapResized);
+            e.printStackTrace();
+        }
+        return image;
     }
 
 
