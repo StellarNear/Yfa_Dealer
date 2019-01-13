@@ -178,6 +178,10 @@ public class Spell {
         return this.perfect;
     }
 
+    public String getPerfectMetaId() {
+        return perfectMetaId;
+    }
+
     public ArcaneConversion getConversion(){
         return this.conversion;
     }
@@ -230,8 +234,8 @@ public class Spell {
         if(!rangesAccepted.contains(this.range) && metaId.equalsIgnoreCase("meta_range")){
             check.setEnabled(false);
         }
-        List<String> durationAccepted = Arrays.asList("instant","permanente");
-        if(!durationAccepted.contains(this.duration) && metaId.equalsIgnoreCase("meta_duration")){
+        List<String> durationDisable = Arrays.asList("instant","permanente");
+        if(durationDisable.contains(this.duration) && metaId.equalsIgnoreCase("meta_duration")){
             check.setEnabled(false);
         }
         if(!this.cast_time.equalsIgnoreCase("simple") && metaId.equalsIgnoreCase("meta_quicken")){
@@ -257,6 +261,7 @@ public class Spell {
                                             perfectMetaId = metaId;
                                             check.setClickable(false);
                                             perfect = false;
+                                            metaList.getMetaByID(metaId).getmListener().onEvent();
                                         }
                                     })
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {

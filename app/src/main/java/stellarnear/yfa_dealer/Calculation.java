@@ -110,7 +110,7 @@ public class Calculation {
                 if(!spell.getConversion().getArcaneId().contains(meta.getId())){
                     val += meta.getUprank();
                 }
-            } else {
+            } else if(!spell.getPerfectMetaId().equalsIgnoreCase(meta.getId())){ //si la meta est pas gratuite pour un sort parfait
                 val += meta.getUprank()*meta.getnCast();
             }
         }

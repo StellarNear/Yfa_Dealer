@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v7.0"</string>
+    <string name="version">"v7.0a"</string>
     <string name="time_spend">114h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V7.0a
+-Correctif Nuées de météore en feu
+-Correctif perfection magique sur métamagie décompté du rang
+-Correctif Sorts mythiques sans dégats
+-Correctif condition d'activation de la métamagie extension de durée
+-Amélioration graphique sur l'affichage du titre du sort qui pouvais etre superposé à la conversion arcanique
+-Ajout du clic sur le nom du sort pour afficher sa description
+----------------------------------------------------------------------------------
 Patch note V7.0
 -Gestion des jets de contact à distance et corps à corps
 -Gestion d'un sort Coup au but présent !

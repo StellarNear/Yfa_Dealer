@@ -62,8 +62,20 @@ public class SpellProfileFactory {
     }
 
     public void refreshProfile(){
-
         ((TextView)profile.findViewById(R.id.spell_name)).setText(spell.getName());
+        ((TextView)profile.findViewById(R.id.spell_name)).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView)profile.findViewById(R.id.description)).setSelected(true);
+            }
+        }, 1500);
+        ((TextView)profile.findViewById(R.id.spell_name)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tools.customToast(mC,spell.getDescr(),"center");
+            }
+        });
+
         testSpellForColorTitle();
 
         ((TextView)profile.findViewById(R.id.current_rank)).setText("(rang : "+calculation.currentRank(spell)+")");

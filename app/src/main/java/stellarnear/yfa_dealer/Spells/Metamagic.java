@@ -126,6 +126,10 @@ public class Metamagic {
         void onEvent();
     }
 
+    public OnRefreshEventListener getmListener() {
+        return mListener;
+    }
+
     public void setRefreshEventListener(OnRefreshEventListener eventListener) {
         mListener = eventListener;
     }
