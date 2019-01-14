@@ -292,11 +292,16 @@ public class MainActivity extends AppCompatActivity {
                                                 .setIcon(android.R.drawable.ic_menu_help)
                                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int whichButton) {
-
                                                         if(spell.getNSubSpell()>0){
+                                                            Spell previousSpellToBind=null;
                                                             for (int i=1;i<=spell.getNSubSpell();i++){
-                                                                Spell subSpellN=new Spell(listAllMythicSpell.getSpellByID(spell.getID()+"_sub"));
+                                                                Spell subSpellN=new Spell(listAllSpell.getSpellByID(spell.getID()+"_sub"));
                                                                 subSpellN.setSubName(i);
+
+                                                                if(previousSpellToBind!=null){
+                                                                    subSpellN.bindTo(previousSpellToBind);
+                                                                }
+                                                                previousSpellToBind=subSpellN;
                                                                 selectedSpells.add(subSpellN);
                                                             }
                                                         } else {
