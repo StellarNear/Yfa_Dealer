@@ -52,7 +52,12 @@ public class Resource {
     }
 
     public void earn(Integer gain){
-        this.current+=gain;
+        if(this.current+gain >= this.max){
+            this.current=this.max;
+        } else {
+            this.current+=gain;
+        }
+        saveCurrentToSettings();
     }
 
     public void resetCurrent() {

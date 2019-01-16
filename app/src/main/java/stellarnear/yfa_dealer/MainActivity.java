@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                     GradientDrawable.Orientation.LEFT_RIGHT,
                     new int[] {0xFFD8D8D8,0xFFFFFFFF});
             side.setBackground(gd_side);
-            TextView side_txt=new TextView(this);
+            final TextView side_txt=new TextView(this);
             side_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             side_txt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
 
@@ -190,17 +191,14 @@ public class MainActivity extends AppCompatActivity {
                                 .setIcon(android.R.drawable.ic_menu_help)
                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Arcane libre de rang " + rank + " lancé.", Toast.LENGTH_SHORT);
-                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                        toast.show();
 
-                                        yfa.castSpell(rank);
-                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        Snackbar.make(side_txt,"Arcane libre de rang " + rank + " lancé.", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
 
                                         yfa.getAllResources().getResource("mythic_points").spend(1);
-                                        Toast toast2 = Toast.makeText(getApplicationContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
-                                        toast2.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                        toast2.show();
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                        toast.show();
                                     }
                                 })
                                 .setNegativeButton("non", new DialogInterface.OnClickListener() {

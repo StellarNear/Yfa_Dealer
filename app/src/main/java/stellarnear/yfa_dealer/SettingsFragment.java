@@ -1,6 +1,7 @@
 package stellarnear.yfa_dealer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import stellarnear.yfa_dealer.SettingsFragments.PrefAllInventoryFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefInfoScreenFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefResetScreenFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefSleepScreenFragment;
+import stellarnear.yfa_dealer.SettingsFragments.PrefSpellgemScreenFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefXpFragment;
 
 public class SettingsFragment extends PreferenceFragment {
@@ -42,6 +44,7 @@ public class SettingsFragment extends PreferenceFragment {
     private PrefResetScreenFragment prefResetScreenFragment;
     private PrefSleepScreenFragment prefSleepScreenFragment;
     private PrefInfoScreenFragment prefInfoScreenFragment;
+    private PrefSpellgemScreenFragment prefSpellgemScreenFragment;
     private Perso yfa = MainActivity.yfa;
 
     @Override
@@ -65,6 +68,7 @@ public class SettingsFragment extends PreferenceFragment {
         this.prefResetScreenFragment = new PrefResetScreenFragment(mA,mC);
         this.prefSleepScreenFragment = new PrefSleepScreenFragment(mA,mC);
         this.prefInfoScreenFragment=new PrefInfoScreenFragment(mA,mC);
+        this.prefSpellgemScreenFragment=new PrefSpellgemScreenFragment(mA,mC);
     }
 
     // will be called by SettingsActivity (Host Activity)
@@ -209,7 +213,7 @@ public class SettingsFragment extends PreferenceFragment {
                 break;
             case "spend_myth_point":
                 if( yfa.getResourceValue("mythic_points")>0) {
-                    new android.support.v7.app.AlertDialog.Builder(mC)
+                    new AlertDialog.Builder(mC)
                             .setTitle("Demande de confirmation")
                             .setMessage("Confirmes-tu la dépense d'un point mythique ?")
                             .setIcon(android.R.drawable.ic_menu_help)
@@ -223,6 +227,9 @@ public class SettingsFragment extends PreferenceFragment {
                 } else {
                     tools.customToast(mC,"Tu n'as plus de point mythique","center");
                 }
+                break;
+            case "spellgem":
+                prefSpellgemScreenFragment.showSpellgem();
                 break;
         }
     }

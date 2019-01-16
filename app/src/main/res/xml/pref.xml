@@ -37,5 +37,10 @@
         android:title="Repos"
         android:summary="Une bonne nuit de sommeil"/>
 
+    <PreferenceScreen
+        android:key="spellgem"
+        android:icon="@drawable/ic_checkered_diamond"
+        android:title="Recharge de sorts"
+        android:summary="Recharger des utilisations de sortilèges"/>
 
 </PreferenceScreen>

@@ -50,7 +50,7 @@ public class PrefXpFragment {
 
         settings.edit().putString("previous_level", previousLvlXp.toString()).apply();
         settings.edit().putString("next_level", nextLvlXp.toString()).apply();
-        settings.edit().putString("ability_lvl", String.valueOf(newLvl)).apply();
+        settings.edit().putString("nls_val", String.valueOf(newLvl)).apply();
 
         if (currentLvl != newLvl) {
             tools.playVideo(mA, mC, "/raw/saiyan");
