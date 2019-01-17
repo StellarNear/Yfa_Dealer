@@ -100,7 +100,8 @@ public class SpellCastActivity extends AppCompatActivity {
     }
 
     private void refreshRound() {
-        round.setText("["+calculation.calcRounds(getApplicationContext(),selected_spells)+" rounds]");
+        int nRound = calculation.calcRounds(getApplicationContext(),selected_spells);
+        round.setText("["+nRound+" round"+(nRound>1 ? "s":"")+"]");
     }
 }
 

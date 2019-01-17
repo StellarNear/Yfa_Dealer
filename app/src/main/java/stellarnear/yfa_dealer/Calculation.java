@@ -147,85 +147,92 @@ public class Calculation {
     }
 
     public int calcRounds(Context mC,SpellList spellList) {
-        int sum_action = 0;
-        int n_convert = 0;
-        int n_complexe = 0;
-        int n_simple = 0;
-        int n_rapide = 0;
-        int n_spells = 0;
-        int n_round = 0;
+        int sumAction = 0;
+        int nConvert = 0;
+        int nComplexe = 0;
+        int nSimple = 0;
+        int nRapide = 0;
+        int nSpells = 0;
+        int nRound = 0;
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         Boolean multicast = settings.getBoolean("multispell_switch", mC.getResources().getBoolean(R.bool.multispell_switch_def));
         if (multicast) {
             for (Spell spell : spellList.asList()) {
-                n_spells += 1;
+                nSpells += 1;
                 switch (getCastTimeTxt(spell)) {
                     case "complexe":
-                        n_complexe += 1;
+                        nComplexe += 1;
                         break;
                     case "simple":
-                        sum_action += 4;
-                        n_simple += 1;
+                        sumAction += 4;
+                        nSimple += 1;
                         break;
                     case "rapide":
-                        sum_action += 1;
-                        n_rapide += 1;
+                        sumAction += 1;
+                        nRapide += 1;
+                        break;
+                    default:
+                        nComplexe+=tools.toInt(getCastTimeTxt(spell).replace("min",""))*60/6;  //converti le nombre de minute en round
                         break;
                 }
                 if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
-                    n_convert += 1;
+                    nConvert += 1;
                 }
             }
-            n_round = (int) (Math.ceil(sum_action / 6.0));
-            n_round += n_complexe;
-            if (n_convert > n_round) {
-                n_round = n_convert;
+            nRound = (int) (Math.ceil(sumAction / 6.0));
+            nRound += nComplexe;
+            if (nConvert > nRound) {
+                nRound = nConvert;
             }
-            if ((int) (Math.ceil(n_rapide / 3.0)) > n_round) {
-                n_round = (int) (Math.ceil(n_rapide / 3.0));
+            if ((int) (Math.ceil(nRapide / 3.0)) > nRound) {
+                nRound = (int) (Math.ceil(nRapide / 3.0));
             }
-            if (n_simple > n_round) {
-                n_round = n_simple;
+            if (nSimple > nRound) {
+                nRound = nSimple;
             }
-            if ((int) (Math.ceil(n_spells / 3.0)) > n_round) {
-                n_round = (int) (Math.ceil(n_spells / 3.0));
+            if ((int) (Math.ceil(nSpells / 3.0)) > nRound) {
+                nRound = (int) (Math.ceil(nSpells / 3.0));
             }
         } else {
             for (Spell spell : spellList.asList()) {
-                n_spells += 1;
+                nSpells += 1;
                 switch (getCastTimeTxt(spell)) {
                     case "complexe":
-                        n_complexe += 1;
+                        nComplexe += 1;
                         break;
                     case "simple":
-                        sum_action += 2;
-                        n_simple += 1;
+                        sumAction += 2;
+                        nSimple += 1;
                         break;
                     case "rapide":
-                        sum_action += 1;
-                        n_rapide += 1;
+                        sumAction += 1;
+                        nRapide += 1;
+                        break;
+                    default:
+                        nComplexe+=tools.toInt(getCastTimeTxt(spell).replace("min",""))*60/6;  //converti le nombre de minute en round
                         break;
                 }
                 if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
-                    n_convert += 1;
+                    nConvert += 1;
                 }
             }
-            n_round = (int) (Math.ceil(sum_action / 3.0));
-            n_round += n_complexe;
-            if (n_convert > n_round) {
-                n_round = n_convert;
+            nRound = (int) (Math.ceil(sumAction / 3.0));
+            nRound += nComplexe;
+            if (nConvert > nRound) {
+                nRound = nConvert;
             }
-            if ((int) (Math.ceil(n_rapide / 2.0)) > n_round) {
-                n_round = (int) (Math.ceil(n_rapide / 2.0));
+            if ((int) (Math.ceil(nRapide / 2.0)) > nRound) {
+                nRound = (int) (Math.ceil(nRapide / 2.0));
             }
-            if (n_simple > n_round) {
-                n_round = n_simple;
+            if (nSimple > nRound) {
+                nRound = nSimple;
             }
-            if ((int) (Math.ceil(n_spells / 2.0)) > n_round) {
-                n_round = (int) (Math.ceil(n_spells / 2.0));
+            if ((int) (Math.ceil(nSpells / 2.0)) > nRound) {
+                nRound = (int) (Math.ceil(nSpells / 2.0));
             }
         }
-        return n_round;
+
+        return nRound;
     }
     public String getCastTimeTxt(Spell spell) {
         String val=spell.getCast_time();

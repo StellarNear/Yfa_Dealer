@@ -7,6 +7,10 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V7.1a
+-Le calcul du nombre de round prend les sort ayant un grand temps de cast en compte
+-Et affichage du pluriel uniquement si nRound > 1 ...
+----------------------------------------------------------------------------------
 Patch note V7.1
 -Ajout d'un menu pour recharger les rangs de sorts individuellement ...
 -Optimisation du calcul d'xp du personnage (niveaux suivant et précédant automatiquement calculé)
