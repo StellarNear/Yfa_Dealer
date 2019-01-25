@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean shouldExecuteOnResume;
     private Targets targets;
     public static Perso yfa;
+    private Tools tools=new Tools();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         buildPage1();
 
         ImageButton fab = (ImageButton) findViewById(R.id.fab);
-
-        fab.setColorFilter(Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,12 +78,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton fabEquip = (ImageButton) findViewById(R.id.fabEquip);
-        fabEquip.setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
+
+        ((FrameLayout) findViewById(R.id.mythic_pts)).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                yfa.getInventory().showEquipment(MainActivity.this,getApplicationContext());
-            }});
+            public boolean onLongClick(View view) {
+                if( yfa.getResourceValue("mythic_points")>0) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Demande de confirmation")
+                            .setMessage("Confirmes-tu la dépense d'un point mythique ?")
+                            .setIcon(android.R.drawable.ic_menu_help)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    yfa.getAllResources().getResource("mythic_points").spend(1);
+                                    ((TextView) findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
+                                    tools.customToast(getApplicationContext(),"Il te reste "+yfa.getResourceValue("mythic_points")+" point(s) mythique(s)","center");
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null).show();
+                } else {
+                    tools.customToast(getApplicationContext(),"Tu n'as plus de point mythique","center");
+                }
+                return true;
+            }
+        });
     }
 
     @Override

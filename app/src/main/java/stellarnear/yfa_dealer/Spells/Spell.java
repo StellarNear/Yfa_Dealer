@@ -259,7 +259,7 @@ public class Spell {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             metaList.getMetaByID(metaId).active();
                                             perfectMetaId = metaId;
-                                            check.setClickable(false);
+                                            check.setEnabled(false);
                                             perfect = false;
                                             metaList.getMetaByID(metaId).getmListener().onEvent();
                                         }

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v7.1"</string>
-    <string name="time_spend">116h</string>
+    <string name="version">"v7.2"</string>
+    <string name="time_spend">118h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V7.2
+-Par manque d'utilisation le raccourci d'acces au menu d'équipement a été supprimé
+-A sa place il y a maintenant un compteur du nombre de points myhtiques restants
+-En raccourci il est possible en appuyant longuement sur ce compteur de faire les depenses de points mythiques hors sorts
+-Diverse améliorations graphiques de l'affichage de dégâts et de la gestion des checkboxes de métamagie et de perfection magique
+----------------------------------------------------------------------------------
 Patch note V7.1a
 -Le calcul du nombre de round prend les sort ayant un grand temps de cast en compte
 -Et affichage du pluriel uniquement si nRound > 1 ...

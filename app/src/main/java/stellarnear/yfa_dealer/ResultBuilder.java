@@ -51,7 +51,7 @@ public class ResultBuilder {
             txt_view.setText("Sortilège " + spell.getName() + " lancé !");
             txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             resultTemplate.addView(txt_view);
-        } else if (spell.getMetaList().metaIdIsActive("meta_perfect") || spell.getMetaList().metaIdIsActive("meta_max")) {
+        } else if (spell.getMetaList().metaIdIsActive("meta_perfect") || spell.getMetaList().metaIdIsActive("meta_max") || !displayedText.damageTxt(spell).contains("d") ) {
             resultTemplate.removeAllViews();
             TextView txt_view = new TextView(mC);
             txt_view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -61,13 +61,17 @@ public class ResultBuilder {
                 Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
                 explo.mutate().setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
                 txt_view.setCompoundDrawablesWithIntrinsicBounds(explo,null,explo,null);
-                txt_view.setText(2*tools.toInt(displayedText.damageTxt(spell))+" dégâts !");
+                int sumDmg = 2*tools.toInt(displayedText.damageTxt(spell));
+                checkHighScore(sumDmg);
+                txt_view.setText(sumDmg+" dégâts !");
             }else{
-                txt_view.setText(displayedText.damageTxt(spell)+" dégâts !");
+                int sumDmg = tools.toInt(displayedText.damageTxt(spell));
+                checkHighScore(sumDmg);
+                txt_view.setText(sumDmg+" dégâts !");
             }
             resultTemplate.addView(txt_view);
             txt_view.setTextColor(spellColorId);
-        }else {
+        } else {
             final DiceList diceList = new DiceList();
             List<Integer> listDiceAllowed = Arrays.asList(3,4,6,8);
             if (listDiceAllowed.contains(calculation.diceType(spell))){
@@ -82,13 +86,7 @@ public class ResultBuilder {
             }
 
             ((TextView)resultTemplate.findViewById(R.id.highscore)).setText("(record:"+String.valueOf(spell.getHighscore())+")");
-
-            if(spell.isHighscore(diceList.getSum())){
-                Tools tools = new Tools();
-                tools.playVideo(mA,mC,"/raw/explosion");
-                tools.customToast(mC, String.valueOf(diceList.getSum()) + " dégats !\nC'est un nouveau record !", "center");
-            }
-
+            checkHighScore(diceList.getSum());
 
             if(spell.isCrit()){
                 Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
@@ -116,6 +114,14 @@ public class ResultBuilder {
         layout.addView(resultTemplate);
     }
 
+    private void checkHighScore(int sumDmg) {
+        if(spell.isHighscore(sumDmg)){
+            Tools tools = new Tools();
+            tools.playVideo(mA,mC,"/raw/explosion");
+            tools.customToast(mC, String.valueOf(sumDmg) + " dégats !\nC'est un nouveau record !", "center");
+        }
+    }
+
     private void setSpellColor() {
         switch (spell.getDmg_type()){
             case "froid":
@@ -132,6 +138,10 @@ public class ResultBuilder {
 
             case "acide":
                 spellColorId =mC.getColor(R.color.acide_dark);
+                break;
+
+            default:
+                spellColorId=mC.getColor(R.color.aucun_dark);
                 break;
         }
 
