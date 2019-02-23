@@ -190,17 +190,6 @@ public class SettingsFragment extends PreferenceFragment {
                     }
                 });
                 break;
-            case "current_xp":
-                preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object o) {
-                        settings.edit().putString(preference.getKey(), o.toString()).apply();
-                        prefXpFragment.checkLevel(tools.toBigInt(o.toString()));
-                        navigate();
-                        return true;
-                    }
-                });
-                break;
             case "create_bag_item":
                 prefAllInventoryFragment.createBagItem();
                 break;
@@ -208,7 +197,7 @@ public class SettingsFragment extends PreferenceFragment {
                 prefAllInventoryFragment.createEquipment();
                 break;
             case "reset_temp":
-                resetTemp();
+                yfa.resetTemp();
                 navigate();
                 break;
             case "spend_myth_point":
@@ -239,13 +228,5 @@ public class SettingsFragment extends PreferenceFragment {
 
         // Second level PreferenceScreens
         if (key.equals("second_level_key_0")) {        // do something...    }       */
-
-    private void resetTemp() {
-        List<String> allTempList = Arrays.asList("NLS_bonus");
-        for (String temp : allTempList) {
-            settings.edit().putString(temp, "0").apply();
-        }
-        settings.edit().putBoolean("karma_switch", false).apply();
-    }
 
 }

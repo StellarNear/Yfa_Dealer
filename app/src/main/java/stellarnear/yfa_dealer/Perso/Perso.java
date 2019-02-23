@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Arrays;
+import java.util.List;
+
 import stellarnear.yfa_dealer.Calculation;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Spells.Spell;
@@ -93,4 +96,22 @@ public class Perso {
     }
 
 
+    public int getBaseAtk() {
+        return tools.toInt(prefs.getString("base_atk",String.valueOf(mC.getResources().getInteger(R.integer.base_atk_def))));
+    }
+
+    public int getBonusAtk() {
+        int epic= tools.toInt(prefs.getString("epic_atk_bonus",String.valueOf(mC.getResources().getInteger(R.integer.epic_atk_bonus_def))));
+        int bonus = tools.toInt(prefs.getString("bonus_atk",String.valueOf(mC.getResources().getInteger(R.integer.bonus_atk_def))));
+        int bonusTemp= tools.toInt(prefs.getString("bonus_atk_temp",String.valueOf(0)));
+        return epic+bonus+bonusTemp;
+    }
+
+    public void resetTemp() {
+        List<String> allTempList = Arrays.asList("NLS_bonus","bonus_atk_temp");
+        for (String temp : allTempList) {
+            prefs.edit().putString(temp, "0").apply();
+        }
+        prefs.edit().putBoolean("karma_switch", false).apply();
+    }
 }

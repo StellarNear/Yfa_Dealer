@@ -11,8 +11,11 @@
         android:title="Points d'experience actuels"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:selectable="false"
         android:inputType="number"
         android:summary="Valeur : %s xp"/>
+
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
     <EditTextPreference
         android:defaultValue="@integer/add_current_xp_def"
@@ -20,7 +23,7 @@
         android:title="Ajout d'expérience"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:inputType="number" />
+        android:inputType="number|numberSigned" />
 
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 

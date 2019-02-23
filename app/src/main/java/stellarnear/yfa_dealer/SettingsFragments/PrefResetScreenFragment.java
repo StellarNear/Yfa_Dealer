@@ -10,6 +10,9 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import java.util.Arrays;
+import java.util.List;
+
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
@@ -60,6 +63,7 @@ public class PrefResetScreenFragment {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
                 editor.commit();
+                yfa.resetTemp();
                 yfa.refresh();
                 yfa.getAllResources().sleepReset();
                 yfa.getInventory().resetInventory();
@@ -70,4 +74,6 @@ public class PrefResetScreenFragment {
             }
         }, time);
     }
+
+
 }

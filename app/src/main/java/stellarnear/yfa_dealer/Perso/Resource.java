@@ -61,7 +61,11 @@ public class Resource {
     }
 
     public void resetCurrent() {
-        this.current = this.max;
+        if(this.id.equalsIgnoreCase("true_strike")){
+            this.current = 0;
+        } else{
+            this.current = this.max;
+        }
         saveCurrentToSettings();
     }
 

@@ -26,6 +26,30 @@
         android:singleLine="true"
         android:summary="Valeur : +%s"/>
     <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@integer/base_atk_def"
+        android:key="base_atk"
+        android:inputType="number"
+        android:title="Bonus de base à l'attaque"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : +%s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@integer/bonus_atk_def"
+        android:key="bonus_atk"
+        android:inputType="number"
+        android:title="Bonus au jet d'attaque"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : +%s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
+        android:defaultValue="@integer/epic_atk_bonus_def"
+        android:key="epic_atk_bonus"
+        android:inputType="number"
+        android:title="Bonus épique à l'attaque"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : +%s"/>
+    <stellarnear.yfa_dealer.EditTextPreference
         android:defaultValue="@integer/force_def"
         android:key="force"
         android:inputType="number"

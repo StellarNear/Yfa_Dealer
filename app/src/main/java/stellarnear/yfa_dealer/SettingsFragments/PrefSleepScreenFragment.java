@@ -67,7 +67,7 @@ public class PrefSleepScreenFragment {
             public void run() {
                 yfa.refresh();
                 yfa.getAllResources().sleepReset();
-                resetTemp();
+                yfa.resetTemp();
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
                 Intent intent = new Intent(mA, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -86,7 +86,7 @@ public class PrefSleepScreenFragment {
             public void run() {
                 yfa.refresh();
                 yfa.getAllResources().halfSleepReset();
-                resetTemp();
+                yfa.resetTemp();
                 tools.customToast(mC, "Une journée sans sortilèges t'attends...", "center");
                 Intent intent = new Intent(mA, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -94,14 +94,4 @@ public class PrefSleepScreenFragment {
             }
         }, time);
     }
-
-    private void resetTemp() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-        List<String> allTempList = Arrays.asList("NLS_bonus");
-        for (String temp : allTempList) {
-            prefs.edit().putString(temp, "0").apply();
-        }
-        prefs.edit().putBoolean("karma_switch", false).apply();
-    }
-
 }

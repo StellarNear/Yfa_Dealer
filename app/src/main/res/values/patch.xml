@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v7.2"</string>
-    <string name="time_spend">118h</string>
+    <string name="version">"v7.3"</string>
+    <string name="time_spend">122h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V7.3
+-Ajout du bonus de base à l'attaque
+-Ajout du bonus bba temporaire
+-Fix de la detection des coups au but actif
+----------------------------------------------------------------------------------
 Patch note V7.2
 -Par manque d'utilisation le raccourci d'acces au menu d'équipement a été supprimé
 -A sa place il y a maintenant un compteur du nombre de points myhtiques restants

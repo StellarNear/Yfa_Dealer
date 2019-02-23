@@ -63,22 +63,28 @@ public class ContactAlertDialog {
         title.setSingleLine(false);
         title.setText(titleTxt);
 
-        String summaryDetail="";
 
 
-        sumScore= 0;
+
+        sumScore= yfa.getBaseAtk();
+        String summaryDetail="BBA (+"+String.valueOf(sumScore)+")";
+
+        if(yfa.getBonusAtk()>0){
+            sumScore+=yfa.getBonusAtk();
+            summaryDetail+=" (bonus +"+String.valueOf(yfa.getBonusAtk())+")";
+        }
         if(mode.equalsIgnoreCase("melee")){
             sumScore+=yfa.getStrMod();
-            summaryDetail="Bonus force ("+(yfa.getStrMod()>0?"+":"")+yfa.getStrMod()+")";
+            summaryDetail+="\nBonus force ("+(yfa.getStrMod()>0?"+":"")+yfa.getStrMod()+")";
         } else {
             sumScore+=yfa.getDexMod();
-            summaryDetail="Bonus dexterité ("+(yfa.getDexMod()>0?"+":"")+yfa.getDexMod()+")";
+            summaryDetail+="\nBonus dexterité ("+(yfa.getDexMod()>0?"+":"")+yfa.getDexMod()+")";
         }
         if(yfa.getResourceValue("true_strike")>0){
             sumScore+=20;
             summaryDetail+="\nCoup au But (+20)";
         }
-        String summaryTxt="Test contact : "+String.valueOf(sumScore);
+        String summaryTxt="Test contact : +"+String.valueOf(sumScore);
         TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
         summary.setText(summaryTxt);
 

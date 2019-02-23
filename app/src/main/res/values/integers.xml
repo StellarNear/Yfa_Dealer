@@ -32,7 +32,7 @@
     <integer name="custom_alert_long_duration_DEF">5000</integer>
 
     <integer name="nls_val_def">25</integer>
-    <integer name="current_xp_def">14535964</integer>
+    <integer name="current_xp_def">14995964</integer>
     <integer name="add_current_xp_def">0</integer>
     <integer name="add_gold_def">0</integer>
     <integer name="money_plat_def">20263</integer>
@@ -44,10 +44,14 @@
     <integer name="mythic_dice_def">6</integer>
 
     <integer name="charisme_def">14</integer>
+    <integer name="base_atk_def">10</integer>
+    <integer name="bonus_atk_def">2</integer>
+    <integer name="epic_atk_bonus_def">1</integer>
     <integer name="force_def">-1</integer>
     <integer name="dexterite_def">3</integer>
     <integer name="wedge_max_lvl_spell_def">7</integer>
     <integer name="percent_fullscreen_combat_launcher_dialog">95</integer>
+
 
 
 </resources>

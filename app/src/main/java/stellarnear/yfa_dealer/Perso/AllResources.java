@@ -79,7 +79,7 @@ public class AllResources {
             getResource("spell_conv_rank_"+rankConv).setMax(readResource("n_rank_"+rankConv+"_conv"));
         }
 
-        getResource("true_strike").setMax(0);
+        getResource("true_strike").setMax(99);
     }
 
     private void loadCurrent() {
@@ -130,5 +130,6 @@ public class AllResources {
 
     public void halfSleepReset() {
         getResource("mythic_points").resetCurrent();
+        getResource("true_strike").resetCurrent();
     }
 }
