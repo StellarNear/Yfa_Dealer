@@ -17,13 +17,12 @@
 
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
-    <EditTextPreference
-        android:defaultValue="@integer/add_current_xp_def"
+    <PreferenceScreen
         android:key="add_current_xp"
         android:title="Ajout d'expérience"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:inputType="number|numberSigned" />
+      />
 
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 

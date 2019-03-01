@@ -14,10 +14,12 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ContentFrameLayout;
+import android.text.InputType;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
@@ -176,19 +178,40 @@ public class SettingsFragment extends PreferenceFragment {
                 });
                 break;
             case "add_current_xp":
-                preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object o) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(mC);
+                final EditText edittext = new EditText(mA);
+                edittext.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+
+                alert.setMessage("Nombre de points d'experiences à ajouter");
+                alert.setTitle("Ajout d'experience");
+
+                alert.setView(edittext);
+                alert.setIcon(R.drawable.ic_upgrade);
+                alert.setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
                         BigInteger xp = tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def))));
-                        BigInteger addXp = tools.toBigInt(o.toString());
+                        BigInteger addXp = tools.toBigInt(edittext.getText().toString());
                         settings.edit().putString("current_xp", xp.add(addXp).toString()).apply();
-                        settings.edit().putString("add_current_xp", String.valueOf(0)).apply();
                         prefXpFragment.checkLevel(xp, addXp);
                         navigate();
-                        return true;
                     }
                 });
+
+                alert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // rien
+                    }
+                });
+                alert.show();
+                edittext.post(new Runnable() {
+                                  public void run() {
+                                      edittext.setFocusableInTouchMode(true);
+                                      edittext.requestFocusFromTouch();
+                                      InputMethodManager lManager = (InputMethodManager) mA.getSystemService(Context.INPUT_METHOD_SERVICE);
+                                      lManager.showSoftInput(edittext, InputMethodManager.SHOW_IMPLICIT);
+                                  }
+                              });
                 break;
             case "create_bag_item":
                 prefAllInventoryFragment.createBagItem();
