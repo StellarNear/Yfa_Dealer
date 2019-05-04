@@ -2,6 +2,17 @@
 <records>
 
     <spell>
+        <id>Immortalité</id>
+        <name>Immortalité (Mythique)</name>
+        <descr>Le personnage devient un point d’ancrage pour son âme et celles de ses alliés. La portée s’élève à 9 mètres et au lieu d’affecter une créature, le sort affecte tous les alliés situés dans une émanation de 9 mètres de rayon autour de lui.</descr>
+        <range>personelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <rank>4</rank>
+    </spell>
+
+    <spell>
         <id>Désintégration</id>
         <name>Désintégration (Mythique)</name>
         <descr>Les dégâts infligés s’élèvent à 3d6 points par niveau (60d6 maximum) et un malus d'1d4 points de Constitution. Une créature qui réussit son jet de sauvegarde subit 5d8 points de dégâts plus un affaiblissement temporaire de 1 point de Constitution.</descr>

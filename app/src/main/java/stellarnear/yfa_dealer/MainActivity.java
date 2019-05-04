@@ -284,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
                 setCheckBoxColor(checkbox,spell);
                 Tiers.addView(checkbox);
                 if (listAllMythicSpell.getSpellByID(spell.getName())!=null){
@@ -351,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         }
                     });
-                    //map_spell_check.put(listAllMythicSpell.getSpellByName(spell.getName()),checkbox);
                 } else {
                     checkbox.setText(spell.getName());
                     checkbox.setOnTouchListener(new View.OnTouchListener() {
@@ -371,7 +369,6 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         }
                     });
-                    //map_spell_check.put(spell,checkbox);
                 }
             }
             View h_sep2 = new View(this);

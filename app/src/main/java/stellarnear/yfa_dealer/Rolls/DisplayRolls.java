@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import stellarnear.yfa_dealer.CustomAlertDialog;
@@ -42,11 +43,19 @@ public class DisplayRolls {
             if(count>=5){
                 line = new LinearLayout(mC);
                 line.setOrientation(LinearLayout.HORIZONTAL);
+                ViewGroup parentImg = (ViewGroup) line.getParent();
+                if (parentImg != null) {
+                    parentImg.removeView(line);
+                }
                 scrollLinear.addView(line);
                 count=0;
             }
-                line.addView(dice.getImg());
-                count++;
+            ViewGroup parentImg = (ViewGroup) dice.getImg().getParent();
+            if (parentImg != null) {
+                parentImg.removeView(dice.getImg());
+            }
+            line.addView(dice.getImg());
+            count++;
         }
     }
 

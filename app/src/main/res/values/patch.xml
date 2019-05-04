@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v7.3"</string>
-    <string name="time_spend">123h</string>
+    <string name="version">"v8.0"</string>
+    <string name="time_spend">129h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V8.0
+-Ajout du changement d'element sur les sorts!
+-Le changement d'elements d'un sort communique bien l'élément aux sous projectiles
+-Transition entre les panneaux Central, conversions Elémentaire et Arcanique
+-Maj des valeurs par défaut pour le niveau 26
+-Correction de bugs sur les conversions quand on ferme le panneau puis en qu'on y revient
+-Ajout du nouveau sort : Immortalité et version Mythique
+----------------------------------------------------------------------------------
 Patch note V7.3
 -Ajout du bonus de base à l'attaque
 -Ajout du bonus bba temporaire

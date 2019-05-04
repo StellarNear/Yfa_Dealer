@@ -436,7 +436,10 @@ public class ConvertView extends AppCompatActivity {
             boolean firstMeta=true;
             for(final Metamagic meta : metaListAvailable.asList()) {
                 final CheckBox checkbox = spell.getCheckboxeForMetaId(mA,mC,meta.getId(),true);
-                if(checkbox.isEnabled()){checkbox.setButtonTintList(colorStateList);}
+                checkbox.setButtonTintList(colorStateList);
+                checkbox.setEnabled(true);
+                checkbox.setChecked(false);
+                checkbox.setTextColor(Color.DKGRAY);
                 if(!firstMeta){
                     addVsep(grid2, 4, Color.GRAY);
                 }
@@ -545,6 +548,10 @@ public class ConvertView extends AppCompatActivity {
                 spell.getMetaList().activateFromConversion(currentMetaSelected.getId());
             }
         }
+        convert_slots.removeAllViews();
+        convert_choices.removeAllViews();
+        convert_result.removeAllViews();
+        convert_confirm.removeAllViews();
     }
 
     private void addVsep(LinearLayout lay, int e, int Color) {

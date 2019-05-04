@@ -52,6 +52,13 @@
                     android:textSize="14sp" />
             </LinearLayout>
             <ImageView
+                android:id="@+id/button_change_element"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/general_margin"
+                android:src="@drawable/ic_concentration_orb"/>
+            <ImageView
                 android:id="@+id/button_conversion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -340,7 +340,17 @@
         <save_type>vig[annule]</save_type>
         <rank>3</rank>
     </spell>
-    
+
+    <spell>
+        <name>Immortalité</name>
+        <descr>Empêche la cible de mourir en subissant des pertes de points de vie. Ce sort n’empêche pas la mort infligée par des sources autres que celles qui infligent des dégâts en termes de points de vie. Les sorts qui soignent les points de dégâts affectent normalement la créature.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <rank>4</rank>
+    </spell>
+
      <spell>
         <name>Invisibilité suprême</name>
         <descr>La créature touchée devient invisible. Une créature invisible et immobile bénéficie d’un bonus de +40 aux tests de Discrétion. Ce bonus est réduit à +20 si la créature se déplace.</descr>

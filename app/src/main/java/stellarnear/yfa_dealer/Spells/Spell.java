@@ -25,7 +25,7 @@ public class Spell {
     private Double  n_dice_per_lvl;
     private int     cap_dice;
 
-    private String  dmg_type;
+    private DmgType  dmg_type;
     private String  range;
     private String contact;
     private String area;
@@ -94,7 +94,7 @@ public class Spell {
         this.dice_type=dice_type;
         this.n_dice_per_lvl=n_dice_per_lvl;
         this.cap_dice=cap_dice;
-        this.dmg_type=dmg_type;
+        this.dmg_type=new DmgType(dmg_type);
         this.range=range;
         this.contact=contact;
         this.area=area;
@@ -160,7 +160,7 @@ public class Spell {
         return this.save_type;
     }
     public String  getDmg_type(){
-        return this.dmg_type;
+        return dmg_type.getDmgType();
     }
     public String getRange(){
         return this.range;
@@ -221,7 +221,7 @@ public class Spell {
             metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
         }
 
-        if(this.dmg_type.equalsIgnoreCase("") && metaId.equalsIgnoreCase("meta_enhance")){
+        if(this.dmg_type.getDmgType().equalsIgnoreCase("") && metaId.equalsIgnoreCase("meta_enhance")){
             check.setEnabled(false);
         }
 
@@ -287,11 +287,21 @@ public class Spell {
         this.name=this.name+" "+i;
     }
 
+    public void setDmgType(String newElement){
+        this.dmg_type.setDmgType(newElement);
+        this.dmg_type.setConverted();
+    }
+
+    public boolean elementIsConverted() {
+        return dmg_type.isConverted();
+    }
+
     public boolean isBinded() {
         return binded;
     }
 
     public void bindTo(Spell previousSpellToBind) {  //pour les sub spell pour que les meta et conversion s'applique partout
+        this.dmg_type=previousSpellToBind.dmg_type;
         this.metaList=previousSpellToBind.metaList;
         this.conversion=previousSpellToBind.conversion;
         this.cast =previousSpellToBind.cast;
@@ -306,7 +316,6 @@ public class Spell {
         return cast.isCast();
     }
 
-
     public void makeCrit() {
         this.crit=true;
     }
@@ -314,4 +323,5 @@ public class Spell {
     public boolean isCrit(){
         return this.crit;
     }
+
 }

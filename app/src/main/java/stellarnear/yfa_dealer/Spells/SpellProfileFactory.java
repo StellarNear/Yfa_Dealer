@@ -20,8 +20,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import java.util.Arrays;
+import java.util.List;
+
 import stellarnear.yfa_dealer.Calculation;
 import stellarnear.yfa_dealer.ContactAlertDialog;
+import stellarnear.yfa_dealer.ConvertElementView;
 import stellarnear.yfa_dealer.ConvertView;
 import stellarnear.yfa_dealer.CustomAlertDialog;
 import stellarnear.yfa_dealer.DisplayedText;
@@ -62,6 +66,7 @@ public class SpellProfileFactory {
     }
 
     public void refreshProfile(){
+         //on notifie à la liste general qu'un sort a du refresh
         ((TextView)profile.findViewById(R.id.spell_name)).setText(spell.getName());
         ((TextView)profile.findViewById(R.id.spell_name)).postDelayed(new Runnable() {
             @Override
@@ -142,15 +147,39 @@ public class SpellProfileFactory {
             @Override
             public void onEvent() {
                 if(mListener!=null){mListener.onEvent();}
+                ((ImageView)profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
                 ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                 ((LinearLayout)profile.findViewById(R.id.second_panel)).removeAllViews();
                 new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.second_panel));
-                flipView();
+                flipViewRight();
             }
         });
 
         panel = ((ViewSwitcher)profile.findViewById(R.id.view_switcher));
+        // conversion element
+        List<String> listElement = Arrays.asList("froid","feu","foudre","acide");
+        if(!listElement.contains(spell.getDmg_type()) || spell.elementIsConverted() || spell.isCast()){
+            ((ImageView)profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
+        } else {
+            ((ImageView) profile.findViewById(R.id.button_change_element)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ConvertElementView convertElementView = new ConvertElementView(panel, spell, mC, mA);
+                    flipViewLeft();
+                    convertElementView.setValidationEventListener(new ConvertElementView.OnValidationEventListener() {
+                        @Override
+                        public void onEvent() {
+                            refreshProfile();
+                            if(mListener!=null){mListener.onEvent();}
+                            flipViewLeft();
+                            ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
+                        }
+                    });
+                }
+            });
+        }
 
+        // conversion arcanique
         if(!spell.getConversion().getArcaneId().equalsIgnoreCase("") || spell.isCast()){
             ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
         } else {
@@ -158,15 +187,14 @@ public class SpellProfileFactory {
                 @Override
                 public void onClick(View view) {
                     ConvertView convertView = new ConvertView(panel, spell, mC, mA);
-                    flipView();
+                    flipViewRight();
                     convertView.setValidationEventListener(new ConvertView.OnValidationEventListener() {
                         @Override
                         public void onEvent() {
                             refreshProfile();
-                            flipView();
                             if(mListener!=null){mListener.onEvent();}
+                            flipViewRight();
                             ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
-                            ((LinearLayout) profile.findViewById(R.id.second_panel)).removeAllViews();
                         }
                     });
                 }
@@ -174,29 +202,48 @@ public class SpellProfileFactory {
         }
     }
 
-    private void flipView() {
-        if(!convDisplayed){flipNext();}else {flipPrevious();}
+    private void flipViewLeft() {
+        if(!convDisplayed){
+            convDisplayed=true;
+            panel.clearAnimation();
+            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
+            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
+            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
+            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
+            panel.setInAnimation(in);  panel.setOutAnimation(out);
+            panel.showNext();
+        }else {
+            convDisplayed=false;
+            panel.clearAnimation();
+            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
+            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
+            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
+            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
+            panel.setInAnimation(in);  panel.setOutAnimation(out);
+            panel.showPrevious();
+        }
     }
 
-    private void flipNext() {
-        convDisplayed=true;
-        panel.clearAnimation();
-        ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
-        ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
-        Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
-        Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
-        panel.setInAnimation(in);  panel.setOutAnimation(out);
-        panel.showNext();
-    }
-    private void flipPrevious() {
-        convDisplayed=false;
-        panel.clearAnimation();
-        ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
-        ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
-        Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
-        Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
-        panel.setInAnimation(in);  panel.setOutAnimation(out);
-        panel.showPrevious();
+    private void flipViewRight() {
+        if(!convDisplayed){
+            convDisplayed=true;
+            panel.clearAnimation();
+            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
+            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
+            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
+            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
+            panel.setInAnimation(in);  panel.setOutAnimation(out);
+            panel.showNext();
+        }else {
+            convDisplayed=false;
+            panel.clearAnimation();
+            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
+            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
+            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
+            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
+            panel.setInAnimation(in);  panel.setOutAnimation(out);
+            panel.showPrevious();
+        }
     }
 
     private void testSpellForColorTitle() {
