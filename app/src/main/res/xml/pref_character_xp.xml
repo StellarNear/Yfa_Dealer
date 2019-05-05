@@ -32,7 +32,7 @@
 
     <stellarnear.yfa_dealer.EditTextPreference
         android:defaultValue="@integer/nls_val_def"
-        android:key="ability_lvl"
+        android:key="nls_val"
         android:selectable="false"
         android:title="Niveau d'Yfamura"
         android:singleLine="true"

@@ -7,8 +7,11 @@
         android:title="Niveau lanceur de sort"
         android:selectAllOnFocus="true"
         android:inputType="number"
+        android:selectable="false"
         android:singleLine="true"
         android:summary="Valeur : %s"/>
+
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
     <SwitchPreference
         android:defaultValue="true"
