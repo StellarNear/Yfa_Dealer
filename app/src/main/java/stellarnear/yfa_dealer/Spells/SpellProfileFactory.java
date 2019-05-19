@@ -43,7 +43,7 @@ public class SpellProfileFactory {
     private Spell spell;
     private View profile;
     private ViewSwitcher panel;
-    private boolean convDisplayed=false;
+    private String currentPanelDisplayed="center";
     private CustomAlertDialog metaPopup;
 
     private Calculation calculation=new Calculation();
@@ -66,6 +66,7 @@ public class SpellProfileFactory {
     }
 
     public void refreshProfile(){
+        if(!currentPanelDisplayed.equalsIgnoreCase("center")){movePanelTo("center");}
          //on notifie à la liste general qu'un sort a du refresh
         ((TextView)profile.findViewById(R.id.spell_name)).setText(spell.getName());
         ((TextView)profile.findViewById(R.id.spell_name)).postDelayed(new Runnable() {
@@ -151,7 +152,7 @@ public class SpellProfileFactory {
                 ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                 ((LinearLayout)profile.findViewById(R.id.second_panel)).removeAllViews();
                 new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.second_panel));
-                flipViewRight();
+                movePanelTo("right");
             }
         });
 
@@ -165,13 +166,13 @@ public class SpellProfileFactory {
                 @Override
                 public void onClick(View view) {
                     ConvertElementView convertElementView = new ConvertElementView(panel, spell, mC, mA);
-                    flipViewLeft();
+                    if(currentPanelDisplayed.equalsIgnoreCase("center")){movePanelTo("left");}else{movePanelTo("center");}
                     convertElementView.setValidationEventListener(new ConvertElementView.OnValidationEventListener() {
                         @Override
                         public void onEvent() {
+                            movePanelTo("center");
                             refreshProfile();
                             if(mListener!=null){mListener.onEvent();}
-                            flipViewLeft();
                             ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
                         }
                     });
@@ -187,13 +188,13 @@ public class SpellProfileFactory {
                 @Override
                 public void onClick(View view) {
                     ConvertView convertView = new ConvertView(panel, spell, mC, mA);
-                    flipViewRight();
+                    if(currentPanelDisplayed.equalsIgnoreCase("center")){movePanelTo("right");}else{movePanelTo("center");}
                     convertView.setValidationEventListener(new ConvertView.OnValidationEventListener() {
                         @Override
                         public void onEvent() {
+                            movePanelTo("center");
                             refreshProfile();
                             if(mListener!=null){mListener.onEvent();}
-                            flipViewRight();
                             ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                         }
                     });
@@ -202,48 +203,50 @@ public class SpellProfileFactory {
         }
     }
 
-    private void flipViewLeft() {
-        if(!convDisplayed){
-            convDisplayed=true;
-            panel.clearAnimation();
-            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
-            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
-            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
-            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
-            panel.setInAnimation(in);  panel.setOutAnimation(out);
-            panel.showNext();
-        }else {
-            convDisplayed=false;
-            panel.clearAnimation();
-            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
-            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
-            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
-            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
-            panel.setInAnimation(in);  panel.setOutAnimation(out);
-            panel.showPrevious();
-        }
-    }
+    private void movePanelTo(String position) {
+        panel.clearAnimation();
+        Animation in;Animation out;
+        switch (position) {
+            case "center":
+                if(currentPanelDisplayed.equalsIgnoreCase("left")){
+                    ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
+                    ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
+                    in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
+                    out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
+                    panel.setInAnimation(in);  panel.setOutAnimation(out);
+                    panel.showPrevious();
+                } else if(currentPanelDisplayed.equalsIgnoreCase("right")){
+                    panel.clearAnimation();
+                    ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
+                    ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
+                    in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
+                    out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
+                    panel.setInAnimation(in);  panel.setOutAnimation(out);
+                    panel.showPrevious();
+                }
+                break;
 
-    private void flipViewRight() {
-        if(!convDisplayed){
-            convDisplayed=true;
-            panel.clearAnimation();
-            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
-            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
-            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
-            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
-            panel.setInAnimation(in);  panel.setOutAnimation(out);
-            panel.showNext();
-        }else {
-            convDisplayed=false;
-            panel.clearAnimation();
-            ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(true);
-            ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(false);
-            Animation in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
-            Animation out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
-            panel.setInAnimation(in);  panel.setOutAnimation(out);
-            panel.showPrevious();
+            case "left":
+                panel.clearAnimation();
+                ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
+                ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
+                in = AnimationUtils.loadAnimation(mC,R.anim.infromleft);
+                out =  AnimationUtils.loadAnimation(mC,R.anim.outtoright);
+                panel.setInAnimation(in);  panel.setOutAnimation(out);
+                panel.showNext();
+                break;
+
+            case "right":
+                panel.clearAnimation();
+                ((LinearLayout)profile.findViewById(R.id.first_panel)).setClickable(false);
+                ((LinearLayout)profile.findViewById(R.id.second_panel)).setClickable(true);
+                in = AnimationUtils.loadAnimation(mC,R.anim.infromright);
+                out =  AnimationUtils.loadAnimation(mC,R.anim.outtoleft);
+                panel.setInAnimation(in);  panel.setOutAnimation(out);
+                panel.showNext();
+                break;
         }
+        currentPanelDisplayed=position;
     }
 
     private void testSpellForColorTitle() {

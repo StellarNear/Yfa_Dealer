@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v8.1"</string>
-    <string name="time_spend">129h</string>
+    <string name="version">"v8.2"</string>
+    <string name="time_spend">131h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V8.2
+-Fix d'un bug lors d'un calcul de tier de sort supérieur à 16
+-Fix des changement entre panneau d'affichage principale/conversion arcanique/conversion d'element
+-Gestion des panneaux de conversions pour les sous projectiles d'un sort
+-Fix du sort mythique Nuée de météores qui était mal selectionné
+-TODO : Les selection de liste meta dans conversion VS normal
+----------------------------------------------------------------------------------
 Patch note V8.1
 -Fix affichage valeur niveau dans menu xp
 ----------------------------------------------------------------------------------
