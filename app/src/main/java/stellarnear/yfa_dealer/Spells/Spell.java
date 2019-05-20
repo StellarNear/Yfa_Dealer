@@ -62,7 +62,6 @@ public class Spell {
         this.dice_type=spell.dice_type;
         this.n_dice_per_lvl=spell.n_dice_per_lvl;
         this.cap_dice=spell.cap_dice;
-        this.dmg_type=spell.dmg_type;
         this.range=spell.range;
         this.contact=spell.contact;
         this.area=spell.area;
@@ -75,6 +74,7 @@ public class Spell {
         this.perfect=spell.perfect;
         this.perfectMetaId=spell.perfectMetaId;
         this.n_sub_spell=spell.n_sub_spell;
+        this.dmg_type=new DmgType(spell.dmg_type);
         this.conversion=new ArcaneConversion(spell.conversion);
         this.metaList=new MetaList(spell.metaList);
         this.cast =new Cast();

@@ -1,5 +1,6 @@
 package stellarnear.yfa_dealer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public static Perso yfa;
     private Tools tools=new Tools();
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onResume() {
         super.onResume();

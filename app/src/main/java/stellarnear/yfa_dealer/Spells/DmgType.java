@@ -8,6 +8,11 @@ public class DmgType {
         this.dmgType=dmgType;
     }
 
+    public DmgType(DmgType dT){
+        this.dmgType=dT.dmgType;
+        this.converted=dT.converted;
+    }
+
     public String getDmgType() {
         return this.dmgType;
     }
