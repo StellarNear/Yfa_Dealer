@@ -49,6 +49,7 @@ public class Spell {
     private ArcaneConversion conversion=null;
 
     private boolean binded=false;
+    private Spell bindedParent =null;
     private Cast cast;
     private boolean crit=false;
 
@@ -213,10 +214,9 @@ public class Spell {
         return metaList;
     }
 
-    public CheckBox getCheckboxeForMetaId(final Activity mA,final Context mC, final String metaId, Boolean... fromArcanicConversion){
-        Boolean fromConv = fromArcanicConversion.length > 0 ? fromArcanicConversion[0] : false;
-        final CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC,fromArcanicConversion);
+    public CheckBox getCheckboxeForMetaId(final Activity mA,final Context mC, final String metaId){
 
+        final CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC);
         if(this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
             metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
         }
@@ -244,7 +244,7 @@ public class Spell {
         if(!this.compoList.contains("V") && metaId.equalsIgnoreCase("meta_silent")){
             check.setEnabled(false);
         }
-        if(this.perfect && this.rank+metaList.getMetaByID(metaId).getUprank()<=9 && !fromConv){
+        if(this.perfect && this.rank+metaList.getMetaByID(metaId).getUprank()<=9){
             check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean active) {
@@ -305,7 +305,12 @@ public class Spell {
         this.metaList=previousSpellToBind.metaList;
         this.conversion=previousSpellToBind.conversion;
         this.cast =previousSpellToBind.cast;
+        this.bindedParent =previousSpellToBind;
         this.binded=true;
+    }
+
+    public Spell getBindedParent() {
+        return bindedParent;
     }
 
     public void cast(){

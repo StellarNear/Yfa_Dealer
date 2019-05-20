@@ -3,6 +3,7 @@ package stellarnear.yfa_dealer.Spells;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -17,8 +18,10 @@ public class SpellList extends AppCompatActivity {
         listSpells.add(spell);
     }
 
-    public void addAll(List<Spell> spells) {
-        listSpells.addAll(spells);
+    public  void add(SpellList spells){
+        for (Spell spell : spells.asList()){
+            listSpells.add(spell);
+        }
     }
 
     public SpellList filterByRank(int rank){
@@ -43,14 +46,14 @@ public class SpellList extends AppCompatActivity {
         return sel_list;
     }
 
-    public Spell getSpellByID(String name){
-        Spell spellAnswer = null;
+    public SpellList getSpellByID(String name){
+        SpellList spellsAnswer = new SpellList();
         for (Spell spell : listSpells){
             if (spell.getID().equalsIgnoreCase(name)){
-                spellAnswer=spell;
+                spellsAnswer.add(new Spell(spell));  //pour renvoyer des copies de sort individuelles
             }
         }
-        return spellAnswer;
+        return spellsAnswer;
     }
 
     public int size() {
@@ -70,5 +73,55 @@ public class SpellList extends AppCompatActivity {
             }
         }
         return bool;
+    }
+
+    public boolean isEmpty(){
+        return listSpells.isEmpty();
+    }
+
+    public Iterator iterator(){
+        return listSpells.iterator();
+    }
+
+    public void setSubName(int i) {
+        for (Spell spell : listSpells){
+            spell.setSubName(i);
+        }
+    }
+
+    public void bindTo(Spell previousSpellToBind) {
+        for (Spell spell : listSpells){
+            spell.bindTo(previousSpellToBind);
+        }
+    }
+
+    public boolean contains(Spell spell) {
+        return listSpells.contains(spell);
+    }
+
+    public void remove(Spell spell) {
+        listSpells.remove(spell);
+    }
+
+    public boolean hasSpellID(String name) {
+        boolean isPresent = false;
+        for (Spell spell : listSpells){
+            if (spell.getID().equalsIgnoreCase(name)){isPresent=true;}
+        }
+        return isPresent;
+    }
+
+    public SpellList getUnbindedSpells() {
+        SpellList spellList = new SpellList();
+        for (Spell spell : listSpells){
+            if(!spell.isBinded()){
+                spellList.add(spell);
+            } else {
+                if (!spellList.contains(spell.getBindedParent())){
+                    spellList.add(spell.getBindedParent());
+                }
+            }
+        }
+        return spellList;
     }
 }

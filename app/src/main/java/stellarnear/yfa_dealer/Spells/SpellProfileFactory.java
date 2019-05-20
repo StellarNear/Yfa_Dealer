@@ -44,6 +44,7 @@ public class SpellProfileFactory {
     private View profile;
     private ViewSwitcher panel;
     private String currentPanelDisplayed="center";
+    private Boolean damageDisplayed=false; //pour aps revenir au panneau central si le sort a ses dégats affiché
     private CustomAlertDialog metaPopup;
 
     private Calculation calculation=new Calculation();
@@ -66,7 +67,7 @@ public class SpellProfileFactory {
     }
 
     public void refreshProfile(){
-        if(!currentPanelDisplayed.equalsIgnoreCase("center")){movePanelTo("center");}
+        if(!currentPanelDisplayed.equalsIgnoreCase("center") && !damageDisplayed){movePanelTo("center");}
          //on notifie à la liste general qu'un sort a du refresh
         ((TextView)profile.findViewById(R.id.spell_name)).setText(spell.getName());
         ((TextView)profile.findViewById(R.id.spell_name)).postDelayed(new Runnable() {
@@ -152,6 +153,7 @@ public class SpellProfileFactory {
                 ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                 ((LinearLayout)profile.findViewById(R.id.second_panel)).removeAllViews();
                 new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.second_panel));
+                damageDisplayed=true;
                 movePanelTo("right");
             }
         });
@@ -270,28 +272,28 @@ public class SpellProfileFactory {
     private String printInfo() {
         String text = "";
         if (calculation.nDice(spell)>0) {
-            text += "Dégats\u00A0:\u00A0" + displayText.damageTxt(spell) + ", ";
+            text += "Dégats:" + displayText.damageTxt(spell) + ", ";
         }
         if (!spell.getDmg_type().equals("")) {
-            text += "Type\u00A0:\u00A0" + spell.getDmg_type() + ", ";
+            text += "Typ:" + spell.getDmg_type() + ", ";
         }
         if (!spell.getRange().equals("")) {
-            text += "Portée\u00A0:\u00A0" + displayText.rangeTxt(spell)+ ", ";
+            text += "Portée:" + displayText.rangeTxt(spell)+ ", ";
         }
         if (!spell.getArea().equals("")) {
-            text += "Zone\u00A0:\u00A0" + spell.getArea()+ ", ";
+            text += "Zone:" + spell.getArea()+ ", ";
         }
         if (!displayText.compoTxt(mC,spell).equalsIgnoreCase("")) {
-            text += "Compos\u00A0:\u00A0" + displayText.compoTxt(mC,spell) + ", ";
+            text += "Compos:" + displayText.compoTxt(mC,spell) + ", ";
         }
         if (!spell.getCast_time().equals("")) {
-            text += "Cast\u00A0:\u00A0" + calculation.getCastTimeTxt(spell) + ", ";
+            text += "Cast:" + calculation.getCastTimeTxt(spell) + ", ";
         }
         if (!spell.getDuration().equals("") && !spell.getDuration().equalsIgnoreCase("instant")) {
-            text += "Durée\u00A0:\u00A0" + displayText.durationTxt(spell) + ", ";
+            text += "Durée:" + displayText.durationTxt(spell) + ", ";
         }
         if (!spell.hasRM()||spell.hasRM()) {
-            text += "RM\u00A0:\u00A0" + (spell.hasRM() ? "oui":"non") + ", ";
+            text += "RM:" + (spell.hasRM() ? "oui":"non") + ", ";
         }
         String resistance;
         if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
@@ -300,7 +302,7 @@ public class SpellProfileFactory {
             resistance = spell.getSave_type() + "(" + calculation.saveVal(spell) + ")";
         }
         if (!resistance.equals("")) {
-            text += "Sauv\u00A0:\u00A0" + resistance + ", ";
+            text += "Sauv:" + resistance + ", ";
         }
         text = text.substring(0, text.length() - 2);
         return text;

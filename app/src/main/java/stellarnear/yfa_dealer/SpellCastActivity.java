@@ -70,7 +70,7 @@ public class SpellCastActivity extends AppCompatActivity {
             textTar.setLayoutParams(para);
 
             mainLin.addView(textTar);
-            addSpellsForTarget(targets.getSpellListForTarget(tar));
+            addSpellsForTarget(targets.getSpellListForTarget(tar).asList());
 
         }
         refreshRound();

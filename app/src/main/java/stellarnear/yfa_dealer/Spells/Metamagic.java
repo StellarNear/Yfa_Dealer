@@ -35,8 +35,7 @@ public class Metamagic {
         this.nCast=0;
     }
 
-    public CheckBox getCheckBox(final Activity mA,final Context mC, Boolean... fromArcanicConversion){
-        final Boolean fromConv = fromArcanicConversion.length > 0 ? fromArcanicConversion[0] : false;
+    public CheckBox getCheckBox(final Activity mA,final Context mC){
         if (check==null) {
             check = new CheckBox(mC);
             check.setText(name +" (+"+uprank+")");
@@ -46,7 +45,7 @@ public class Metamagic {
                     if (isChecked) {
                         nCast += 1;
                     } else {
-                        if (multicast && !fromConv) {
+                        if (multicast) {
                             new AlertDialog.Builder(mA)
                                     .setTitle("Demande de confirmation")
                                     .setMessage("Veux-tu utiliser " + name + " une fois de plus ?")

@@ -157,7 +157,7 @@ public class Calculation {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         Boolean multicast = settings.getBoolean("multispell_switch", mC.getResources().getBoolean(R.bool.multispell_switch_def));
         if (multicast) {
-            for (Spell spell : spellList.asList()) {
+            for (Spell spell : spellList.getUnbindedSpells().asList()) {
                 nSpells += 1;
                 switch (getCastTimeTxt(spell)) {
                     case "complexe":

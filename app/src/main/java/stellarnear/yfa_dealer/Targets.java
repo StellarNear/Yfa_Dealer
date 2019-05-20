@@ -11,7 +11,7 @@ import stellarnear.yfa_dealer.Spells.SpellList;
 public class Targets {
     private static Targets instance = new Targets();
     private List<String> allTargets;
-    private Map<String,List<Spell>> mapTargetListSpell;
+    private Map<String,SpellList> mapTargetListSpell;
 
     public static Targets getInstance() {
         return instance;
@@ -19,13 +19,13 @@ public class Targets {
 
     private Targets(){
         allTargets=new ArrayList<>();
-        mapTargetListSpell = new HashMap<String, List<Spell>>();
+        mapTargetListSpell = new HashMap<String, SpellList>();
     }
 
     public void addTarget(String target){
         if (!allTargets.contains(target)) {
             allTargets.add(target);
-            mapTargetListSpell.put(target,new ArrayList<Spell>());
+            mapTargetListSpell.put(target,new SpellList());
         }
     }
 
@@ -43,8 +43,8 @@ public class Targets {
         }
     }
 
-    public List<Spell> getSpellListForTarget(String target){
-        List<Spell> listReturn = new ArrayList<>();
+    public SpellList getSpellListForTarget(String target){
+        SpellList listReturn = new SpellList();
         try {
             listReturn=mapTargetListSpell.get(target);
         } catch (Exception e) {
@@ -59,13 +59,13 @@ public class Targets {
 
     public void clearTargets() {
         allTargets=new ArrayList<>();
-        mapTargetListSpell = new HashMap<String, List<Spell>>();
+        mapTargetListSpell = new HashMap<String, SpellList>();
     }
 
     public SpellList getAllSpellList() {
         SpellList allSpell= new SpellList();
         for(String tar:allTargets){
-            allSpell.addAll(mapTargetListSpell.get(tar));
+            allSpell.add(mapTargetListSpell.get(tar));
         }
         return  allSpell;
     }
@@ -81,7 +81,7 @@ public class Targets {
         return bool;
     }
 
-    public void assignAllToMain(String tar,List<Spell> selectedSpells) {
+    public void assignAllToMain(String tar,SpellList selectedSpells) {
         if (!allTargets.contains(tar)) {
             allTargets.add(tar);
             mapTargetListSpell.put(tar,selectedSpells);

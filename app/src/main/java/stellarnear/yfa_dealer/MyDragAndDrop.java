@@ -100,7 +100,7 @@ public class MyDragAndDrop {
         for (String tar : targets.getTargetList()){
             txt+=tar+":\n";
             int i=1;
-            for (Spell spell : targets.getSpellListForTarget(tar)){
+            for (Spell spell : targets.getSpellListForTarget(tar).asList()){
                 txt+="Spell "+i+" : "+spell.getName()+"\n";
                 i++;
             }

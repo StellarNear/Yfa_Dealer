@@ -393,7 +393,6 @@ public class ConvertView extends AppCompatActivity {
         }
     }
 
-
     private void construct_convertview_metas() {
         resetMeta();
         resetConfirm();
@@ -420,8 +419,6 @@ public class ConvertView extends AppCompatActivity {
             grid2.addView(no_meta);
 
         } else {
-
-
             int[] colorClickBox = new int[]{Color.DKGRAY, Color.parseColor("#088A29")};
             //if(!dmg_spell){colorClickBox=new int[]{Color.GRAY,Color.GRAY};checkbox.setTextColor(Color.GRAY);}
 
@@ -435,34 +432,27 @@ public class ConvertView extends AppCompatActivity {
 
             boolean firstMeta=true;
             for(final Metamagic meta : metaListAvailable.asList()) {
-                final CheckBox checkbox = spell.getCheckboxeForMetaId(mA,mC,meta.getId(),true);
+                final CheckBox checkbox = new CheckBox(mC);
+                CheckBox oriCheckbox =   spell.getCheckboxeForMetaId(mA,mC,meta.getId());
+                checkbox.setText(oriCheckbox.getText());
                 checkbox.setButtonTintList(colorStateList);
-                checkbox.setEnabled(true);
-                checkbox.setChecked(false);
                 checkbox.setTextColor(Color.DKGRAY);
                 if(!firstMeta){
                     addVsep(grid2, 4, Color.GRAY);
                 }
                 firstMeta=false;
-
                 meta_selected.add(checkbox);
-
                 checkbox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         checkbox.setTextColor(Color.parseColor("#088A29"));
-
-                        if(currentMetaSelected!=null){ //re rend la derniere checkbox clickable
-                            spell.getCheckboxeForMetaId(mA,mC,currentMetaSelected.getId(),true).setEnabled(true);
-                        }
                         currentMetaSelected=meta;
                         checkbox.setEnabled(false); //evite de deselectionner
-
                         for (CheckBox check : meta_selected) {
                             if(check!=checkbox) {
                                 check.setTextColor(Color.DKGRAY);
                                 check.setChecked(false);
+                                check.setEnabled(true);
                             }
                         }
                         construct_convertview_confirm();

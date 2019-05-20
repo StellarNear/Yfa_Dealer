@@ -73,12 +73,11 @@ public class ResultBuilder {
             txt_view.setTextColor(spellColorId);
         } else {
             final DiceList diceList = new DiceList();
-            List<Integer> listDiceAllowed = Arrays.asList(3,4,6,8);
+            List<Integer> listDiceAllowed = Arrays.asList(3,4,6,8,10);
             if (listDiceAllowed.contains(calculation.diceType(spell))){
                 for(int i=1 ; i<= calculation.nDice(spell);i++){
                     diceList.add(new Dice(mA,mC,calculation.diceType(spell),spell.getDmg_type()));
                 }
-
                 for (Dice dice : diceList.getList()){
                     dice.rand(false);
                 }
