@@ -3,7 +3,7 @@
 
     <spell>
         <id>Immortalité</id>
-        <name>Immortalité (Mythique)</name>
+        <name>Immortalité (M)</name>
         <descr>Le personnage devient un point d’ancrage pour son âme et celles de ses alliés. La portée s’élève à 9 mètres et au lieu d’affecter une créature, le sort affecte tous les alliés situés dans une émanation de 9 mètres de rayon autour de lui.</descr>
         <range>personelle</range>
         <cast_time>simple</cast_time>
@@ -14,7 +14,7 @@
 
     <spell>
         <id>Désintégration</id>
-        <name>Désintégration (Mythique)</name>
+        <name>Désintégration (M)</name>
         <descr>Les dégâts infligés s’élèvent à 3d6 points par niveau (60d6 maximum) et un malus d'1d4 points de Constitution. Une créature qui réussit son jet de sauvegarde subit 5d8 points de dégâts plus un affaiblissement temporaire de 1 point de Constitution.</descr>
         <dice_type>6</dice_type>
         <cap_dice>60</cap_dice>
@@ -33,7 +33,7 @@
 
     <spell>
         <id>Doigt de mort</id>
-        <name>Doigt de mort (Mythique)</name>
+        <name>Doigt de mort (M)</name>
         <descr>Les dégâts infligés s’élèvent à 15 points dégâts par niveau et un malus de 1d8 points de Constitution.</descr>
         <dice_type>lvl</dice_type>
         <n_dice_per_lvl>15</n_dice_per_lvl>
@@ -51,7 +51,7 @@
 
     <spell>
         <id>Nuée de météores</id>
-        <name>Nuée de météores (Mythique)</name>
+        <name>Nuée de météores (M)</name>
         <descr>Les météores créés par ce sort infligent des dégâts contondants sur une ligne qui s’étend depuis le personnage jusqu’au point de destination ciblé où ils explosent. Les créatures situées sur la trajectoire d’un météore subissent 2d10 points de dégâts contondants et doivent réussir un jet de Vigueur pour ne pas tomber à terre..</descr>
         <dmg_type>feu</dmg_type>
         <n_sub_spell>4</n_sub_spell>
@@ -59,7 +59,7 @@
     </spell>
     <spell>
         <id>Nuée de météores_sub</id>
-        <name>Météore (Mythique)</name>
+        <name>Météore (M)</name>
         <descr>Si l'attaque de contact à distance touche, la cible subit 2d6 points de dégâts contondants (pas de jet de sauvegarde) et subit un malus de -4 au jet de sauvegarde sur l'explosion suivante.</descr>
         <range>longue</range>
         <dice_type>10</dice_type>
@@ -75,7 +75,7 @@
     </spell>
     <spell>
         <id>Nuée de météores_sub</id>
-        <name>Explosion (Mythique)</name>
+        <name>Explosion (M)</name>
         <descr>Explosion de 12 m de rayon et inflige 6d6 points de dégâts de feu (jet de reflexe pour demi-dégats la resistance ne s'applique qu'une fois si d'autre il y a d'autre météores sur la meme cible).</descr>
         <range>longue</range>
         <dice_type>10</dice_type>
