@@ -70,7 +70,7 @@ public class DisplayedText {
     public String durationTxt(Spell spell) {
         String dura=spell.getDuration();
 
-        if(!dura.equalsIgnoreCase("permanente") && !dura.contains("d")){
+        if(!dura.equalsIgnoreCase("permanente")){
             Integer result= tools.toInt(dura.replaceAll("[^0-9?!]",""));
             String duration_unit = dura.replaceAll("[0-9?!]","");
             if(dura.contains("/lvl")){

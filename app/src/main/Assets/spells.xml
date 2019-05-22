@@ -721,7 +721,6 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <cap_dice>2</cap_dice>
         <dmg_type>feu</dmg_type>
         <cast_time>simple</cast_time>
-        <duration>instant</duration>
         <compo>V,G</compo>
         <duration>instant</duration>
         <contact>distance</contact>
@@ -737,7 +736,6 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <cap_dice>6</cap_dice>
         <dmg_type>feu</dmg_type>
         <cast_time>simple</cast_time>
-        <duration>instant</duration>
         <compo>V,G</compo>
         <area>12m</area>
         <duration>instant</duration>

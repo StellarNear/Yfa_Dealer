@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v8.2"</string>
-    <string name="time_spend">138h</string>
+    <string name="version">"v8.3"</string>
+    <string name="time_spend">142h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V8.3
+-Refonte du système de sort mythique pour faciliter la saisie de sort
+----------------------------------------------------------------------------------
 Patch note V8.2
 -Fix d'un bug lors d'un calcul de tier de sort supérieur à 16
 -Fix des changement entre panneau d'affichage principale/conversion arcanique/conversion d'element

@@ -20,14 +20,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -46,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean shouldExecuteOnResume;
     private Targets targets;
     public static Perso yfa;
+
+    private SpellList listAllSpell=null;
+
     private Tools tools=new Tools();
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,8 +124,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildPage1() {
-        final SpellList listAllSpell = new BuildSpellList(getApplicationContext(),"").getSpellList();
-        final SpellList listAllMythicSpell = new BuildSpellList(getApplicationContext(),"Mythic").getSpellList();
+        SpellList listAllNormalSpell = new BuildSpellList(getApplicationContext(),"").getSpellList();
+        SpellList listAllMythicSpell = new BuildSpellList(getApplicationContext(),"Mythic").getSpellList();
+        listAllSpell=new SpellList();
+        listAllSpell.add(listAllNormalSpell);
+        listAllSpell.add(listAllMythicSpell);
 
         int max_tier=0;
         for(int i=0;i<=19;i++){
@@ -240,139 +245,52 @@ public class MainActivity extends AppCompatActivity {
 
             side.addView(side_txt);
 
-
             View h_sep = new View(this);
             h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
             h_sep.setBackgroundColor(Color.BLACK);
             Tiers.addView(h_sep);
-            SpellList rank_list= listAllSpell.filterByRank(i).filterDisplayable();
+            SpellList rank_list= listAllNormalSpell.filterByRank(i).filterDisplayable();
             if (rank_list.size()==0){ continue;}
 
             for(final Spell spell : rank_list.asList()){
-                final CheckBox checkbox=new CheckBox(getApplicationContext());
-                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked){
-                            if(spell.getNSubSpell()>0){
-                                Spell parentSpellToBind=null;
-                                for (int i=1;i<=spell.getNSubSpell();i++){
-                                    SpellList subSpellN= listAllSpell.getSpellByID(spell.getID()+"_sub");
-                                    subSpellN.setSubName(i);
-                                    if(subSpellN.asList().size()>0 && parentSpellToBind==null){parentSpellToBind=subSpellN.asList().get(0);}
-                                    if(parentSpellToBind!=null){
-                                        subSpellN.bindTo(parentSpellToBind);
-                                    }
-                                    selectedSpells.add(subSpellN);
-                                }
-                            } else {
-                                selectedSpells.add(new Spell(spell));
-                            }
-                            current_spell_display(getApplicationContext());
-                        }
+                LinearLayout spellLine = new LinearLayout(getApplicationContext());
+                spellLine.setOrientation(LinearLayout.HORIZONTAL);
+                setSpellLineColor(spellLine,spell);
+                spellLine.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                        if (!isChecked) {
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu tu lancer lancer une nouvelle fois le sort "+spell.getName()+" ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            checkbox.setChecked(true);
-                                        }})
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            removeSpellFromSelection(spell);
-                                        }}).show();
-                        }
+                final CheckBox checkbox=new CheckBox(getApplicationContext());
+                setAddingSpell(checkbox,spell);
+                setCheckBoxColor(checkbox);
+                spellLine.addView(checkbox);
+                TextView spellName = new TextView(getApplicationContext());
+                spellName.setText(spell.getName());
+                spellName.setTextColor(Color.BLACK);
+                spellName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
                     }
                 });
-
-                setCheckBoxColor(checkbox,spell);
-                Tiers.addView(checkbox);
-                if (listAllMythicSpell.hasSpellID(spell.getName())){
-                    checkbox.setText(spell.getName());
-                    checkbox.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_embrassed_energy), null);
-                    checkbox.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            if (event.getAction() == MotionEvent.ACTION_UP) {
-                                if(event.getRawX() <= checkbox.getLeft() + Math.round(TypedValue.applyDimension(
-                                        TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))){
-                                    checkbox.setChecked(!checkbox.isChecked());
-
-                                } else if (event.getRawX() >= checkbox.getRight() - Math.round(TypedValue.applyDimension(
-                                        TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))) {
-                                    // your action for drawable click event
-                                    if(yfa.getResourceValue("mythic_points")>0) {
-                                        new AlertDialog.Builder(MainActivity.this)
-                                                .setTitle("Demande de confirmation")
-                                                .setMessage("Point(s) mythique(s) actuel(s) : " + yfa.getResourceValue("mythic_points") + "\n" +
-                                                        "\nVeux tu lancer la version mythique du sort " + spell.getName() + " (cout : 1pt) ?")
-                                                .setIcon(android.R.drawable.ic_menu_help)
-                                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                                        if(spell.getNSubSpell()>0){
-                                                            Spell parentSpellToBind=null;
-                                                            for (int i=1;i<=spell.getNSubSpell();i++){
-                                                                SpellList subSpellN=listAllMythicSpell.getSpellByID(spell.getID()+"_sub");
-                                                                subSpellN.setSubName(i);
-                                                                if(subSpellN.asList().size()>0 && parentSpellToBind==null){parentSpellToBind=subSpellN.asList().get(0);}
-                                                                if(parentSpellToBind!=null){
-                                                                    subSpellN.bindTo(parentSpellToBind);
-                                                                }
-                                                                selectedSpells.add(subSpellN);
-                                                            }
-                                                        } else {
-                                                            selectedSpells.add(listAllMythicSpell.getSpellByID(spell.getName()));
-                                                        }
-                                                        yfa.getAllResources().getResource("mythic_points").spend(1);
-                                                        refreshMythicPoints();
-                                                        Toast toast = Toast.makeText(getApplicationContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
-                                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                                        toast.show();
-                                                        current_spell_display(getApplicationContext());
-                                                    }
-                                                })
-                                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                                    }
-                                                }).show();
-                                    } else {
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                        toast.show();
-                                    }
-                                    return true;
-                                } else {
-                                    Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
-                                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                    toast.show();
-                                }
-                            }
-                            return true;
-                        }
-                    });
-                } else {
-                    checkbox.setText(spell.getName());
-                    checkbox.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            if (event.getAction() == MotionEvent.ACTION_UP) {
-                                if (event.getRawX() <= checkbox.getLeft() + Math.round(TypedValue.applyDimension(
-                                        TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()))) {
-                                    checkbox.setChecked(!checkbox.isChecked());
-
-                                } else {
-                                    Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
-                                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                    toast.show();
-                                }
-                            }
-                            return true;
-                        }
-                    });
+                spellLine.addView(spellName);
+                Spell mythicSpell = listAllMythicSpell.getNormalSpellFromID(spell.getID());
+                if (mythicSpell!=null){
+                    LinearLayout mythLine =  new LinearLayout(getApplicationContext());
+                    mythLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                    int px = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.general_margin),    getResources().getDisplayMetrics()    );
+                    mythLine.setPadding(0,0,px,0);
+                    mythLine.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+                    CheckBox checkMyth = new CheckBox(getApplicationContext());
+                    setCheckBoxColor(checkMyth);
+                    setAddingSpell(checkMyth,mythicSpell);
+                    mythLine.addView(checkMyth);
+                    ImageView img = new ImageView(getApplicationContext());
+                    img.setImageDrawable(getDrawable(R.drawable.ic_embrassed_energy));
+                    mythLine.addView(img);
+                    spellLine.addView(mythLine);
                 }
+                Tiers.addView(spellLine);
             }
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
@@ -381,28 +299,125 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void removeSpellFromSelection(Spell spell) {
-        Iterator <Spell> s = selectedSpells.iterator();
-        while(s.hasNext()){
-            Spell spellList=s.next();
-            boolean spellInList = spellList.getName().equalsIgnoreCase(spell.getName());
-            boolean subSpellInList = spell.getNSubSpell()>0 && spellList.getID().equalsIgnoreCase(spell.getName()+"_sub");
-            if(spellInList || subSpellInList){
-                s.remove();
+    private void setAddingSpell(final CheckBox check, final Spell spell) {
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!check.isChecked()){
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Demande de confirmation")
+                            .setMessage("Veux-tu tu lancer lancer une nouvelle fois le sort "+spell.getName()+" ?")
+                            .setIcon(android.R.drawable.ic_menu_help)
+                            .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    check.setChecked(true);
+                                    prepareSpell(check,spell);
+                                }})
+                            .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    check.setChecked(false);
+                                    removeSpellFromSelection(spell);
+                                }}).show();
+                } else {
+                    prepareSpell(check,spell);
+                }
             }
+        });
+    }
+
+    private void prepareSpell(final CheckBox check, final Spell spell) {
+        if(spell.isMyth()){
+            if(yfa.getResourceValue("mythic_points")>0) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Point(s) mythique(s) actuel(s) : " + yfa.getResourceValue("mythic_points") + "\n" +
+                                "\nVeux tu lancer la version mythique du sort " + spell.getName() + " (cout : 1pt) ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.getAllResources().getResource("mythic_points").spend(1);
+                                refreshMythicPoints();
+                                check.setChecked(true);
+                                addSpellToList(spell);
+                            }})
+                        .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                            }
+                        }).show();
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+                check.setChecked(false);
+            }
+        }else {
+            addSpellToList(spell);
         }
     }
 
-    private void current_spell_display(Context mC) {
-        String display="Sort séléctionnés :\n";
-        for(Spell spell : selectedSpells.asList()){
-            display+=spell.getName()+"\n";
+    private void addSpellToList(Spell spell) {
+        if (spell.getNSubSpell() > 0) {
+            Spell parentSpellToBind = null;
+            for (int i = 1; i <= spell.getNSubSpell(); i++) {
+                SpellList subSpellN = listAllSpell.getSpellByID(spell.getID() + "_sub");
+                subSpellN.setSubName(i);
+                if (subSpellN.asList().size() > 0 && parentSpellToBind == null) {
+                    parentSpellToBind = subSpellN.asList().get(0);
+                }
+                if (parentSpellToBind != null) {
+                    subSpellN.bindTo(parentSpellToBind);
+                }
+                selectedSpells.add(subSpellN);
+            }
+        } else {
+            selectedSpells.add(spell);
         }
-        display = display.substring(0, display.length() - 1);
-        Toast toast =  Toast.makeText(mC, display, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        currentSelectionDisplay(getApplicationContext());
+    }
 
+    private void removeSpellFromSelection(Spell spell) {
+        Iterator <Spell> s = selectedSpells.iterator();
+        SpellList parentSpellRemovedList=new SpellList();
+        while(s.hasNext()){
+            Spell spellList=s.next();
+            boolean spellInList = spellList.getID().equalsIgnoreCase(spell.getID());
+            boolean subSpellInList = spell.getNSubSpell()>0 && spellList.getID().equalsIgnoreCase(spell.getID()+"_sub");
+
+            if(spellInList || subSpellInList){
+                s.remove();
+                if(spellInList){
+                    parentSpellRemovedList.add(spellList);
+                } else if(subSpellInList && !parentSpellRemovedList.contains(spellList.getBindedParent())){
+                    parentSpellRemovedList.add(spellList.getBindedParent());
+                }
+            }
+        }
+
+        if (spell.isMyth()){
+            yfa.getAllResources().getResource("mythic_points").earn(parentSpellRemovedList.size());
+            refreshMythicPoints();
+            Toast toast = Toast.makeText(getApplicationContext(), "Tes points mythiques t'ont été restitués, il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
+        }
+        currentSelectionDisplay(getApplicationContext());
+    }
+
+    private void currentSelectionDisplay(Context mC) {
+        if(selectedSpells.isEmpty()){
+            Toast toast = Toast.makeText(mC, "Aucun sort séléctionné", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else {
+            String display = "Sort séléctionnés :\n";
+            for (Spell spell : selectedSpells.asList()) {
+                display += spell.getName() + "\n";
+            }
+            display = display.substring(0, display.length() - 1);
+            Toast toast = Toast.makeText(mC, display, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
     private void testSpellSelection() {
@@ -545,22 +560,38 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setCheckBoxColor(CheckBox checkbox,Spell spell) {
-        int bord=0;
-        int centre=0;
+    public void setSpellLineColor(LinearLayout line,Spell spell) {
+        int bord = 0;
+        int centre = 0;
 
-        if (spell.getDmg_type().equals("aucun")) {centre=R.color.aucun_dark;bord=R.color.aucun;}
-        else if (spell.getDmg_type().equals("feu")) {centre=R.color.feu_dark;bord=R.color.feu;}
-        else if (spell.getDmg_type().equals("foudre")) {centre=R.color.foudre_dark;bord=R.color.foudre;}
-        else if (spell.getDmg_type().equals("froid")) {centre=R.color.froid_dark;bord=R.color.froid;}
-        else if (spell.getDmg_type().equals("acide")) {centre=R.color.acide_dark;bord=R.color.acide;}
-        else {centre=R.color.white;bord=R.color.white;}
+        if (spell.getDmg_type().equals("aucun")) {
+            centre = R.color.aucun_dark;
+            bord = R.color.aucun;
+        } else if (spell.getDmg_type().equals("feu")) {
+            centre = R.color.feu_dark;
+            bord = R.color.feu;
+        } else if (spell.getDmg_type().equals("foudre")) {
+            centre = R.color.foudre_dark;
+            bord = R.color.foudre;
+        } else if (spell.getDmg_type().equals("froid")) {
+            centre = R.color.froid_dark;
+            bord = R.color.froid;
+        } else if (spell.getDmg_type().equals("acide")) {
+            centre = R.color.acide_dark;
+            bord = R.color.acide;
+        } else {
+            centre = R.color.white;
+            bord = R.color.white;
+        }
 
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {getColor(bord),getColor(centre)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
+                new int[]{getColor(bord), getColor(centre)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
         gd.setCornerRadius(0f);
+        line.setBackground(gd);
+    }
 
+    public void setCheckBoxColor(CheckBox checkbox) {
         checkbox.setTextColor(Color.BLACK);
         int[] colorClickBox=new int[]{Color.BLACK,Color.BLACK};
 
@@ -572,7 +603,7 @@ public class MainActivity extends AppCompatActivity {
 
         );
         checkbox.setButtonTintList(colorStateList);
-        checkbox.setBackground(gd);
+
     }
 }
 

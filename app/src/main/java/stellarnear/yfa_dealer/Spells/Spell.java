@@ -20,6 +20,9 @@ public class Spell {
 
     private String  name;
     private String id;
+
+    private String normalSpellId; // pour les sorts mythic
+
     private String  descr;
     private String  dice_type;
     private Double  n_dice_per_lvl;
@@ -57,6 +60,7 @@ public class Spell {
 
     public Spell(Spell spell){ //copying spell
         this.id=spell.id;
+        this.normalSpellId=spell.normalSpellId;
         this.name=spell.name;
         this.descr=spell.descr;
         this.dice_type=spell.dice_type;
@@ -81,7 +85,7 @@ public class Spell {
         this.settings=spell.settings;
     }
 
-    public Spell(String id, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String id,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
         if(id.equalsIgnoreCase("")){
@@ -89,6 +93,7 @@ public class Spell {
         } else {
             this.id=id;
         }
+        this.normalSpellId=normalSpellId;
         this.name=name;
         this.descr=descr;
         this.n_sub_spell=n_sub_spell;
@@ -123,6 +128,14 @@ public class Spell {
 
     public String getID() {
         return id;
+    }
+
+    public String getNormalSpellId() {
+        return normalSpellId;
+    }
+
+    public boolean isMyth(){
+        return !this.normalSpellId.equalsIgnoreCase("");
     }
 
     public String getDuration() {

@@ -103,12 +103,12 @@ public class SpellList extends AppCompatActivity {
         listSpells.remove(spell);
     }
 
-    public boolean hasSpellID(String name) {
-        boolean isPresent = false;
+    public Spell getNormalSpellFromID(String id) {
+        Spell answerSpell=null;
         for (Spell spell : listSpells){
-            if (spell.getID().equalsIgnoreCase(name)){isPresent=true;}
+            if (spell.getNormalSpellId().equalsIgnoreCase(id)){answerSpell=spell;}
         }
-        return isPresent;
+        return answerSpell;
     }
 
     public SpellList getUnbindedSpells() {
