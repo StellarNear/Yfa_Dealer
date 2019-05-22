@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.Tools;
 
 
 public class Spell {
@@ -56,7 +57,7 @@ public class Spell {
     private Cast cast;
     private boolean crit=false;
 
-    //private Tools tools=new Tools();
+    private Tools tools=new Tools();
 
     public Spell(Spell spell){ //copying spell
         this.id=spell.id;
@@ -232,6 +233,11 @@ public class Spell {
         final CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC);
         if(this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
             metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
+        }
+
+        int maxLevelWedge= tools.toInt(settings.getString("wedge_max_lvl_spell",String.valueOf(mC.getResources().getInteger(R.integer.wedge_max_lvl_spell_def))));
+        if(this.rank> maxLevelWedge && metaId.equalsIgnoreCase("meta_arrow")){
+            check.setEnabled(false);
         }
 
         if(this.dmg_type.getDmgType().equalsIgnoreCase("") && metaId.equalsIgnoreCase("meta_enhance")){
