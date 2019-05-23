@@ -106,6 +106,7 @@ public class Metamagic {
         this.nCast=1;
         if (!(check==null)) {
             check.setOnClickListener(null);
+            check.setOnCheckedChangeListener(null);
             check.setChecked(true);
             check.setEnabled(false);
         }

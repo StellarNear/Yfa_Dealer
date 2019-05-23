@@ -106,11 +106,10 @@ public class Calculation {
     public int currentRank(Spell spell){
         int val=spell.getRank();
         for(Metamagic meta : spell.getMetaList().filterActive().asList()){
-            if(spell.getConversion().getArcaneId().contains("metamagic")){ //une méta peut etre gratuite venant de conversion arcanique
-                if(!spell.getConversion().getArcaneId().contains(meta.getId())){
-                    val += meta.getUprank();
-                }
-            } else if(!spell.getPerfectMetaId().equalsIgnoreCase(meta.getId())){ //si la meta est pas gratuite pour un sort parfait
+            //une méta peut etre gratuite venant de conversion arcanique ou de perfectin magique
+            boolean metaFreePerfect = spell.getPerfectMetaId().equalsIgnoreCase(meta.getId());
+            boolean metaFreeArcaneConv = spell.getConversion().getArcaneId().contains("metamagic") && spell.getConversion().getArcaneId().contains(meta.getId());
+            if( !( metaFreeArcaneConv || metaFreePerfect ) ){
                 val += meta.getUprank()*meta.getnCast();
             }
         }

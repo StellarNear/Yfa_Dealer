@@ -111,7 +111,7 @@ public class Spell {
         this.rm=rm;
         this.save_type=save_type;
         this.rank=rank;
-        if (this.id.equals("Désintégration")) {
+        if (this.id.equalsIgnoreCase("Désintégration") || this.normalSpellId.equalsIgnoreCase("Désintégration")) {
             if (settings.getBoolean("perfect_desint", mC.getResources().getBoolean(R.bool.perfect_desint_def))) {
                 this.perfect=true;
             }
@@ -268,7 +268,6 @@ public class Spell {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean active) {
                     if(active) {
-
                         if (perfect) { //pour recheck sur les autre meta afficher que le sort est toujours parfait
                             new AlertDialog.Builder(mA)
                                     .setTitle("Demande de confirmation")
