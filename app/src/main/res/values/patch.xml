@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v8.3"</string>
+    <string name="version">"v8.4"</string>
     <string name="time_spend">144h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V8.4
+-Ajout du multilancement pour la métamagie Sort Eloigné
+----------------------------------------------------------------------------------
 Patch note V8.3a
 -Fix comptage de rang avec perfection magique + conversion arcanique
--Ajotu de Désint Mythique en tant à la perfection magique
+-Ajout de Désint Mythique en tant à la perfection magique
 ----------------------------------------------------------------------------------
 Patch note V8.3
 -Refonte du système de sort mythique pour faciliter la saisie de sort

@@ -93,7 +93,7 @@
     <spell>
         <name>Résistance</name>
         <descr>Ce sort protège la cible en lui offrant temporairement un bonus de résistance de +1 aux jets de sauvegarde.</descr>
-        <range>Contact</range>
+        <range>contact</range>
         <cast_time>simple</cast_time>
         <duration>1min</duration>
         <compo>V,G,M</compo>

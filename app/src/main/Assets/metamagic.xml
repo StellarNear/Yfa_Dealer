@@ -66,6 +66,7 @@
         <name>Sort éloigné</name>
         <descr>Ce don permet d’augmenter la portée d'un sort (selon l’ordre « contact », « courte », « moyenne », « longue »). Un sort éloigné occupe un emplacement de sort d’un niveau de plus que le niveau normal du sort pour chaque augmentation de catégorie. Si le sort de base nécessite des attaques de contact au corps à corps, la version modifiée par ce don utilise des attaques de contact à distance.</descr>
         <uprank>1</uprank>
+        <multicast>true</multicast>
     </metamagic>
     <metamagic>
         <id>meta_duration</id>

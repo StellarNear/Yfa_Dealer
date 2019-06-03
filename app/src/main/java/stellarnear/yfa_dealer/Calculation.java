@@ -123,10 +123,11 @@ public class Calculation {
         Double distDouble =-1.0;
         int indexRange = rangesLvl.indexOf(range);
         if(spell.getMetaList().metaIdIsActive("meta_range") && rangesLvl.contains(range) && !range.equalsIgnoreCase("longue")){
-            indexRange+=1;
+            indexRange+=spell.getMetaList().getMetaByID("meta_range").getnCast();
         }
         if (indexRange>=0) {
             Integer lvl = casterLevel(spell);
+            if(indexRange>=rangesLvl.size()){indexRange=rangesLvl.size()-1;}
             switch(rangesLvl.get(indexRange)) {
                 case ("contact"):
                     distDouble=0.0;
