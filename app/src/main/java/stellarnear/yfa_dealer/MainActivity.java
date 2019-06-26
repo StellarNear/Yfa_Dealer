@@ -140,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
             final ScrollView scroll_tier=(ScrollView) findViewById(R.id.main_scroll_relat);
             LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
             final TextView Tier= new TextView(this);
-            GradientDrawable gd = new GradientDrawable(
-                    GradientDrawable.Orientation.BL_TR,
-                    new int[] {0xFFd9d9d9,0xFFFFFFFF});
-            gd.setCornerRadius(0f);
-            Tier.setBackground(gd);
+            LinearLayout.LayoutParams para= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            int pixelMarging = getApplicationContext().getResources().getDimensionPixelSize(R.dimen.general_margin);
+            para.setMargins(pixelMarging,pixelMarging,pixelMarging,pixelMarging);
+            Tier.setLayoutParams(para);
+            Tier.setBackground(getApplicationContext().getDrawable(R.drawable.background_tier_title));
 
             String tier_txt="Tier "+i;
 
@@ -157,16 +157,12 @@ public class MainActivity extends AppCompatActivity {
             Tier.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             Tier.setTextColor(Color.BLACK);
             Tier.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            Tier.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
             Tiers.addView(Tier);
 
             // side bar
             LinearLayout side=(LinearLayout) findViewById(R.id.side_bar);
             side.setElevation(10);
-            GradientDrawable gd_side = new GradientDrawable(
-                    GradientDrawable.Orientation.LEFT_RIGHT,
-                    new int[] {0xFFD8D8D8,0xFFFFFFFF});
-            side.setBackground(gd_side);
+            side.setBackground(getApplicationContext().getDrawable(R.drawable.background_side_bar));
             final TextView side_txt=new TextView(this);
             side_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             side_txt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
@@ -244,10 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
             side.addView(side_txt);
 
-            View h_sep = new View(this);
-            h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep.setBackgroundColor(Color.BLACK);
-            Tiers.addView(h_sep);
+
             SpellList rank_list= listAllNormalSpell.filterByRank(i).filterDisplayable();
             if (rank_list.size()==0){ continue;}
 
@@ -255,7 +248,9 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout spellLine = new LinearLayout(getApplicationContext());
                 spellLine.setOrientation(LinearLayout.HORIZONTAL);
                 setSpellLineColor(spellLine,spell);
-                spellLine.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                LinearLayout.LayoutParams paraSpellLine= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                paraSpellLine.setMargins(pixelMarging,pixelMarging,pixelMarging,0);
+                spellLine.setLayoutParams(paraSpellLine);
 
                 final CheckBox checkbox=new CheckBox(getApplicationContext());
                 setAddingSpell(checkbox,spell);
@@ -291,10 +286,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Tiers.addView(spellLine);
             }
-            View h_sep2 = new View(this);
-            h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep2.setBackgroundColor(Color.BLACK);
-            Tiers.addView(h_sep2);
         }
     }
 
@@ -560,34 +551,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setSpellLineColor(LinearLayout line,Spell spell) {
-        int bord = 0;
-        int centre = 0;
-
         if (spell.getDmg_type().equals("aucun")) {
-            centre = R.color.aucun_dark;
-            bord = R.color.aucun;
+            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_noelem));
         } else if (spell.getDmg_type().equals("feu")) {
-            centre = R.color.feu_dark;
-            bord = R.color.feu;
+            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_fire));
         } else if (spell.getDmg_type().equals("foudre")) {
-            centre = R.color.foudre_dark;
-            bord = R.color.foudre;
+            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_shock));
         } else if (spell.getDmg_type().equals("froid")) {
-            centre = R.color.froid_dark;
-            bord = R.color.froid;
+            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_frost));
         } else if (spell.getDmg_type().equals("acide")) {
-            centre = R.color.acide_dark;
-            bord = R.color.acide;
+            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_acid));
         } else {
-            centre = R.color.white;
-            bord = R.color.white;
+            //line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_nodmg));
         }
 
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{getColor(bord), getColor(centre)});  //pour V2 effet passer en TOP_BOTTOM et mettre getColor(bord),getColor(centre),getColor(bord)
-        gd.setCornerRadius(0f);
-        line.setBackground(gd);
     }
 
     public void setCheckBoxColor(CheckBox checkbox) {
