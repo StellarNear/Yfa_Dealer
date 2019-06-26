@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v8.4"</string>
-    <string name="time_spend">144h</string>
+    <string name="version">"v9.0"</string>
+    <string name="time_spend">146h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V9.0
+-Depense rapide de point mythic au clic et non plus au maintient du clic
+-Ajout d'un rappel lors d'un lancement d'arcane libre du bonus de +2 NLS
+-Refonte graphique
+----------------------------------------------------------------------------------
 Patch note V8.4
 -Ajout du multilancement pour la métamagie Sort Eloigné
 ----------------------------------------------------------------------------------
