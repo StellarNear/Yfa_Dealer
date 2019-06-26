@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
 
-        ((FrameLayout) findViewById(R.id.mythic_pts)).setOnLongClickListener(new View.OnLongClickListener() {
+        ((FrameLayout) findViewById(R.id.mythic_pts)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View view) {
                 if( yfa.getResourceValue("mythic_points")>0) {
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle("Demande de confirmation")
@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     tools.customToast(getApplicationContext(),"Tu n'as plus de point mythique","center");
                 }
-                return true;
             }
         });
     }
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
 
-                                        Snackbar.make(side_txt,"Arcane libre de rang " + rank + " lancé.", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(side_txt,"Arcane libre de rang " + rank + " lancé.\n(+2 NLS sur ce sort)", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
 
                                         yfa.getAllResources().getResource("mythic_points").spend(1);
