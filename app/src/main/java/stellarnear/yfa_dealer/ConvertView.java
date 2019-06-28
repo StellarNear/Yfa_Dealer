@@ -201,7 +201,7 @@ public class ConvertView extends AppCompatActivity {
 
 
         CheckBox checkMax=new CheckBox(mC);
-        checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
+        checkMax.setText("Cap +"+2*selected_rank+" ");//checkMax.setText("Augmentation du Cap +"+2*selected_rank+" ");
         setListnerChoiceSelect(checkMax,grid,list_check_choice);
         grid.addView(checkMax);
         list_check_choice.add(checkMax);
@@ -209,7 +209,7 @@ public class ConvertView extends AppCompatActivity {
         addVsep(grid,4,Color.GRAY);
 
         CheckBox checkMeta=new CheckBox(mC);
-        checkMeta.setText("Métamagie ");
+        checkMeta.setText("Métamagie ");//checkMeta.setText("Métamagie ");
         setListnerChoiceSelect(checkMeta,grid,list_check_choice);
         grid.addView(checkMeta);
         list_check_choice.add(checkMeta);
@@ -217,7 +217,7 @@ public class ConvertView extends AppCompatActivity {
         addVsep(grid,4,Color.GRAY);
 
         CheckBox checkNLS=new CheckBox(mC);
-        checkNLS.setText("Niveau de lanceur de sort +"+selected_rank+" ");
+        checkNLS.setText("NLS +"+selected_rank+" ");//checkNLS.setText("Niveau de lanceur de sort +"+selected_rank+" ");
         setListnerChoiceSelect(checkNLS,grid,list_check_choice);
         grid.addView(checkNLS);
         list_check_choice.add(checkNLS);
@@ -225,7 +225,7 @@ public class ConvertView extends AppCompatActivity {
         addVsep(grid,4,Color.GRAY);
 
         CheckBox checkDissi=new CheckBox(mC);
-        checkDissi.setText("Test contre Dissipation +"+2*selected_rank+" ");
+        checkDissi.setText("Dissipation +"+2*selected_rank+" ");//checkDissi.setText("Test contre Dissipation +"+2*selected_rank+" ");
         setListnerChoiceSelect(checkDissi,grid,list_check_choice);
         grid.addView(checkDissi);
         list_check_choice.add(checkDissi);
@@ -233,7 +233,7 @@ public class ConvertView extends AppCompatActivity {
         addVsep(grid,4,Color.GRAY);
 
         CheckBox checkResi=new CheckBox(mC);
-        checkResi.setText("Test contre Résistance +"+2*selected_rank+" ");
+        checkResi.setText("RM +"+2*selected_rank+" ");//checkResi.setText("Test contre Résistance +"+2*selected_rank+" ");
         setListnerChoiceSelect(checkResi,grid,list_check_choice);
         grid.addView(checkResi);
         list_check_choice.add(checkResi);
@@ -241,7 +241,7 @@ public class ConvertView extends AppCompatActivity {
         addVsep(grid,4,Color.GRAY);
 
         CheckBox checkSauv=new CheckBox(mC);
-        checkSauv.setText("Test contre Sauvegarde +"+(int) (selected_rank/2.0)+" ");
+        checkSauv.setText("JDS +"+(int) (selected_rank/2.0)+" ");//checkSauv.setText("Test contre Sauvegarde +"+(int) (selected_rank/2.0)+" ");
         setListnerChoiceSelect(checkSauv,grid,list_check_choice);
         grid.addView(checkSauv);
         list_check_choice.add(checkSauv);
@@ -287,11 +287,11 @@ public class ConvertView extends AppCompatActivity {
 
         for (CheckBox check : list_check_choice)
         {
-            if (check.getText().toString().contains("Métamagie") && check.isChecked()){
+            if (check.getText().toString().contains("Méta") && check.isChecked()){
                 construct_convertview_metas();
             }
 
-            if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
+            if (check.getText().toString().contains("JDS") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
 
@@ -316,7 +316,7 @@ public class ConvertView extends AppCompatActivity {
 
             }
 
-            if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
+            if (check.getText().toString().contains("NLS") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
                 int NLS=calculation.casterLevel(spell);
@@ -331,7 +331,7 @@ public class ConvertView extends AppCompatActivity {
 
             }
 
-            if (check.getText().toString().contains("Dissipation") && check.isChecked()){
+            if (check.getText().toString().contains("Dissi") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
                 if (spell.getSave_type().equals("aucun") || spell.getSave_type().equals("")) {
@@ -355,7 +355,7 @@ public class ConvertView extends AppCompatActivity {
 
             }
 
-            if (check.getText().toString().contains("Résistance") && check.isChecked()){
+            if (check.getText().toString().contains("RM") && check.isChecked()){
                 TextView result = new TextView(mC);
                 result.setTextColor(Color.parseColor("#088A29"));
                 int newNLS_resi=calculation.casterLevelSR(spell)+selected_rank*2;
@@ -517,16 +517,16 @@ public class ConvertView extends AppCompatActivity {
         // on modifie spell en fonction
         for (CheckBox check : list_check_choice)
         {
-            if (check.getText().toString().contains("Sauvegarde") && check.isChecked()){
+            if (check.getText().toString().contains("JDS") && check.isChecked()){
                 spell.getConversion().setArcaneId("save");
                 spell.getConversion().setRank(selected_rank);
-            } else if (check.getText().toString().contains("lanceur de sort") && check.isChecked()){
+            } else if (check.getText().toString().contains("NLS") && check.isChecked()){
                 spell.getConversion().setArcaneId("caster_level");
                 spell.getConversion().setRank(selected_rank);
             }else if (check.getText().toString().contains("Cap") && check.isChecked()){
                 spell.getConversion().setArcaneId("raise_cap");
                 spell.getConversion().setRank(selected_rank);
-            }else if (check.getText().toString().contains("Résistance") && check.isChecked()){
+            }else if (check.getText().toString().contains("RM") && check.isChecked()){
                 spell.getConversion().setArcaneId("spell_resistance");
                 spell.getConversion().setRank(selected_rank);
             }else if (check.getText().toString().contains("Dissipation") && check.isChecked()){

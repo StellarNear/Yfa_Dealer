@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedSpells.add(subSpellN);
             }
         } else {
-            selectedSpells.add(spell);
+            selectedSpells.add(new Spell(spell));
         }
         currentSelectionDisplay(getApplicationContext());
     }
