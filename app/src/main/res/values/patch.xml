@@ -7,6 +7,12 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V9.1
+-Le clic sur le nom du sort l'ajoute à la liste de sort en cours
+-Le clic sur le reste de la ligne du sort affiche sa description
+-Le clic sur le symbol mythique ajoute le sort mythique l'ajoute à la liste de sort en cours
+-Un clic maintenu sur le symbole mythique affiche la description de la variante mythique du sort
+----------------------------------------------------------------------------------
 Patch note V9.0
 -Depense rapide de point mythic au clic et non plus au maintient du clic
 -Ajout d'un rappel lors d'un lancement d'arcane libre du bonus de +2 NLS

@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -246,6 +247,14 @@ public class MainActivity extends AppCompatActivity {
 
             for(final Spell spell : rank_list.asList()){
                 LinearLayout spellLine = new LinearLayout(getApplicationContext());
+                spellLine.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    }
+                });
                 spellLine.setOrientation(LinearLayout.HORIZONTAL);
                 setSpellLineColor(spellLine,spell);
                 LinearLayout.LayoutParams paraSpellLine= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -262,25 +271,36 @@ public class MainActivity extends AppCompatActivity {
                 spellName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-                        toast.show();
+                        checkbox.setChecked(!checkbox.isChecked());
                     }
                 });
                 spellLine.addView(spellName);
-                Spell mythicSpell = listAllMythicSpell.getNormalSpellFromID(spell.getID());
+                final Spell mythicSpell = listAllMythicSpell.getNormalSpellFromID(spell.getID());
                 if (mythicSpell!=null){
                     LinearLayout mythLine =  new LinearLayout(getApplicationContext());
                     mythLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
                     int px = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.general_margin),    getResources().getDisplayMetrics()    );
                     mythLine.setPadding(0,0,px,0);
                     mythLine.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
-                    CheckBox checkMyth = new CheckBox(getApplicationContext());
+                    final CheckBox checkMyth = new CheckBox(getApplicationContext());
                     setCheckBoxColor(checkMyth);
                     setAddingSpell(checkMyth,mythicSpell);
                     mythLine.addView(checkMyth);
                     ImageView img = new ImageView(getApplicationContext());
                     img.setImageDrawable(getDrawable(R.drawable.ic_embrassed_energy));
+                    img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            checkMyth.setChecked(!checkMyth.isChecked());
+                        }
+                    });
+                    img.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            tools.customToast(getApplicationContext(),mythicSpell.getDescr(),"center");
+                            return true;
+                        }
+                    });
                     mythLine.addView(img);
                     spellLine.addView(mythLine);
                 }
@@ -290,10 +310,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAddingSpell(final CheckBox check, final Spell spell) {
-        check.setOnClickListener(new View.OnClickListener() {
+        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                if(!check.isChecked()){
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!b){
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle("Demande de confirmation")
                             .setMessage("Veux-tu tu lancer lancer une nouvelle fois le sort "+spell.getName()+" ?")
@@ -301,7 +321,6 @@ public class MainActivity extends AppCompatActivity {
                             .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     check.setChecked(true);
-                                    prepareSpell(check,spell);
                                 }})
                             .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -332,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
                             }})
                         .setNegativeButton("non", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                check.setChecked(false);
                             }
                         }).show();
             } else {
