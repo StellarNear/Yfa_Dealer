@@ -60,7 +60,7 @@ public class ResultBuilder {
             if(spell.isCrit()){
                 Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
                 explo.mutate().setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
-                txt_view.setCompoundDrawablesWithIntrinsicBounds(explo,null,explo,null);
+                txt_view.setCompoundDrawablesWithIntrinsicBounds(null,explo,null,explo);
                 int sumDmg = 2*tools.toInt(displayedText.damageTxt(spell));
                 checkHighScore(sumDmg);
                 txt_view.setText(sumDmg+" dégâts !");
@@ -85,16 +85,19 @@ public class ResultBuilder {
             }
 
             ((TextView)resultTemplate.findViewById(R.id.highscore)).setText("(record:"+String.valueOf(spell.getHighscore())+")");
-            checkHighScore(diceList.getSum());
+            int sumDmg =diceList.getSum();
 
             if(spell.isCrit()){
                 Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
                 explo.setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
-                ((TextView)resultTemplate.findViewById(R.id.damage)).setCompoundDrawablesWithIntrinsicBounds(explo,null,explo,null);
-                ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(2*diceList.getSum()));
+                ((TextView)resultTemplate.findViewById(R.id.damage)).setCompoundDrawablesWithIntrinsicBounds(null,explo,null,explo);
+                sumDmg=2*diceList.getSum();
+                ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(sumDmg));
             }else{
                 ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(diceList.getSum()));
             }
+            checkHighScore(sumDmg);
+
             ((TextView)resultTemplate.findViewById(R.id.damage)).setTextColor(spellColorId);
 
             ProbaFromDiceRand probaFromDiceRand = new ProbaFromDiceRand(diceList);
