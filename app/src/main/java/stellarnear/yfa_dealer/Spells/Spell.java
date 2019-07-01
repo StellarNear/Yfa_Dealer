@@ -19,9 +19,10 @@ import stellarnear.yfa_dealer.Tools;
 
 public class Spell {
 
+
     private String  name;
     private String id;
-
+    private Boolean mythic;
     private String normalSpellId; // pour les sorts mythic
 
     private String  descr;
@@ -61,6 +62,7 @@ public class Spell {
 
     public Spell(Spell spell){ //copying spell
         this.id=spell.id;
+        this.mythic=spell.mythic;
         this.normalSpellId=spell.normalSpellId;
         this.name=spell.name;
         this.descr=spell.descr;
@@ -86,13 +88,14 @@ public class Spell {
         this.settings=spell.settings;
     }
 
-    public Spell(String id,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         if(id.equalsIgnoreCase("")){
             this.id=name;
         } else {
             this.id=id;
         }
+        this.mythic=Boolean.valueOf(mythic);
         this.normalSpellId=normalSpellId;
         this.name=name;
         this.descr=descr;
@@ -135,7 +138,7 @@ public class Spell {
     }
 
     public boolean isMyth(){
-        return !this.normalSpellId.equalsIgnoreCase("");
+        return this.mythic;
     }
 
     public String getDuration() {

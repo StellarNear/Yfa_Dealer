@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!b){
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle("Demande de confirmation")
-                            .setMessage("Veux-tu tu lancer lancer une nouvelle fois le sort "+spell.getName()+" ?")
+                            .setMessage("Veux-tu tu lancer une nouvelle fois le sort "+spell.getName()+" ?")
                             .setIcon(android.R.drawable.ic_menu_help)
                             .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -339,13 +339,11 @@ public class MainActivity extends AppCompatActivity {
             if(yfa.getResourceValue("mythic_points")>0) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Demande de confirmation")
-                        .setMessage("Point(s) mythique(s) actuel(s) : " + yfa.getResourceValue("mythic_points") + "\n" +
-                                "\nVeux tu lancer la version mythique du sort " + spell.getName() + " (cout : 1pt) ?")
+                        .setMessage("Point(s) mythique(s) avant lancement des sorts : " + yfa.getResourceValue("mythic_points") + "\n" +
+                                "\nVeux tu préparer la version mythique du sort " + spell.getName() + "\n(cela coûtera 1 pt) ?")
                         .setIcon(android.R.drawable.ic_menu_help)
                         .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                yfa.getAllResources().getResource("mythic_points").spend(1);
-                                refreshMythicPoints();
                                 check.setChecked(true);
                                 addSpellToList(spell);
                             }})
@@ -401,14 +399,6 @@ public class MainActivity extends AppCompatActivity {
                     parentSpellRemovedList.add(spellList.getBindedParent());
                 }
             }
-        }
-
-        if (spell.isMyth()){
-            yfa.getAllResources().getResource("mythic_points").earn(parentSpellRemovedList.size());
-            refreshMythicPoints();
-            Toast toast = Toast.makeText(getApplicationContext(), "Tes points mythiques t'ont été restitués, il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
         }
         currentSelectionDisplay(getApplicationContext());
     }

@@ -28,15 +28,21 @@ public class SliderBuilder {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (seekBar.getProgress() > 75) {
                     seekBar.setProgress(100);
-                    if (spell.getRank() != 0 && yfa.getResourceValue("spell_rank_" + calculation.currentRank(spell)) <= 0) {
+                    if (spell.getRank() != 0 && yfa.getResourceValue("spell_rank_" + calculation.currentRank(spell)) <1) {
                         seekBar.setProgress(1);
                         tools.customToast(mC,"Tu n'as pas d'emplacement de sort "+calculation.currentRank(spell)+" de disponible...","center");
-                    } else if (!spell.getConversion().getArcaneId().equalsIgnoreCase("") && yfa.getResourceValue("spell_conv_rank_" + spell.getConversion().getRank())<=0) {
+                    } else if (!spell.getConversion().getArcaneId().equalsIgnoreCase("") && yfa.getResourceValue("spell_conv_rank_" + spell.getConversion().getRank())<1) {
                         seekBar.setProgress(1);
                         tools.customToast(mC, "Tu n'as pas d'emplacement de sort convertible " + calculation.currentRank(spell) + " de disponible...","center");
-                    } else if (spell.elementIsConverted() && yfa.getResourceValue("mythic_points") <= 0) {
+                    } else if (spell.elementIsConverted() && yfa.getResourceValue("mythic_points") < 1) {
                         seekBar.setProgress(1);
-                        tools.customToast(mC, "Il ne te reste aucun point mythique ","center");
+                        tools.customToast(mC, "Il ne te reste aucun point mythique pour la conversion d'élément","center");
+                    } else if(spell.isMyth() && yfa.getResourceValue("mythic_points") <1){
+                        seekBar.setProgress(1);
+                        tools.customToast(mC, "Il ne te reste aucun point mythique pour lancer ce sort Mythique","center");
+                    } else if(spell.isMyth() && spell.elementIsConverted() && yfa.getResourceValue("mythic_points") <2){
+                        seekBar.setProgress(1);
+                        tools.customToast(mC, "Il ne te reste pas assez de points mythiques pour lancer ce sort Mythique avec conversion d'élément","center");
                     } else {
                         startCasting();
                     }
@@ -69,9 +75,13 @@ public class SliderBuilder {
         if(!spell.getConversion().getArcaneId().equalsIgnoreCase("")){
             yfa.castConvSpell(spell.getConversion().getRank());
         }
+        if(spell.isMyth()){
+            yfa.getAllResources().getResource("mythic_points").spend(1);
+            tools.customToast(mC, "Sort Mythique\nIl te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
+        }
         if(spell.elementIsConverted()){
             yfa.getAllResources().getResource("mythic_points").spend(1);
-            tools.customToast(mC, "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
+            tools.customToast(mC, "Conversion d'élément\nIl te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
         }
         mListener.onEvent();
         Snackbar.make(seek, "Lancement du sort : " + spell.getName(), Snackbar.LENGTH_LONG)

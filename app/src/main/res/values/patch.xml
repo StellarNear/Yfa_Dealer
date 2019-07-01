@@ -10,6 +10,7 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
 Patch note V9.2
 -La dépense du sort convertible a lieu uniquement au lancement du sort (slider) (retour en arrière possible jusqu'à la fin)
 -La dépense du point mythique suite à une conversion d'élément a lieu uniquement au lancement du sort (slider) (retour en arrière possible jusqu'à la fin)
+-La selection de sort mythiques en page de séléction ne dépense plus les points directement (retour en arrière possible jusqu'à la fin)
 -Fix liste des métamagies affichés en convertion
 ----------------------------------------------------------------------------------
 Patch note V9.1

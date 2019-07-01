@@ -43,6 +43,7 @@ public class BuildSpellList extends AppCompatActivity {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
                     allSpells.add(new Spell(getValue("id",element2),
+                            getValue("mythic",element2),
                             getValue("normalSpellId",element2),
                             getValue("name",element2),
                             getValue("descr",element2),
