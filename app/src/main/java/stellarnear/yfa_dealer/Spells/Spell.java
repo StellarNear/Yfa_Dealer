@@ -88,7 +88,6 @@ public class Spell {
 
     public Spell(String id,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
-
         if(id.equalsIgnoreCase("")){
             this.id=name;
         } else {
@@ -233,6 +232,10 @@ public class Spell {
         final CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC);
         if(this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
             metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
+        }
+
+        if(metaId.equalsIgnoreCase("meta_extend") && !this.dmg_type.getDmgType().equalsIgnoreCase("") &&  this.dice_type.equalsIgnoreCase("lvl")){
+            check.setEnabled(false);
         }
 
         int maxLevelWedge= tools.toInt(settings.getString("wedge_max_lvl_spell",String.valueOf(mC.getResources().getInteger(R.integer.wedge_max_lvl_spell_def))));

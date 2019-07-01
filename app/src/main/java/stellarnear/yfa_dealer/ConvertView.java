@@ -434,6 +434,7 @@ public class ConvertView extends AppCompatActivity {
             for(final Metamagic meta : metaListAvailable.asList()) {
                 final CheckBox checkbox = new CheckBox(mC);
                 CheckBox oriCheckbox =   spell.getCheckboxeForMetaId(mA,mC,meta.getId());
+                if(!oriCheckbox.isEnabled()){continue;} //meta non dispo pour ce spell
                 checkbox.setText(oriCheckbox.getText());
                 checkbox.setButtonTintList(colorStateList);
                 checkbox.setTextColor(Color.DKGRAY);

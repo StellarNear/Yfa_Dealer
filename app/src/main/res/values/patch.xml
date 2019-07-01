@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v9.0"</string>
-    <string name="time_spend">146h</string>
+    <string name="version">"v9.2"</string>
+    <string name="time_spend">147h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V9.2
+-La dépense du sort convertible a lieu uniquement au lancement du sort (slider) (retour en arrière possible jusqu'à la fin)
+-La dépense du point mythique suite à une conversion d'élément a lieu uniquement au lancement du sort (slider) (retour en arrière possible jusqu'à la fin)
+-Fix liste des métamagies affichés en convertion
+----------------------------------------------------------------------------------
 Patch note V9.1
 -Le clic sur le nom du sort l'ajoute à la liste de sort en cours
 -Le clic sur le reste de la ligne du sort affiche sa description

@@ -33,6 +33,10 @@ public class SliderBuilder {
                         if(!spell.getConversion().getArcaneId().equalsIgnoreCase("")){
                             yfa.castConvSpell(spell.getConversion().getRank());
                         }
+                        if(spell.elementIsConverted()){
+                            yfa.getAllResources().getResource("mythic_points").spend(1);
+                            tools.customToast(mC, "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
+                        }
                         mListener.onEvent();
                         Snackbar.make(seek, "Lancement du sort : " + spell.getName(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();

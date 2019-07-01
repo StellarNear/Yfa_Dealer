@@ -191,8 +191,6 @@ public class ConvertElementView extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         applyConvertElement(); //si c'etait une méta elle est appliqué direct par la meta mais pour les autres il faut faire les cas
                                         mListener.onEvent();
-                                        yfa.getAllResources().getResource("mythic_points").spend(1);
-                                        tools.customToast(mC, "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
                                     }
                                 })
                                 .setNegativeButton(android.R.string.no, null).show();
