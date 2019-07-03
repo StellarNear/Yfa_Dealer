@@ -131,7 +131,7 @@ public class ContactAlertDialog {
                     message="Critique !\nIl va prendre cher !";
                 }
                 if(mListener!=null){mListener.onEvent();}
-                tools.customToast(mC,message);
+                tools.customToast(mC,message,"center");
             }
         });
         alertDialog = dialogBuilder.create();
@@ -215,13 +215,17 @@ public class ContactAlertDialog {
             public void onClick(View view) {
                 spell.setContactFailed();
                 if(mListener!=null){mListener.onEvent();}
-                tools.customToast(mC,"Mince ... prochaine fois ca touche !");
+                tools.customToast(mC,"Mince ... prochaine fois ca touche !","center");
                 alertDialog.dismiss();
             }
         });
 
         Button success = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        success.setVisibility(View.VISIBLE);
+        if(dice.getRandValue()==1){
+            success.setVisibility(View.GONE);
+        } else {
+            success.setVisibility(View.VISIBLE);
+        }
     }
 
     public interface OnRefreshEventListener {
