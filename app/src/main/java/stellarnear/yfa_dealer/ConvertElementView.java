@@ -7,23 +7,17 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Perso.Perso;
-import stellarnear.yfa_dealer.Spells.MetaList;
-import stellarnear.yfa_dealer.Spells.Metamagic;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 /**
@@ -35,7 +29,6 @@ public class ConvertElementView extends AppCompatActivity {
     private Spell spell;
     private Context mC;
     private Activity mA;
-    private ViewSwitcher panel;
     private LinearLayout title;
     private LinearLayout convert_element_choices;
     private LinearLayout convert_element_result;
@@ -47,17 +40,16 @@ public class ConvertElementView extends AppCompatActivity {
     private List<CheckBox> listAllElements = new ArrayList<CheckBox>();
     private String selectedElement;
 
-    public ConvertElementView(ViewSwitcher panel, Spell spell, Context mC, Activity mA) {
+    public ConvertElementView(View mainView, Spell spell, Context mC, Activity mA) {
         this.spell=spell;
         this.mC=mC;
         this.mA=mA;
-        this.panel=panel;
 
-        title = panel.findViewById(R.id.convert_slots);
-        convert_element_choices = panel.findViewById(R.id.convert_choices);
-        convert_element_result = panel.findViewById(R.id.convert_result);
+        title = mainView.findViewById(R.id.convert_elem_slots);
+        convert_element_choices = mainView.findViewById(R.id.convert_elem_choices);
+        convert_element_result = mainView.findViewById(R.id.convert_elem_result);
         resetResult();
-        convert_element_confirm = panel.findViewById(R.id.convert_confirm);
+        convert_element_confirm = mainView.findViewById(R.id.convert_elem_confirm);
         resetConfirm();
 
         constructTitle();
@@ -95,7 +87,7 @@ public class ConvertElementView extends AppCompatActivity {
         TextView titleTxt=new TextView(mC);
         titleTxt.setText("Changement d'élément");
         titleTxt.setTextSize(18);
-        titleTxt.setTextColor(Color.GRAY);
+        titleTxt.setTextColor(Color.DKGRAY);
         title.addView(titleTxt);
     }
 
@@ -215,7 +207,4 @@ public class ConvertElementView extends AppCompatActivity {
         convert_element_result.removeAllViews();
         convert_element_confirm.removeAllViews();
     }
-
-
-
 }

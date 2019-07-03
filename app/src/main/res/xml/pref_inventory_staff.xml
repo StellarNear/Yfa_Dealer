@@ -1,55 +1,19 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/staff_nkill_lightning_def"
-        android:key="staff_nkill_lightning"
-        android:title="Foudre"
-        android:icon="@drawable/ic_lightning"
-        android:selectAllOnFocus="true"
-        android:inputType="number"
-        android:singleLine="true"
-        android:summary="Nombre de morts : %s"/>
+    <SwitchPreference
+        android:defaultValue="@bool/glae_switch_tier1_def"
+        android:key="glae_switch_tier1"
+        android:summary="Accès au rang Mythique"
+        android:title="Premier éveil d'âme"
+        />
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/kill_list_lightning_def"
-        android:key="kill_list_lightning"
-        android:title="Tableau de chasse"
-        android:selectAllOnFocus="true"
-        android:summary="%s"/>
-
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/staff_nkill_frost_def"
-        android:key="staff_nkill_frost"
-        android:title="Froid"
-        android:icon="@drawable/ic_frost"
-        android:selectAllOnFocus="true"
-        android:inputType="number"
-        android:singleLine="true"
-        android:summary="Nombre de morts : %s"/>
-
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/kill_list_frost_def"
-        android:key="kill_list_frost"
-        android:title="Tableau de chasse"
-        android:selectAllOnFocus="true"
-        android:summary="%s"/>
-
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/staff_nkill_fire_def"
-        android:key="staff_nkill_fire"
-        android:title="Feu"
-        android:selectAllOnFocus="true"
-        android:icon="@drawable/ic_fire"
-        android:inputType="number"
-        android:singleLine="true"
-        android:summary="Nombre de morts : %s"/>
-
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@string/kill_list_fire_def"
-        android:key="kill_list_fire"
-        android:title="Tableau de chasse"
-        android:selectAllOnFocus="true"
-        android:summary="%s"/>
+    <SwitchPreference
+        android:defaultValue="@bool/glae_switch_tier2_def"
+        android:dependency="glae_switch_tier1"
+        android:key="glae_switch_tier2"
+        android:summary="Foudre : 1d20 > 20 double les dégâts. Autres : 1d20 > 1 échec du sort."
+        android:title="Deuxième éveil d'âme"
+        />
 
 </PreferenceScreen>

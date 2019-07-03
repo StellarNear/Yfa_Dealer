@@ -16,10 +16,7 @@ import java.util.List;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;
 
-
 public class Spell {
-
-
     private String  name;
     private String id;
     private Boolean mythic;
@@ -33,6 +30,7 @@ public class Spell {
     private DmgType  dmg_type;
     private String  range;
     private String contact;
+    private boolean contactFailed;
     private String area;
     private String  cast_time;
     private String  duration;
@@ -59,6 +57,9 @@ public class Spell {
     private boolean crit=false;
 
     private Tools tools=new Tools();
+    private GlaeManager glaeManager;
+
+    private SpellProfile spellProfile;
 
     public Spell(Spell spell){ //copying spell
         this.id=spell.id;
@@ -85,6 +86,7 @@ public class Spell {
         this.conversion=new ArcaneConversion(spell.conversion);
         this.metaList=new MetaList(spell.metaList);
         this.cast =new Cast();
+        this.glaeManager=new GlaeManager(spell.glaeManager);
         this.settings=spell.settings;
     }
 
@@ -118,10 +120,10 @@ public class Spell {
                 this.perfect=true;
             }
         }
-
         this.conversion=new ArcaneConversion();
         this.metaList= BuildMetaList.getInstance(mC).getMetaList();
         this.cast =new Cast();
+        this.glaeManager= new GlaeManager();
     }
 
     private void calcCompo(String compo) {
@@ -185,6 +187,15 @@ public class Spell {
     public String getContact(){
         return this.contact;
     }
+
+    public boolean contactFailed(){
+        return contactFailed;
+    }
+
+    public void setContactFailed(){
+        this.contactFailed=true;
+    }
+
     public String getArea(){ return this.area; }
 
     public String getCast_time() {
@@ -301,9 +312,7 @@ public class Spell {
                     }
                 }
             });
-
         }
-
         return check;
     }
 
@@ -329,6 +338,7 @@ public class Spell {
         this.metaList=previousSpellToBind.metaList;
         this.conversion=previousSpellToBind.conversion;
         this.cast =previousSpellToBind.cast;
+        this.glaeManager=previousSpellToBind.glaeManager;
         this.bindedParent =previousSpellToBind;
         this.binded=true;
     }
@@ -341,8 +351,16 @@ public class Spell {
         cast.cast();
     }
 
+    public void setFailed(){
+        cast.setFailed();
+    }
+
     public boolean isCast(){
         return cast.isCast();
+    }
+
+    public boolean isFailed() {
+        return cast.isFailed();
     }
 
     public void makeCrit() {
@@ -353,4 +371,34 @@ public class Spell {
         return this.crit;
     }
 
+    public void makeGlaeBoost() {
+        this.glaeManager.setBoosted();
+    }
+
+    public void refreshProfile() {
+        this.spellProfile.refreshProfile();
+    }
+
+    public SpellProfile getProfile() {
+        if(this.spellProfile==null){
+            this.spellProfile=new SpellProfile(this);
+        }
+        return this.spellProfile;
+    }
+
+    public GlaeManager getGlaeManager() {
+        return this.glaeManager;
+    }
+
+    public void makeGlaeFail() {
+        this.glaeManager.setFailed();
+    }
+
+    public void setRmPassed() {
+        cast.setRmPassed();
+    }
+
+    public boolean hasPassedRM(){
+        return cast.hasPassedRM();
+    }
 }

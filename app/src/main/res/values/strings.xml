@@ -3,9 +3,6 @@
     <string name="app_name">"Yfa Dealer"</string>
     <string name="action_settings">"Paramètres"</string>
 
-    <string name="kill_list_lightning_def">...</string>
-    <string name="kill_list_frost_def" />
-    <string name="kill_list_fire_def" />
     <string name="setting_activity">Paramètres</string>
 
 

@@ -67,14 +67,80 @@
                 android:src="@drawable/ic_repeat_black_24dp"/>
         </RelativeLayout>
 
-        <ViewSwitcher
-            android:id="@+id/view_switcher"
+        <ViewFlipper
+            android:id="@+id/view_flipper"
             android:layout_width="match_parent"
             android:focusableInTouchMode="false"
             android:layout_height="@dimen/height_spell_profile">
 
+
             <LinearLayout
                 android:id="@+id/first_panel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_spell_profile"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/convert_elem_slots"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/convert_elem_choices"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/convert_elem_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginStart="@dimen/bordure_spell_background"
+                    android:layout_marginEnd="@dimen/bordure_spell_background"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:id="@+id/convert_elem_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/general_margin"
+                    android:gravity="center"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/second_panel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_spell_profile"
                 android:orientation="vertical">
@@ -117,6 +183,8 @@
                         android:textAlignment="center" />
 
                     <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/sr_test_sepa"
                         android:layout_width="4px"
                         android:layout_height="match_parent"
                         android:background="@color/gray" />
@@ -161,46 +229,91 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/contact"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:background="@drawable/round_corner_slide"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:thumb="@drawable/thumb_unselect" >
+                    android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_filter_center_focus_black_24dp" />
+                    <SeekBar
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/round_corner_slide"
+                        android:layout_weight="1"
+                        android:progress="1"
+                        android:max="100"
+                        android:minHeight="30dp"
+                        android:thumb="@drawable/thumb_unselect" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/general_margin"
-                        android:text="Jet de contact"
-                        android:textAlignment="center"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="20sp" />
+                    <LinearLayout
+                        android:id="@+id/test_glae"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/round_corner_slide"
+                        android:gravity="center">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_staff" />
 
-                <SeekBar
-                    android:id="@+id/slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@drawable/round_corner_slide"
-                    android:layout_weight="1"
-                    android:progress="1"
-                    android:max="100"
-                    android:minHeight="30dp"
-                    android:visibility="gone"
-                    android:thumb="@drawable/thumb_unselect" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/general_margin"
+                            android:layout_marginEnd="@dimen/general_margin"
+                            android:text="Test Glaedäyes"
+                            android:textAlignment="center"
+
+                            android:textColor="@color/dark_gray"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/glae_boost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_crowned_explosion"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/glae_fail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_thunder_skull"
+                            android:visibility="gone"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/round_corner_slide"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_filter_center_focus_black_24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/general_margin"
+                            android:text="Jet de contact"
+                            android:textAlignment="center"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+
+
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/second_panel"
+                android:id="@+id/third_panel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_spell_profile"
                 android:layout_gravity="center"
@@ -214,8 +327,7 @@
                     android:layout_weight="1"
                     android:layout_margin="@dimen/general_margin"
                     android:gravity="center"
-                    android:orientation="horizontal">
-                </LinearLayout>
+                    android:orientation="horizontal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -231,8 +343,7 @@
                     android:layout_weight="1"
                     android:layout_margin="@dimen/general_margin"
                     android:gravity="center"
-                    android:orientation="horizontal">
-                </LinearLayout>
+                    android:orientation="horizontal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -248,8 +359,7 @@
                     android:layout_weight="1"
                     android:layout_margin="@dimen/general_margin"
                     android:gravity="center"
-                    android:orientation="horizontal">
-                </LinearLayout>
+                    android:orientation="horizontal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,12 +375,19 @@
                     android:layout_weight="1"
                     android:layout_margin="@dimen/general_margin"
                     android:gravity="center"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
+                    android:orientation="horizontal"/>
 
             </LinearLayout>
 
-        </ViewSwitcher>
+
+            <LinearLayout
+                android:id="@+id/fourth_panel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_spell_profile"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"/>
+
+        </ViewFlipper>
     </LinearLayout>
 </RelativeLayout>

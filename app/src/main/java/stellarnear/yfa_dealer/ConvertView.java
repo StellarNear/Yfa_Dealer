@@ -13,7 +13,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ public class ConvertView extends AppCompatActivity {
     private Spell spell;
     private Context mC;
     private Activity mA;
-    private ViewSwitcher panel;
     private LinearLayout convert_slots;
     private LinearLayout convert_choices;
     private LinearLayout convert_result;
@@ -51,25 +49,21 @@ public class ConvertView extends AppCompatActivity {
 
     private OnValidationEventListener mListener;
 
-    public ConvertView(ViewSwitcher panel, Spell spell, Context mC,Activity mA) {
+    public ConvertView(View mainView, Spell spell, Context mC,Activity mA) {
         this.spell=spell;
         this.mC=mC;
         this.mA=mA;
-        this.panel=panel;
 
-        convert_slots = panel.findViewById(R.id.convert_slots);
-        convert_choices = panel.findViewById(R.id.convert_choices);
-        resetChoice();
-
-        convert_result= panel.findViewById(R.id.convert_result);
-        resetResult();
-
-        convert_confirm = panel.findViewById(R.id.convert_confirm);
-
-        resetConfirm();
+        convert_slots = mainView.findViewById(R.id.convert_slots);
+        convert_choices = mainView.findViewById(R.id.convert_choices);
+        convert_result= mainView.findViewById(R.id.convert_result);
+        convert_confirm = mainView.findViewById(R.id.convert_confirm);
 
         this.all_meta=BuildMetaList.getInstance(mC).getMetaList();
 
+        resetChoice();
+        resetResult();
+        resetConfirm();
         constructTierlist();
     }
 

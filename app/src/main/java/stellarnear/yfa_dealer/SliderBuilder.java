@@ -69,23 +69,29 @@ public class SliderBuilder {
     }
 
     private void startCasting() {
-        if (spell.getRank() != 0) {
-            yfa.castSpell(spell);
-        }
-        if(!spell.getConversion().getArcaneId().equalsIgnoreCase("")){
-            yfa.castConvSpell(spell.getConversion().getRank());
-        }
-        if(spell.isMyth()){
-            yfa.getAllResources().getResource("mythic_points").spend(1);
-            tools.customToast(mC, "Sort Mythique\nIl te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
-        }
-        if(spell.elementIsConverted()){
-            yfa.getAllResources().getResource("mythic_points").spend(1);
-            tools.customToast(mC, "Conversion d'élément\nIl te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
-        }
+        spendCast();
         mListener.onEvent();
         Snackbar.make(seek, "Lancement du sort : " + spell.getName(), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    public void spendCast() {
+        if(!spell.isCast()) {
+            if (spell.getRank() != 0) {
+                yfa.castSpell(spell);
+            }
+            if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
+                yfa.castConvSpell(spell.getConversion().getRank());
+            }
+            if (spell.isMyth()) {
+                yfa.getAllResources().getResource("mythic_points").spend(1);
+                tools.customToast(mC, "Sort Mythique\nIl te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
+            }
+            if (spell.elementIsConverted()) {
+                yfa.getAllResources().getResource("mythic_points").spend(1);
+                tools.customToast(mC, "Conversion d'élément\nIl te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", "center");
+            }
+        }
     }
 
     public interface OnCastEventListener {

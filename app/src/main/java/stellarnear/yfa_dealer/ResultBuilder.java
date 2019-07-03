@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,20 +58,28 @@ public class ResultBuilder {
             txt_view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-            if(spell.isCrit()){
-                Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
-                explo.mutate().setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
-                txt_view.setCompoundDrawablesWithIntrinsicBounds(null,explo,null,explo);
-                int sumDmg = 2*tools.toInt(displayedText.damageTxt(spell));
-                checkHighScore(sumDmg);
-                txt_view.setText(sumDmg+" dégâts !");
-            }else{
-                int sumDmg = tools.toInt(displayedText.damageTxt(spell));
-                checkHighScore(sumDmg);
-                txt_view.setText(sumDmg+" dégâts !");
+            int sumDmg=tools.toInt(displayedText.damageTxt(spell));
+            if(spell.getGlaeManager().isBoosted()){
+                addGlaeBoost(resultTemplate);
+                sumDmg = 2*sumDmg;
             }
+            if(spell.isCrit()){
+                addExplo(resultTemplate);
+                sumDmg = 2*sumDmg;
+            }
+
             resultTemplate.addView(txt_view);
+
+            if(spell.isCrit()) {
+                addExplo(resultTemplate);
+            }
+            if(spell.getGlaeManager().isBoosted()){
+                addGlaeBoost(resultTemplate);
+            }
+
+            txt_view.setText(sumDmg+" dégâts !");
             txt_view.setTextColor(spellColorId);
+            checkHighScore(sumDmg);
         } else {
             final DiceList diceList = new DiceList();
             List<Integer> listDiceAllowed = Arrays.asList(3,4,6,8,10);
@@ -81,21 +90,21 @@ public class ResultBuilder {
                 for (Dice dice : diceList.getList()){
                     dice.rand(false);
                 }
-
             }
-
             ((TextView)resultTemplate.findViewById(R.id.highscore)).setText("(record:"+String.valueOf(spell.getHighscore())+")");
             int sumDmg =diceList.getSum();
-
-            if(spell.isCrit()){
-                Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
-                explo.setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
-                ((TextView)resultTemplate.findViewById(R.id.damage)).setCompoundDrawablesWithIntrinsicBounds(null,explo,null,explo);
-                sumDmg=2*diceList.getSum();
-                ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(sumDmg));
-            }else{
-                ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(diceList.getSum()));
+            if(spell.getGlaeManager().isBoosted()){
+                addGlaeBoost((LinearLayout) resultTemplate.findViewById(R.id.damage_top_icon));
+                addGlaeBoost((LinearLayout) resultTemplate.findViewById(R.id.damage_bot_icon));
+                sumDmg = 2*sumDmg;
             }
+            if(spell.isCrit()){
+                addExplo((LinearLayout) resultTemplate.findViewById(R.id.damage_top_icon));
+                addExplo((LinearLayout) resultTemplate.findViewById(R.id.damage_bot_icon));
+                sumDmg = 2*sumDmg;
+            }
+
+            ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(sumDmg));
             checkHighScore(sumDmg);
 
             ((TextView)resultTemplate.findViewById(R.id.damage)).setTextColor(spellColorId);
@@ -114,6 +123,22 @@ public class ResultBuilder {
             });
         }
         layout.addView(resultTemplate);
+    }
+
+    private void addGlaeBoost(LinearLayout resultTemplate) {
+        Drawable glae = mC.getDrawable(R.drawable.ic_crowned_explosion);
+        glae.mutate().setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
+        ImageView glaeImg =new ImageView(mC);
+        glaeImg.setImageDrawable(glae);
+        resultTemplate.addView(glaeImg);
+    }
+
+    private void addExplo(LinearLayout resultTemplate) {
+        Drawable explo = mC.getDrawable(R.drawable.ic_grade_black_24dp);
+        explo.mutate().setColorFilter(spellColorId,PorterDuff.Mode.SRC_IN);
+        ImageView exploImg =new ImageView(mC);
+        exploImg.setImageDrawable(explo);
+        resultTemplate.addView(exploImg);
     }
 
     private void checkHighScore(int sumDmg) {

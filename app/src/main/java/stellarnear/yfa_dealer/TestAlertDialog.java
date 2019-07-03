@@ -30,8 +30,9 @@ public class TestAlertDialog {
     private Spell spell;
     private Calculation calculation=new Calculation();
     private int sumScore;
-
+    private OnRefreshEventListener mListener;
     private boolean robe=false;
+    private Tools tools=new Tools();
 
     public TestAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;
@@ -39,7 +40,6 @@ public class TestAlertDialog {
         this.spell = spell;
         this.sumScore = 0;
         buildAlertDialog();
-        showAlertDialog();
     }
 
     private void buildAlertDialog() {
@@ -107,6 +107,16 @@ public class TestAlertDialog {
                 // User clicked cancel button
             }
         });
+
+        dialogBuilder.setPositiveButton("Succès", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                tools.customToast(mC,"Quand le spell passe... !");
+                spell.setRmPassed();
+                if(mListener!=null){mListener.onEvent();}
+                alertDialog.dismiss();
+            }
+        });
+
         alertDialog = dialogBuilder.create();
     }
 
@@ -134,12 +144,18 @@ public class TestAlertDialog {
         display.getSize(size);
         Float factor = mC.getResources().getInteger(R.integer.percent_fullscreen_customdialog)/100f;
         alertDialog.getWindow().setLayout((int) (factor*size.x), (int)(factor*size.y));
-        Button onlyButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        LinearLayout.LayoutParams onlyButtonLL = (LinearLayout.LayoutParams) onlyButton.getLayoutParams();
+        Button negativButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        LinearLayout.LayoutParams onlyButtonLL = (LinearLayout.LayoutParams) negativButton.getLayoutParams();
         onlyButtonLL.width=ViewGroup.LayoutParams.WRAP_CONTENT;
-        onlyButton.setLayoutParams(onlyButtonLL);
-        onlyButton.setTextColor(mC.getColor(R.color.colorBackground));
-        onlyButton.setBackground(mC.getDrawable(R.drawable.button_cancel_gradient));
+        negativButton.setLayoutParams(onlyButtonLL);
+        negativButton.setTextColor(mC.getColor(R.color.colorBackground));
+        negativButton.setBackground(mC.getDrawable(R.drawable.button_cancel_gradient));
+
+        Button success = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        success.setLayoutParams(onlyButtonLL);
+        success.setTextColor(mC.getColor(R.color.colorBackground));
+        success.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
+        success.setVisibility(View.GONE);
     }
 
     private void endSkillCalculation(final Dice dice) {
@@ -151,9 +167,8 @@ public class TestAlertDialog {
         TextView callToAction = dialogView.findViewById(R.id.customDialogTestCallToAction);
         callToAction.setTextColor(mC.getColor(R.color.secondaryTextCustomDialog));
 
-        Button onlyButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        onlyButton.setText("Ok");
-        onlyButton.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
+        Button successButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        successButton.setVisibility(View.VISIBLE);
 
         resultTitle.setText("Résultat du test de niveau de lanceur de sort :");
         int sumResult=dice.getRandValue()+ calculation.casterLevelSR(spell);
@@ -173,6 +188,26 @@ public class TestAlertDialog {
         });
 
         callToAction.setText("Fin du test de\nniveau de lanceur de sort.");
+
+        Button failButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        failButton.setText("Raté");
+        failButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tools.customToast(mC,"Le sort ne passe pas la résiste magique...");
+                spell.setFailed();
+                if(mListener!=null){mListener.onEvent();}
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    public interface OnRefreshEventListener {
+        void onEvent();
+    }
+
+    public void setRefreshEventListener(OnRefreshEventListener eventListener) {
+        mListener = eventListener;
     }
 }
 

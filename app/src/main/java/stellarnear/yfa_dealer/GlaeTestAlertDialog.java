@@ -19,36 +19,29 @@ import android.widget.TextView;
 
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Rolls.Dice;
-import stellarnear.yfa_dealer.Rolls.WheelDicePicker;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 
-public class ContactAlertDialog {
+public class GlaeTestAlertDialog {
     private Activity mA;
     private Context mC;
     private AlertDialog alertDialog;
-    private AlertDialog alertDialogWheelPicker;
-    private WheelDicePicker wheelPicker;
     private View dialogView;
-    private View dialogViewWheelPicker;
-    private String mode;
-    private Calculation calculation=new Calculation();
-    private int sumScore;
     private Spell spell;
     private Dice dice;
 
+    private Boolean boost=false;
+    private Boolean fail=false;
     private Perso yfa = MainActivity.yfa;
 
-    private OnRefreshEventListener mListener;
+    private OnEndEventListener mListener;
 
     private Tools tools = new Tools();
 
-    public ContactAlertDialog(Activity mA, Context mC, Spell spell) {
+    public GlaeTestAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;
         this.mC=mC;
         this.spell=spell;
-        this.mode = spell.getContact();
-        this.sumScore = 0;
         buildAlertDialog();
     }
 
@@ -56,37 +49,32 @@ public class ContactAlertDialog {
         LayoutInflater inflater = mA.getLayoutInflater();
         dialogView = inflater.inflate(R.layout.custom_alert_dialog, null);
         ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
-        icon.setImageDrawable(mC.getDrawable(R.drawable.ic_filter_center_focus_black_24dp));
 
-        String titleTxt = "Test de contact "+(mode.equalsIgnoreCase("melee") ? "au corps à corps" : "à distance") +" :\n";
+        if(spell.getDmg_type().equalsIgnoreCase("foudre")){
+            this.boost=true; this.fail=false;
+            icon.setImageDrawable(mC.getDrawable(R.drawable.ic_crowned_explosion));
+        } else {
+            this.fail=true; this.boost=false;
+            icon.setImageDrawable(mC.getDrawable(R.drawable.ic_thunder_skull));
+        }
+
+        String titleTxt = "Test de Glaedäyes :\n";
         final TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
         title.setSingleLine(false);
         title.setText(titleTxt);
 
-        sumScore= yfa.getBaseAtk();
-        String summaryDetail="BBA (+"+String.valueOf(sumScore)+")";
 
-        if(yfa.getBonusAtk()>0){
-            sumScore+=yfa.getBonusAtk();
-            summaryDetail+=" (bonus +"+String.valueOf(yfa.getBonusAtk())+")";
-        }
-        if(mode.equalsIgnoreCase("melee")){
-            sumScore+=yfa.getStrMod();
-            summaryDetail+="\nBonus force ("+(yfa.getStrMod()>0?"+":"")+yfa.getStrMod()+")";
+        String summaryTxt="Test de ";
+        if(spell.getDmg_type().equalsIgnoreCase("foudre")){
+            summaryTxt+=" surpuissance de la foudre";
         } else {
-            sumScore+=yfa.getDexMod();
-            summaryDetail+="\nBonus dexterité ("+(yfa.getDexMod()>0?"+":"")+yfa.getDexMod()+")";
+            summaryTxt+=" réprobation de l'élément "+spell.getDmg_type();
         }
-        if(yfa.getResourceValue("true_strike")>0){
-            sumScore+=20;
-            summaryDetail+="\nCoup au But (+20)";
-        }
-        String summaryTxt="Test contact : +"+String.valueOf(sumScore);
         TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
         summary.setText(summaryTxt);
 
         TextView detail = dialogView.findViewById(R.id.customDialogTestDetail);
-        detail.setText(summaryDetail);
+        detail.setVisibility(View.GONE);
 
         Button diceroll = dialogView.findViewById(R.id.button_customDialog_test_diceroll);
         diceroll.setOnClickListener( new View.OnClickListener() {
@@ -94,23 +82,6 @@ public class ContactAlertDialog {
             public void onClick(View v) {
                 if(((TextView)dialogView.findViewById(R.id.customDialogTestResult)).getText().equals("")){
                     startRoll();
-                } else {
-                    new AlertDialog.Builder(mA)
-                            .setIcon(R.drawable.ic_warning_black_24dp)
-                            .setTitle("Demande de confirmation")
-                            .setMessage("Es-tu sûre de vouloir te relancer ce jet ?")
-                            .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    startRoll();
-                                }
-                            })
-                            .setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .show();
                 }
             }
         });
@@ -122,25 +93,12 @@ public class ContactAlertDialog {
                 // User clicked cancel button
             }
         });
-
-        dialogBuilder.setPositiveButton("Succès", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                String message ="Bravo le sort touche !";
-                if(dice.getRandValue()==20){
-                    spell.makeCrit();
-                    message="Critique !\nIl va prendre cher !";
-                }
-                if(mListener!=null){mListener.onEvent();}
-                tools.customToast(mC,message);
-            }
-        });
         alertDialog = dialogBuilder.create();
     }
 
     private void startRoll() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         yfa.getAllResources().getResource("true_strike").spend(1);
-
         dice = new Dice(mA,mC,20);
         if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_DEF))){
             dice.rand(true);
@@ -167,12 +125,6 @@ public class ContactAlertDialog {
         failButton.setTextColor(mC.getColor(R.color.colorBackground));
         failButton.setBackground(mC.getDrawable(R.drawable.button_cancel_gradient));
 
-        Button success = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        success.setLayoutParams(onlyButtonLL);
-        success.setTextColor(mC.getColor(R.color.colorBackground));
-        success.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
-        success.setVisibility(View.GONE);
-
         Display display = mA.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -184,52 +136,52 @@ public class ContactAlertDialog {
         FrameLayout resultDice= dialogView.findViewById(R.id.customDialogTestResultDice);
         resultDice.removeAllViews();
         resultDice.addView(dice.getImg());
+        dice.delt();
 
         TextView resultTitle = dialogView.findViewById(R.id.customDialogTitleResult);
         TextView callToAction = dialogView.findViewById(R.id.customDialogTestCallToAction);
         callToAction.setTextColor(mC.getColor(R.color.secondaryTextCustomDialog));
 
+        resultTitle.setText("Résultat du test :");
 
-        resultTitle.setText("Résultat du test de contact :");
-        int sumResult=dice.getRandValue()+ sumScore;
-        if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
+        String resultMessage="Le sort est normal";
+        if(dice.getRandValue()==1 && this.fail){resultMessage="Le sort rate...";}
+        if(dice.getRandValue()==20 && this.boost){resultMessage="Le sort est boosté !";}
 
         final TextView result = dialogView.findViewById(R.id.customDialogTestResult);
-        result.setText(String.valueOf(sumResult));
+        result.setText(String.valueOf(resultMessage));
+        result.setTextSize(35);
 
-        dice.setMythicEventListener(new Dice.OnMythicEventListener() {
-            @Override
-            public void onEvent() {
-                int sumResult=dice.getRandValue()+ sumScore;
-                if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
-                result.setText(String.valueOf(sumResult));
-            }
-        });
-
-        callToAction.setText("Fin du test de contact.");
+        callToAction.setText("Fin du test.");
 
         Button failButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        failButton.setText("Raté");
+        failButton.setText("Ok");
+        failButton.setBackground(mC.getDrawable(R.drawable.button_ok_gradient));
         failButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                spell.setContactFailed();
-                if(mListener!=null){mListener.onEvent();}
-                tools.customToast(mC,"Mince ... prochaine fois ca touche !");
+                if(dice.getRandValue()==1 && fail){
+                    spell.makeGlaeFail();
+                } else if (dice.getRandValue() == 20 && boost) {
+                    spell.makeGlaeBoost();
+                    tools.customToast(mC, "Que la puissance de Glaedäyes retentisse !");
+                }
+                spell.getGlaeManager().setTested();
+                if (mListener != null) {
+                    mListener.onEvent();
+                }
                 alertDialog.dismiss();
             }
         });
-
-        Button success = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        success.setVisibility(View.VISIBLE);
     }
 
-    public interface OnRefreshEventListener {
+    public interface OnEndEventListener {
         void onEvent();
     }
 
-    public void setRefreshEventListener(OnRefreshEventListener eventListener) {
+    public void setEndEventListener(OnEndEventListener eventListener) {
         mListener = eventListener;
     }
+
 }
 

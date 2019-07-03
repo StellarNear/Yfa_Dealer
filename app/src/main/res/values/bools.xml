@@ -19,4 +19,7 @@
     <bool name="switch_manual_diceroll_DEF">false</bool>
     <bool name="myth_parangon_def">true</bool>
 
+    <bool name="glae_switch_tier1_def">true</bool>
+    <bool name="glae_switch_tier2_def">true</bool>
+
 </resources>

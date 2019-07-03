@@ -59,6 +59,7 @@ public class Perso {
     public void castSpell(Integer selected_rank) {
         allResources.castSpell(selected_rank);
     }
+
     public void castSpell(Spell spell) {
         if (!spell.isCast()){
             spell.cast();

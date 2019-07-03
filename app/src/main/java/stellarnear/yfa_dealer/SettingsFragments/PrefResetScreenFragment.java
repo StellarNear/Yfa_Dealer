@@ -10,9 +10,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 
-import java.util.Arrays;
-import java.util.List;
-
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;

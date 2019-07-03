@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v9.2"</string>
-    <string name="time_spend">148h</string>
+    <string name="version">"v9.3"</string>
+    <string name="time_spend">154h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V9.3
+-Fix dépense multiple de points mythique quand un sort avait des sous projectiles
+-Ajout d'un systeme de gestion de l'état de lancement des sorts pour les sort liés
+-Gestion des jets contre résistance magique et multi sort liés
+-Ajout de la gestion de Glaedäyes sur les sorts élémentaux
+-Gestion des dégats en fonction de Glaedäyes et d'un contact critique !
+-Masquage du test RM si le sort n'y est pas soumis
+----------------------------------------------------------------------------------
 Patch note V9.2
 -La dépense du sort convertible a lieu uniquement au lancement du sort (slider) (retour en arrière possible jusqu'à la fin)
 -La dépense du point mythique suite à une conversion d'élément a lieu uniquement au lancement du sort (slider) (retour en arrière possible jusqu'à la fin)
@@ -297,8 +305,6 @@ Fragment 2 design OK
 Range, durée tout est dynamique et calculé par rapport au level OK
 Tout les dès de chaque élément OK
 ----------------------------------------------------------------------------------
-To do ideas :
-- mieux faire l'alignement dynamique de la grille de dès dans dmg_det
-    </string>
+</string>
 
 </resources>
