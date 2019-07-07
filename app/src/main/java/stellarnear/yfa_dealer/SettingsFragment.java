@@ -29,6 +29,8 @@ import stellarnear.yfa_dealer.SettingsFragments.PrefResetScreenFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefSleepScreenFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefSpellgemScreenFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefXpFragment;
+import stellarnear.yfa_dealer.Spells.BuildMetaList;
+import stellarnear.yfa_dealer.Spells.BuildSpellList;
 
 public class SettingsFragment extends PreferenceFragment {
     private Activity mA;
@@ -133,6 +135,10 @@ public class SettingsFragment extends PreferenceFragment {
                 case "pref_character_xp":
                     BigInteger xp = tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def))));
                     prefXpFragment.checkLevel(xp);
+                    break;
+                case "pref_character_feat":
+                    BuildMetaList.resetMetas();
+                    BuildSpellList.resetSpellList();
                     break;
             }
         }

@@ -18,13 +18,30 @@ import stellarnear.yfa_dealer.Tools;
 
 public class BuildSpellList extends AppCompatActivity {
 
-    public SpellList allSpells = new SpellList();
+    private static BuildSpellList instance=null;
+
+    public SpellList allSpells = null;
     private Tools tools=new Tools();
 
-    public BuildSpellList(Context mC, String mode){  // on construit la liste qu'une fois dans MainActivity donc pas besoin de singleton
+    public static BuildSpellList getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
+        if (instance==null){
+            instance = new BuildSpellList(mC);
+        }
+        return instance;
+    }
 
-        //construire la liste complete regarder xml parser
+    public static void resetSpellList() {
+        instance = null;
+    }
 
+
+    private BuildSpellList(Context mC){  // on construit la liste qu'une fois dans MainActivity donc pas besoin de singleton
+        this.allSpells=new SpellList();
+        addSpells(mC,"");
+        addSpells(mC,"Mythic");
+    }
+
+    private void addSpells(Context mC, String mode) {
         try {
             InputStream is = mC.getAssets().open("spells"+mode+".xml");
 

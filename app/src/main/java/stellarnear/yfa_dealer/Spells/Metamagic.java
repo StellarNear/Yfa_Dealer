@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class Metamagic {
     private String id;
     private String name;
     private String description;
     private CheckBox check=null;
+    private OnCheckedChangeListener changeListener;
     private int uprank;
     private boolean multicast=false;
     private int nCast;
@@ -39,39 +41,44 @@ public class Metamagic {
         if (check==null) {
             check = new CheckBox(mC);
             check.setText(name +" (+"+uprank+")");
-            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (isChecked) {
-                        nCast += 1;
-                    } else {
-                        if (multicast) {
-                            new AlertDialog.Builder(mA)
-                                    .setTitle("Demande de confirmation")
-                                    .setMessage("Veux-tu utiliser " + name + " une fois de plus ?")
-                                    .setIcon(android.R.drawable.ic_menu_help)
-                                    .setPositiveButton("oui", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            check.setChecked(true);
-                                            if(mListener!=null){mListener.onEvent();}
-                                        }
-                                    })
-                                    .setNegativeButton("non", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            check.setChecked(false);
-                                            nCast = 0;
-                                            if(mListener!=null){mListener.onEvent();}
-                                        }
-                                    }).show();
-                        } else {
-                            nCast = 0;
-                        }
-                    }
-                    if(mListener!=null){mListener.onEvent();}
-                }
-            });
+            setOnChangeListenr(mA);
+            check.setOnCheckedChangeListener(changeListener);
         }
         return check;
+    }
+
+    private void setOnChangeListenr(final Activity mA) {
+        changeListener=new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    nCast += 1;
+                } else {
+                    if (multicast) {
+                        new AlertDialog.Builder(mA)
+                                .setTitle("Demande de confirmation")
+                                .setMessage("Veux-tu utiliser " + name + " une fois de plus ?")
+                                .setIcon(android.R.drawable.ic_menu_help)
+                                .setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        check.setChecked(true);
+                                        if(mListener!=null){mListener.onEvent();}
+                                    }
+                                })
+                                .setNegativeButton("non", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        check.setChecked(false);
+                                        nCast = 0;
+                                        if(mListener!=null){mListener.onEvent();}
+                                    }
+                                }).show();
+                    } else {
+                        nCast = 0;
+                    }
+                }
+                if(mListener!=null){mListener.onEvent();}
+            }
+        };
     }
 
     public String getId() {
@@ -118,8 +125,13 @@ public class Metamagic {
     }
 
     public void desactive() {
+        this.check.setChecked(false);
         this.nCast=0;
         if(mListener!=null){mListener.onEvent();}
+    }
+
+    public OnCheckedChangeListener getOnChangeListener() {
+        return changeListener;
     }
 
     public interface OnRefreshEventListener {

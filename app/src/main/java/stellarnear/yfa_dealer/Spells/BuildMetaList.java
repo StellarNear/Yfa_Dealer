@@ -1,6 +1,8 @@
 package stellarnear.yfa_dealer.Spells;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,10 +29,12 @@ public class BuildMetaList {
         return instance;
     }
 
+    public static void resetMetas() {
+        instance = null;
+    }
 
     private BuildMetaList(Context mC){
         metaList=new MetaList();
-
         //construire la liste complete regarder xml parser
         try {
             InputStream is = mC.getAssets().open("metamagic.xml");
@@ -57,8 +61,24 @@ public class BuildMetaList {
                     ));
                 }
             }
-
+            removeUnavailableMetas(mC);
         } catch (Exception e) {e.printStackTrace();}
+
+
+    }
+
+
+    private void removeUnavailableMetas(Context mC) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+        MetaList allowedList=new MetaList();
+        for(Metamagic meta : metaList.asList()) {
+            int defResId = mC.getResources().getIdentifier(meta.getId().toLowerCase() + "_switch_def", "bool", mC.getPackageName());
+            boolean active = settings.getBoolean(meta.getId().toLowerCase() + "_switch", mC.getResources().getBoolean(defResId));
+            if (active) {
+                allowedList.add(meta);
+            }
+        }
+        metaList=allowedList;
     }
 
     private String getValue(String tag, Element element) {
@@ -72,6 +92,6 @@ public class BuildMetaList {
     }
 
     public MetaList getMetaList() {
-        return new MetaList(this.metaList);
+        return new MetaList(this.metaList); //pour que chaque sort ai sa version de la métalist
     }
 }

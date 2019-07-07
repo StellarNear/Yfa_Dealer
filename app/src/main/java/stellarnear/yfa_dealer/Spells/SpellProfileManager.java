@@ -140,6 +140,7 @@ public class SpellProfileManager {
                     glaeDialog.setEndEventListener(new GlaeTestAlertDialog.OnEndEventListener() {
                         @Override
                         public void onEvent() {
+                            buildProfileMechanisms();
                             if(mListener!=null){mListener.onEvent();}
                             ((LinearLayout)profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
                         }

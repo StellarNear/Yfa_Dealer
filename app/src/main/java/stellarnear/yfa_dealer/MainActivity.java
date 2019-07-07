@@ -122,11 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildPage1() {
-        SpellList listAllNormalSpell = new BuildSpellList(getApplicationContext(),"").getSpellList();
-        SpellList listAllMythicSpell = new BuildSpellList(getApplicationContext(),"Mythic").getSpellList();
-        listAllSpell=new SpellList();
-        listAllSpell.add(listAllNormalSpell);
-        listAllSpell.add(listAllMythicSpell);
+        listAllSpell=BuildSpellList.getInstance(getApplicationContext()).getSpellList();
 
         int max_tier=0;
         for(int i=0;i<=19;i++){
@@ -240,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
             side.addView(side_txt);
 
 
-            SpellList rank_list= listAllNormalSpell.filterByRank(i).filterDisplayable();
+            SpellList rank_list= listAllSpell.getNormalSpells().filterByRank(i).filterDisplayable();
             if (rank_list.size()==0){ continue;}
 
             for(final Spell spell : rank_list.asList()){
@@ -273,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 spellLine.addView(spellName);
-                final Spell mythicSpell = listAllMythicSpell.getNormalSpellFromID(spell.getID());
+                final Spell mythicSpell = listAllSpell.getMythicSpells().getNormalSpellFromID(spell.getID());
                 if (mythicSpell!=null){
                     LinearLayout mythLine =  new LinearLayout(getApplicationContext());
                     mythLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import stellarnear.yfa_dealer.CompositeListner;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;
 
@@ -244,8 +246,23 @@ public class Spell {
     public CheckBox getCheckboxeForMetaId(final Activity mA,final Context mC, final String metaId){
 
         final CheckBox check = metaList.getMetaByID(metaId).getCheckBox(mA, mC);
-        if(this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
-            metaList.getMetaByID("meta_heighten").getCheckBox(mA,mC).setEnabled(false);
+
+        if(metaId.equalsIgnoreCase("meta_heighten") ){
+            CompositeListner compoList = new CompositeListner();
+            compoList.addOnclickListener(metaList.getMetaByID(metaId).getOnChangeListener());
+            compoList.addOnclickListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if ( rank+metaList.getMetaByID("meta_heighten").getnCast()>9){
+                        metaList.getMetaByID("meta_heighten").desactive();
+                    }
+                }
+            });
+
+            check.setOnCheckedChangeListener(compoList);
+                if (this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
+            check.setEnabled(false);}
+
         }
 
         if(metaId.equalsIgnoreCase("meta_extend") && !this.dmg_type.getDmgType().equalsIgnoreCase("") &&  this.dice_type.equalsIgnoreCase("lvl")){
@@ -281,10 +298,10 @@ public class Spell {
             check.setEnabled(false);
         }
         if(this.perfect && this.rank+metaList.getMetaByID(metaId).getUprank()<=9){
-            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            check.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean active) {
-                    if(active) {
+                public void onClick(View view) {
+            if(check.isChecked()) {
                         if (perfect) { //pour recheck sur les autre meta afficher que le sort est toujours parfait
                             new AlertDialog.Builder(mA)
                                     .setTitle("Demande de confirmation")
@@ -301,14 +318,10 @@ public class Spell {
                                     })
                                     .setNegativeButton("non", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            metaList.getMetaByID(metaId).active();
+
                                         }
                                     }).show();
-                        } else {
-                            metaList.getMetaByID(metaId).active();
                         }
-                    } else {
-                        metaList.getMetaByID(metaId).desactive();
                     }
                 }
             });

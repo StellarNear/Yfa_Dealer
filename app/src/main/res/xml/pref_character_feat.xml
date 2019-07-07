@@ -9,45 +9,46 @@
 
 
     <SwitchPreference
-        android:defaultValue="@bool/perfect_switch_def"
-        android:key="perfect"
+        android:defaultValue="@bool/meta_perfect_switch_def"
+        android:key="meta_perfect_switch"
         android:summary="Les variables du sort maximisées puis doublées"
         android:title="Sort parfait (+6)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/ameliore_switch_def"
-        android:key="ameliore"
+        android:defaultValue="@bool/meta_enhance_switch_def"
+        android:key="meta_enhance_switch"
         android:summary="Augmente d'une catégorie les dès de dégâts d'un sort"
         android:title="Sort amélioré (+4)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/rapid_switch_def"
-        android:key="rapid"
-        android:summary="Lance le sort par une action rapide"
-        android:title="Sort rapide (+4)" />
-
-    <SwitchPreference
-        android:defaultValue="@bool/delay_switch_def"
-        android:key="delay"
+        android:defaultValue="@bool/meta_delay_switch_def"
+        android:key="meta_delay_switch"
         android:summary="Le sort se déclenche après un certain temps"
         android:title="Sort à retardement (+4)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/quintessence_switch_def"
-        android:key="quintessence"
-        android:summary="Les variables du sort maximisées"
-        android:title="Quintessence des sorts (+3)" />
+        android:defaultValue="@bool/meta_quicken_switch_def"
+        android:key="meta_quicken_switch"
+        android:summary="Lance le sort par une action rapide"
+        android:title="Incantation rapide (+4)" />
+
 
 
     <SwitchPreference
-        android:defaultValue="@bool/extension_switch_def"
-        android:key="extension"
+        android:defaultValue="@bool/meta_max_switch_def"
+        android:key="meta_max_switch"
+        android:summary="Les variables du sort maximisées"
+        android:title="Quintessence des sorts (+3)" />
+
+    <SwitchPreference
+        android:defaultValue="@bool/meta_extend_switch_def"
+        android:key="meta_extend_switch"
         android:summary="Augmente les variables des sorts de 50%"
         android:title="Extension d’effet (+2)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/enchant_arrow_switch_def"
-        android:key="enchant_arrow"
+        android:defaultValue="@bool/meta_arrow_switch_def"
+        android:key="meta_arrow_switch"
         android:summary="Place un sort sur une flêche de l'archer-sylvestre"
         android:title="Flêche naturalisée (+2)" />
 
@@ -58,37 +59,37 @@
         android:selectAllOnFocus="true"
         android:inputType="number"
         android:singleLine="true"
-        android:dependency="enchant_arrow"
+        android:dependency="meta_arrow_switch"
         android:summary="Tier : %s"/>
 
 
     <SwitchPreference
-        android:defaultValue="@bool/intense_switch_def"
-        android:key="intense"
+        android:defaultValue="@bool/meta_heighten_switch_def"
+        android:key="meta_heighten_switch"
         android:summary="Le sort est considéré comme d’un niveau supérieur"
         android:title="Augmentation d’intensité (+1)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/extension_dura_switch_def"
-        android:key="extension_dura"
+        android:defaultValue="@bool/meta_duration_switch_def"
+        android:key="meta_duration_switch"
         android:summary="Le sort dure deux fois plus longtemps."
         android:title="Extension de durée (+1)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/eloigne_switch_def"
-        android:key="eloigne"
+        android:defaultValue="@bool/meta_range_switch_def"
+        android:key="meta_range_switch"
         android:summary="Augmente la portée d’un sort d’une ou de plusieurs catégories."
         android:title="Sort éloigné (+1)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/select_switch_def"
-        android:key="select"
+        android:defaultValue="@bool/meta_select_switch_def"
+        android:key="meta_select_switch"
         android:summary="Exclut certaines cibles de la zone d’effet d’un sort"
         android:title="Sort sélectif (+1)" />
 
     <SwitchPreference
-        android:defaultValue="@bool/silence_switch_def"
-        android:key="silence"
+        android:defaultValue="@bool/meta_silent_switch_def"
+        android:key="meta_silent_switch"
         android:summary="Le personnage peut lancer un sort sans émettre le moindre son"
         android:title="Incantation silencieuse (+1)" />
 

@@ -75,4 +75,8 @@ public class MetaList extends AppCompatActivity {
     public void activateFromConversion(String id) {
         getMetaByID(id).activateFromConversion();
     }
+
+    public void remove(Metamagic meta) {
+        this.listMeta.remove(meta);
+    }
 }

@@ -46,6 +46,27 @@ public class SpellList extends AppCompatActivity {
         return sel_list;
     }
 
+
+    public SpellList getNormalSpells(){
+        SpellList sel_list = new SpellList();
+        for(Spell spell : listSpells){
+            if (!spell.isMyth()) {
+                sel_list.add(spell);
+            }
+        }
+        return sel_list;
+    }
+
+    public SpellList getMythicSpells() {
+        SpellList sel_list = new SpellList();
+        for(Spell spell : listSpells){
+            if (spell.isMyth()) {
+                sel_list.add(spell);
+            }
+        }
+        return sel_list;
+    }
+
     public SpellList getSpellByID(String name){
         SpellList spellsAnswer = new SpellList();
         for (Spell spell : listSpells){
@@ -124,4 +145,6 @@ public class SpellList extends AppCompatActivity {
         }
         return spellList;
     }
+
+
 }
