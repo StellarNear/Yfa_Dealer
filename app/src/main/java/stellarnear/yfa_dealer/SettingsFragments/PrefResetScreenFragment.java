@@ -64,6 +64,7 @@ public class PrefResetScreenFragment {
                 yfa.refresh();
                 yfa.getAllResources().sleepReset();
                 yfa.getInventory().resetInventory();
+                yfa.getStats().resetStats();
                 tools.customToast(mC, "Remise à zero des paramètres de l'application", "center");
                 Intent intent = new Intent(mA, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

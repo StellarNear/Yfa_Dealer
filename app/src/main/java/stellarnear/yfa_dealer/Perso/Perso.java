@@ -8,8 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_dealer.Calculation;
+import stellarnear.yfa_dealer.HallOfFame;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Spells.Spell;
+import stellarnear.yfa_dealer.Stats.Stats;
 import stellarnear.yfa_dealer.Tools;
 
 /**
@@ -20,6 +22,8 @@ public class Perso {
 
     private Inventory inventory;
     private AllResources allResources;
+    private Stats stats;
+    private HallOfFame hallOfFame;
     private Tools tools=new Tools();
     private Context mC;
     private SharedPreferences prefs;
@@ -28,6 +32,8 @@ public class Perso {
     public Perso(Context mC) {
         inventory = new Inventory(mC);
         allResources = new AllResources(mC);
+        stats = new Stats(mC);
+        hallOfFame=new HallOfFame(mC);
         this.mC=mC;
         this.prefs= PreferenceManager.getDefaultSharedPreferences(mC);
     }
@@ -114,5 +120,14 @@ public class Perso {
             prefs.edit().putString(temp, "0").apply();
         }
         prefs.edit().putBoolean("karma_switch", false).apply();
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
+
+
+    public HallOfFame getHallOfFame() {
+        return hallOfFame;
     }
 }

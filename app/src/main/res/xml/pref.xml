@@ -43,4 +43,12 @@
         android:title="Recharge de sorts"
         android:summary="Recharger des utilisations de sortilèges"/>
 
+    <PreferenceScreen
+        android:icon="@drawable/ic_trophy_cup"
+        android:key="pref_stats"
+        android:title="Statistiques"
+        android:summary="Record actuel : XXXX"/>
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
+
 </PreferenceScreen>

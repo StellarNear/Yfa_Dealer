@@ -47,7 +47,7 @@
     <integer name="dexterite_def">3</integer>
     <integer name="wedge_max_lvl_spell_def">7</integer>
     <integer name="percent_fullscreen_combat_launcher_dialog">95</integer>
-
+    <integer name="display_stats_bin_def">50</integer>
 
 
 </resources>

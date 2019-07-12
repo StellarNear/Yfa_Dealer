@@ -164,7 +164,7 @@ public class GlaeTestAlertDialog {
                     spell.makeGlaeFail();
                 } else if (dice.getRandValue() == 20 && boost) {
                     spell.makeGlaeBoost();
-                    tools.customToast(mC, "Que la puissance de Glaedäyes retentisse !");
+                    tools.customToast(mC, "Que la puissance de Glaedäyes retentisse !","center");
                 }
                 spell.getGlaeManager().setTested();
                 if (mListener != null) {

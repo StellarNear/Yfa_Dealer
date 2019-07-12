@@ -148,6 +148,10 @@ public class SpellProfile {
         return text;
     }
 
+    public boolean isDone() {
+        return this.profileManager.isDone();
+    }
+
     public interface OnRefreshEventListener {
         void onEvent();
     }

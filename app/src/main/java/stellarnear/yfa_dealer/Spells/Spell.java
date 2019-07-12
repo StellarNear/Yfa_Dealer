@@ -63,6 +63,8 @@ public class Spell {
 
     private SpellProfile spellProfile;
 
+    private int dmgResult=0;
+
     public Spell(Spell spell){ //copying spell
         this.id=spell.id;
         this.mythic=spell.mythic;
@@ -413,5 +415,13 @@ public class Spell {
 
     public boolean hasPassedRM(){
         return cast.hasPassedRM();
+    }
+
+    public void setDmgResult(int dmgResult) {
+        this.dmgResult = dmgResult;
+    }
+
+    public int getDmgResult() {
+       return this.dmgResult;
     }
 }

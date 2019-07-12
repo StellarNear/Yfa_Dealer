@@ -35,6 +35,17 @@ public class SpellList extends AppCompatActivity {
         return sel_list;
     }
 
+
+    public SpellList filterByElem(String elem) {
+        SpellList sel_list = new SpellList();
+        for(Spell spell : listSpells){
+            if (spell.getDmg_type().equalsIgnoreCase(elem)) {
+                sel_list.add(spell);
+            }
+        }
+        return sel_list;
+    }
+
     public SpellList filterDisplayable(){
         SpellList sel_list = new SpellList();
 
@@ -147,4 +158,11 @@ public class SpellList extends AppCompatActivity {
     }
 
 
+    public Integer getDmg() {
+        int sum=0;
+        for(Spell spell: listSpells){
+            sum+=spell.getDmgResult();
+        }
+        return sum;
+    }
 }

@@ -79,6 +79,7 @@ public class ResultBuilder {
 
             txt_view.setText(sumDmg+" dégâts !");
             txt_view.setTextColor(spellColorId);
+            spell.setDmgResult(sumDmg);
             checkHighScore(sumDmg);
         } else {
             final DiceList diceList = new DiceList();
@@ -105,6 +106,7 @@ public class ResultBuilder {
             }
 
             ((TextView)resultTemplate.findViewById(R.id.damage)).setText(String.valueOf(sumDmg));
+            spell.setDmgResult(sumDmg);
             checkHighScore(sumDmg);
 
             ((TextView)resultTemplate.findViewById(R.id.damage)).setTextColor(spellColorId);

@@ -53,4 +53,23 @@
     <color name="start_gradient_background_spell">#d9d9d9</color>
     <color name="end_gradient_background_spell">#ffffff</color>
     <color name="lightgray">#dddddd</color>
+
+
+    <color name="miss_stat">#ff6666</color>
+    <color name="hit_stat">#66ccff</color>
+    <color name="crit_stat">#00e600</color>
+    <color name="crit_nat_stat">#009900</color>
+
+    <color name="dmg_stat">#13823E</color>
+    <color name="recent_stat">#003A17</color>
+
+    <color name="recent_phy">#1a1a1a</color>
+    <color name="recent_fire">#cc0000</color>
+    <color name="recent_shock">#008599</color>
+    <color name="recent_frost">#001a66</color>
+    <color name="contact_miss_stat">#cccccc</color>
+    <color name="resist_stat">#005580</color>
+    <color name="bglae_boost_stat">#006600</color>
+    <color name="glae_fail_stat">#cc2900</color>
+
 </resources>

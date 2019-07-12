@@ -20,7 +20,7 @@ import stellarnear.yfa_dealer.Spells.SpellProfile;
 
 public class SpellCastActivity extends AppCompatActivity {
 
-    private SpellList selected_spells;
+    private SpellList selectedSpells;
     private Perso yfa = MainActivity.yfa;
     private Targets targets = Targets.getInstance();
     private Tools tools=new Tools();
@@ -49,7 +49,7 @@ public class SpellCastActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         }
 
-        selected_spells= targets.getAllSpellList();
+        selectedSpells = targets.getAllSpellList();
 
         mainLin = (LinearLayout) findViewById(R.id.linear2);
         round = (TextView) findViewById(R.id.n_round);
@@ -81,23 +81,39 @@ public class SpellCastActivity extends AppCompatActivity {
                 @Override
                 public void onEvent() {
                     refreshRound();
-                    if(selected_spells.haveBindedSpells()){
+                    if(selectedSpells.haveBindedSpells()){
                         refreshAllProfiles();
                     }
+                    testAllEndRound();
                 }
             });
         }
     }
 
+
+
     private void refreshAllProfiles() {
-        for(Spell spell : selected_spells.asList()){
+        for(Spell spell : selectedSpells.asList()){
             spell.refreshProfile();
         }
     }
 
     private void refreshRound() {
-        int nRound = calculation.calcRounds(getApplicationContext(),selected_spells);
+        int nRound = calculation.calcRounds(getApplicationContext(), selectedSpells);
         round.setText("["+nRound+" round"+(nRound>1 ? "s":"")+"]");
+    }
+
+    private void testAllEndRound() {
+        boolean end = true;
+        for (Spell spell : selectedSpells.asList()){
+            if(!spell.getProfile().isDone()){
+                end=false;
+            }
+        }
+        if(end){
+            tools.customToast(getApplicationContext(),"Plus de sort à lancer");
+            yfa.getStats().storeStatsFromRolls(selectedSpells);
+        }
     }
 }
 

@@ -1,0 +1,239 @@
+package stellarnear.yfa_dealer.SettingsFragments.DisplayStatsScreenFragment;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.CheckBox;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import stellarnear.yfa_dealer.Elems.ElemsManager;
+import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.Stats.Stat;
+import stellarnear.yfa_dealer.Tools;
+
+
+public class DSSFGraph {
+    private Perso yfa = MainActivity.yfa;
+    private Context mC;
+    private View mainView;
+    private ElemsManager elems;
+    private List<String> elemsSelected;
+    private Map<String,CheckBox> mapElemCheckbox=new HashMap<>();
+    private int rankMax=-1;
+    private int nMetaMax=-1;
+    private int infoTxtSize=10;
+    private LineChart chartDmgRank;
+    private LineChart chartMetaDmg;
+    private Tools tools=new Tools();
+
+    public DSSFGraph(View mainView, Context mC) {
+        this.mainView = mainView;
+        this.mC = mC;
+        this.elems= ElemsManager.getInstance();
+        CheckBox checkPhy = mainView.findViewById(R.id.line_type_aucun);
+        CheckBox checkAcid = mainView.findViewById(R.id.line_type_acid);
+        CheckBox checkFire = mainView.findViewById(R.id.line_type_fire);
+        CheckBox checkShock = mainView.findViewById(R.id.line_type_shock);
+        CheckBox checkFrost = mainView.findViewById(R.id.line_type_frost);
+        mapElemCheckbox.put("aucun",checkPhy);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
+        setCheckboxListeners();
+        initLineCharts();
+    }
+
+    private void setCheckboxListeners() {
+        for(String elem : elems.getListKeys()){
+            mapElemCheckbox.get(elem).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    calculateElemToShow();
+                    resetChartRank();
+                    setDmgData();
+                    resetChartMeta();
+                    setMetaData();
+                }
+            });
+        }
+    }
+
+    private void initLineCharts() {
+        calculateElemToShow();
+        initLineChartRankDmg();
+        initLineChartMeta();
+        buildCharts();
+        chartDmgRank.animateXY(750, 1000);
+        chartMetaDmg.animateXY(750, 1000);
+    }
+
+    private void initLineChartRankDmg(){
+        chartDmgRank =mainView.findViewById(R.id.line_chart_dmg_rank);
+        setChartPara(chartDmgRank);
+        chartDmgRank.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                tools.customToast(mC,e.getData().toString(),"center");
+            }
+            @Override
+            public void onNothingSelected() {
+                resetChartRank();
+            }
+        });
+    }
+
+    private void setChartPara(LineChart chart) {
+        chart.getDescription().setEnabled(false);
+        chart.setDrawGridBackground(false);
+        chart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        chart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        chart.getXAxis().setDrawGridLines(false);
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setGranularity(1.0f);
+        leftAxis.setGranularityEnabled(true);
+        leftAxis.setAxisMinimum(0); // this replaces setStartAtZero(true)
+        chart.getAxisRight().setEnabled(false);
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(1.0f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+    }
+
+    private void calculateElemToShow() {
+        elemsSelected = new ArrayList<>();
+        for (String elem : elems.getListKeys()) {
+            if (mapElemCheckbox.get(elem).isChecked()) {
+                elemsSelected.add(elem);
+            }
+        }
+    }
+
+    private void initLineChartMeta() {
+        chartMetaDmg =mainView.findViewById(R.id.line_chart_crit_elem);
+        setChartPara(chartMetaDmg);
+
+        chartMetaDmg.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                tools.customToast(mC,e.getData().toString(),"center");
+            }
+
+            @Override
+            public void onNothingSelected() {
+                resetChartMeta();
+            }
+        });
+    }
+
+    private void buildCharts() {
+        buildMapRank();
+        setDmgData();
+        chartDmgRank.getXAxis().setLabelCount(rankMax+1);
+        setMetaData();
+        chartMetaDmg.getXAxis().setLabelCount(nMetaMax+1);
+    }
+
+    private void buildMapRank() {
+        rankMax=-1;
+        nMetaMax=-1;
+        for (Stat stat : yfa.getStats().getStatsList().asList()){
+            for (int rank : stat.getListRank()){
+                if(rank>rankMax){rankMax=rank;}
+            }
+            for(int nMeta:stat.getListMetaUprank()){
+                if(nMeta>nMetaMax){nMetaMax=nMeta;}
+            }
+        }
+    }
+
+    private void setDmgData() {
+        LineData data = new LineData();
+        for(String elem:elemsSelected){
+            ArrayList<Entry> listVal = new ArrayList<>();
+            for(int i=0;i<=rankMax;i++){
+                int dmgMoyElem=0;
+                for (Stat stat : yfa.getStats().getStatsList().asList()){
+                    if(stat.getRankElemMoyDmg(i,elem)>0){
+                       dmgMoyElem+=stat.getRankElemMoyDmg(i,elem);
+                    }
+                }
+                if(dmgMoyElem>0) {
+                    listVal.add(new Entry((int) i, (int) dmgMoyElem, dmgMoyElem + " dégâts en moyenne\npour les sorts de type " + elem + " de rang " + i));
+                }
+            }
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, elem);
+                setLinePara(elemSet, elems.getColorIdSombre(elem));
+                data.addDataSet(elemSet);
+            }
+        }
+        data.setValueTextSize(infoTxtSize);
+        chartDmgRank.setData(data);
+    }
+
+    private void setMetaData() {
+        LineData data = new LineData();
+        for(String elem:elemsSelected){
+            ArrayList<Entry> listVal = new ArrayList<>();
+            for(int iMeta=0;iMeta<=nMetaMax;iMeta++){
+                int dmgMoyMeta=0;
+                for (Stat stat : yfa.getStats().getStatsList().asList()){
+                    if(stat.getMetaElemMoyDmg(iMeta,elem)>0){
+                        dmgMoyMeta+=stat.getMetaElemMoyDmg(iMeta,elem);
+                    }
+                }
+                if(dmgMoyMeta>0) {
+                    listVal.add(new Entry((int) iMeta, (int) dmgMoyMeta, dmgMoyMeta + " dégâts en moyenne\npour " + iMeta + " rang de métamagie sur des sorts de type"+elem));
+                }
+            }
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, elem);
+                setLinePara(elemSet, elems.getColorIdSombre(elem));
+                data.addDataSet(elemSet);
+            }
+        }
+        data.setValueTextSize(infoTxtSize);
+        chartMetaDmg.setData(data);
+    }
+
+    private void setLinePara(LineDataSet set,int color) {
+        set.setColors(mC.getColor(color));   set.setLineWidth(2f);   set.setCircleRadius(4f); set.setCircleColor(mC.getColor(color)); set.setValueFormatter(new LargeValueFormatter());
+    }
+
+    // Resets
+    public void reset() {
+        for(String elem : elems.getListKeys()){
+            mapElemCheckbox.get(elem).setChecked(true);
+        }
+        calculateElemToShow();
+        resetChartRank();
+        resetChartMeta();
+        buildCharts();
+    }
+
+    private void resetChartRank() {
+        chartDmgRank.invalidate();
+        chartDmgRank.fitScreen();
+        chartDmgRank.highlightValue(null);
+    }
+
+    private void resetChartMeta() {
+        chartMetaDmg.invalidate();
+        chartMetaDmg.fitScreen();
+        chartMetaDmg.highlightValue(null);
+    }
+}
+

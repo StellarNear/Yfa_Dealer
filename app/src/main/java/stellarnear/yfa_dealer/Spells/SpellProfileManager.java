@@ -41,10 +41,9 @@ public class SpellProfileManager {
     private Spell spell;
     private View profile;
     private ViewFlipper panel;
-    private Boolean damageDisplayed=false; //pour aps revenir au panneau central si le sort a ses dégats affiché
+    private Boolean resultDisplayed =false; //pour aps revenir au panneau central si le sort a ses dégats affiché
     private CustomAlertDialog metaPopup;
     private Tools tools=new Tools();
-
     private SliderBuilder sliderBuild;
     private OnRefreshEventListener mListener;
     private String position="info";
@@ -64,7 +63,7 @@ public class SpellProfileManager {
             triggerFail("fail");
         } else if(spell.getGlaeManager().isFailed()){
             triggerFail("glae");
-        } else if(!this.position.equalsIgnoreCase("info") && !damageDisplayed){movePanelTo("info");}
+        } else if(!this.position.equalsIgnoreCase("info") && !resultDisplayed){movePanelTo("info");}
 
         if(spell.hasPassedRM() || !spell.hasRM()){
             profile.findViewById(R.id.sr_test_img).setVisibility(View.GONE);
@@ -77,10 +76,8 @@ public class SpellProfileManager {
                     testAlert.setRefreshEventListener(new TestAlertDialog.OnRefreshEventListener() {
                         @Override
                         public void onEvent() {
-                            if (mListener != null) {
-                                mListener.onEvent();
-                            }
                             buildProfileMechanisms();
+                            if (mListener != null) { mListener.onEvent();  }
                         }
                     });
                     testAlert.showAlertDialog();
@@ -108,13 +105,13 @@ public class SpellProfileManager {
         sliderBuild.setCastEventListener(new SliderBuilder.OnCastEventListener() {
             @Override
             public void onEvent() {
-                if(mListener!=null){mListener.onEvent();}
                 ((ImageView)profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
                 ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
                 ((LinearLayout)profile.findViewById(R.id.fourth_panel)).removeAllViews();
                 new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.fourth_panel));
-                damageDisplayed=true;
+                resultDisplayed =true;
                 movePanelTo("dmg");
+                if(mListener!=null){mListener.onEvent();}
             }
         });
 
@@ -141,8 +138,8 @@ public class SpellProfileManager {
                         @Override
                         public void onEvent() {
                             buildProfileMechanisms();
-                            if(mListener!=null){mListener.onEvent();}
                             ((LinearLayout)profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
+                            if(mListener!=null){mListener.onEvent();}
                         }
                     });
                 }
@@ -162,8 +159,8 @@ public class SpellProfileManager {
                         @Override
                         public void onEvent() {
                             buildProfileMechanisms();
-                            if(mListener!=null){mListener.onEvent();}
                             ((LinearLayout)profile.findViewById(R.id.contact)).setVisibility(View.GONE);
+                            if(mListener!=null){mListener.onEvent();}
                         }
                     });
                 }
@@ -184,8 +181,8 @@ public class SpellProfileManager {
                         public void onEvent() {
                             movePanelTo("info");
                             buildProfileMechanisms();
-                            if(mListener!=null){mListener.onEvent();}
                             ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
+                            if(mListener!=null){mListener.onEvent();}
                         }
                     });
                 }
@@ -206,8 +203,8 @@ public class SpellProfileManager {
                         public void onEvent() {
                             movePanelTo("info");
                             buildProfileMechanisms();
-                            if(mListener!=null){mListener.onEvent();}
                             ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+                            if(mListener!=null){mListener.onEvent();}
                         }
                     });
                 }
@@ -226,7 +223,7 @@ public class SpellProfileManager {
         txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         ((LinearLayout)profile.findViewById(R.id.fourth_panel)).addView(txt_view);
         sliderBuild.spendCast();
-        damageDisplayed=true;
+        resultDisplayed =true;
         movePanelTo("dmg");
     }
 
@@ -337,6 +334,10 @@ public class SpellProfileManager {
 
     public void refreshProfileMechanisms() {
         buildProfileMechanisms();
+    }
+
+    public boolean isDone() {
+        return resultDisplayed;
     }
 
     public interface OnRefreshEventListener {
