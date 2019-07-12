@@ -246,6 +246,31 @@
                         android:minHeight="30dp"
                         android:thumb="@drawable/thumb_unselect" />
 
+
+
+                    <LinearLayout
+                        android:id="@+id/contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/round_corner_slide"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_filter_center_focus_black_24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/general_margin"
+                            android:text="Jet de contact"
+                            android:textAlignment="center"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/test_glae"
                         android:layout_width="match_parent"
@@ -283,31 +308,6 @@
                             android:visibility="gone"/>
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/contact"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/round_corner_slide"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_filter_center_focus_black_24dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/general_margin"
-                            android:text="Jet de contact"
-                            android:textAlignment="center"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-
 
                 </FrameLayout>
             </LinearLayout>

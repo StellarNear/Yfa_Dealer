@@ -1,7 +1,9 @@
 package stellarnear.yfa_dealer.Stats;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class StatsList {
     private List<Stat> listStats = new ArrayList<>();
@@ -74,109 +76,6 @@ public class StatsList {
         }
         return tot;
     }
-
-
-    // Dmg part
-    /*
-
-    public int getNDmgTot() {
-        return listStats.size();
-    }
-
-
-    public int getMinDmgTot() {
-        int res=0;
-        for (Stat stat:listStats){
-            int sumDmg=stat.getSumDmg();
-            if(res==0 && sumDmg!=0 ){
-                res=sumDmg;
-            }
-            if (sumDmg!=0 && sumDmg<res){
-                res=sumDmg;
-            }
-        }
-        return res;
-    }
-
-    public int getMaxDmgTot() {
-        int res=0;
-        for (Stat stat:listStats){
-            int sumDmg=stat.getSumDmg();
-            if(res==0 && sumDmg!=0 ){
-                res=sumDmg;
-            }
-            if (sumDmg!=0 && sumDmg>res){
-                res=sumDmg;
-            }
-        }
-        return res;
-    }
-
-    public int getMinDmgElem(String elem) {
-        int res=0;
-        for (Stat stat:listStats){
-            if(res==0 && stat.getElemSumDmg().get(elem)!=null && stat.getElemSumDmg().get(elem)!=0 ){
-                res=stat.getElemSumDmg().get(elem);
-            }
-            if (stat.getElemSumDmg().get(elem)!=null && stat.getElemSumDmg().get(elem)!=0 && stat.getElemSumDmg().get(elem)<res){
-                res=stat.getElemSumDmg().get(elem);
-            }
-        }
-        return res;
-    }
-
-
-    public int getMoyDmg() {
-        int res=0;
-        for (Stat stat:listStats){
-            res+=stat.getSumDmg();
-        }
-        if(listStats.size()>=1){
-            res=(int)(res/listStats.size());
-        } else { res=0; }
-        return res;
-    }
-
-    public int getMoyDmgElem(String elem) {
-        int res=0;
-        for (Stat stat:listStats){
-            res+=stat.getElemSumDmg().get(elem);
-        }
-        if(listStats.size()>=1){
-            res=(int)(res/listStats.size());
-        } else { res=0; }
-        return res;
-    }
-
-    public int getMaxDmgElem(String elem) {
-        int res=0;
-        for (Stat stat:listStats){
-            if(res==0 && stat.getElemSumDmg().get(elem)!=null ){
-                res=stat.getElemSumDmg().get(elem);
-            }
-            if (stat.getElemSumDmg().get(elem)!=null && stat.getElemSumDmg().get(elem)>res){
-                res=stat.getElemSumDmg().get(elem);
-            }
-        }
-        return res;
-    }
-
-    public int getSumDmgTot() {
-        int res=0;
-        for (Stat stat:listStats){
-            //res+=stat.getSumDmg();
-        }
-        return res;
-    }
-
-    public int getSumDmgTotElem(String elem) {
-        int res=0;
-        for (Stat stat:listStats){
-            res+=stat.getElemSumDmg().get(elem);
-        }
-        return res;
-    }
-*/
 
     public Stat getLastStat() {
         Stat res=null;
@@ -290,5 +189,16 @@ public class StatsList {
 
         }
         return tot;
+    }
+
+    public StatsList filterByDate(String dateFormated){
+        StatsList res = new StatsList();
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy", Locale.FRANCE);
+        for (Stat stat : listStats){
+            if( formater.format(stat.getDate()).equalsIgnoreCase(dateFormated)){
+                res.add(stat);
+            }
+        }
+        return res;
     }
 }

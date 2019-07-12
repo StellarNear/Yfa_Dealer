@@ -71,6 +71,10 @@ public class Stat {
         return damagesShortList.filterByNMeta(iMeta).filterByElem(elem).getDmgMoy();
     }
 
+    public int getElemMoyDmg(String elem) {
+        return damagesShortList.filterByElem(elem).getDmgMoy();
+    }
+
     public Date getDate() {
         return date;
     }
@@ -131,4 +135,6 @@ public class Stat {
     public List<Integer> getListMetaUprank() {
         return rankMetaList;
     }
+
+
 }

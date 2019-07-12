@@ -519,7 +519,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:layout_height="wrap_content">
-                        <CheckBox android:id="@+id/line_type_time_foudre"
+                        <CheckBox android:id="@+id/line_type_time_shock"
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

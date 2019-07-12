@@ -26,7 +26,7 @@ public class DSSFPreference extends Preference {
 
     private DSSFSpell fragAtk;
     private DSSFGraph fragGraph;
-   // private DSSFTime fragTime;
+    private DSSFTime fragTime;
     //private DSSFDmg fragDmg;
     private String position="atk";
 
@@ -92,7 +92,7 @@ public class DSSFPreference extends Preference {
         fabTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if(fragTime==null){fragTime=new DSSFTime(mainView,mC);} else {  fragTime.reset();}
+                if(fragTime==null){fragTime=new DSSFTime(mainView,mC);} else {  fragTime.reset();}
                 movePanelTo("time");
                 popIn(fabTime);
             }

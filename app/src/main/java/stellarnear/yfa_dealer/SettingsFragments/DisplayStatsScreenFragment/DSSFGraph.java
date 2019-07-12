@@ -46,12 +46,12 @@ public class DSSFGraph {
         this.mainView = mainView;
         this.mC = mC;
         this.elems= ElemsManager.getInstance();
-        CheckBox checkPhy = mainView.findViewById(R.id.line_type_aucun);
+        CheckBox checkNone = mainView.findViewById(R.id.line_type_aucun);
         CheckBox checkAcid = mainView.findViewById(R.id.line_type_acid);
         CheckBox checkFire = mainView.findViewById(R.id.line_type_fire);
         CheckBox checkShock = mainView.findViewById(R.id.line_type_shock);
         CheckBox checkFrost = mainView.findViewById(R.id.line_type_frost);
-        mapElemCheckbox.put("aucun",checkPhy);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
+        mapElemCheckbox.put("aucun",checkNone);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
         setCheckboxListeners();
         initLineCharts();
     }

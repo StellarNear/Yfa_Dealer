@@ -1,37 +1,63 @@
 package stellarnear.yfa_dealer.SettingsFragments.DisplayStatsScreenFragment;
 
-/*
-import stellarnear.wedge_dealer.Elems.ElemsManager;
-import stellarnear.wedge_dealer.MainActivity;
-import stellarnear.wedge_dealer.Perso.Perso;
-import stellarnear.wedge_dealer.R;
-import stellarnear.wedge_dealer.Stats.Stat;
-import stellarnear.wedge_dealer.Stats.StatsList;
-import stellarnear.wedge_dealer.Tools;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.CheckBox;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import stellarnear.yfa_dealer.Elems.ElemsManager;
+import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.Stats.Stat;
+import stellarnear.yfa_dealer.Stats.StatsList;
+import stellarnear.yfa_dealer.Tools;
 
 public class DSSFTime {
-    private Perso wedge = MainActivity.wedge;
+    private Perso yfa = MainActivity.yfa;
     private Context mC;
     private View mainView;
     private ElemsManager elems;
     private List<String> elemsSelected;
-    private LinkedHashMap<String, StatsList> mapDatetxtStatslist = new LinkedHashMap<>();
+    private Map<String, StatsList> mapDatetxtStatslist = new LinkedHashMap<>();
     private List<String> labelList=new ArrayList<>();
-    private Map<String,CheckBox> mapElemCheckbox=new HashMap<>();
+    private Map<String, CheckBox> mapElemCheckbox=new HashMap<>();
     private int infoTxtSize=10;
-    private LineChart chartAtk;
+    private int nDate=0;
     private LineChart chartDmg;
+    private LineChart chartRank;
     private Tools tools=new Tools();
 
     public DSSFTime(View mainView, Context mC) {
         this.mainView = mainView;
         this.mC = mC;
-        this.elems= ElemsManager.getInstance(mC);
-        CheckBox checkPhy = mainView.findViewById(R.id.line_type_time_phy);
+        this.elems= ElemsManager.getInstance();
+        CheckBox checkNone = mainView.findViewById(R.id.line_type_time_none);
+        CheckBox checkAcid = mainView.findViewById(R.id.line_type_time_acid);
         CheckBox checkFire = mainView.findViewById(R.id.line_type_time_fire);
         CheckBox checkShock = mainView.findViewById(R.id.line_type_time_shock);
         CheckBox checkFrost = mainView.findViewById(R.id.line_type_time_frost);
-        mapElemCheckbox.put("",checkPhy); mapElemCheckbox.put("fire",checkFire);  mapElemCheckbox.put("shock",checkShock); mapElemCheckbox.put("frost",checkFrost);
+        mapElemCheckbox.put("aucun",checkNone);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
         setCheckboxListeners();
         initLineCharts();
     }
@@ -43,25 +69,27 @@ public class DSSFTime {
                 public void onClick(View view) {
                     calculateElemToShow();
                     resetChartDmg();
+                    resetChartRank();
                     setDmgData();
+                    setRankData();
                 }
             });
         }
     }
 
     private void initLineCharts() {
-        initLineChartAtk();
         calculateElemToShow();
         initLineChartDmg();
+        initLineChartRank();
         buildCharts();
-        chartAtk.animateXY(750, 1000);
         chartDmg.animateXY(750, 1000);
+        chartRank.animateXY(750, 1000);
     }
 
-    private void initLineChartAtk(){
-        chartAtk =mainView.findViewById(R.id.line_chart_time);
-        setChartPara(chartAtk);
-        chartAtk.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+    private void initLineChartDmg(){
+        chartDmg =mainView.findViewById(R.id.line_chart_time);
+        setChartPara(chartDmg);
+        chartDmg.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 tools.customToast(mC,e.getData().toString(),"center");
@@ -69,7 +97,7 @@ public class DSSFTime {
 
             @Override
             public void onNothingSelected() {
-                resetChartAtk();
+                resetChartDmg();
             }
         });
     }
@@ -99,11 +127,10 @@ public class DSSFTime {
         }
     }
 
-    private void initLineChartDmg() {
-        chartDmg =mainView.findViewById(R.id.line_chart_time_dmg);
-        setChartPara(chartDmg);
-
-        chartDmg.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+    private void initLineChartRank() {
+        chartRank =mainView.findViewById(R.id.line_chart_time_dmg);
+        setChartPara(chartRank);
+        chartRank.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 tools.customToast(mC,e.getData().toString(),"center");
@@ -111,17 +138,17 @@ public class DSSFTime {
 
             @Override
             public void onNothingSelected() {
-                resetChartDmg();
+                resetChartRank();
             }
         });
     }
 
     private void buildCharts() {
         computeHashmaps();
-        setAtkData();
         setDmgData();
-        formatAxis(chartAtk);
+        setRankData();
         formatAxis(chartDmg);
+        formatAxis(chartRank);
     }
 
     private void formatAxis(LineChart chart) {
@@ -142,7 +169,7 @@ public class DSSFTime {
     private void computeHashmaps() {
         mapDatetxtStatslist = new LinkedHashMap<>();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy", Locale.FRANCE);
-        for (Stat stat : wedge.getStats().getStatsList().asList()){
+        for (Stat stat : yfa.getStats().getStatsList().asList()){
             String dateTxt = formater.format(stat.getDate());
             if(mapDatetxtStatslist.get(dateTxt)==null) {
                 mapDatetxtStatslist.put(dateTxt,new StatsList());
@@ -151,43 +178,40 @@ public class DSSFTime {
         }
     }
 
-    private void setAtkData() {
+    private void setDmgData() {
         labelList=new ArrayList<>();
-        ArrayList<Entry> listValHit = new ArrayList<>();
-        ArrayList<Entry> listValCrit = new ArrayList<>();
-        ArrayList<Entry> listValCritNat = new ArrayList<>();
-        int index=0;
-        for (String key : mapDatetxtStatslist.keySet()){
-            int sumHit=mapDatetxtStatslist.get(key).getNAtksHit();
-            int nTot = mapDatetxtStatslist.get(key).getNAtksTot();
-            int nCrit = mapDatetxtStatslist.get(key).getNCrit();
-            int nCritNat = mapDatetxtStatslist.get(key).getNCritNat();
-
-            listValHit.add(new Entry((int) index, (int) (100f*sumHit/nTot),(int) (100f*sumHit/nTot)+"% touché en moyenne le "+key));
-            listValCrit.add(new Entry((int) index, (int) (100f*(nCrit-nCritNat)/nTot),(int) (100f*(nCrit-nCritNat)/nTot)+"% critique en moyenne le "+key));
-            listValCritNat.add(new Entry((int) index, (int) (100f*nCritNat/nTot),(int) (100f*nCritNat/nTot)+"% critique naturel en moyenne le "+key));
-            labelList.add(key);
-            index++;
-        }
-        LineDataSet setHit = new LineDataSet(listValHit,"Hit");
-        setLinePara(setHit,mC.getColor(R.color.hit_stat));
-
-        LineDataSet setCrit = new LineDataSet(listValCrit,"Crit");
-        setLinePara(setCrit,mC.getColor(R.color.crit_stat));
-
-        LineDataSet setCritNat = new LineDataSet(listValCritNat,"CritNat");
-        setLinePara(setCritNat,mC.getColor(R.color.crit_nat_stat));
-
         LineData data = new LineData();
-        data.addDataSet(setHit);
-        data.addDataSet(setCrit);
-        data.addDataSet(setCritNat);
+
+        for(String elem : elemsSelected) {
+            ArrayList<Entry> listVal = new ArrayList<>();
+            nDate=0;
+            for (String key : mapDatetxtStatslist.keySet()){
+                int dmgMoyMeta=0;
+                for (Stat stat : yfa.getStats().getStatsList().filterByDate(key).asList()){
+                    if(stat.getElemMoyDmg(elem)>0){
+                        dmgMoyMeta+=stat.getElemMoyDmg(elem);
+                    }
+                }
+                if(dmgMoyMeta>0) {
+                    listVal.add(new Entry((int) nDate, (int) dmgMoyMeta, dmgMoyMeta + " dégâts en moyenne\nle " + key + " pour les sorts de type"+elem));
+                }
+                nDate++;
+                labelList.add(key);
+
+            }
+
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, elem);
+                setLinePara(elemSet, elems.getColorIdSombre(elem));
+                data.addDataSet(elemSet);
+            }
+        }
         data.setValueTextSize(infoTxtSize);
-        chartAtk.setData(data);
+        chartDmg.setData(data);
     }
 
 
-    private void setDmgData() {
+    private void setRankData() {
         LineData data;
         if(elemsSelected.size()==4){
             data=getDmgDataSolo();
@@ -195,22 +219,24 @@ public class DSSFTime {
             data=getDmgDataElems();
         }
         data.setValueTextSize(infoTxtSize);
-        chartDmg.setData(data);
+        chartRank.setData(data);
     }
 
     private LineData getDmgDataSolo() {
+
         ArrayList<Entry> listValDmgMoy = new ArrayList<>();
         int index=0;
         for (String key : mapDatetxtStatslist.keySet()){
-            int dmgMoy=mapDatetxtStatslist.get(key).getMoyDmg();
+            int dmgMoy=0;//mapDatetxtStatslist.get(key).getMoyDmg();
             listValDmgMoy.add(new Entry((int) index, dmgMoy,dmgMoy+" dégâts en moyenne le "+key));
             index++;
         }
         LineDataSet setHit = new LineDataSet(listValDmgMoy,"tout");
-        setLinePara(setHit,mC.getColor(R.color.dmg_stat));
+        setLinePara(setHit,R.color.dmg_stat);
         LineData data = new LineData();
         data.addDataSet(setHit);
         return data;
+
     }
 
     private LineData getDmgDataElems() {
@@ -219,7 +245,7 @@ public class DSSFTime {
             ArrayList<Entry> listDmgMoy = new ArrayList<>();
             int index = 0;
             for (String key : mapDatetxtStatslist.keySet()) {
-                int dmgMoy = mapDatetxtStatslist.get(key).getMoyDmgElem(elem);
+                int dmgMoy = 0;//mapDatetxtStatslist.get(key).getMoyDmgElem(elem);
                 listDmgMoy.add(new Entry((int) index, dmgMoy,dmgMoy+" dégâts de "+elems.getName(elem)+" en moyenne le "+key));
                 index++;
             }
@@ -231,7 +257,7 @@ public class DSSFTime {
     }
 
     private void setLinePara(LineDataSet set,int color) {
-        set.setColors(color);   set.setLineWidth(2f);   set.setCircleRadius(4f); set.setCircleColor(color); set.setValueFormatter(new LargeValueFormatter());
+        set.setColors(mC.getColor(color));   set.setLineWidth(2f);   set.setCircleRadius(4f); set.setCircleColor(mC.getColor(color)); set.setValueFormatter(new LargeValueFormatter());
     }
 
     // Resets
@@ -239,23 +265,22 @@ public class DSSFTime {
         for(String elem : elems.getListKeys()){
             mapElemCheckbox.get(elem).setChecked(true);
         }
-        resetChartAtk();
         resetChartDmg();
+        resetChartRank();
         buildCharts();
     }
 
-    private void resetChartAtk() {
-        chartAtk.invalidate();
-        chartAtk.fitScreen();
-        chartAtk.highlightValue(null);
-    }
-
     private void resetChartDmg() {
-        calculateElemToShow();
         chartDmg.invalidate();
         chartDmg.fitScreen();
         chartDmg.highlightValue(null);
     }
+
+    private void resetChartRank() {
+        calculateElemToShow();
+        chartRank.invalidate();
+        chartRank.fitScreen();
+        chartRank.highlightValue(null);
+    }
 }
 
-*/
