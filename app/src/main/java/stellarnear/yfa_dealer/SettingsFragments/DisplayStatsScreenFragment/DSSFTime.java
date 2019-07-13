@@ -183,7 +183,7 @@ public class DSSFTime {
         labelList=new ArrayList<>();
         LineData data = new LineData();
 
-        if(typeSelected.size()==6){
+        if(typeSelected.size()==6 || (typeSelected.size()==5 && !typeSelected.contains(""))){
             addDmgAllTypesData(data);
         } else {
             addDmgTypesData(data);

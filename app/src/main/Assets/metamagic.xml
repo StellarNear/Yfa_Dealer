@@ -42,12 +42,7 @@
         <descr>Place un sort sur une flêche de l'archer-sylvestre (Wedge + Tenshi ftw). Tout sort placé sur une flèche de cette manière est alors considéré comme lancé. Les flèches naturalisées restent actives 24h. Utiliser ce pouvoir est une action complexe et nécéssite un emplacement de sort de deux niveaux de plus que son niveau réel.</descr>
         <uprank>2</uprank>
     </metamagic>
-    <metamagic>
-        <id>meta_select</id>
-        <name>Sort séléctif</name>
-        <descr>Lorsque le personnage lance un sort de zone sélectif, il peut choisir des cibles situées dans la zone. Les cibles choisies échappent aux effets du sort. Un sort sélectif occupe un emplacement de sort d’un niveau de plus que le niveau normal du sort.</descr>
-        <uprank>1</uprank>
-    </metamagic>
+
     <metamagic>
         <id>meta_heighten</id>
         <name>Augmentation d'intensité</name>
@@ -56,9 +51,15 @@
         <multicast>true</multicast>
     </metamagic>
     <metamagic>
-        <id>meta_silent</id>
-        <name>Sort silencieux</name>
-        <descr>Un sort à incantation silencieuse ne nécessite pas de composante verbale. Les sorts sans composante verbale ne sont donc pas affectés. Un sort à incantation silencieuse nécessite un emplacement de sort d’un niveau de plus que son niveau réel.</descr>
+        <id>meta_duration</id>
+        <name>Extension de durée</name>
+        <descr>Un sort à extension de durée dure deux fois plus longtemps qu’indiqué dans sa description. Les sorts permanents, instantanés et ceux dont la durée dépend de la concentration du personnage ne sont pas concernés. Un sort à extension de durée nécessite un emplacement de sort d’un niveau de plus que son niveau réel."</descr>
+        <uprank>1</uprank>
+    </metamagic>
+    <metamagic>
+        <id>meta_focus</id>
+        <name>Sort concentré</name>
+        <descr>Lorsque le personnage lance un sort qui touche ou cible plus d’une créature, il peut choisir une cible ou une créature dans la zone d’effet du sort. Le DD du jet de sauvegarde de cette créature pour résister au sort est augmenté de +2. Occupe un emplacement de sort d’un niveau de plus que le niveau normal du sort.</descr>
         <uprank>1</uprank>
     </metamagic>
     <metamagic>
@@ -69,10 +70,19 @@
         <multicast>true</multicast>
     </metamagic>
     <metamagic>
-        <id>meta_duration</id>
-        <name>Extension de durée</name>
-        <descr>Un sort à extension de durée dure deux fois plus longtemps qu’indiqué dans sa description. Les sorts permanents, instantanés et ceux dont la durée dépend de la concentration du personnage ne sont pas concernés. Un sort à extension de durée nécessite un emplacement de sort d’un niveau de plus que son niveau réel."</descr>
+        <id>meta_select</id>
+        <name>Sort séléctif</name>
+        <descr>Lorsque le personnage lance un sort de zone sélectif, il peut choisir des cibles situées dans la zone. Les cibles choisies échappent aux effets du sort. Un sort sélectif occupe un emplacement de sort d’un niveau de plus que le niveau normal du sort.</descr>
         <uprank>1</uprank>
     </metamagic>
+    <metamagic>
+        <id>meta_silent</id>
+        <name>Sort silencieux</name>
+        <descr>Un sort à incantation silencieuse ne nécessite pas de composante verbale. Les sorts sans composante verbale ne sont donc pas affectés. Un sort à incantation silencieuse nécessite un emplacement de sort d’un niveau de plus que son niveau réel.</descr>
+        <uprank>1</uprank>
+    </metamagic>
+
+
+
 
 </records>

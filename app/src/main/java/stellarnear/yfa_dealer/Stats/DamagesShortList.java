@@ -17,10 +17,14 @@ public class DamagesShortList {
         listElements=new ArrayList<>();
     }
 
-
-    private void add(DamagesShortListElement element) {
+    public void add(DamagesShortListElement element) {
         listElements.add(element);
     }
+
+    public void add(DamagesShortList list) {
+            listElements.addAll(list.asList());
+    }
+
     private void buildList(SpellList spells) {
         listElements=new ArrayList<>();
         for (Spell spell:spells.asList()){
@@ -44,22 +48,7 @@ public class DamagesShortList {
         return result;
     }
 
-    public int getMinDmg() {
-        int result=0;
-        for(DamagesShortListElement element : listElements){
-            if(result==0 && element.getDmgSum()!=0){result=element.getDmgSum();}
-            if(result>element.getDmgSum()){result=element.getDmgSum();}
-        }
-        return result;
-    }
 
-    public int getMaxDmg() {
-        int result=0;
-        for(DamagesShortListElement element : listElements){
-            if(result<element.getDmgSum()){result=element.getDmgSum();}
-        }
-        return result;
-    }
 
     public int getRankMoy() {
         float result=0;
@@ -67,6 +56,32 @@ public class DamagesShortList {
             result+=element.getRank();
         }
         return listElements.size()>0?Math.round(result/listElements.size()):0;
+    }
+
+    public int getMetaRankMoy() {
+        float result=0;
+        for(DamagesShortListElement element : listElements){
+            result+=element.getnMeta();
+        }
+        return listElements.size()>0?Math.round(result/listElements.size()):0;
+    }
+
+    public int getArcaneConvRankMoy() {
+        float result=0;
+        for(DamagesShortListElement element : listElements){
+            result+=element.getArcaneConvRank();
+        }
+        return listElements.size()>0?Math.round(result/listElements.size()):0;
+    }
+
+    public int getNMythicMoy() {
+        int result=0;
+        for(DamagesShortListElement element : listElements){
+            if(element.isMythic()) {
+                result ++;
+            }
+        }
+        return result;
     }
 
     public int getNDamageSpell() {
@@ -111,5 +126,43 @@ public class DamagesShortList {
     }
 
 
+    public List<DamagesShortListElement> asList() {
+        return listElements;
+    }
+
+    public int size() {
+        return listElements.size();
+    }
+
+    /* DAMAGE part */
+
+    public int getSumDmgTot() {
+        int tot=0;
+        for (DamagesShortListElement element : listElements){
+            tot+=element.getDmgSum();
+        }
+        return tot;
+    }
+
+    public int getMinDmg() {
+        int result=0;
+        for(DamagesShortListElement element : listElements){
+            if(result==0 && element.getDmgSum()!=0){result=element.getDmgSum();}
+            if(result>element.getDmgSum()){result=element.getDmgSum();}
+        }
+        return result;
+    }
+
+    public int getMaxDmg() {
+        int result=0;
+        for(DamagesShortListElement element : listElements){
+            if(result<element.getDmgSum()){result=element.getDmgSum();}
+        }
+        return result;
+    }
+
+    public DamagesShortListElement getLastDamageElement() {
+        return listElements!=null && listElements.size()>0 ? listElements.get(listElements.size()-1) : null;
+    }
 
 }

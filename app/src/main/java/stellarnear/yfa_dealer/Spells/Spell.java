@@ -228,6 +228,10 @@ public class Spell {
         if(val>highscore){
             returnVal=true;
             settings.edit().putInt(this.id+"_highscore",val).apply();
+            int highscoreAllSpells=settings.getInt("all_spells_highscore",0);
+            if(val>highscoreAllSpells){
+                settings.edit().putInt("all_spells_highscore",val).apply();
+            }
         }
         return returnVal;
     }
@@ -264,7 +268,10 @@ public class Spell {
             check.setOnCheckedChangeListener(compoList);
                 if (this.rank>=9 || this.rank+metaList.getMetaByID("meta_heighten").getnCast()>=9 ){
             check.setEnabled(false);}
+        }
 
+        if(metaId.equalsIgnoreCase("meta_focus") && (this.save_type.equalsIgnoreCase("") || this.save_type.equalsIgnoreCase("aucun"))){
+            check.setEnabled(false);
         }
 
         if(metaId.equalsIgnoreCase("meta_extend") && !this.dmg_type.getDmgType().equalsIgnoreCase("") &&  this.dice_type.equalsIgnoreCase("lvl")){

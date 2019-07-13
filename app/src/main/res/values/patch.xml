@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v9.4"</string>
-    <string name="time_spend">152h</string>
+    <string name="version">"v10.0"</string>
+    <string name="time_spend">182h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V9.5
+-Ajout métamagie Sort concentré
+----------------------------------------------------------------------------------
 Patch note V9.4
 -Fix des métamagies pas connus toujours présente dans la liste affichée
 -Augementation d'intensité lancable en multicast (avec restriction calculée directement)

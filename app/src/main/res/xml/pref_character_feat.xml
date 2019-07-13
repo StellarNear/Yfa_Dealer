@@ -76,6 +76,12 @@
         android:title="Extension de durée (+1)" />
 
     <SwitchPreference
+        android:defaultValue="@bool/meta_focus_switch_def"
+        android:key="meta_focus_switch"
+        android:summary="+2 au DD du sort"
+        android:title="Sort concentré (+1)" />
+
+    <SwitchPreference
         android:defaultValue="@bool/meta_range_switch_def"
         android:key="meta_range_switch"
         android:summary="Augmente la portée d’un sort d’une ou de plusieurs catégories."
@@ -91,7 +97,7 @@
         android:defaultValue="@bool/meta_silent_switch_def"
         android:key="meta_silent_switch"
         android:summary="Le personnage peut lancer un sort sans émettre le moindre son"
-        android:title="Incantation silencieuse (+1)" />
+        android:title="Sort silencieux (+1)" />
 
     <SwitchPreference
         android:defaultValue="@bool/multispell_switch_def"

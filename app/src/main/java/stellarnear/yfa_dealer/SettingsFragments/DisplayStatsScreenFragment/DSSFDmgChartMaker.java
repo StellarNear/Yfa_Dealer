@@ -25,7 +25,8 @@ import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
-import stellarnear.yfa_dealer.Stats.Stat;
+import stellarnear.yfa_dealer.Stats.DamagesShortList;
+import stellarnear.yfa_dealer.Stats.DamagesShortListElement;
 import stellarnear.yfa_dealer.Stats.StatsList;
 import stellarnear.yfa_dealer.Tools;
 
@@ -37,7 +38,7 @@ public class DSSFDmgChartMaker {
     private Map<String, CheckBox> mapElemCheckbox=new HashMap<>();
     private List<String> elemsSelected;
     private Boolean barGroupMode=false;
-    private Map<Integer, StatsList> mapIStepSelectedListStat=new HashMap<>();
+    private Map<Integer, DamagesShortList> mapIStepSelectedDamagesShortList =new HashMap<>();
     private ArrayList<String> listLabels;
     private int infoTxtSize = 12;
 
@@ -100,13 +101,13 @@ public class DSSFDmgChartMaker {
     private void calculateMinMaxRound() {
         int minDmg,maxDmg;
         if(elemsSelected.size()==5) {
-            minDmg = yfa.getStats().getStatsList().getMinDmg();
-            maxDmg = yfa.getStats().getStatsList().getMaxDmg();
+            minDmg = yfa.getStats().getStatsList().getDamageShortList().getMinDmg();
+            maxDmg = yfa.getStats().getStatsList().getDamageShortList().getMaxDmg();
         } else {
             int currentMin=0,currentMax=0;
             for (String elem:elemsSelected){
-                int minElem=yfa.getStats().getStatsList().getMinDmgElem(elem);
-                int maxElem=yfa.getStats().getStatsList().getMaxDmgElem(elem);
+                int minElem=yfa.getStats().getStatsList().getDamageShortList().filterByElem(elem).getMinDmg();
+                int maxElem=yfa.getStats().getStatsList().getDamageShortList().filterByElem(elem).getMaxDmg();
                 if(currentMin==0 && minElem!=0 ){
                     currentMin=minElem;
                 }
@@ -160,25 +161,30 @@ public class DSSFDmgChartMaker {
 
     private BarDataSet computeBarDataSet(String elemsSelected){
         Map<Integer, Integer> histo = new HashMap<>();
-        mapIStepSelectedListStat=new HashMap<>();
-        for (Stat stat : yfa.getStats().getStatsList().asList()) {
-            int sumDmg;
-            if(elemsSelected.equalsIgnoreCase("all")) {
-                sumDmg = stat.getSumDmg();
-            } else {
-                sumDmg=stat.getSumDmgElem(elemsSelected);
+        mapIStepSelectedDamagesShortList =new HashMap<>();
+        DamagesShortList damagesShortList;
+        if(elemsSelected.equalsIgnoreCase("all")){
+            damagesShortList=yfa.getStats().getStatsList().getDamageShortList();
+        } else {
+            damagesShortList=yfa.getStats().getStatsList().getDamageShortListForElem(elemsSelected);
+        }
+        for(DamagesShortListElement element : damagesShortList.asList() ) {
+            int dmg = element.getDmgSum();
+            if (dmg <= 0) {
+                continue;
             }
-            int iStep = (int)((sumDmg - minRound) / sizeStep);
-            if(mapIStepSelectedListStat.get(iStep)==null){
-                mapIStepSelectedListStat.put(iStep,new StatsList());
+            int iStep = (int) ((dmg - minRound) / sizeStep);
+            if (mapIStepSelectedDamagesShortList.get(iStep) == null) {
+                mapIStepSelectedDamagesShortList.put(iStep, new DamagesShortList());
             }
-            mapIStepSelectedListStat.get(iStep).add(stat);
+            mapIStepSelectedDamagesShortList.get(iStep).add(element);
             if (histo.get(iStep) == null) {
                 histo.put(iStep, 1);
             } else {
                 histo.put(iStep, histo.get(iStep) + 1);
             }
         }
+
         ArrayList<BarEntry> listVal = new ArrayList<>();
         for (int i = 0; i < nSteps; i++) {
             if (histo.get(i) != null) {
@@ -192,7 +198,7 @@ public class DSSFDmgChartMaker {
         if(elemsSelected.equalsIgnoreCase("all")){
             set.setColor(mC.getColor(R.color.all_stat));
         } else {
-            set.setColor(mC.getColor(elems.getColorId(elemsSelected)));
+            set.setColor(mC.getColor(elems.getColorIdSombre(elemsSelected)));
         }
         set.setDrawValues(false);
         return set;
@@ -249,7 +255,7 @@ public class DSSFDmgChartMaker {
         if(elem.equalsIgnoreCase("all")){
             lineColor=mC.getColor(R.color.all_recent_stat);
         } else {
-            lineColor=mC.getColor(elems.getColorIdSombre(elem));
+            lineColor=mC.getColor(elems.getColorId(elem));
         }
 
         int iStep=((sumDmg - minRound) / sizeStep);
@@ -296,8 +302,8 @@ public class DSSFDmgChartMaker {
         chart.invalidate();
     }
 
-    public Map<Integer, StatsList> getMapIStepSelectedListStat() {
-        return mapIStepSelectedListStat;
+    public Map<Integer, DamagesShortList> getMapIStepSelectedDamagesShortList() {
+        return mapIStepSelectedDamagesShortList;
     }
 
     public List<String> getLabels() {

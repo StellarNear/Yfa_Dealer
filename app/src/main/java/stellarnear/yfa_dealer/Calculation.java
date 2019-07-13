@@ -25,6 +25,9 @@ public class Calculation {
         if(spell.getMetaList().metaIdIsActive("meta_heighten")){
             val+=spell.getMetaList().getMetaByID("meta_heighten").getnCast() * spell.getMetaList().getMetaByID("meta_heighten").getUprank();
         }
+        if(spell.getMetaList().metaIdIsActive("meta_focus")){
+            val+=2;
+        }
         if(spell.getConversion().getArcaneId().equalsIgnoreCase("save")){
             val+=(int) (spell.getConversion().getRank()/2.0);
         }

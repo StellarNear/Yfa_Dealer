@@ -180,4 +180,7 @@ public class Stat {
         return rankMetaList;
     }
 
+    public DamagesShortList getDamageShortList() {
+        return damagesShortList;
+    }
 }

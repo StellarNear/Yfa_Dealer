@@ -10,6 +10,7 @@
     <bool name="meta_extend_switch_def">true</bool>
     <bool name="meta_range_switch_def">true</bool>
     <bool name="meta_heighten_switch_def">true</bool>
+    <bool name="meta_focus_switch_def">true</bool>
     <bool name="perfect_desint_def">true</bool>
     <bool name="meta_arrow_switch_def">true</bool>
     <bool name="meta_delay_switch_def">true</bool>
@@ -21,5 +22,6 @@
 
     <bool name="glae_switch_tier1_def">true</bool>
     <bool name="glae_switch_tier2_def">true</bool>
+
 
 </resources>

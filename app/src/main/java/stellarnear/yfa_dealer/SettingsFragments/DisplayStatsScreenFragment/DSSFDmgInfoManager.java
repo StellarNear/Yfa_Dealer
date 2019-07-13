@@ -13,22 +13,22 @@ import java.util.Map;
 
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
+import stellarnear.yfa_dealer.Stats.DamagesShortList;
+import stellarnear.yfa_dealer.Stats.DamagesShortListElement;
 import stellarnear.yfa_dealer.Stats.Stat;
 import stellarnear.yfa_dealer.Stats.StatsList;
 import stellarnear.yfa_dealer.Tools;
 
 public class DSSFDmgInfoManager {
-
-}
-    /*
     private Perso yfa = MainActivity.yfa;
 
     private Context mC;
     private View mainView;
     private SpellTypesManager elems;
     private Map<String, CheckBox> mapElemCheckbox;
-    private StatsList selectedStats=new StatsList();
+    private DamagesShortList selectedDamageShortList =new DamagesShortList();
     private String selectedBracket;
     private boolean allStats;
     private int infoTxtSize = 12;
@@ -48,12 +48,12 @@ public class DSSFDmgInfoManager {
         this.selectedBracket=s;
     }
 
-    public void addInfos(StatsList selectedStats){
-        if(selectedStats==null){
-            this.selectedStats= yfa.getStats().getStatsList();
+    public void addInfos(DamagesShortList selectedDamageShortList){
+        if(selectedDamageShortList==null){
+            this.selectedDamageShortList = yfa.getStats().getStatsList().getDamageShortList();
             this.allStats=true;
-        } else { this.selectedStats=selectedStats; this.allStats=false;}
-        if(this.selectedStats.size()>0){addInfos();}
+        } else { this.selectedDamageShortList =selectedDamageShortList; this.allStats=false;}
+        if(this.selectedDamageShortList.size()>0){addInfos();}
     }
 
     private void addInfos(){
@@ -94,16 +94,20 @@ public class DSSFDmgInfoManager {
         lineMax.addView(titleMax);
 
         for (String elem : elems.getListDmgKeys()) {
-            if (mapElemCheckbox.get(elem).isChecked()) {
-                int colorInt = elems.getColorId(elem);
-                TextView telemMin = createTextElement(String.valueOf(selectedStats.getMinDmgElem(elem)));
-                telemMin.setTextColor(colorInt);
+            int minDmg=selectedDamageShortList.filterByElem(elem).getMinDmg();
+            int moyDmg=selectedDamageShortList.filterByElem(elem).getDmgMoy();
+            int maxDmg=selectedDamageShortList.filterByElem(elem).getMaxDmg();
+            boolean dmgNull = minDmg == 0 && moyDmg == 0 && maxDmg ==0;
+            if (!dmgNull && mapElemCheckbox.get(elem).isChecked()) {
+                int colorInt = elems.getColorIdSombre(elem);
+                TextView telemMin = createTextElement(String.valueOf(minDmg));
+                telemMin.setTextColor(mC.getColor(colorInt));
                 lineMin.addView(telemMin);
-                TextView telemMoy = createTextElement(String.valueOf(selectedStats.getMoyDmgElem(elem)));
-                telemMoy.setTextColor(colorInt);
+                TextView telemMoy = createTextElement(String.valueOf(moyDmg));
+                telemMoy.setTextColor(mC.getColor(colorInt));
                 lineMoy.addView(telemMoy);
-                TextView telemMax = createTextElement(String.valueOf(selectedStats.getMaxDmgElem(elem)));
-                telemMax.setTextColor(colorInt);
+                TextView telemMax = createTextElement(String.valueOf(maxDmg));
+                telemMax.setTextColor(mC.getColor(colorInt));
                 lineMax.addView(telemMax);
             }
         }
@@ -129,26 +133,37 @@ public class DSSFDmgInfoManager {
 
         for (String elem : elems.getListDmgKeys()) {
             if (mapElemCheckbox.get(elem).isChecked()) {
-                int colorInt = elems.getColorId(elem);
-                TextView telemScore = createTextElement(String.valueOf(selectedStats.getLastStat().getElemSumDmg().get(elem)));
-                telemScore.setTextColor(colorInt);
-                lineScore.addView(telemScore);
-                TextView telemPercent = createTextElement(calculateAbovePercentage(selectedStats, elem));
-                telemPercent.setTextColor(colorInt);
-                linePercent.addView(telemPercent);
+                int colorInt = elems.getColorIdSombre(elem);
+
+                DamagesShortListElement lastElement = selectedDamageShortList.getLastDamageElement();
+                if(lastElement.getElement().equalsIgnoreCase(elem)){
+                    TextView telemScore = createTextElement(String.valueOf(lastElement.getDmgSum()));
+                    telemScore.setTextColor(mC.getColor(colorInt));
+                    lineScore.addView(telemScore);
+                    TextView telemPercent = createTextElement(calculateAbovePercentage(selectedDamageShortList, elem));
+                    telemPercent.setTextColor(mC.getColor(colorInt));
+                    linePercent.addView(telemPercent);
+                } else {
+                    TextView telemScore = createTextElement("-");
+                    telemScore.setTextColor(Color.DKGRAY);
+                    lineScore.addView(telemScore);
+                    TextView telemPercent = createTextElement("-");
+                    telemPercent.setTextColor(Color.DKGRAY);
+                    linePercent.addView(telemPercent);
+                }
             }
         }
     }
 
-    private String calculateAbovePercentage(StatsList selectedStats, String elem) {
-        int lastElemDmg=selectedStats.getLastStat().getElemSumDmg().get(elem);
+    private String calculateAbovePercentage(DamagesShortList damagesShortList, String elem) {
+        int lastElemDmg=damagesShortList.getLastDamageElement().getDmgSum();
         int sup=0;
-        for(Stat stat: selectedStats.asList()){
-            if(stat.getElemSumDmg().get(elem)<=lastElemDmg){
+        for(DamagesShortListElement element: damagesShortList.filterByElem(elem).asList()){
+            if(element.getDmgSum()<=lastElemDmg){
                 sup++;
             }
         }
-        float percent=100f*(((1f*sup)/(1f*selectedStats.size())));
+        float percent=100f*(((1f*sup)/(1f*damagesShortList.filterByElem(elem).size())));
         int roundPercent=Math.round(percent);
         return roundPercent+"%";
     }
@@ -161,45 +176,42 @@ public class DSSFDmgInfoManager {
         t.setTextColor(Color.BLACK);
         bloc2.addView(t);
 
-        LinearLayout lineHit = createLine();
-        bloc2.addView(lineHit);
-        LinearLayout lineCrit = createLine();
-        bloc2.addView(lineCrit);
-        LinearLayout lineCritNat = createLine();
-        bloc2.addView(lineCritNat);
+        LinearLayout lineRank = createLine();
+        bloc2.addView(lineRank);
+        LinearLayout lineMeta = createLine();
+        bloc2.addView(lineMeta);
+        LinearLayout lineArcane = createLine();
+        bloc2.addView(lineArcane);
+        LinearLayout lineMythic = createLine();
+        bloc2.addView(lineMythic);
 
-        TextView titleHit = createTextElement("touché");
-        titleHit.setTextColor(mC.getColor(R.color.hit_stat));
-        lineHit.addView(titleHit);
-        int hitVal=selectedStats.getNAtksHit();
-        int missVal=selectedStats.getNAtksMiss();
-        int percent =Math.round(100f*((1f*hitVal)/(1f*hitVal+missVal)));
-        float hitValMoy = selectedStats.size()>1 ?(1f*hitVal)/selectedStats.size() : 0;
-        TextView percentText = createTextElement(percent+"%" + " ("+String.format ("%,.1f", hitValMoy)+")");
-        percentText.setTextColor(mC.getColor(R.color.hit_stat));
-        lineHit.addView(percentText);
+        TextView titleRank = createTextElement("rank");
+        titleRank.setTextColor(Color.DKGRAY);
+        lineRank.addView(titleRank);
+        TextView rankText = createTextElement(String.valueOf(selectedDamageShortList.getRankMoy()));
+        rankText.setTextColor(Color.DKGRAY);
+        lineRank.addView(rankText);
 
-        int nHit=selectedStats.getNAtksHit();
-        int nCrit=selectedStats.getNCrit();
-        int nCritNat=selectedStats.getNCritNat();
-        float nCritMoy = selectedStats.size()>0 ? (1f*(nCrit-nCritNat))/selectedStats.size() : 0;
-        float nCritNatMoy = selectedStats.size()>0 ? (1f*nCritNat)/selectedStats.size() : 0;
+        TextView titleCrit = createTextElement("rankMeta");
+        titleCrit.setTextColor(Color.DKGRAY);
+        lineMeta.addView(titleCrit);
+        TextView rangMetaMoyText = createTextElement(String.valueOf(selectedDamageShortList.getMetaRankMoy()));
+        rangMetaMoyText.setTextColor(Color.DKGRAY);
+        lineMeta.addView(rangMetaMoyText);
 
-        int critPercent=Math.round(100f*(nCrit-nCritNat)/(1f*nHit));
-        int critNatPercent=Math.round(100f*(nCritNat/(1f*nHit)));
-        TextView titleCrit = createTextElement("crit");
-        titleCrit.setTextColor(mC.getColor(R.color.crit_stat));
-        lineCrit.addView(titleCrit);
-        TextView percentCritText = createTextElement(critPercent+"%" +" ("+String.format ("%,.1f",nCritMoy)+")");
-        percentCritText.setTextColor(mC.getColor(R.color.crit_stat));
-        lineCrit.addView(percentCritText);
+        TextView arcaneConvRankMoyTitle = createTextElement("arcaneConvRank");
+        arcaneConvRankMoyTitle.setTextColor(Color.DKGRAY);
+        lineArcane.addView(arcaneConvRankMoyTitle);
+        TextView arcaneConvRankMoy = createTextElement(String.valueOf(selectedDamageShortList.getArcaneConvRankMoy()));
+        arcaneConvRankMoy.setTextColor(Color.DKGRAY);
+        lineArcane.addView(arcaneConvRankMoy);
 
-        TextView titleCritNat = createTextElement("critNat");
-        titleCritNat.setTextColor(mC.getColor(R.color.crit_nat_stat));
-        lineCritNat.addView(titleCritNat);
-        TextView percentCritNatText = createTextElement(critNatPercent+"%" +" ("+String.format ("%,.1f",nCritNatMoy)+")");
-        percentCritNatText.setTextColor(mC.getColor(R.color.crit_nat_stat));
-        lineCritNat.addView(percentCritNatText);
+        TextView nMythicMoyTitle = createTextElement("NMythic");
+        nMythicMoyTitle.setTextColor(Color.DKGRAY);
+        lineMythic.addView(nMythicMoyTitle);
+        TextView nMythicMoy = createTextElement(String.valueOf(selectedDamageShortList.getNMythicMoy()));
+        nMythicMoy.setTextColor(Color.DKGRAY);
+        lineMythic.addView(nMythicMoy);
     }
 
     private LinearLayout setBlock() {
@@ -230,5 +242,5 @@ public class DSSFDmgInfoManager {
 
 
 }
-*/
+
 
