@@ -33,7 +33,7 @@ public class FameEntry {
     }
 
     public int getSumDmg() {
-        return stat==null ? 0 : 0;//stat.getSumDmg();
+        return stat==null ? 0 : stat.getSumDmg();
     }
 
     public void updateInfos(String foeName, String location, String details) {

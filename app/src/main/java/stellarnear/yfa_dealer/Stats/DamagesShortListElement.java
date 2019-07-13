@@ -43,4 +43,8 @@ public class DamagesShortListElement {
     public boolean isMythic() {
         return mythic;
     }
+
+    public void addBindedSpell(Spell spell) {
+        this.dmgSum+=spell.getDmgResult();
+    }
 }

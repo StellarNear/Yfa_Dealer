@@ -1,6 +1,31 @@
 package stellarnear.yfa_dealer.SettingsFragments;
 
-/*
+
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.preference.Preference;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import stellarnear.yfa_dealer.CustomAlertDialog;
+import stellarnear.yfa_dealer.FameEntry;
+import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.Stats.Stat;
+import stellarnear.yfa_dealer.Tools;
+
 public class PrefHallOfFameFragment extends Preference {
     private Perso yfa= MainActivity.yfa;
     private Context mC;
@@ -104,7 +129,7 @@ public class PrefHallOfFameFragment extends Preference {
         if(lastStat==null){
             tools.customToast(mC, "Aucune attaque à enregistrer...", "center");
         } else {
-            if (wedge.getHallOfFame().containsStat(lastStat)) {
+            if (yfa.getHallOfFame().containsStat(lastStat)) {
                 tools.customToast(mC, "Entrée déjà présente", "center");
             } else {
                 addFameEntry(lastStat);
@@ -182,4 +207,3 @@ public class PrefHallOfFameFragment extends Preference {
     }
 
 }
-*/

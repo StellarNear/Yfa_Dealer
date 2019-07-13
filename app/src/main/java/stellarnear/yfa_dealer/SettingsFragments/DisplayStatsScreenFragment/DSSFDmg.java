@@ -28,7 +28,6 @@ import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
 import stellarnear.yfa_dealer.Stats.DamagesShortList;
-import stellarnear.yfa_dealer.Stats.StatsList;
 import stellarnear.yfa_dealer.Tools;
 
 public class DSSFDmg {

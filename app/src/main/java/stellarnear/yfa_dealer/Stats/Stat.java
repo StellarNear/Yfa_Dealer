@@ -100,22 +100,6 @@ public class Stat {
     }
 
 
-    public int getMinDmg() {
-        return damagesShortList.getMinDmg();
-    }
-
-    public int getMaxDmg() {
-        return damagesShortList.getMaxDmg();
-    }
-
-    public int getMinDmgElem(String elem) {
-        return damagesShortList.filterByElem(elem).getMinDmg();
-    }
-
-    public int getMaxDmgElem(String elem) {
-        return damagesShortList.filterByElem(elem).getMaxDmg();
-    }
-
     public Date getDate() {
         return date;
     }

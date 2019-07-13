@@ -1,7 +1,9 @@
 package stellarnear.yfa_dealer.Stats;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Spells.SpellList;
@@ -27,8 +29,19 @@ public class DamagesShortList {
 
     private void buildList(SpellList spells) {
         listElements=new ArrayList<>();
+        Map<Spell,DamagesShortListElement> mapBindedParentDamageShortListElement= new HashMap<>();
         for (Spell spell:spells.asList()){
-            listElements.add(new DamagesShortListElement(spell));
+            if(spell.isBinded()){
+                if(mapBindedParentDamageShortListElement.get(spell.getBindedParent())==null){
+                    DamagesShortListElement element=new DamagesShortListElement(spell);
+                    mapBindedParentDamageShortListElement.put(spell.getBindedParent(),element);
+                    listElements.add(element);
+                } else {
+                    mapBindedParentDamageShortListElement.get(spell.getBindedParent()).addBindedSpell(spell);
+                }
+            } else {
+                listElements.add(new DamagesShortListElement(spell));
+            }
         }
     }
 

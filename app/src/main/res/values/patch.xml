@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v10.0"</string>
-    <string name="time_spend">182h</string>
+    <string name="time_spend">186h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V10.0
+-Ajout de la feature HallOfFame !
+-Ajout de la feature DisplayStatistics !
+----------------------------------------------------------------------------------
 Patch note V9.5
 -Ajout métamagie Sort concentré
 ----------------------------------------------------------------------------------
