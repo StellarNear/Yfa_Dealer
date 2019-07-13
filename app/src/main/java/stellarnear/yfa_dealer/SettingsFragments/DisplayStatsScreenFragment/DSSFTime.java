@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import stellarnear.yfa_dealer.Elems.ElemsManager;
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
 import stellarnear.yfa_dealer.Stats.Stat;
 import stellarnear.yfa_dealer.Stats.StatsList;
 import stellarnear.yfa_dealer.Tools;
@@ -37,8 +37,8 @@ public class DSSFTime {
     private Perso yfa = MainActivity.yfa;
     private Context mC;
     private View mainView;
-    private ElemsManager elems;
-    private List<String> elemsSelected;
+    private SpellTypesManager types;
+    private List<String> typeSelected;
     private Map<String, StatsList> mapDatetxtStatslist = new LinkedHashMap<>();
     private List<String> labelList=new ArrayList<>();
     private Map<String, CheckBox> mapElemCheckbox=new HashMap<>();
@@ -51,19 +51,20 @@ public class DSSFTime {
     public DSSFTime(View mainView, Context mC) {
         this.mainView = mainView;
         this.mC = mC;
-        this.elems= ElemsManager.getInstance();
+        this.types = SpellTypesManager.getInstance();
+        CheckBox checkNoDmg = mainView.findViewById(R.id.line_type_time_nodmg);
         CheckBox checkNone = mainView.findViewById(R.id.line_type_time_none);
         CheckBox checkAcid = mainView.findViewById(R.id.line_type_time_acid);
         CheckBox checkFire = mainView.findViewById(R.id.line_type_time_fire);
         CheckBox checkShock = mainView.findViewById(R.id.line_type_time_shock);
         CheckBox checkFrost = mainView.findViewById(R.id.line_type_time_frost);
-        mapElemCheckbox.put("aucun",checkNone);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
+        mapElemCheckbox.put("",checkNoDmg);mapElemCheckbox.put("aucun",checkNone);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
         setCheckboxListeners();
         initLineCharts();
     }
 
     private void setCheckboxListeners() {
-        for(String elem : elems.getListKeys()){
+        for(String elem : types.getListKeys()){
             mapElemCheckbox.get(elem).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -119,10 +120,10 @@ public class DSSFTime {
     }
 
     private void calculateElemToShow() {
-        elemsSelected = new ArrayList<>();
-        for (String elem : elems.getListKeys()) {
+        typeSelected = new ArrayList<>();
+        for (String elem : types.getListKeys()) {
             if (mapElemCheckbox.get(elem).isChecked()) {
-                elemsSelected.add(elem);
+                typeSelected.add(elem);
             }
         }
     }
@@ -182,18 +183,56 @@ public class DSSFTime {
         labelList=new ArrayList<>();
         LineData data = new LineData();
 
-        for(String elem : elemsSelected) {
+        if(typeSelected.size()==6){
+            addDmgAllTypesData(data);
+        } else {
+            addDmgTypesData(data);
+        }
+        data.setValueTextSize(infoTxtSize);
+        chartDmg.setData(data);
+    }
+
+    private void addDmgAllTypesData(LineData data) {
             ArrayList<Entry> listVal = new ArrayList<>();
             nDate=0;
             for (String key : mapDatetxtStatslist.keySet()){
-                int dmgMoyMeta=0;
+                float dmgSumMoy=0;
+                int count=0;
                 for (Stat stat : yfa.getStats().getStatsList().filterByDate(key).asList()){
-                    if(stat.getElemMoyDmg(elem)>0){
-                        dmgMoyMeta+=stat.getElemMoyDmg(elem);
+                    if(stat.getMoyDmg()>0){
+                        dmgSumMoy+=stat.getMoyDmg();
+                        count++;
                     }
                 }
-                if(dmgMoyMeta>0) {
-                    listVal.add(new Entry((int) nDate, (int) dmgMoyMeta, dmgMoyMeta + " dégâts en moyenne\nle " + key + " pour les sorts de type"+elem));
+                if(dmgSumMoy>0) {
+                    listVal.add(new Entry((int) nDate, Math.round(dmgSumMoy/count), Math.round(dmgSumMoy/count) + " dégâts en moyenne\nle " + key + " pour l'ensemble des sorts"));
+                }
+                nDate++;
+                labelList.add(key);
+            }
+
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, "tout");
+                setLinePara(elemSet, R.color.all_stat);
+                data.addDataSet(elemSet);
+            }
+    }
+
+    private void addDmgTypesData(LineData data) {
+        for(String type : typeSelected) {
+            ArrayList<Entry> listVal = new ArrayList<>();
+            nDate=0;
+            for (String key : mapDatetxtStatslist.keySet()){
+                float dmgSumMoy=0;
+                int count=0;
+                for (Stat stat : yfa.getStats().getStatsList().filterByDate(key).asList()){
+                    if(stat.getElemMoyDmg(type)>0){
+                        dmgSumMoy+=stat.getElemMoyDmg(type);
+                        count++;
+                    }
+                }
+                if(dmgSumMoy>0) {
+                    listVal.add(new Entry((int) nDate, Math.round(dmgSumMoy/count), Math.round(dmgSumMoy/count) + " dégâts en moyenne\nle " + key + " pour les sorts de type"+type));
                 }
                 nDate++;
                 labelList.add(key);
@@ -201,60 +240,78 @@ public class DSSFTime {
             }
 
             if(listVal.size()>0) {
-                LineDataSet elemSet = new LineDataSet(listVal, elem);
-                setLinePara(elemSet, elems.getColorIdSombre(elem));
+                LineDataSet elemSet = new LineDataSet(listVal, type);
+                setLinePara(elemSet, types.getColorIdSombre(type));
                 data.addDataSet(elemSet);
             }
         }
-        data.setValueTextSize(infoTxtSize);
-        chartDmg.setData(data);
     }
 
 
     private void setRankData() {
-        LineData data;
-        if(elemsSelected.size()==4){
-            data=getDmgDataSolo();
+        LineData data = new LineData();
+
+        if(typeSelected.size()==6){
+            addMetaAllTypesData(data);
         } else {
-            data=getDmgDataElems();
+            addmetaTypesData(data);
         }
         data.setValueTextSize(infoTxtSize);
         chartRank.setData(data);
     }
 
-    private LineData getDmgDataSolo() {
-
-        ArrayList<Entry> listValDmgMoy = new ArrayList<>();
-        int index=0;
-        for (String key : mapDatetxtStatslist.keySet()){
-            int dmgMoy=0;//mapDatetxtStatslist.get(key).getMoyDmg();
-            listValDmgMoy.add(new Entry((int) index, dmgMoy,dmgMoy+" dégâts en moyenne le "+key));
-            index++;
-        }
-        LineDataSet setHit = new LineDataSet(listValDmgMoy,"tout");
-        setLinePara(setHit,R.color.dmg_stat);
-        LineData data = new LineData();
-        data.addDataSet(setHit);
-        return data;
-
-    }
-
-    private LineData getDmgDataElems() {
-        LineData data = new LineData();
-        for(String elem : elemsSelected) {
-            ArrayList<Entry> listDmgMoy = new ArrayList<>();
-            int index = 0;
-            for (String key : mapDatetxtStatslist.keySet()) {
-                int dmgMoy = 0;//mapDatetxtStatslist.get(key).getMoyDmgElem(elem);
-                listDmgMoy.add(new Entry((int) index, dmgMoy,dmgMoy+" dégâts de "+elems.getName(elem)+" en moyenne le "+key));
-                index++;
+    private void addMetaAllTypesData(LineData data) {
+            ArrayList<Entry> listVal = new ArrayList<>();
+            nDate=0;
+            for (String key : mapDatetxtStatslist.keySet()){
+                float rankSumMoy=0;
+                int count=0;
+                for (Stat stat : yfa.getStats().getStatsList().filterByDate(key).asList()){
+                    if(stat.getRankMoy()>0){
+                        rankSumMoy+=stat.getRankMoy();
+                        count++;
+                    }
+                }
+                if(rankSumMoy>0) {
+                    listVal.add(new Entry((int) nDate, Math.round(rankSumMoy/count), Math.round(rankSumMoy/count) + " rang de sort en moyenne\nlancé le " + key + " pour l'ensemble des sorts"));
+                }
+                nDate++;
             }
-            LineDataSet setVal = new LineDataSet(listDmgMoy, elems.getName(elem));
-            setLinePara(setVal, elems.getColorId(elem));
-            data.addDataSet(setVal);
-        }
-        return data;
+
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, "tout");
+                setLinePara(elemSet, R.color.all_stat);
+                data.addDataSet(elemSet);
+            }
     }
+
+    private void addmetaTypesData(LineData data) {
+        for(String type : typeSelected) {
+            ArrayList<Entry> listVal = new ArrayList<>();
+            nDate=0;
+            for (String key : mapDatetxtStatslist.keySet()){
+                float rankSumMoy=0;
+                int count=0;
+                for (Stat stat : yfa.getStats().getStatsList().filterByDate(key).asList()){
+                    if(stat.getElemRankMoy(type)>0){
+                        rankSumMoy+=stat.getElemRankMoy(type);
+                        count++;
+                    }
+                }
+                if(rankSumMoy>0) {
+                    listVal.add(new Entry((int) nDate, Math.round(rankSumMoy/count), Math.round(rankSumMoy/count) + " rang de sort en moyenne\nlancé le " + key + " pour les sorts de type"+type));
+                }
+                nDate++;
+            }
+
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, types.getName(type));
+                setLinePara(elemSet, types.getColorIdSombre(type));
+                data.addDataSet(elemSet);
+            }
+        }
+    }
+
 
     private void setLinePara(LineDataSet set,int color) {
         set.setColors(mC.getColor(color));   set.setLineWidth(2f);   set.setCircleRadius(4f); set.setCircleColor(mC.getColor(color)); set.setValueFormatter(new LargeValueFormatter());
@@ -262,7 +319,7 @@ public class DSSFTime {
 
     // Resets
     public void reset() {
-        for(String elem : elems.getListKeys()){
+        for(String elem : types.getListKeys()){
             mapElemCheckbox.get(elem).setChecked(true);
         }
         resetChartDmg();

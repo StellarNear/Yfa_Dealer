@@ -1,14 +1,7 @@
 package stellarnear.yfa_dealer.Stats;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import stellarnear.yfa_dealer.Calculation;
-import stellarnear.yfa_dealer.Elems.ElemsManager;
 import stellarnear.yfa_dealer.Spells.Spell;
-import stellarnear.yfa_dealer.Spells.SpellList;
 
 public class DamagesShortListElement {
     private String element;

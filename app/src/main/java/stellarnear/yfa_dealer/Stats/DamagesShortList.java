@@ -29,11 +29,54 @@ public class DamagesShortList {
     }
 
     public int getDmgMoy(){
+        float result=0;
+        for(DamagesShortListElement element : listElements){
+            result+=element.getDmgSum();
+        }
+        return listElements.size()>0?Math.round(result/listElements.size()):0;
+    }
+
+    public int getDmgSum() {
         int result=0;
         for(DamagesShortListElement element : listElements){
             result+=element.getDmgSum();
         }
-        return listElements.size()>0?(int)(result/listElements.size()):0;
+        return result;
+    }
+
+    public int getMinDmg() {
+        int result=0;
+        for(DamagesShortListElement element : listElements){
+            if(result==0 && element.getDmgSum()!=0){result=element.getDmgSum();}
+            if(result>element.getDmgSum()){result=element.getDmgSum();}
+        }
+        return result;
+    }
+
+    public int getMaxDmg() {
+        int result=0;
+        for(DamagesShortListElement element : listElements){
+            if(result<element.getDmgSum()){result=element.getDmgSum();}
+        }
+        return result;
+    }
+
+    public int getRankMoy() {
+        float result=0;
+        for(DamagesShortListElement element : listElements){
+            result+=element.getRank();
+        }
+        return listElements.size()>0?Math.round(result/listElements.size()):0;
+    }
+
+    public int getNDamageSpell() {
+        int result=0;
+        for(DamagesShortListElement element : listElements){
+            if(element.getDmgSum()>0) {
+                result++;
+            }
+        }
+        return result;
     }
 
     public DamagesShortList filterByElem(String elem){
@@ -66,4 +109,7 @@ public class DamagesShortList {
         }
         return result;
     }
+
+
+
 }

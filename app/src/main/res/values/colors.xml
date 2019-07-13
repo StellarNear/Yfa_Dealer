@@ -19,6 +19,10 @@
     <color name="foudre_dark">#2ECCFA</color>
     <color name="acide">#d4f7d9</color>
     <color name="acide_dark">#3cdd54</color>
+
+    <color name="no_dmg">#0B272B</color>
+    <color name="no_dmg_dark">#030F10</color>
+
     <color name="warning">#CF0202</color>
     <color name="transparent">#00000000</color>
     <color name="conversion">#088A29</color>
@@ -60,16 +64,14 @@
     <color name="crit_stat">#00e600</color>
     <color name="crit_nat_stat">#009900</color>
 
-    <color name="dmg_stat">#13823E</color>
-    <color name="recent_stat">#003A17</color>
+    <color name="all_stat">#13823E</color>
+    <color name="all_recent_stat">#003A17</color>
 
-    <color name="recent_phy">#1a1a1a</color>
-    <color name="recent_fire">#cc0000</color>
-    <color name="recent_shock">#008599</color>
-    <color name="recent_frost">#001a66</color>
+
     <color name="contact_miss_stat">#cccccc</color>
     <color name="resist_stat">#005580</color>
     <color name="bglae_boost_stat">#006600</color>
     <color name="glae_fail_stat">#cc2900</color>
+
 
 </resources>

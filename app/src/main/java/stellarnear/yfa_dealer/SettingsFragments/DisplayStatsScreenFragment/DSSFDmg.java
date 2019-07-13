@@ -1,16 +1,45 @@
 package stellarnear.yfa_dealer.SettingsFragments.DisplayStatsScreenFragment;
 
-/*
+
+import android.content.Context;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
+import stellarnear.yfa_dealer.Stats.StatsList;
+import stellarnear.yfa_dealer.Tools;
+
 public class DSSFDmg {
-    private Perso wedge = MainActivity.wedge;
+    private Perso yfa = MainActivity.yfa;
     private DSSFDmgChartMaker chartMaker;
     private DSSFDmgInfoManager subManager;
     private PieChart pieChart;
 
     private Context mC;
     private View mainView;
-    private ElemsManager elems;
-    private Map<String,CheckBox> mapElemCheckbox=new HashMap<>();
+    private SpellTypesManager elems;
+    private Map<String, CheckBox> mapElemCheckbox=new HashMap<>();
     private StatsList selectedStats=new StatsList();
     private int infoTxtSize = 12;
 
@@ -19,29 +48,31 @@ public class DSSFDmg {
     public DSSFDmg(View mainView, Context mC) {
         this.mainView = mainView;
         this.mC = mC;
-        this.elems=ElemsManager.getInstance(mC);
+        this.elems=SpellTypesManager.getInstance();
 
         TextView nAtkTxt = mainView.findViewById(R.id.nDmgTxt);
-        nAtkTxt.setText(wedge.getStats().getStatsList().getNDmgTot() + " jets de dégâts");
+        nAtkTxt.setText(yfa.getStats().getStatsList().getNDamageSpell() + " jets de dégâts");
 
-        CheckBox checkPhy = mainView.findViewById(R.id.dmg_type_phy);
+        CheckBox checkNone = mainView.findViewById(R.id.dmg_type_none);
+        CheckBox checkAcid = mainView.findViewById(R.id.dmg_type_none);
         CheckBox checkFire = mainView.findViewById(R.id.dmg_type_fire);
         CheckBox checkShock = mainView.findViewById(R.id.dmg_type_shock);
         CheckBox checkFrost = mainView.findViewById(R.id.dmg_type_frost);
-        mapElemCheckbox.put("",checkPhy);
-        mapElemCheckbox.put("fire",checkFire);
-        mapElemCheckbox.put("shock",checkShock);
-        mapElemCheckbox.put("frost",checkFrost);
+        mapElemCheckbox.put("aucun",checkNone);
+        mapElemCheckbox.put("acide",checkAcid);
+        mapElemCheckbox.put("feu",checkFire);
+        mapElemCheckbox.put("foudre",checkShock);
+        mapElemCheckbox.put("froid",checkFrost);
 
         chartMaker = new DSSFDmgChartMaker((BarChart)mainView.findViewById(R.id.bar_chart_dmg),mapElemCheckbox,mC);
         setCheckboxListeners();
         initChartSelectEvent();
         initPieChart();
-        subManager=new DSSFDmgInfoManager(mainView,mapElemCheckbox,mC);
+        //subManager=new DSSFDmgInfoManager(mainView,mapElemCheckbox,mC);
     }
 
     private void setCheckboxListeners() {
-        for(String elem : elems.getListKeys()){
+        for(String elem : elems.getListDmgKeys()){
             mapElemCheckbox.get(elem).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -49,7 +80,7 @@ public class DSSFDmg {
                     chartMaker.buildChart();
                     resetPieChart();
                     buildPieChart();
-                    subManager.addInfos(null);
+                    //subManager.addInfos(null);
                 }
             });
         }
@@ -62,8 +93,8 @@ public class DSSFDmg {
                 resetPieChart();
                 selectedStats=chartMaker.getMapIStepSelectedListStat().get((int)e.getX());
                 buildPieChart();
-                subManager.setSubSelectionBracket(chartMaker.getLabels().get((int)e.getX()));
-                subManager.addInfos(selectedStats);
+                //subManager.setSubSelectionBracket(chartMaker.getLabels().get((int)e.getX()));
+                //subManager.addInfos(selectedStats);
             }
 
             @Override
@@ -71,7 +102,7 @@ public class DSSFDmg {
                 if(chartMaker.getChart().isFocusable()) {
                     reset();
                     resetPieChart();
-                    subManager.addInfos(null);
+                    //subManager.addInfos(null);
                     buildPieChart();
                 }
             }
@@ -118,15 +149,15 @@ public class DSSFDmg {
         if(selectedStats!=null && selectedStats.size()!=0){
             list=selectedStats;
         } else {
-            list=wedge.getStats().getStatsList();
+            list= yfa.getStats().getStatsList();
         }
         int totalDmg=list.getSumDmgTot();
-        for(String elem : elems.getListKeys()) {
+        for(String elem : elems.getListDmgKeys()) {
             if (mapElemCheckbox.get(elem).isChecked()) {
-                float percent = 100f * (list.getSumDmgTotElem(elem) / (float) totalDmg);
+                float percent = 100f * (list.getSumDmgElem(elem) / (float) totalDmg);
                 if (percent > 0f) {
-                    entries.add(new PieEntry(percent, "", new LargeValueFormatter().getFormattedValue((int) list.getSumDmgTotElem(elem)) + " dégats " + elems.getName(elem)));
-                    colorList.add(elems.getColorId(elem));
+                    entries.add(new PieEntry(percent, "", new LargeValueFormatter().getFormattedValue((int) list.getSumDmgElem(elem)) + " dégats " + elems.getName(elem)));
+                    colorList.add(mC.getColor(elems.getColorIdSombre(elem)));
                 }
             }
         }
@@ -140,7 +171,7 @@ public class DSSFDmg {
     // Resets
 
     public void reset() {
-        for(String elem : elems.getListKeys()){
+        for(String elem : elems.getListDmgKeys()){
             mapElemCheckbox.get(elem).setChecked(true);
         }
         chartMaker.resetChart();
@@ -158,5 +189,3 @@ public class DSSFDmg {
         pieChart.highlightValue(null);
     }
 }
-
-*/

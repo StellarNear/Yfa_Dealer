@@ -1,7 +1,7 @@
-package stellarnear.yfa_dealer.Elems;
+package stellarnear.yfa_dealer.SpellTypes;
 
 
-public class Elem {
+public class Type {
 
     private int colorId;
     private int colorIdRecent;
@@ -9,7 +9,7 @@ public class Elem {
     private String key;
     private int drawableId;
 
-    public Elem(String key, String name, int colorId,int colorIdRecent,int drawableId){
+    public Type(String key, String name, int colorId, int colorIdRecent, int drawableId){
         this.key=key;
         this.name=name;
         this.colorId=colorId;

@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import stellarnear.yfa_dealer.Elems.ElemsManager;
 import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
+import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
 import stellarnear.yfa_dealer.Stats.Stat;
 import stellarnear.yfa_dealer.Tools;
 
@@ -32,7 +32,7 @@ public class DSSFGraph {
     private Perso yfa = MainActivity.yfa;
     private Context mC;
     private View mainView;
-    private ElemsManager elems;
+    private SpellTypesManager elems;
     private List<String> elemsSelected;
     private Map<String,CheckBox> mapElemCheckbox=new HashMap<>();
     private int rankMax=-1;
@@ -45,7 +45,7 @@ public class DSSFGraph {
     public DSSFGraph(View mainView, Context mC) {
         this.mainView = mainView;
         this.mC = mC;
-        this.elems= ElemsManager.getInstance();
+        this.elems= SpellTypesManager.getInstance();
         CheckBox checkNone = mainView.findViewById(R.id.line_type_aucun);
         CheckBox checkAcid = mainView.findViewById(R.id.line_type_acid);
         CheckBox checkFire = mainView.findViewById(R.id.line_type_fire);
@@ -57,7 +57,7 @@ public class DSSFGraph {
     }
 
     private void setCheckboxListeners() {
-        for(String elem : elems.getListKeys()){
+        for(String elem : elems.getListDmgKeys()){
             mapElemCheckbox.get(elem).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -114,7 +114,7 @@ public class DSSFGraph {
 
     private void calculateElemToShow() {
         elemsSelected = new ArrayList<>();
-        for (String elem : elems.getListKeys()) {
+        for (String elem : elems.getListDmgKeys()) {
             if (mapElemCheckbox.get(elem).isChecked()) {
                 elemsSelected.add(elem);
             }
@@ -161,52 +161,118 @@ public class DSSFGraph {
 
     private void setDmgData() {
         LineData data = new LineData();
-        for(String elem:elemsSelected){
-            ArrayList<Entry> listVal = new ArrayList<>();
-            for(int i=0;i<=rankMax;i++){
-                int dmgMoyElem=0;
-                for (Stat stat : yfa.getStats().getStatsList().asList()){
-                    if(stat.getRankElemMoyDmg(i,elem)>0){
-                       dmgMoyElem+=stat.getRankElemMoyDmg(i,elem);
-                    }
-                }
-                if(dmgMoyElem>0) {
-                    listVal.add(new Entry((int) i, (int) dmgMoyElem, dmgMoyElem + " dégâts en moyenne\npour les sorts de type " + elem + " de rang " + i));
-                }
-            }
-            if(listVal.size()>0) {
-                LineDataSet elemSet = new LineDataSet(listVal, elem);
-                setLinePara(elemSet, elems.getColorIdSombre(elem));
-                data.addDataSet(elemSet);
-            }
+        if(elemsSelected.size()==5){
+            addDmgAllData(data);
+        } else {
+            addDmgElemsData(data);
         }
         data.setValueTextSize(infoTxtSize);
         chartDmgRank.setData(data);
     }
 
-    private void setMetaData() {
-        LineData data = new LineData();
+    private void addDmgAllData(LineData data) {
+        ArrayList<Entry> listVal = new ArrayList<>();
+        for(int i=0;i<=rankMax;i++){
+            float dmgSumMoy=0;
+            int count=0;
+            for (Stat stat : yfa.getStats().getStatsList().asList()){
+                if(stat.getRankMoyDmg(i)>0){
+                    dmgSumMoy+=stat.getRankMoyDmg(i);
+                    count++;
+                }
+            }
+            if(dmgSumMoy>0) {
+                listVal.add(new Entry((int) i,Math.round(dmgSumMoy/count), Math.round(dmgSumMoy/count) + " dégâts en moyenne\npour l'ensemble des sorts de rang " + i));
+            }
+        }
+        if(listVal.size()>0) {
+            LineDataSet elemSet = new LineDataSet(listVal, "tout");
+            setLinePara(elemSet, R.color.all_stat);
+            data.addDataSet(elemSet);
+        }
+    }
+
+    private void addDmgElemsData(LineData data) {
         for(String elem:elemsSelected){
             ArrayList<Entry> listVal = new ArrayList<>();
-            for(int iMeta=0;iMeta<=nMetaMax;iMeta++){
-                int dmgMoyMeta=0;
+            for(int i=0;i<=rankMax;i++){
+                float dmgSumMoyElem=0;
+                int count=0;
                 for (Stat stat : yfa.getStats().getStatsList().asList()){
-                    if(stat.getMetaElemMoyDmg(iMeta,elem)>0){
-                        dmgMoyMeta+=stat.getMetaElemMoyDmg(iMeta,elem);
+                    if(stat.getRankElemMoyDmg(i,elem)>0){
+                        dmgSumMoyElem+=stat.getRankElemMoyDmg(i,elem);
+                        count++;
                     }
                 }
-                if(dmgMoyMeta>0) {
-                    listVal.add(new Entry((int) iMeta, (int) dmgMoyMeta, dmgMoyMeta + " dégâts en moyenne\npour " + iMeta + " rang de métamagie sur des sorts de type"+elem));
+                if(dmgSumMoyElem>0) {
+                    listVal.add(new Entry((int) i,Math.round(dmgSumMoyElem/count), Math.round(dmgSumMoyElem/count) + " dégâts en moyenne\npour les sorts de type " + elem + " de rang " + i));
                 }
             }
             if(listVal.size()>0) {
-                LineDataSet elemSet = new LineDataSet(listVal, elem);
+                LineDataSet elemSet = new LineDataSet(listVal, elems.getName(elem));
                 setLinePara(elemSet, elems.getColorIdSombre(elem));
                 data.addDataSet(elemSet);
             }
         }
+    }
+
+    private void setMetaData() {
+        LineData data = new LineData();
+        if(elemsSelected.size()==5){
+            addMetaAllData(data);
+        } else {
+            addMetaElemsData(data);
+        }
         data.setValueTextSize(infoTxtSize);
         chartMetaDmg.setData(data);
+    }
+
+    private void addMetaAllData(LineData data) {
+
+            ArrayList<Entry> listVal = new ArrayList<>();
+            for(int iMeta=0;iMeta<=nMetaMax;iMeta++){
+                float dmgSumMoyMeta=0;
+                int count=0;
+                for (Stat stat : yfa.getStats().getStatsList().asList()){
+                    if(stat.getMetaMoyDmg(iMeta)>0){
+                        dmgSumMoyMeta+=stat.getMetaMoyDmg(iMeta);
+                        count++;
+                    }
+                }
+                if(dmgSumMoyMeta>0) {
+                    listVal.add(new Entry((int) iMeta, Math.round(dmgSumMoyMeta/count),  Math.round(dmgSumMoyMeta/count) + " dégâts en moyenne\npour " + iMeta + " rang de métamagie pour l'ensemble des sorts"));
+                }
+            }
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, "tout");
+                setLinePara(elemSet, R.color.all_stat);
+                data.addDataSet(elemSet);
+            }
+
+    }
+
+    private void addMetaElemsData(LineData data) {
+        for(String elem:elemsSelected){
+            ArrayList<Entry> listVal = new ArrayList<>();
+            for(int iMeta=0;iMeta<=nMetaMax;iMeta++){
+                float dmgSumMoyMeta=0;
+                int count=0;
+                for (Stat stat : yfa.getStats().getStatsList().asList()){
+                    if(stat.getMetaElemMoyDmg(iMeta,elem)>0){
+                        dmgSumMoyMeta+=stat.getMetaElemMoyDmg(iMeta,elem);
+                        count++;
+                    }
+                }
+                if(dmgSumMoyMeta>0) {
+                    listVal.add(new Entry((int) iMeta, Math.round(dmgSumMoyMeta/count),  Math.round(dmgSumMoyMeta/count) + " dégâts en moyenne\npour " + iMeta + " rang de métamagie sur des sorts de type"+elem));
+                }
+            }
+            if(listVal.size()>0) {
+                LineDataSet elemSet = new LineDataSet(listVal, elems.getName(elem));
+                setLinePara(elemSet, elems.getColorIdSombre(elem));
+                data.addDataSet(elemSet);
+            }
+        }
     }
 
     private void setLinePara(LineDataSet set,int color) {
@@ -215,7 +281,7 @@ public class DSSFGraph {
 
     // Resets
     public void reset() {
-        for(String elem : elems.getListKeys()){
+        for(String elem : elems.getListDmgKeys()){
             mapElemCheckbox.get(elem).setChecked(true);
         }
         calculateElemToShow();

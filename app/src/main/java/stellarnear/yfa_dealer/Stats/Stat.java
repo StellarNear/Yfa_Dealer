@@ -71,14 +71,58 @@ public class Stat {
         return damagesShortList.filterByNMeta(iMeta).filterByElem(elem).getDmgMoy();
     }
 
+    public int getMetaMoyDmg(int iMeta) {
+        return damagesShortList.filterByNMeta(iMeta).getDmgMoy();
+    }
+
     public int getElemMoyDmg(String elem) {
         return damagesShortList.filterByElem(elem).getDmgMoy();
+    }
+
+    public int getElemRankMoy(String elem) {
+        return damagesShortList.filterByElem(elem).getRankMoy();
+    }
+
+    public int getRankMoy() {
+        return damagesShortList.getRankMoy();
+    }
+
+    public int getMoyDmg() {
+        return damagesShortList.getDmgMoy();
+    }
+
+    public int getSumDmgElem(String elem) {
+        return damagesShortList.filterByElem(elem).getDmgSum();
+    }
+
+    public int getSumDmg() {
+        return damagesShortList.getDmgSum();
+    }
+
+
+    public int getMinDmg() {
+        return damagesShortList.getMinDmg();
+    }
+
+    public int getMaxDmg() {
+        return damagesShortList.getMaxDmg();
+    }
+
+    public int getMinDmgElem(String elem) {
+        return damagesShortList.filterByElem(elem).getMinDmg();
+    }
+
+    public int getMaxDmgElem(String elem) {
+        return damagesShortList.filterByElem(elem).getMaxDmg();
     }
 
     public Date getDate() {
         return date;
     }
 
+    public int getNDamageSpell() {
+        return damagesShortList.getNDamageSpell();
+    }
 
 
     @Override
@@ -135,6 +179,5 @@ public class Stat {
     public List<Integer> getListMetaUprank() {
         return rankMetaList;
     }
-
 
 }

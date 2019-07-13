@@ -27,7 +27,7 @@ public class DSSFPreference extends Preference {
     private DSSFSpell fragAtk;
     private DSSFGraph fragGraph;
     private DSSFTime fragTime;
-    //private DSSFDmg fragDmg;
+    private DSSFDmg fragDmg;
     private String position="atk";
 
     public DSSFPreference(Context context, AttributeSet attrs) {
@@ -103,7 +103,7 @@ public class DSSFPreference extends Preference {
         fabDmg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if(fragDmg==null){  fragDmg = new DSSFDmg(mainView,mC);}else {   fragDmg.reset();}
+                if(fragDmg==null){  fragDmg = new DSSFDmg(mainView,mC);}else {   fragDmg.reset();}
                 movePanelTo("dmg");
                 popIn(fabDmg);
             }

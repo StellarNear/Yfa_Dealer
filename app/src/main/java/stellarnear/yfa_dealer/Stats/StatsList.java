@@ -186,7 +186,14 @@ public class StatsList {
         int tot=0;
         for (Stat stat : listStats){
             tot+=stat.getListRank().size();
+        }
+        return tot;
+    }
 
+    public int getNDamageSpell() {
+        int tot=0;
+        for (Stat stat : listStats){
+            tot+=stat.getNDamageSpell();
         }
         return tot;
     }
@@ -200,5 +207,57 @@ public class StatsList {
             }
         }
         return res;
+    }
+
+    /* DAMAGE part */
+
+    public int getSumDmgTot() {
+        int tot=0;
+        for (Stat stat : listStats){
+            tot+=stat.getSumDmg();
+        }
+        return tot;
+    }
+
+    public int getSumDmgElem(String elem) {
+        int tot=0;
+        for (Stat stat : listStats){
+            tot+=stat.getSumDmgElem(elem);
+        }
+        return tot;
+    }
+
+    public int getMinDmg() {
+        int result=0;
+        for(Stat stat : listStats){
+            if(result==0 && stat.getMinDmg()!=0){result=stat.getMinDmg();}
+            if(result>stat.getMinDmg()){result=stat.getMinDmg();}
+        }
+        return result;
+    }
+
+    public int getMaxDmg() {
+        int result=0;
+        for(Stat stat : listStats){
+            if(result>stat.getMaxDmg()){result=stat.getMaxDmg();}
+        }
+        return result;
+    }
+
+    public int getMinDmgElem(String elem) {
+        int result=0;
+        for(Stat stat : listStats){
+            if(result==0 && stat.getMinDmgElem(elem)!=0){result=stat.getMinDmgElem(elem);}
+            if(result>stat.getMinDmgElem(elem)){result=stat.getMinDmgElem(elem);}
+        }
+        return result;
+    }
+
+    public int getMaxDmgElem(String elem) {
+        int result=0;
+        for(Stat stat : listStats){
+            if(result>stat.getMaxDmgElem(elem)){result=stat.getMaxDmgElem(elem);}
+        }
+        return result;
     }
 }

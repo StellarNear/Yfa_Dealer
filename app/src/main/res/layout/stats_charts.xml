@@ -376,7 +376,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="%"
+                        android:text="dmgMoy"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -425,7 +425,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="dmgMoy"
+                        android:text="rangMoy"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -547,7 +547,23 @@
                             android:layout_height="@dimen/logo_element_stats"
                             android:src="@drawable/frost_logo"/>
                     </LinearLayout>
-
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <CheckBox android:id="@+id/line_type_time_nodmg"
+                            android:checked="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/no_dmg_dark"
+                            />
+                        <ImageView
+                            android:layout_width="@dimen/logo_element_stats"
+                            android:layout_height="@dimen/logo_element_stats"
+                            android:src="@drawable/nodmg_logo"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -626,7 +642,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:gravity="center">
-                        <CheckBox android:id="@+id/dmg_type_phy"
+                        <CheckBox android:id="@+id/dmg_type_none"
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

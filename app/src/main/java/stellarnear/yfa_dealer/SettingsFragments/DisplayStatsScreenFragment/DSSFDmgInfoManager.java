@@ -1,13 +1,32 @@
 package stellarnear.yfa_dealer.SettingsFragments.DisplayStatsScreenFragment;
 
-/*
+
+import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.Map;
+
+import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
+import stellarnear.yfa_dealer.Stats.Stat;
+import stellarnear.yfa_dealer.Stats.StatsList;
+import stellarnear.yfa_dealer.Tools;
 
 public class DSSFDmgInfoManager {
-    private Perso wedge = MainActivity.wedge;
+
+}
+    /*
+    private Perso yfa = MainActivity.yfa;
 
     private Context mC;
     private View mainView;
-    private ElemsManager elems;
+    private SpellTypesManager elems;
     private Map<String, CheckBox> mapElemCheckbox;
     private StatsList selectedStats=new StatsList();
     private String selectedBracket;
@@ -16,9 +35,9 @@ public class DSSFDmgInfoManager {
 
     private Tools tools=new Tools();
 
-    public DSSFDmgInfoManager(View mainView, Map<String,CheckBox> mapElemCheckbox, Context mC) {
+    public DSSFDmgInfoManager(View mainView, Map<String, CheckBox> mapElemCheckbox, Context mC) {
         this.mainView = mainView;
-        this.elems=ElemsManager.getInstance(mC);
+        this.elems= SpellTypesManager.getInstance();
         this.mapElemCheckbox=mapElemCheckbox;
         this.mC = mC;
 
@@ -31,7 +50,7 @@ public class DSSFDmgInfoManager {
 
     public void addInfos(StatsList selectedStats){
         if(selectedStats==null){
-            this.selectedStats=wedge.getStats().getStatsList();
+            this.selectedStats= yfa.getStats().getStatsList();
             this.allStats=true;
         } else { this.selectedStats=selectedStats; this.allStats=false;}
         if(this.selectedStats.size()>0){addInfos();}
@@ -74,7 +93,7 @@ public class DSSFDmgInfoManager {
         TextView titleMax = createTextElement("max");
         lineMax.addView(titleMax);
 
-        for (String elem : elems.getListKeys()) {
+        for (String elem : elems.getListDmgKeys()) {
             if (mapElemCheckbox.get(elem).isChecked()) {
                 int colorInt = elems.getColorId(elem);
                 TextView telemMin = createTextElement(String.valueOf(selectedStats.getMinDmgElem(elem)));
@@ -108,7 +127,7 @@ public class DSSFDmgInfoManager {
         TextView titlePercent = createTextElement(">=%");
         linePercent.addView(titlePercent);
 
-        for (String elem : elems.getListKeys()) {
+        for (String elem : elems.getListDmgKeys()) {
             if (mapElemCheckbox.get(elem).isChecked()) {
                 int colorInt = elems.getColorId(elem);
                 TextView telemScore = createTextElement(String.valueOf(selectedStats.getLastStat().getElemSumDmg().get(elem)));
@@ -212,3 +231,4 @@ public class DSSFDmgInfoManager {
 
 }
 */
+
