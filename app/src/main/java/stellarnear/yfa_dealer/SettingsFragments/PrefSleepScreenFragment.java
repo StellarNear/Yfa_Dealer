@@ -8,13 +8,14 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 
-import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Activities.MainActivityFragmentSpell;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 public class PrefSleepScreenFragment {
-    private Perso yfa=MainActivity.yfa;
+    private Perso yfa= MainActivity.yfa;
     private Activity mA;
     private Context mC;
     private Tools tools=new Tools();
@@ -64,7 +65,7 @@ public class PrefSleepScreenFragment {
                 yfa.getAllResources().sleepReset();
                 yfa.resetTemp();
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
-                Intent intent = new Intent(mA, MainActivity.class);
+                Intent intent = new Intent(mA, MainActivityFragmentSpell.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mA.startActivity(intent);
             }
@@ -83,7 +84,7 @@ public class PrefSleepScreenFragment {
                 yfa.getAllResources().halfSleepReset();
                 yfa.resetTemp();
                 tools.customToast(mC, "Une journée sans sortilèges t'attends...", "center");
-                Intent intent = new Intent(mA, MainActivity.class);
+                Intent intent = new Intent(mA, MainActivityFragmentSpell.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mA.startActivity(intent);
             }

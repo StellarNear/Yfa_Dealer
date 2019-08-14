@@ -8,7 +8,7 @@
     android:id="@+id/page2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="stellarnear.yfa_dealer.MainActivity">
+    tools:context="stellarnear.yfa_dealer.Activities.MainActivityFragmentSpell">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -1,6 +1,6 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Activities;
 
-import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,17 +9,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -35,36 +32,48 @@ import android.widget.Toast;
 import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 
+import stellarnear.yfa_dealer.CustomAlertDialog;
+import stellarnear.yfa_dealer.MyDragAndDrop;
 import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Spells.BuildSpellList;
 import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Spells.SpellList;
+import stellarnear.yfa_dealer.Targets;
+import stellarnear.yfa_dealer.Tools;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityFragmentSpell extends Fragment {
     private SpellList selectedSpells=new SpellList();
     private boolean shouldExecuteOnResume;
     private Targets targets;
-    public static Perso yfa;
+    private Perso yfa=MainActivity.yfa;
+    
+    private View returnFragView;
 
     private SpellList listAllSpell=null;
 
     private Tools tools=new Tools();
 
+    public MainActivityFragmentSpell() {
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (container != null) {
+            container.removeAllViews();
+        }
+
+        returnFragView= inflater.inflate(R.layout.fragment_main_cast, container, false);
         super.onCreate(savedInstanceState);
         shouldExecuteOnResume = false;
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.BLACK);
-        toolbar.setBackgroundResource(R.drawable.banner_background);
-        setSupportActionBar(toolbar);
-        yfa=new Perso(getApplicationContext());
+    
         targets = Targets.getInstance();
 
         buildPage1();
 
-        ImageButton fab = (ImageButton) findViewById(R.id.fab);
+        ImageButton fab = (ImageButton) returnFragView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,20 +81,20 @@ public class MainActivity extends AppCompatActivity {
                     targets.clearTargets();
                     testSpellSelection();
                 } else {
-                    Toast toast =  Toast.makeText(getApplicationContext(), "Sélectionnes au moins un sort ...", Toast.LENGTH_SHORT);
+                    Toast toast =  Toast.makeText(getContext(), "Sélectionnes au moins un sort ...", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }
             }
         });
 
-        ((TextView) findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
+        ((TextView) returnFragView.findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
 
-        ((FrameLayout) findViewById(R.id.mythic_pts)).setOnClickListener(new View.OnClickListener() {
+        ((FrameLayout) returnFragView.findViewById(R.id.mythic_pts)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if( yfa.getResourceValue("mythic_points")>0) {
-                    new AlertDialog.Builder(MainActivity.this)
+                    new AlertDialog.Builder(getContext())
                             .setTitle("Demande de confirmation")
                             .setMessage("Confirmes-tu la dépense d'un point mythique ?")
                             .setIcon(android.R.drawable.ic_menu_help)
@@ -93,36 +102,26 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     yfa.getAllResources().getResource("mythic_points").spend(1);
                                     refreshMythicPoints();
-                                    tools.customToast(getApplicationContext(),"Il te reste "+yfa.getResourceValue("mythic_points")+" point(s) mythique(s)","center");
+                                    tools.customToast(getContext(),"Il te reste "+yfa.getResourceValue("mythic_points")+" point(s) mythique(s)","center");
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null).show();
                 } else {
-                    tools.customToast(getApplicationContext(),"Tu n'as plus de point mythique","center");
+                    tools.customToast(getContext(),"Tu n'as plus de point mythique","center");
                 }
             }
         });
+
+        return returnFragView;
     }
 
     private void refreshMythicPoints() {
-        ((TextView) findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
+        ((TextView) returnFragView.findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("mythic_points")));
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    protected void onResume() {
-        super.onResume();
-        yfa.refresh();
-        if(shouldExecuteOnResume){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            overridePendingTransition(R.anim.infromleft,R.anim.nothing);
-        } else{
-            shouldExecuteOnResume = true;
-        }
-    }
 
     private void buildPage1() {
-        listAllSpell=BuildSpellList.getInstance(getApplicationContext()).getSpellList();
+        listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList();
 
         int max_tier=0;
         for(int i=0;i<=19;i++){
@@ -132,14 +131,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for(int i=0;i<=max_tier;i++){
-            final ScrollView scroll_tier=(ScrollView) findViewById(R.id.main_scroll_relat);
-            LinearLayout Tiers=(LinearLayout) findViewById(R.id.linear1);
-            final TextView Tier= new TextView(this);
+            final ScrollView scroll_tier=(ScrollView) returnFragView.findViewById(R.id.main_scroll_relat);
+            LinearLayout Tiers=(LinearLayout) returnFragView.findViewById(R.id.linear1);
+            final TextView Tier= new TextView(getContext());
             LinearLayout.LayoutParams para= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            int pixelMarging = getApplicationContext().getResources().getDimensionPixelSize(R.dimen.general_margin);
+            int pixelMarging = getContext().getResources().getDimensionPixelSize(R.dimen.general_margin);
             para.setMargins(pixelMarging,pixelMarging,pixelMarging,pixelMarging);
             Tier.setLayoutParams(para);
-            Tier.setBackground(getApplicationContext().getDrawable(R.drawable.background_tier_title));
+            Tier.setBackground(getContext().getDrawable(R.drawable.background_tier_title));
 
             String tier_txt="Tier "+i;
 
@@ -155,10 +154,10 @@ public class MainActivity extends AppCompatActivity {
             Tiers.addView(Tier);
 
             // side bar
-            LinearLayout side=(LinearLayout) findViewById(R.id.side_bar);
+            LinearLayout side=(LinearLayout) returnFragView.findViewById(R.id.side_bar);
             side.setElevation(10);
-            side.setBackground(getApplicationContext().getDrawable(R.drawable.background_side_bar));
-            final TextView side_txt=new TextView(this);
+            side.setBackground(getContext().getDrawable(R.drawable.background_side_bar));
+            final TextView side_txt=new TextView(getContext());
             side_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             side_txt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
 
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     String n_spell_conv_txt="T" + i + "\n(" + yfa.getResourceValue("spell_rank_"+i)+","+ yfa.getResourceValue("spell_conv_rank_"+i) + ")";
                     String before_conv="T" + i + "\n(" + yfa.getResourceValue("spell_rank_"+i)+",";
                     SpannableString n_spell_conv=  new SpannableString(n_spell_conv_txt);
-                    n_spell_conv.setSpan(new ForegroundColorSpan(getColor(R.color.conversion)),before_conv.length(),before_conv.length()+yfa.getResourceValue("spell_conv_rank_"+i).toString().length(), 0);// set color2
+                    n_spell_conv.setSpan(new ForegroundColorSpan(getContext().getColor(R.color.conversion)),before_conv.length(),before_conv.length()+yfa.getResourceValue("spell_conv_rank_"+i).toString().length(), 0);// set color2
                     side_txt.setText(n_spell_conv);
                 }
             } else {
@@ -181,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     String n_spell_conv_txt="T" + i + " (" + yfa.getResourceValue("spell_rank_"+i)+","+ yfa.getResourceValue("spell_conv_rank_"+i) + ")";
                     String before_conv="T" + i + " (" + yfa.getResourceValue("spell_rank_"+i)+",";
                     SpannableString n_spell_conv=  new SpannableString(n_spell_conv_txt);
-                    n_spell_conv.setSpan(new ForegroundColorSpan(getColor(R.color.conversion)),before_conv.length(),before_conv.length()+yfa.getResourceValue("spell_conv_rank_"+i).toString().length(), 0);// set color2
+                    n_spell_conv.setSpan(new ForegroundColorSpan(getContext().getColor(R.color.conversion)),before_conv.length(),before_conv.length()+yfa.getResourceValue("spell_conv_rank_"+i).toString().length(), 0);// set color2
                     side_txt.setText(n_spell_conv);
                 }
             }
@@ -204,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onLongClick(View view) {
                     if(yfa.getResourceValue("mythic_points")>0) {
 
-                        new AlertDialog.Builder(MainActivity.this)
+                        new AlertDialog.Builder(getContext())
                                 .setTitle("Arcane libre")
                                 .setMessage("Veux tu lancer utiliser arcane libre pour lancer un sort de rang " + rank + " ?")
                                 .setIcon(android.R.drawable.ic_menu_help)
@@ -215,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                                                 .setAction("Action", null).show();
 
                                         yfa.getAllResources().getResource("mythic_points").spend(1);
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
+                                        Toast toast = Toast.makeText(getContext(), "Il te reste " + yfa.getResourceValue("mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                                         toast.show();
                                     }
@@ -225,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }).show();
                     } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                     }
@@ -240,11 +239,11 @@ public class MainActivity extends AppCompatActivity {
             if (rank_list.size()==0){ continue;}
 
             for(final Spell spell : rank_list.asList()){
-                LinearLayout spellLine = new LinearLayout(getApplicationContext());
+                LinearLayout spellLine = new LinearLayout(getContext());
                 spellLine.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast toast = Toast.makeText(getApplicationContext(), spell.getDescr(), Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getContext(), spell.getDescr(), Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                     }
@@ -255,11 +254,11 @@ public class MainActivity extends AppCompatActivity {
                 paraSpellLine.setMargins(pixelMarging,pixelMarging,pixelMarging,0);
                 spellLine.setLayoutParams(paraSpellLine);
 
-                final CheckBox checkbox=new CheckBox(getApplicationContext());
+                final CheckBox checkbox=new CheckBox(getContext());
                 setAddingSpell(checkbox,spell);
                 setCheckBoxColor(checkbox);
                 spellLine.addView(checkbox);
-                TextView spellName = new TextView(getApplicationContext());
+                TextView spellName = new TextView(getContext());
                 spellName.setText(spell.getName());
                 spellName.setTextColor(Color.BLACK);
                 spellName.setOnClickListener(new View.OnClickListener() {
@@ -271,17 +270,17 @@ public class MainActivity extends AppCompatActivity {
                 spellLine.addView(spellName);
                 final Spell mythicSpell = listAllSpell.getMythicSpells().getNormalSpellFromID(spell.getID());
                 if (mythicSpell!=null){
-                    LinearLayout mythLine =  new LinearLayout(getApplicationContext());
+                    LinearLayout mythLine =  new LinearLayout(getContext());
                     mythLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
                     int px = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.general_margin),    getResources().getDisplayMetrics()    );
                     mythLine.setPadding(0,0,px,0);
                     mythLine.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
-                    final CheckBox checkMyth = new CheckBox(getApplicationContext());
+                    final CheckBox checkMyth = new CheckBox(getContext());
                     setCheckBoxColor(checkMyth);
                     setAddingSpell(checkMyth,mythicSpell);
                     mythLine.addView(checkMyth);
-                    ImageView img = new ImageView(getApplicationContext());
-                    img.setImageDrawable(getDrawable(R.drawable.ic_embrassed_energy));
+                    ImageView img = new ImageView(getContext());
+                    img.setImageDrawable(getContext().getDrawable(R.drawable.ic_embrassed_energy));
                     img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -291,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                     img.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View view) {
-                            tools.customToast(getApplicationContext(),mythicSpell.getDescr(),"center");
+                            tools.customToast(getContext(),mythicSpell.getDescr(),"center");
                             return true;
                         }
                     });
@@ -308,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(!b){
-                    new AlertDialog.Builder(MainActivity.this)
+                    new AlertDialog.Builder(getContext())
                             .setTitle("Demande de confirmation")
                             .setMessage("Veux-tu tu lancer une nouvelle fois le sort "+spell.getName()+" ?")
                             .setIcon(android.R.drawable.ic_menu_help)
@@ -331,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
     private void prepareSpell(final CheckBox check, final Spell spell) {
         if(spell.isMyth()){
             if(yfa.getResourceValue("mythic_points")>0) {
-                new AlertDialog.Builder(MainActivity.this)
+                new AlertDialog.Builder(getContext())
                         .setTitle("Demande de confirmation")
                         .setMessage("Point(s) mythique(s) avant lancement des sorts : " + yfa.getResourceValue("mythic_points") + "\n" +
                                 "\nVeux tu préparer la version mythique du sort " + spell.getName() + "\n(cela coûtera 1 pt) ?")
@@ -347,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }).show();
             } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getContext(), "Tu n'as plus de point mythique ...", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
                 check.setChecked(false);
@@ -374,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             selectedSpells.add(new Spell(spell));
         }
-        currentSelectionDisplay(getApplicationContext());
+        currentSelectionDisplay(getContext());
     }
 
     private void removeSpellFromSelection(Spell spell) {
@@ -394,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        currentSelectionDisplay(getApplicationContext());
+        currentSelectionDisplay(getContext());
     }
 
     private void currentSelectionDisplay(Context mC) {
@@ -417,13 +416,13 @@ public class MainActivity extends AppCompatActivity {
     private void testSpellSelection() {
         if (!selectedSpells.isEmpty()) {
             askNTarget();
-        } else { startActivity(new Intent(this, MainActivity.class));}
+        } else { startActivity(new Intent(getContext(), MainActivityFragmentSpell.class));}
     }
 
     private void askNTarget() {
-        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         View mainView = inflater.inflate(R.layout.target_naming,null);
-        CustomAlertDialog targetDialog = new CustomAlertDialog(this,getApplicationContext(),mainView);
+        CustomAlertDialog targetDialog = new CustomAlertDialog(getActivity(),getContext(),mainView);
         final LinearLayout listName = mainView.findViewById(R.id.target_list_names);
 
         targetDialog.setPermanent(true);
@@ -456,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
         addTarget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText edit = new EditText(getApplicationContext());
+                EditText edit = new EditText(getContext());
                 edit.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 int i = listName.getChildCount();
                 edit.setHint("Cible "+i);
@@ -469,12 +468,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showTargetDragAndDrop() {
-        MyDragAndDrop myDragAndDrop = new MyDragAndDrop(getApplicationContext());
+        MyDragAndDrop myDragAndDrop = new MyDragAndDrop(getContext());
 
-        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         View mainView = inflater.inflate(R.layout.target_drag_drop,null);
 
-        CustomAlertDialog targetDialog = new CustomAlertDialog(this,getApplicationContext(),mainView);
+        CustomAlertDialog targetDialog = new CustomAlertDialog(getActivity(),getContext(),mainView);
         targetDialog.setPermanent(true);
         targetDialog.clickToHide(mainView.findViewById(R.id.target_frame));
 
@@ -483,7 +482,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout targetLin = mainView.findViewById(R.id.target_list_targets);
 
         for (Spell spell : selectedSpells.asList()){
-            TextView t = new TextView(getApplicationContext());
+            TextView t = new TextView(getContext());
             t.setText(spell.getName());
             t.setTextSize(18);
             t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -492,15 +491,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (String tar : targets.getTargetList()){
-            LinearLayout fram = new LinearLayout(getApplicationContext());
+            LinearLayout fram = new LinearLayout(getContext());
             fram.setGravity(Gravity.CENTER);
             fram.setOrientation(LinearLayout.VERTICAL);
             fram.setPadding(5,50,5,50);
-            fram.setBackground(getDrawable(R.drawable.target_basic_gradient));
+            fram.setBackground(getContext().getDrawable(R.drawable.target_basic_gradient));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT );
             params.setMargins(0,5,0,0);
             fram.setLayoutParams(params);
-            TextView t = new TextView(getApplicationContext());
+            TextView t = new TextView(getContext());
             t.setText(tar);
             t.setTextColor(Color.DKGRAY);
             t.setTextSize(20);
@@ -516,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
                 if (targets.anySpellAssigned()){
                     buildPage2();
                 } else {
-                    Toast toast =  Toast.makeText(getApplicationContext(), "Aucun sort n'est attribué à une cible ...", Toast.LENGTH_SHORT);
+                    Toast toast =  Toast.makeText(getContext(), "Aucun sort n'est attribué à une cible ...", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }
@@ -525,48 +524,25 @@ public class MainActivity extends AppCompatActivity {
         targetDialog.showAlert();
     }
     private void buildPage2(){
-        Intent intent = new Intent(this, SpellCastActivity.class);
+        Intent intent = new Intent(getContext(), SpellCastActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.infromright,R.anim.nothing);
+        //overridePendingTransition(R.anim.infromright,R.anim.nothing);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void setSpellLineColor(LinearLayout line,Spell spell) {
         if (spell.getDmg_type().equals("aucun")) {
-            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_noelem));
+            line.setBackground(getContext().getDrawable(R.drawable.background_spell_line_noelem));
         } else if (spell.getDmg_type().equals("feu")) {
-            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_fire));
+            line.setBackground(getContext().getDrawable(R.drawable.background_spell_line_fire));
         } else if (spell.getDmg_type().equals("foudre")) {
-            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_shock));
+            line.setBackground(getContext().getDrawable(R.drawable.background_spell_line_shock));
         } else if (spell.getDmg_type().equals("froid")) {
-            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_frost));
+            line.setBackground(getContext().getDrawable(R.drawable.background_spell_line_frost));
         } else if (spell.getDmg_type().equals("acide")) {
-            line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_acid));
+            line.setBackground(getContext().getDrawable(R.drawable.background_spell_line_acid));
         } else {
-            //line.setBackground(getApplicationContext().getDrawable(R.drawable.background_spell_line_nodmg));
+            //line.setBackground(getContext().getDrawable(R.drawable.background_spell_line_nodmg));
         }
 
     }

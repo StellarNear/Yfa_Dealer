@@ -49,6 +49,7 @@
     <integer name="percent_fullscreen_combat_launcher_dialog">95</integer>
 
     <integer name="display_stats_bin_def">25</integer>
+    <integer name="translationFragDuration">500</integer>
 
 
 </resources>

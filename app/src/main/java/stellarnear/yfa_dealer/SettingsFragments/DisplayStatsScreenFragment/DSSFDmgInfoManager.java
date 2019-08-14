@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import java.util.Map;
 
-import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.SpellTypes.SpellTypesManager;
 import stellarnear.yfa_dealer.Stats.DamagesShortList;
 import stellarnear.yfa_dealer.Stats.DamagesShortListElement;
 import stellarnear.yfa_dealer.Tools;
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 public class DSSFDmgInfoManager {
     private Perso yfa = MainActivity.yfa;

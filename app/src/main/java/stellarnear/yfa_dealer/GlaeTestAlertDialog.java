@@ -20,7 +20,7 @@ import android.widget.TextView;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Rolls.Dice;
 import stellarnear.yfa_dealer.Spells.Spell;
-
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 public class GlaeTestAlertDialog {
     private Activity mA;

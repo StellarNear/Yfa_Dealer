@@ -15,10 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 public class ImgForDice {
     private Activity mA;
@@ -102,10 +102,10 @@ public class ImgForDice {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
             /*if(mode.equalsIgnoreCase("légendaire")){
                 surgeDice=new Dice(mA, mC, tools.toInt(settings.getString("legendary_dice",String.valueOf(mC.getResources().getInteger(R.integer.legendary_dice_def)))));
-                MainActivity.yfa.getAllResources().getResource("legendary_points").spend(1);
+                yfa.getAllResources().getResource("legendary_points").spend(1);
             } else {*/
                 surgeDice=new Dice(mA, mC, tools.toInt(settings.getString("mythic_dice",String.valueOf(mC.getResources().getInteger(R.integer.mythic_dice_def)))));
-                MainActivity.yfa.getAllResources().getResource("mythic_points").spend(1);
+                yfa.getAllResources().getResource("mythic_points").spend(1);
             //}
 
             if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_DEF))){

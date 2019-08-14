@@ -4,11 +4,12 @@ import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.widget.SeekBar;
 
+import stellarnear.yfa_dealer.Activities.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 public class SliderBuilder {
-    private Perso yfa=MainActivity.yfa;
+    private Perso yfa= MainActivity.yfa;
     private Spell spell;
     private Context mC;
     private Calculation calculation=new Calculation();

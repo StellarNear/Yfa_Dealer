@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import stellarnear.yfa_dealer.Activities.MainActivity;
 import stellarnear.yfa_dealer.Calculation;
 import stellarnear.yfa_dealer.DisplayedText;
-import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;

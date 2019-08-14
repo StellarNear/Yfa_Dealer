@@ -22,6 +22,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import stellarnear.yfa_dealer.Activities.MainActivity;
+import stellarnear.yfa_dealer.Activities.MainActivityFragmentSpell;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.SettingsFragments.PrefAllInventoryFragment;
 import stellarnear.yfa_dealer.SettingsFragments.PrefInfoScreenFragment;
@@ -80,7 +82,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onUpButton() {
         if (histoPrefKeys.get(histoPrefKeys.size() - 1).equalsIgnoreCase("pref") || histoPrefKeys.size() <= 1) // in top-level
         {
-            Intent intent = new Intent(mA, MainActivity.class);// Switch to MainActivity
+            Intent intent = new Intent(mA, MainActivityFragmentSpell.class);// Switch to MainActivityFragmentSpell
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             mA.startActivity(intent);
         } else // in sub-level

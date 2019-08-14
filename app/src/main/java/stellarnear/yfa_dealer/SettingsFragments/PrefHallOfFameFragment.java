@@ -20,11 +20,11 @@ import java.util.Locale;
 
 import stellarnear.yfa_dealer.CustomAlertDialog;
 import stellarnear.yfa_dealer.FameEntry;
-import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Stats.Stat;
 import stellarnear.yfa_dealer.Tools;
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 public class PrefHallOfFameFragment extends Preference {
     private Perso yfa= MainActivity.yfa;

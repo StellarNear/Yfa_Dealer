@@ -7,11 +7,12 @@ import android.preference.PreferenceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import stellarnear.yfa_dealer.Activities.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Spells.Spell;
 
 public class DisplayedText {
-    private Perso yfa=MainActivity.yfa;
+    private Perso yfa= MainActivity.yfa;
     private Tools tools=new Tools();
     private Calculation calculation=new Calculation();
 

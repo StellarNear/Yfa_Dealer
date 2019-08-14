@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Activities;
 
 /**
  * Created by jchatron on 20/02/2018.
@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.VideoView;
+
+import stellarnear.yfa_dealer.R;
 
 
 /**

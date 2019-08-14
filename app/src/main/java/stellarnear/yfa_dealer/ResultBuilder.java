@@ -21,10 +21,10 @@ import stellarnear.yfa_dealer.Rolls.DiceList;
 import stellarnear.yfa_dealer.Rolls.DisplayRolls;
 import stellarnear.yfa_dealer.Rolls.ProbaFromDiceRand;
 import stellarnear.yfa_dealer.Spells.Spell;
-
+import stellarnear.yfa_dealer.Activities.MainActivity;
 public class ResultBuilder {
 
-    private Perso yfa=MainActivity.yfa;
+    private Perso yfa= MainActivity.yfa;
     private Spell spell;
     private int spellColorId;
     private Context mC;

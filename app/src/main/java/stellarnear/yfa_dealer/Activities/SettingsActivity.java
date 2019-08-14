@@ -1,9 +1,11 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import stellarnear.yfa_dealer.SettingsFragment;
 
 
 /**

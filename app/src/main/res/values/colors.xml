@@ -72,6 +72,12 @@
     <color name="resist_stat">#005580</color>
     <color name="bglae_boost_stat">#006600</color>
     <color name="glae_fail_stat">#cc2900</color>
+    <color name="start_back_color">#000000</color>
+    <color name="title_skill_color_text">@color/colorBackground</color>
+    <color name="title_skill_color_background">@color/colorPrimaryDark</color>
+    <color name="stroke_main_action_bar">#000000</color>
+    <color name="start_gradient_title_bar_main_skill">#000967</color>
+    <color name="end_gradient_title_bar_main_skill">#b164f5</color>
 
 
 </resources>

@@ -10,13 +10,13 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 
-import stellarnear.yfa_dealer.MainActivity;
+import stellarnear.yfa_dealer.Activities.MainActivityFragmentSpell;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;
-
+import stellarnear.yfa_dealer.Activities.MainActivity;
 public class PrefResetScreenFragment {
-    private Perso yfa=MainActivity.yfa;
+    private Perso yfa= MainActivity.yfa;
     private Activity mA;
     private Context mC;
 
@@ -41,7 +41,7 @@ public class PrefResetScreenFragment {
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(mA, MainActivity.class);
+                        Intent intent = new Intent(mA, MainActivityFragmentSpell.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         mA.startActivity(intent);
                     }
@@ -66,7 +66,7 @@ public class PrefResetScreenFragment {
                 yfa.getInventory().resetInventory();
                 yfa.getStats().resetStats();
                 tools.customToast(mC, "Remise à zero des paramètres de l'application", "center");
-                Intent intent = new Intent(mA, MainActivity.class);
+                Intent intent = new Intent(mA, MainActivityFragmentSpell.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mA.startActivity(intent);
             }

@@ -1,4 +1,4 @@
-package stellarnear.yfa_dealer;
+package stellarnear.yfa_dealer.Activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -12,10 +12,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import stellarnear.yfa_dealer.Calculation;
 import stellarnear.yfa_dealer.Perso.Perso;
+import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Spells.SpellList;
 import stellarnear.yfa_dealer.Spells.SpellProfile;
+import stellarnear.yfa_dealer.Targets;
+import stellarnear.yfa_dealer.Tools;
 
 
 public class SpellCastActivity extends AppCompatActivity {
@@ -38,7 +42,7 @@ public class SpellCastActivity extends AppCompatActivity {
         toolbar2.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivityFragmentSpell.class));
                 overridePendingTransition(R.anim.infromleft, R.anim.nothing);
             }
         });

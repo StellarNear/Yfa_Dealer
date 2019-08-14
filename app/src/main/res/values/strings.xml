@@ -4,6 +4,9 @@
     <string name="action_settings">"Paramètres"</string>
 
     <string name="setting_activity">Paramètres</string>
+    <string name="main_action_skill">Compétences</string>
+    <string name="main_action_spell">Sortilèges</string>
+    <string name="quadrantGeneralTitle">Caractéristiques</string>
 
 
     <string-array name="values">

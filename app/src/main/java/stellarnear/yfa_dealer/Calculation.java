@@ -7,13 +7,14 @@ import android.preference.PreferenceManager;
 import java.util.Arrays;
 import java.util.List;
 
+import stellarnear.yfa_dealer.Activities.MainActivity;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Spells.Metamagic;
 import stellarnear.yfa_dealer.Spells.Spell;
 import stellarnear.yfa_dealer.Spells.SpellList;
 
 public class Calculation {
-    private Perso yfa=MainActivity.yfa;
+    private Perso yfa= MainActivity.yfa;
     private Tools tools=new Tools();
 
     public Calculation(){  }

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.Rolls.Dice;
 import stellarnear.yfa_dealer.Spells.Spell;
-
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 public class TestAlertDialog {
     private Activity mA;
@@ -55,7 +55,7 @@ public class TestAlertDialog {
 
 
         sumScore= calculation.casterLevelSR(spell);
-        Perso yfa =MainActivity.yfa;
+        Perso yfa = MainActivity.yfa;
         robe = yfa.getInventory().getAllEquipments().getEquipmentsEquiped("armor_slot").getName().equalsIgnoreCase("Robe d'archimage grise");
         if(robe){
             sumScore+=2;

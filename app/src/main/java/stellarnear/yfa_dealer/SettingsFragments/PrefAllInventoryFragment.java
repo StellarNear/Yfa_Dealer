@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import stellarnear.yfa_dealer.CustomAlertDialog;
-import stellarnear.yfa_dealer.MainActivity;
 import stellarnear.yfa_dealer.Perso.Equipment;
 import stellarnear.yfa_dealer.Perso.Perso;
 import stellarnear.yfa_dealer.R;
 import stellarnear.yfa_dealer.Tools;
+import stellarnear.yfa_dealer.Activities.MainActivity;
 
 
 public class PrefAllInventoryFragment {

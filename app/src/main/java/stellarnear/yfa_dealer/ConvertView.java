@@ -22,7 +22,7 @@ import stellarnear.yfa_dealer.Spells.BuildMetaList;
 import stellarnear.yfa_dealer.Spells.MetaList;
 import stellarnear.yfa_dealer.Spells.Metamagic;
 import stellarnear.yfa_dealer.Spells.Spell;
-
+import stellarnear.yfa_dealer.Activities.MainActivity;
 /**
  * Created by jchatron on 01/12/2017.
  */
