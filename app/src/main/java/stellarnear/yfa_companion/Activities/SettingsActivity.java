@@ -9,7 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import stellarnear.yfa_companion.R;
-import stellarnear.yfa_companion.SettingsFragment;
+import stellarnear.yfa_companion.SettingsFragments.SettingsFragment;
 
 
 /**

@@ -19,6 +19,8 @@
     <string name="quadrantQ2Title">Ressources</string>
     <string name="quadrantQ3Title">Caractéristiques défensives</string>
     <string name="quadrantQ4Title">Caractéristiques avancées</string>
+    <string name="skill_mastery">Rang de maîtrise</string>
+    <string name="skill_bonus">Bonus divers</string>
 
 
     <string-array name="values">

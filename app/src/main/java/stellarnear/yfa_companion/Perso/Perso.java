@@ -47,9 +47,10 @@ public class Perso {
     }
 
     public void refresh() {
+        allAbilities.refreshAllAbilities();
+        allFeats.refreshAllSwitch();
         allSkills.refreshAllVals();
         allResources.refreshMaxs();
-
     }
 
 

@@ -1,33 +1,54 @@
 package stellarnear.yfa_companion.SettingsFragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
-import stellarnear.yfa_companion.Activities.MainActivityFragmentSpell;
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
-import stellarnear.yfa_companion.Activities.MainActivity;
-public class PrefResetScreenFragment {
-    private Perso yfa= MainActivity.yfa;
-    private Activity mA;
+public class PrefResetScreenFragment extends Preference {
     private Context mC;
+    private Perso yfa=MainActivity.yfa;
+    private View mainView;
 
-    public PrefResetScreenFragment(Activity mA, Context mC) {
-        this.mA=mA;
-        this.mC=mC;
+    public PrefResetScreenFragment(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+    }
+
+    public PrefResetScreenFragment(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+    }
+    public PrefResetScreenFragment(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected View onCreateView(ViewGroup parent)
+    {
+        super.onCreateView(parent);
+        this.mC=getContext();
+
+        mainView = new View(getContext());
+        final ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(parent.getWidth(), parent.getHeight());  //pour full screen
+        mainView.setLayoutParams(params);
+        addResetScreen();
+        return mainView;
     }
 
     public void addResetScreen() {
-        View window = mA.findViewById(android.R.id.content);
-        window.setBackgroundResource(R.drawable.reset_background);
+        mainView.setBackgroundResource(R.drawable.reset_background);
         new AlertDialog.Builder(mC)
                 .setIcon(R.drawable.ic_warning_black_24dp)
                 .setTitle("Remise à zéro des paramètres")
@@ -41,9 +62,6 @@ public class PrefResetScreenFragment {
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(mA, MainActivityFragmentSpell.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        mA.startActivity(intent);
                     }
                 })
                 .show();
@@ -66,9 +84,9 @@ public class PrefResetScreenFragment {
                 yfa.getInventory().resetInventory();
                 yfa.getStats().resetStats();
                 tools.customToast(mC, "Remise à zero des paramètres de l'application", "center");
-                Intent intent = new Intent(mA,  MainActivity.class);
+                Intent intent = new Intent(mC,  MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                mA.startActivity(intent);
+                mC.startActivity(intent);
             }
         }, time);
     }

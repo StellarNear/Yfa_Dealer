@@ -26,6 +26,13 @@
         android:summary="Statistiques relatives au combat"/>
 
     <PreferenceScreen
+        android:key="pref_character_skill"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Compétences"
+        android:summary="Maitrise des compétences"
+        />
+
+    <PreferenceScreen
         android:key="pref_character_xp"
         android:icon="@drawable/ic_upgrade"
         android:title="Experience"

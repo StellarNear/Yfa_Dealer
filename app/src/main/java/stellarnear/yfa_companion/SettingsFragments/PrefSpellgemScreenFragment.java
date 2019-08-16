@@ -12,13 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import stellarnear.yfa_companion.Activities.MainActivityFragmentSpell;
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Perso.Resource;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
-import stellarnear.yfa_companion.Activities.MainActivity;
 public class PrefSpellgemScreenFragment {
     private Activity mA;
     private Context mC;
@@ -90,7 +89,7 @@ public class PrefSpellgemScreenFragment {
         this.spellgemPopup.setAcceptEventListener(new CustomAlertDialog.OnAcceptEventListener() {
             @Override
             public void onEvent() {
-                Intent intent = new Intent(mA, MainActivityFragmentSpell.class);// Switch to MainActivityFragmentSpell
+                Intent intent = new Intent(mA, MainActivity.class);// Switch to MainActivityFragmentSpell
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mA.startActivity(intent);
             }

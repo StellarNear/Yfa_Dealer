@@ -1,4 +1,4 @@
-package stellarnear.yfa_companion;
+package stellarnear.yfa_companion.SettingsFragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,7 +13,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ContentFrameLayout;
 import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -24,14 +23,10 @@ import java.util.List;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
-import stellarnear.yfa_companion.SettingsFragments.PrefAllInventoryFragment;
-import stellarnear.yfa_companion.SettingsFragments.PrefInfoScreenFragment;
-import stellarnear.yfa_companion.SettingsFragments.PrefResetScreenFragment;
-import stellarnear.yfa_companion.SettingsFragments.PrefSleepScreenFragment;
-import stellarnear.yfa_companion.SettingsFragments.PrefSpellgemScreenFragment;
-import stellarnear.yfa_companion.SettingsFragments.PrefXpFragment;
+import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildMetaList;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
+import stellarnear.yfa_companion.Tools;
 
 public class SettingsFragment extends PreferenceFragment {
     private Activity mA;
@@ -46,9 +41,8 @@ public class SettingsFragment extends PreferenceFragment {
     private SharedPreferences settings;
     private PrefAllInventoryFragment prefAllInventoryFragment;
     private PrefXpFragment prefXpFragment;
-    private PrefResetScreenFragment prefResetScreenFragment;
-    private PrefSleepScreenFragment prefSleepScreenFragment;
     private PrefInfoScreenFragment prefInfoScreenFragment;
+    private PrefSkillFragment prefSkillFragment;
     private PrefSpellgemScreenFragment prefSpellgemScreenFragment;
     private Perso yfa = MainActivity.yfa;
 
@@ -71,16 +65,16 @@ public class SettingsFragment extends PreferenceFragment {
         });
         this.prefXpFragment = new PrefXpFragment(mA,mC);
         this.prefXpFragment.checkLevel(tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def)))));
-        this.prefResetScreenFragment = new PrefResetScreenFragment(mA,mC);
-        this.prefSleepScreenFragment = new PrefSleepScreenFragment(mA,mC);
         this.prefInfoScreenFragment=new PrefInfoScreenFragment(mA,mC);
         this.prefSpellgemScreenFragment=new PrefSpellgemScreenFragment(mA,mC);
+        this.prefSkillFragment=new PrefSkillFragment(mA,mC);
     }
 
     // will be called by SettingsActivity (Host Activity)
     public void onUpButton() {
         if (histoPrefKeys.get(histoPrefKeys.size() - 1).equalsIgnoreCase("pref") || histoPrefKeys.size() <= 1) // in top-level
         {
+            yfa.refresh();
             Intent intent = new Intent(mA, MainActivity.class);// Switch to MainActivityFragmentSpell
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             mA.startActivity(intent);
@@ -143,6 +137,12 @@ public class SettingsFragment extends PreferenceFragment {
                     BuildMetaList.resetMetas();
                     BuildSpellList.resetSpellList();
                     break;
+                case "pref_character_skill":
+                    PreferenceCategory rank = (PreferenceCategory) findPreference(getString(R.string.skill_mastery));
+                    PreferenceCategory bonus = (PreferenceCategory) findPreference(getString(R.string.skill_bonus));
+                    prefSkillFragment.addSkillsList(rank,bonus);
+                    setHasOptionsMenu(true);
+                    break;
             }
         }
     }
@@ -158,16 +158,6 @@ public class SettingsFragment extends PreferenceFragment {
         switch (preference.getKey()) {
             case "infos":
                 prefInfoScreenFragment.showInfo();
-                break;
-            case "reset_para":
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(preference.getTitle());
-                ((ContentFrameLayout) getActivity().findViewById(android.R.id.content)).removeAllViews();
-                prefResetScreenFragment.addResetScreen();
-                break;
-            case "sleep":
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(preference.getTitle().toString());
-                ((ContentFrameLayout) getActivity().findViewById(android.R.id.content)).removeAllViews();
-                prefSleepScreenFragment.addSleepScreen();
                 break;
             case "show_equipment":
                 yfa.getInventory().showEquipment(getActivity(), getContext(), true);

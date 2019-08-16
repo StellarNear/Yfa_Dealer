@@ -32,7 +32,7 @@
         android:title="Bonus temporaires" />
 
     <PreferenceScreen
-        android:key="sleep"
+        android:key="pref_sleep"
         android:icon="@drawable/ic_brightness_3_black_24dp"
         android:title="Repos"
         android:summary="Une bonne nuit de sommeil"/>

@@ -72,11 +72,11 @@ public class ContactAlertDialog {
             summaryDetail+=" (bonus +"+String.valueOf(yfa.getBonusAtk())+")";
         }
         if(mode.equalsIgnoreCase("melee")){
-            sumScore+=yfa.getAbilityScore("ability_force");
-            summaryDetail+="\nBonus force ("+(yfa.getAbilityScore("ability_force")>0?"+":"")+yfa.getAbilityScore("ability_force")+")";
+            sumScore+=yfa.getAbilityMod("ability_force");
+            summaryDetail+="\nBonus force ("+(yfa.getAbilityMod("ability_force")>0?"+":"")+yfa.getAbilityMod("ability_force")+")";
         } else {
-            sumScore+=yfa.getAbilityScore("ability_dexterite");
-            summaryDetail+="\nBonus dexterité ("+(yfa.getAbilityScore("ability_dexterite")>0?"+":"")+yfa.getAbilityScore("ability_dexterite")+")";
+            sumScore+=yfa.getAbilityMod("ability_dexterite");
+            summaryDetail+="\nBonus dexterité ("+(yfa.getAbilityMod("ability_dexterite")>0?"+":"")+yfa.getAbilityMod("ability_dexterite")+")";
         }
         if(yfa.getResourceValue("true_strike")>0){
             sumScore+=20;
