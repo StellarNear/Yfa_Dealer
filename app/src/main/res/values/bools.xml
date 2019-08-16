@@ -24,6 +24,7 @@
     <bool name="glae_switch_tier2_def">true</bool>
     <bool name="switch_campaign_gif_DEF">true</bool>
     <bool name="switch_fullscreen_mode_DEF">true</bool>
+    <bool name="switch_perma_resi_DEF">true</bool>
 
 
 </resources>

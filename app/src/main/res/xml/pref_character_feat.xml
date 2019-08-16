@@ -52,7 +52,7 @@
         android:summary="Place un sort sur une flêche de l'archer-sylvestre"
         android:title="Flêche naturalisée (+2)" />
 
-    <stellarnear.yfa_dealer.EditTextPreference
+    <stellarnear.yfa_companion.EditTextPreference
         android:defaultValue="@integer/wedge_max_lvl_spell_def"
         android:key="wedge_max_lvl_spell"
         android:title="Niveau max de sort connu par l'archer-sylvestre"

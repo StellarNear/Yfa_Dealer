@@ -1,73 +1,28 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/nls_val_def"
-        android:key="nls_val"
-        android:title="Niveau lanceur de sort"
-        android:selectAllOnFocus="true"
-        android:inputType="number"
-        android:selectable="false"
-        android:singleLine="true"
-        android:summary="Valeur : %s"/>
+    <PreferenceScreen
+        android:key="pref_character_general_base"
+        android:icon="@drawable/ic_dna1"
+        android:title="Caractéristiques de base"
+        android:summary="Statistiques de base du personnage"/>
 
-    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+    <PreferenceScreen
+        android:key="pref_character_general_ressource"
+        android:icon="@drawable/ic_heart_bottle"
+        android:title="Ressources du personnage"
+        android:summary="Points de vie/regen et points héroiques"/>
 
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="ioun_stone"
-        android:summary="Pierre d'ioun orange (+1 NLS)"
-        android:title="Pierre d'ioun"
-        />
+    <PreferenceScreen
+        android:key="pref_character_general_ca"
+        android:icon="@drawable/ic_shield"
+        android:summary="Classe d'armure du personnage"
+        android:title="CA apportée par l'équipement" />
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/charisme_def"
-        android:key="charisme"
-        android:inputType="number"
-        android:title="Modificateur de charisme"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : +%s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/base_atk_def"
-        android:key="base_atk"
-        android:inputType="number"
-        android:title="Bonus de base à l'attaque"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : +%s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/bonus_atk_def"
-        android:key="bonus_atk"
-        android:inputType="number"
-        android:title="Bonus au jet d'attaque"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : +%s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/epic_atk_bonus_def"
-        android:key="epic_atk_bonus"
-        android:inputType="number"
-        android:title="Bonus épique à l'attaque"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : +%s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/force_def"
-        android:key="force"
-        android:inputType="number"
-        android:title="Modificateur de force"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : +%s"/>
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/dexterite_def"
-        android:key="dexterite"
-        android:inputType="number"
-        android:title="Modificateur de dextérité"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : +%s"/>
-
+    <PreferenceScreen
+        android:key="pref_character_general_save"
+        android:icon="@drawable/ic_dodging"
+        android:summary="Jets de sauvegarde"
+        android:title="Tout ce qui modifie : Reflexe, Vigeur et Volonté" />
 
 </PreferenceScreen>

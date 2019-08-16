@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<records>
+    <!-- feat_active -->
+    <feat>
+        <name>Combat en aveugle</name>
+        <type>feat_active</type>
+        <descr>Le personnage est très doué pour attaquer des adversaires qu’il distingue mal. Lors d’un combat au corps à corps, à chaque fois que le personnage rate son adversaire à cause de son camouflage, il peut à nouveau jeter 1d100 afin de savoir s’il touche. Un adversaire invisible ne bénéficie d’aucun avantage offensif contre le personnage.</descr>
+        <id>feat_blind_fight</id>
+    </feat>
+    <feat>
+        <name>Coup étourdissant</name>
+        <type>feat_active</type>
+        <descr>Le personnage sait où frapper pour étourdir son adversaire. Le personnage doit annoncer qu’il utilise ce don avant de faire son jet d’attaque (la tentative échoue donc si le personnage rate son jet). L’attaque inflige les dégâts habituels. De plus, le Coup étourdissant oblige tout adversaire frappé par l’attaque à mains nues du personnage à faire un jet de Vigueur (DD 10 + 1/2 niveau du personnage + modificateur de Sagesse). S'il rate ce jet de sauvegarde, il est amoindri (effet au choix du moine).</descr>
+        <id>feat_stun</id>
+    </feat>
+    <feat>
+        <name>Parade de projectile</name>
+        <type>feat_active</type>
+        <descr>Le personnage peut détourner les flèches et d’autres projectiles de leur trajectoire afin de les éviter. Le personnage doit avoir au moins une main libre pour utiliser ce don. Une fois par round, quand il devrait être touché par une arme à distance, il peut dévier le projectile au dernier moment et éviter tout dégât.</descr>
+        <id>feat_proj_parade</id>
+    </feat>
+    <feat>
+        <name>Science de la vigeur surhumaine</name>
+        <type>feat_active</type>
+        <descr>Le personnage peut puiser dans ses réserves intérieures pour résister aux maladies, aux poisons et autres effets néfastes. Une fois par jour, le personnage peut relancer un jet de Vigueur. Il doit décider de le faire avant que le résultat du premier jet soit connu et doit accepter le second résultat, même s’il est pire que le premier.</descr>
+        <id>feat_inhuman_stamina_sup</id>
+    </feat>
+    <feat>
+        <name>Science de la volonté de fer</name>
+        <type>feat_active</type>
+        <descr>Les pensées limpides du personnage lui permettent de résister aux attaques mentales. Une fois par jour, le personnage peut relancer un jet de Volonté. Il doit décider de le faire avant que le résultat du premier jet soit connu et doit accepter le second résultat, même s’il est pire que le premier.</descr>
+        <id>feat_iron_will_sup</id>
+    </feat>
+
+    <feat>
+        <name>Armure Ki</name>
+        <type>feat_active</type>
+        <descr>En dépensant un point de Ki le moine gagne un bonus d’esquive de +2 à sa CA pendant 1 minute (accumulable jusqu'à un maximum de CA égal à la moitié du niveau du moine).</descr>
+        <id>feat_ki_armor</id>
+    </feat>
+
+    <feat>
+        <name>Vitesse aveuglante</name>
+        <type>feat_active</type>
+        <descr>Le personnage peut agir comme si il avait le sort "rapidité" activé 5 rounds par jour. Il peut activer les rounds indépendamment. Activer ce pouvoir est une action libre.</descr>
+        <id>feat_ki_armor</id>
+    </feat>
+
+
+
+    <!-- feat_atk -->
+    <feat>
+        <name>Coups Vifs</name>
+        <type>feat_atk</type>
+        <descr>Tant qu'il reste un point de Ki au moine les poings du moine font des dégâts tranchants. La plage de critique de base est portée à 18-20. Les poings du moine sont considéré comme bloquant et désarmant pour les test de BMO et DMD.</descr>
+        <id>feat_keen_strike</id>
+    </feat>
+    <feat>
+        <name>Don pour les critiques</name>
+        <type>feat_atk</type>
+        <descr>Le personnage est très doué pour semer la souffrance. Le personnage reçoit un bonus de circonstances de +4 aux jets d’attaque destinés à confirmer un coup critique.</descr>
+        <id>feat_crit</id>
+    </feat>
+    <feat>
+        <name>Ecole du scorpion</name>
+        <type>feat_atk</type>
+        <descr>Le personnage frappe son adversaire de ses poings nus et entrave considérablement ses mouvements. Pour utiliser ce don, le personnage doit faire une unique attaque à mains nues par une action simple. S’il touche, il inflige des dégâts normaux et réduit la vitesse de déplacement de base de sa cible à 1,5 m pendant un nombre de rounds égal à son modificateur de Sagesse, à moins que la victime réussisse un jet de Vigueur (DD 10 + 1/2 niveau du personnage + modificateur de Sagesse).</descr>
+        <id>feat_scorpio</id>
+    </feat>
+    <feat>
+        <name>Frappe de Ki améliorée</name>
+        <type>feat_atk</type>
+        <descr>Les coups du moine sont considérés comme étant portés avec des armes épiques du point de vue de la réduction de dégats.</descr>
+        <id>feat_improved_ki_strike</id>
+    </feat>
+    <feat>
+        <name>Fureur de la méduse</name>
+        <type>feat_atk</type>
+        <descr>Le personnage profite de la confusion de son adversaire pour lui porter une multitude de coups. Quand le personnage effectue une attaque à outrance et porte au moins une attaque à mains nues, il peut faire deux attaques à mains nues supplémentaires avec son bonus de base à l’attaque maximal. Ces attaques en bonus ne peuvent être menées que contre une cible chancelante, étourdie, hébétée, inconsciente, paralysée ou prise au dépourvu.</descr>
+        <id>feat_medusa</id>
+    </feat>
+    <feat>
+        <name>Maitrise des écoles</name>
+        <type>feat_atk</type>
+        <descr>Le personnage peut changer d’école de combat et les combiner pour améliorer leurs effets. Le personnage peut changer d’école par une action libre. Il choisit une école en début de combat et commence l’affrontement avec, même lors du round de surprise.</descr>
+        <id>feat_stance_master</id>
+    </feat>
+    <feat>
+        <name>Poing de la gorgone</name>
+        <type>feat_atk</type>
+        <descr>Le personnage peut projeter son adversaire en arrière d’un seul coup de poing. Par une action simple, le personnage fait une unique attaque de corps à corps contre un adversaire dont la vitesse est réduite (s’il est victime de l’École du scorpion par exemple). La cible est chancelante jusqu’à la fin du prochain tour du personnage, à moins qu’elle ne réussisse un jet de Vigueur (DD 10 + 1/2 niveau du personnage + modificateur de Sagesse).</descr>
+        <id>feat_gorgon</id>
+    </feat>
+    <feat>
+        <name>Science du critique</name>
+        <type>feat_atk</type>
+        <descr>Les attaques du personnage avec une arme de son choix sont particulièrement redoutables. La zone de critique de l’arme choisie est doublée.</descr>
+        <id>feat_crit_sup</id>
+    </feat>
+
+
+
+    <!-- DEF -->
+    <feat>
+        <name>Esquive surnaturelle</name>
+        <type>feat_def</type>
+        <descr>Face aux attaques permettant un jet de Réflexes pour réduire les dégâts de moitié, il continue à ne subir aucun dégât en cas de jet de sauvegarde réussi mais, en plus, il ne subit que la moitié des dégâts en cas d’échec du jet de sauvegarde. Le moine ne bénéficie pas de cette capacité s’il est sans défense.</descr>
+        <id>feat_inhuman_evade</id>
+    </feat>
+    <feat>
+        <name>Esquive totale</name>
+        <type>feat_def</type>
+        <descr>Le moine peut esquiver de nombreuses attaques de zone. S’il réussit son jet de Réflexes contre une attaque dont les dégâts sont normalement réduits de moitié, il ne subit pas le moindre dégât.</descr>
+        <id>feat_total_evade</id>
+    </feat>
+    <feat>
+        <name>Robustesse</name>
+        <type>feat_def</type>
+        <descr>L’endurance du personnage est au-dessus de la moyenne. Le personnage gagne 3 points de vie supplémentaires. Il gagne 1 point de vie supplémentaire pour chaque Dé de vie qu’il possède au-dessus de 3. S’il possède plus de 3 DV, il gagne 1 point de vie supplémentaire à chaque fois qu’il gagne un DV (quand il prend un niveau par exemple).</descr>
+        <id>feat_robustness</id>
+    </feat>
+    <feat>
+        <name>Souplesse du serpent</name>
+        <type>feat_def</type>
+        <descr>Le personnage n’a aucun mal à traverser la mêlée. Le personnage bénéficie d’un bonus d’esquive de +4 à la CA contre les attaques d’opportunité déclenchées par un déplacement dans un espace contrôlé (ou lorsqu’il en sort). Il perd automatiquement ce bonus s’il perd son bonus de Dextérité à la CA.</descr>
+        <id>feat_snake_dex</id>
+    </feat>
+
+    <feat>
+        <name>Vigeur surhumaine</name>
+        <type>feat_def</type>
+        <descr>Le personnage est plus résistant aux poisons, aux maladies et autres effets néfastes. Le personnage bénéficie d’un bonus de +2 à tous ses jets de Vigueur.</descr>
+        <id>feat_inhuman_stamina</id>
+    </feat>
+    <feat>
+        <name>Volonté de fer</name>
+        <type>feat_def</type>
+        <descr>Le personnage est plus résistant aux effets mentaux. Le personnage bénéficie d’un bonus de +2 à tous ses jets de Volonté.</descr>
+        <id>feat_iron_will</id>
+    </feat>
+
+
+
+    <!-- feat_otherS -->
+    <feat>
+        <name>Ki suplémentaire</name>
+        <type>feat_other</type>
+        <descr>Le personnage peut utiliser sa réserve de ki de plus nombreuses fois que la normale. La réserve de ki du personnage est augmentée de 2 points.</descr>
+        <id>feat_bonus_ki</id>
+    </feat>
+    <feat>
+        <name>Science de l'initative</name>
+        <type>feat_other</type>
+        <descr>Les réflexes du personnage lui permettent de réagir rapidement en cas de danger. Le personnage bénéficie d’un bonus de +4 au test d’initiative.</descr>
+        <id>feat_init</id>
+    </feat>
+    <feat>
+        <name>Charge terrible</name>
+        <type>feat_other</type>
+        <descr>Le personnage peut après une action de charge faire une attaque à outrance à la place d'une attaque simple.</descr>
+        <id>feat_dire_charge</id>
+    </feat>
+
+    <feat>
+        <name>Pas du vide</name>
+        <type>feat_other</type>
+        <descr>Une fois par round le personnage peut se deplacer de la vitesse de déplacement en tant qu'action rapide. Ce mouvement ne provoque aucune attaque d'opportunité.</descr>
+        <id>feat_void_step</id>
+    </feat>
+
+    <!-- DONS DES feat_stanceS -->
+    <feat>
+        <name>Attaque éclair</name>
+        <type>feat_stance</type>
+        <descr>En une action complexe, le personnage peut se déplacer à sa vitesse de base et faire une attaque de corps à corps sans provoquer d’attaque d’opportunité de la part de sa cible. Il peut se déplacer avant et après l’attaque mais il doit parcourir au moins trois mètres avant d’attaquer et la distance parcourue au total ne doit pas dépasser sa vitesse de base.</descr>
+        <id>feat_quick_atk</id>
+    </feat>
+    <feat>
+        <name>Attaque en finesse</name>
+        <type>feat_stance</type>
+        <descr>Le personnage peut choisir d’appliquer son bonus de Dextérité à ses jets d’attaque plutôt que son bonus de Force.</descr>
+        <id>feat_dex_atk</id>
+    </feat>
+
+
+</records>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <stellarnear.yfa_dealer.EditTextPreference
+    <stellarnear.yfa_companion.EditTextPreference
         android:defaultValue="0"
         android:key="NLS_bonus"
         android:title="Bonus au NLS"
@@ -10,7 +10,7 @@
         android:singleLine="true"
         android:summary="Valeur : %s"/>
 
-    <stellarnear.yfa_dealer.EditTextPreference
+    <stellarnear.yfa_companion.EditTextPreference
         android:defaultValue="0"
         android:key="bonus_atk_temp"
         android:title="Bonus au jet d'attaque"

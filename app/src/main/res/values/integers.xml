@@ -27,7 +27,7 @@
     <integer name="percent_fullscreen_customdialog_equipment_list">80</integer>
     <integer name="custom_alert_long_duration_DEF">5000</integer>
 
-    <integer name="nls_val_def">26</integer>
+    <integer name="ability_lvl_def">26</integer>
     <integer name="current_xp_def">19747406</integer>
     <integer name="add_current_xp_def">0</integer>
     <integer name="add_gold_def">0</integer>
@@ -39,17 +39,70 @@
     <integer name="mythic_tier_def">2</integer>
     <integer name="mythic_dice_def">6</integer>
 
-    <integer name="charisme_def">15</integer>
     <integer name="base_atk_def">10</integer>
     <integer name="bonus_atk_def">2</integer>
     <integer name="epic_atk_bonus_def">1</integer>
-    <integer name="force_def">-1</integer>
-    <integer name="dexterite_def">3</integer>
     <integer name="wedge_max_lvl_spell_def">7</integer>
     <integer name="percent_fullscreen_combat_launcher_dialog">95</integer>
 
     <integer name="display_stats_bin_def">25</integer>
     <integer name="translationFragDuration">500</integer>
+
+
+    <!--  Stat de base du perso  -->
+    <integer name="ability_force_def">23</integer>
+    <integer name="ability_dexterite_def">27</integer>
+    <integer name="ability_constitution_def">18</integer>
+    <integer name="ability_intelligence_def">14</integer>
+    <integer name="ability_sagesse_def">24</integer>
+    <integer name="ability_charisme_def">15</integer>
+    <integer name="ability_ms_def">33</integer>
+    <integer name="ability_reduc_def">12</integer>
+    <integer name="ability_reduc_elem_def">0</integer>
+    <integer name="ability_ca_stuff_def">5</integer>
+    <integer name="ability_vig_def">12</integer>
+    <integer name="ability_ref_def">12</integer>
+    <integer name="ability_vol_def">12</integer>
+
+    <!--  Rank de maitrise des compétences  -->
+    <integer name="skill_acrob_rankDEF">24</integer>
+    <integer name="skill_myst_rankDEF">6</integer>
+    <integer name="skill_religion_rankDEF">6</integer>
+    <integer name="skill_stealth_rankDEF">23</integer>
+    <integer name="skill_ride_rankDEF">0</integer>
+    <integer name="skill_climb_rankDEF">18</integer>
+    <integer name="skill_escape_rankDEF">20</integer>
+    <integer name="skill_intimidate_rankDEF">0</integer>
+    <integer name="skill_swim_rankDEF">0</integer>
+    <integer name="skill_percept_rankDEF">20</integer>
+    <integer name="skill_heal_rankDEF">26</integer>
+    <integer name="skill_psycho_rankDEF">7</integer>
+    <integer name="skill_survival_rankDEF">26</integer>
+
+    <!--  Bonus des compétences  -->
+    <integer name="skill_acrob_bonusDEF">13</integer>
+    <integer name="skill_myst_bonusDEF">3</integer>
+    <integer name="skill_religion_bonusDEF">3</integer>
+    <integer name="skill_stealth_bonusDEF">11</integer>
+    <integer name="skill_ride_bonusDEF">8</integer>
+    <integer name="skill_climb_bonusDEF">13</integer>
+    <integer name="skill_escape_bonusDEF">11</integer>
+    <integer name="skill_intimidate_bonusDEF">3</integer>
+    <integer name="skill_swim_bonusDEF">8</integer>
+    <integer name="skill_percept_bonusDEF">13</integer>
+    <integer name="skill_heal_bonusDEF">11</integer>
+    <integer name="skill_psycho_bonusDEF">11</integer>
+    <integer name="skill_survival_bonusDEF">11</integer>
+
+    <!-- Resources  -->
+    <integer name="resource_hp_def">298</integer>
+    <integer name="resource_hp_shield_def">0</integer>
+    <integer name="resource_regen_def">0</integer>
+    <integer name="resource_heroic_def">1</integer>
+    <integer name="epic_save_def">0</integer>
+    <integer name="bonus_temp_ca_DEF">0</integer>
+    <integer name="bonus_temp_rm_DEF">0</integer>
+    <integer name="bonus_temp_save_DEF">0</integer>
 
 
 </resources>

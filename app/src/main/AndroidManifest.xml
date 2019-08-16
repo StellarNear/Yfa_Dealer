@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="stellarnear.yfa_dealer">
+    package="stellarnear.yfa_companion">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.SplashActivity"
+            android:name="stellarnear.yfa_companion.Activities.SplashActivity"
             android:theme="@style/SplashTheme"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
@@ -22,14 +22,14 @@
         </activity>
 
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="stellarnear.yfa_companion.Activities.MainActivity"
 
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
-            android:name=".Activities.SettingsActivity"
+            android:name="stellarnear.yfa_companion.Activities.SettingsActivity"
             android:screenOrientation="portrait"
             android:label="@string/setting_activity">
         </activity>

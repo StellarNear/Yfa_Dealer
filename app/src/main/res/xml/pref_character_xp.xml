@@ -1,11 +1,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <stellarnear.yfa_dealer.XpBarPreference
+    <stellarnear.yfa_companion.XpBarPreference
         android:selectable="false"
         />
 
-    <stellarnear.yfa_dealer.EditTextPreference
+    <stellarnear.yfa_companion.EditTextPreference
         android:defaultValue="@integer/current_xp_def"
         android:key="current_xp"
         android:title="Points d'experience actuels"
@@ -30,9 +30,9 @@
     <PreferenceCategory android:title="Informations sur le niveau"/>
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
-    <stellarnear.yfa_dealer.EditTextPreference
-        android:defaultValue="@integer/nls_val_def"
-        android:key="nls_val"
+    <stellarnear.yfa_companion.EditTextPreference
+        android:defaultValue="@integer/ability_lvl_def"
+        android:key="ability_lvl"
         android:selectable="false"
         android:title="Niveau d'Yfamura"
         android:singleLine="true"
@@ -41,7 +41,7 @@
 
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
-    <stellarnear.yfa_dealer.EditTextPreference
+    <stellarnear.yfa_companion.EditTextPreference
         android:key="previous_level"
         android:selectable="false"
         android:title="Points pour le niveau précédant"
@@ -51,7 +51,7 @@
 
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
-    <stellarnear.yfa_dealer.EditTextPreference
+    <stellarnear.yfa_companion.EditTextPreference
         android:key="next_level"
         android:selectable="false"
         android:title="Points pour le prochain niveau"

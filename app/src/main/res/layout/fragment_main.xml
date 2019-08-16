@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clipChildren="false"
-    tools:context="stellarnear.yfa_dealer.Activities.MainActivityFragment">
+    tools:context="stellarnear.yfa_companion.Activities.MainActivityFragment">
 
 
     <LinearLayout

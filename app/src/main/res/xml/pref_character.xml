@@ -20,6 +20,12 @@
         android:summary="Valeurs de base du nombre de sorts journaliers par rang"/>
 
     <PreferenceScreen
+        android:key="pref_character_combat"
+        android:icon="@drawable/ic_filter_center_focus_black_24dp"
+        android:title="Caractéristiques de combat"
+        android:summary="Statistiques relatives au combat"/>
+
+    <PreferenceScreen
         android:key="pref_character_xp"
         android:icon="@drawable/ic_upgrade"
         android:title="Experience"

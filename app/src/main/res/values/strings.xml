@@ -1,12 +1,24 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">"Yfa Dealer"</string>
+    <string name="app_name">"Yfa Companion"</string>
     <string name="action_settings">"Paramètres"</string>
 
     <string name="setting_activity">Paramètres</string>
     <string name="main_action_skill">Compétences</string>
     <string name="main_action_spell">Sortilèges</string>
     <string name="quadrantGeneralTitle">Caractéristiques</string>
+    <string name="custom_dialog_test_rolldice">normal (dé 20)</string>
+    <string name="custom_dialog_test_passive">Passif (+10)</string>
+    <string name="custom_dialog_test_focus">concentré (+20)</string>
+    <string name="health_dialog_heal">soin</string>
+    <string name="health_dialog_regen">régen</string>
+    <string name="health_dialog_shield">(pv temp)</string>
+    <string name="health_dialog_dmg">dégât</string>
+
+    <string name="quadrantQ1Title">Caractéristiques de base</string>
+    <string name="quadrantQ2Title">Ressources</string>
+    <string name="quadrantQ3Title">Caractéristiques défensives</string>
+    <string name="quadrantQ4Title">Caractéristiques avancées</string>
 
 
     <string-array name="values">
