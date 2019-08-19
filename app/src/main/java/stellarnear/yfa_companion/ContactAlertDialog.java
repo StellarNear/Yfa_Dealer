@@ -17,11 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Rolls.Dice;
 import stellarnear.yfa_companion.Rolls.WheelDicePicker;
 import stellarnear.yfa_companion.Spells.Spell;
-import stellarnear.yfa_companion.Activities.MainActivity;
 
 
 public class ContactAlertDialog {

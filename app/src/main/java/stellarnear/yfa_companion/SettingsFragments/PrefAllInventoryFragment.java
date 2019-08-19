@@ -13,12 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.Perso.Equipment;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
-import stellarnear.yfa_companion.Activities.MainActivity;
 
 
 public class PrefAllInventoryFragment {

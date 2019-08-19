@@ -17,12 +17,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Spells.BuildMetaList;
 import stellarnear.yfa_companion.Spells.MetaList;
 import stellarnear.yfa_companion.Spells.Metamagic;
 import stellarnear.yfa_companion.Spells.Spell;
-import stellarnear.yfa_companion.Activities.MainActivity;
 /**
  * Created by jchatron on 01/12/2017.
  */

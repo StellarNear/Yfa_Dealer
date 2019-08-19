@@ -18,13 +18,13 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.FameEntry;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Stats.Stat;
 import stellarnear.yfa_companion.Tools;
-import stellarnear.yfa_companion.Activities.MainActivity;
 
 public class PrefHallOfFameFragment extends Preference {
     private Perso yfa= MainActivity.yfa;

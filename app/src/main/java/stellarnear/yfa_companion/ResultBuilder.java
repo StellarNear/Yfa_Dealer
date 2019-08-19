@@ -15,13 +15,13 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.List;
 
+import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Rolls.Dice;
 import stellarnear.yfa_companion.Rolls.DiceList;
 import stellarnear.yfa_companion.Rolls.DisplayRolls;
 import stellarnear.yfa_companion.Rolls.ProbaFromDiceRand;
 import stellarnear.yfa_companion.Spells.Spell;
-import stellarnear.yfa_companion.Activities.MainActivity;
 public class ResultBuilder {
 
     private Perso yfa= MainActivity.yfa;
