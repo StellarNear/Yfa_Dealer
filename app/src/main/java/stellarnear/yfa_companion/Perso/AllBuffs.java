@@ -31,7 +31,9 @@ public class AllBuffs {
     private AllBuffs(Context mC){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
         allBuffs=new ArrayList<Buff>();
         SpellList spellList = BuildSpellList.getInstance(mC).getSpellList();
+        /* peau de pierre, lien télépathique, renvoi des sorts, moment de prescience, liberté de mouvement
 
+Permanence: Détection de la magie, de l'invisibilité, dons des langues, lecture de la magie, vision dans le noir, vision magique, vision des auras, flou, écholocalisation, prémonition, esprit impénétrable, bouclier, résistance, vision lucide*/
         List<String> allBuffSpellsIds= Arrays.asList("Détection de l'invisibilité","Flou");
         List<String> allBuffPermaSpellsIds= Arrays.asList("Détection de la magie","Lecture de la magie");
 
