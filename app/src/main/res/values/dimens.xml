@@ -40,4 +40,6 @@
     <dimen name="iconSizeQuadrantFull">42dp</dimen>
     <dimen name="full_quadrant_icons_margin">15dp</dimen>
     <dimen name="mini_quadrant_icons_margin">3dp</dimen>
+    <dimen name="general_margin_help_infos">8dp</dimen>
+    <dimen name="buff_hour_button">30dp</dimen>
 </resources>

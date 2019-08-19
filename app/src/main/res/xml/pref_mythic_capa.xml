@@ -1,22 +1,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory
-        android:key="Dons Magie"
-        android:title="Dons Magie">
+        android:key="Commun"
+        android:title="Commun">
         <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
     </PreferenceCategory>
     <Preference android:layout="@layout/divider_pref" android:selectable="false"/>
     <PreferenceCategory
-        android:key="Dons défensif"
-        android:title="Dons défensif">
+        android:key="Voie de l'Archimage"
+        android:title="Voie de l'Archimage">
         <Preference android:layout="@layout/divider_pref" android:selectable="false"/>
 
     </PreferenceCategory>
     <Preference android:layout="@layout/divider_pref" android:selectable="false"/>
     <PreferenceCategory
-        android:key="Dons autre"
-        android:title="Dons autre">
-    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+        android:key="Voie Universelle"
+        android:title="Voie Universelle">
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
     </PreferenceCategory>
 
+    <Preference android:layout="@layout/divider_pref" android:selectable="false"/>
 </PreferenceScreen>

@@ -23,16 +23,24 @@
 
         <activity
             android:name="stellarnear.yfa_companion.Activities.MainActivity"
-
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name="stellarnear.yfa_companion.Activities.SettingsActivity"
             android:screenOrientation="portrait"
-            android:label="@string/setting_activity">
-        </activity>
+            android:label="@string/setting_activity"/>
+
+        <activity android:label="@string/help_activity"
+            android:name=".Activities.HelpActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBarHelp"/>
+
+        <activity android:label="@string/buff_activity"
+            android:name=".Activities.BuffActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBarBuff"/>
 
     </application>
 

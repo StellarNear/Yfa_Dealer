@@ -14,7 +14,7 @@
             android:inputType="number"
             android:summary="Valeur : %s"/>
         <SwitchPreference
-            android:defaultValue="@bool/switch_perma_resi_DEF"
+            android:defaultValue="@bool/switch_perma_resi_def"
             android:key="switch_perma_resi"
             android:title="Permanence résistance +1" />
 

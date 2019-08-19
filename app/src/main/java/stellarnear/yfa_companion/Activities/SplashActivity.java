@@ -33,21 +33,21 @@ public class SplashActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
-        final VideoView campaignVideo = (VideoView) findViewById(R.id.campaignContainer);
+        final VideoView oppening = (VideoView) findViewById(R.id.campaignContainer);
         String fileName = "android.resource://"+  getPackageName() + "/raw/yfa_openning";
-        campaignVideo.setMediaController(null);
-        campaignVideo.setVideoURI(Uri.parse(fileName));
+        oppening.setMediaController(null);
+        oppening.setVideoURI(Uri.parse(fileName));
 
-        campaignVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        oppening.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                campaignVideo.stopPlayback();
+                oppening.stopPlayback();
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-        campaignVideo.setZOrderOnTop(true);
-        campaignVideo.start();
+        oppening.setZOrderOnTop(true);
+        oppening.start();
     }
 }

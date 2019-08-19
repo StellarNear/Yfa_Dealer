@@ -1,7 +1,5 @@
 package stellarnear.yfa_companion.Perso;
 
-import android.content.Context;
-
 import stellarnear.yfa_companion.Spells.Spell;
 
 
@@ -19,5 +17,13 @@ public class Buff {
 
     public boolean isActive(){
         return perma || currentDuration>0;
+    }
+
+    public boolean isPerma() {
+        return perma;
+    }
+
+    public String getSpellName() {
+        return spell.getName();
     }
 }

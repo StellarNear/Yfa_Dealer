@@ -108,7 +108,7 @@ public class ImgForDice {
                 yfa.getAllResources().getResource("resource_mythic_points").spend(1);
             //}
 
-            if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_DEF))){
+            if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_def))){
                 surgeDice.rand(true);
                 surgeDice.setRefreshEventListener(new Dice.OnRefreshEventListener() {
                     @Override

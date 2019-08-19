@@ -27,7 +27,10 @@ public class Perso {
 
     private AllAbilities allAbilities;
     private AllFeats allFeats;
+    private AllCapacities allCapacities;
     private AllSkills allSkills;
+    private AllMythicFeats allMythicFeats;
+    private AllMythicCapacities allMythicCapacities;
 
     private Tools tools=new Tools();
     private Context mC;
@@ -40,6 +43,9 @@ public class Perso {
         stats = new Stats(mC);
         hallOfFame=new HallOfFame(mC);
         allFeats = new AllFeats(mC);
+        allCapacities = new AllCapacities(mC);
+        allMythicFeats = new AllMythicFeats(mC);
+        allMythicCapacities = new AllMythicCapacities(mC);
         allAbilities = new AllAbilities(mC);
         allSkills = new AllSkills(mC);
         this.mC=mC;
@@ -49,6 +55,7 @@ public class Perso {
     public void refresh() {
         allAbilities.refreshAllAbilities();
         allFeats.refreshAllSwitch();
+        allMythicFeats.refreshAllSwitch();
         allSkills.refreshAllVals();
         allResources.refreshMaxs();
     }
@@ -56,6 +63,18 @@ public class Perso {
 
     public AllAbilities getAllAbilities() {
         return allAbilities;
+    }
+
+    public AllCapacities getAllCapacities() {
+        return allCapacities;
+    }
+
+    public AllMythicCapacities getAllMythicCapacities() {
+        return allMythicCapacities;
+    }
+
+    public AllMythicFeats getAllMythicFeats() {
+        return allMythicFeats;
     }
 
     public AllResources getAllResources() {
@@ -154,31 +173,28 @@ public class Perso {
             }
 
             if (abiId.equalsIgnoreCase("ability_rm")) {
-                int bonusRm = tools.toInt(settings.getString("bonus_temp_rm", String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_rm_DEF))));
+                int bonusRm = tools.toInt(settings.getString("bonus_temp_rm", String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_rm_def))));
                 if (bonusRm>abiScore) { abiScore = bonusRm; }
             }
 
             if (abiId.equalsIgnoreCase("ability_init")) {
                 int currentTier = tools.toInt(settings.getString("mythic_tier", String.valueOf(mC.getResources().getInteger(R.integer.mythic_tier_def))));
                 abiScore += currentTier;
-                if ( featIsActive("feat_init")) {
-                    abiScore += 4;
-                }
             }
 
             if (abiId.equalsIgnoreCase("ability_ca")) {
-                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_DEF))));
+                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_def))));
 
             }
 
             if (abiId.equalsIgnoreCase("ability_ref")||abiId.equalsIgnoreCase("ability_vig")||abiId.equalsIgnoreCase("ability_vol")) {
-                abiScore += tools.toInt(settings.getString("bonus_temp_save",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_save_DEF))));
+                abiScore += tools.toInt(settings.getString("bonus_temp_save",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_save_def))));
                 abiScore += tools.toInt(settings.getString("epic_save",String.valueOf(mC.getResources().getInteger(R.integer.epic_save_def))));
                 if (abiId.equalsIgnoreCase("ability_ref")){abiScore+=getAbilityMod("ability_dexterite");}
                 if (abiId.equalsIgnoreCase("ability_vig")){abiScore+=getAbilityMod("ability_constitution");}
                 if (abiId.equalsIgnoreCase("ability_vol")){abiScore+=getAbilityMod("ability_sagesse");}
 
-                if (settings.getBoolean("switch_perma_resi",mC.getResources().getBoolean(R.bool.switch_perma_resi_DEF))) {
+                if (settings.getBoolean("switch_perma_resi",mC.getResources().getBoolean(R.bool.switch_perma_resi_def))) {
                     abiScore+=1;
                 }
             }
@@ -211,4 +227,5 @@ public class Perso {
         boolean active = feat.isActive();
         return active;
     }
+
 }

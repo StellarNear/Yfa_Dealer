@@ -45,6 +45,10 @@ public class SettingsFragment extends PreferenceFragment {
     private PrefInfoScreenFragment prefInfoScreenFragment;
     private PrefSkillFragment prefSkillFragment;
     private PrefSpellgemScreenFragment prefSpellgemScreenFragment;
+    private PrefFeatFragment prefFeatFragment;
+    private PrefCapaFragment prefCapaFragment;
+    private PrefMythicFeatFragment prefMythicFeatFragment;
+    private PrefMythicCapaFragment prefMythicCapaFragment;
     private Perso yfa = MainActivity.yfa;
 
     @Override
@@ -69,6 +73,10 @@ public class SettingsFragment extends PreferenceFragment {
         this.prefInfoScreenFragment=new PrefInfoScreenFragment(mA,mC);
         this.prefSpellgemScreenFragment=new PrefSpellgemScreenFragment(mA,mC);
         this.prefSkillFragment=new PrefSkillFragment(mA,mC);
+        this.prefFeatFragment=new PrefFeatFragment(mA,mC);
+        this.prefCapaFragment =new PrefCapaFragment(mA,mC);
+        this.prefMythicFeatFragment =new PrefMythicFeatFragment(mA,mC);
+        this.prefMythicCapaFragment =new PrefMythicCapaFragment(mA,mC);
     }
 
     // will be called by SettingsActivity (Host Activity)
@@ -138,6 +146,34 @@ public class SettingsFragment extends PreferenceFragment {
                     BuildMetaList.resetMetas();
                     BuildSpellList.resetSpellList();
                     AllBuffs.resetBuffsList();
+
+                    PreferenceCategory magic = (PreferenceCategory) findPreference("Dons Magie");
+                    PreferenceCategory def = (PreferenceCategory) findPreference("Dons défensif");
+                    PreferenceCategory other = (PreferenceCategory) findPreference("Dons autre");
+                    prefFeatFragment.addFeatsList(magic,def,other);
+                    setHasOptionsMenu(true);
+                    break;
+                case "pref_character_capa":
+                    PreferenceCategory sorc = (PreferenceCategory) findPreference("Ensorceleur");
+
+                    prefCapaFragment.addCapaList(sorc);
+                    setHasOptionsMenu(true);
+                    break;
+                case "pref_mythic_feat":
+                    PreferenceCategory myth_magic = (PreferenceCategory) findPreference("Dons Magie");
+                    PreferenceCategory myth_def = (PreferenceCategory) findPreference("Dons défensif");
+                    PreferenceCategory myth_other = (PreferenceCategory) findPreference("Dons autre");
+
+                    prefMythicFeatFragment.addMythicFeatsList(myth_magic,myth_def,myth_other);
+                    setHasOptionsMenu(true);
+                    break;
+                case "pref_mythic_capa":
+                    PreferenceCategory common_myth = (PreferenceCategory) findPreference("Commun");
+                    PreferenceCategory protect_myth = (PreferenceCategory) findPreference("Voie de l'Archimage");
+                    PreferenceCategory all_myth = (PreferenceCategory) findPreference("Voie Universelle");
+
+                    prefMythicCapaFragment.addMythicCapaList(common_myth,protect_myth,all_myth);
+                    setHasOptionsMenu(true);
                     break;
                 case "pref_character_skill":
                     PreferenceCategory rank = (PreferenceCategory) findPreference(getString(R.string.skill_mastery));

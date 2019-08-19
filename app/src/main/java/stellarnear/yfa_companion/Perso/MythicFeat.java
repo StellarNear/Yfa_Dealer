@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
  * Created by jchatron on 04/01/2018.
  */
 
-public class Feat {
+public class MythicFeat {
     private String name;
     private String type;
     private String descr;
@@ -16,7 +16,7 @@ public class Feat {
     private Context mC;
     private Boolean active;
 
-    public Feat(String name, String type, String descr, String id, Context mC){
+    public MythicFeat(String name, String type, String descr, String id, Context mC){
         this.name=name;
         this.type=type;
         this.descr=descr;

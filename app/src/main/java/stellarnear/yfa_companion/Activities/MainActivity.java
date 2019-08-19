@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (settings.getBoolean("switch_fullscreen_mode", getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_DEF))) {
+        if (settings.getBoolean("switch_fullscreen_mode", getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
@@ -113,26 +113,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
-        /*
-        ImageButton toStance = (ImageButton) findViewById(R.id.button_to_spell_list);
-        toStance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            }
-        });
 
-        ImageButton toHelp = (ImageButton) findViewById(R.id.button_to_help);
-        toHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-            }
-        });
-*/
         final VideoView campaignVideo = (VideoView) findViewById(R.id.campaignContainer);
 
-        Boolean switchCampaignBool = settings.getBoolean("switch_campaign_gif", getApplicationContext().getResources().getBoolean(R.bool.switch_campaign_gif_DEF));
+        Boolean switchCampaignBool = settings.getBoolean("switch_campaign_gif", getApplicationContext().getResources().getBoolean(R.bool.switch_campaign_gif_def));
         if (campaignShow && switchCampaignBool) {
             campaignVideo.setVisibility(View.VISIBLE);
 
@@ -227,18 +211,18 @@ public class MainActivity extends AppCompatActivity {
             case Surface.ROTATION_0:
                 //on y est déja
                 break;
-/*
+
             case Surface.ROTATION_90:
-                Intent intent_stance = new Intent(MainActivity.this, ListSpellActivity.class);
-                startActivity(intent_stance);
+                Intent intent_buff = new Intent(MainActivity.this, BuffActivity.class);
+                startActivity(intent_buff);
                 finish();
                 break;
 
             case Surface.ROTATION_270:
-                //Intent intent_help = new Intent(MainActivity.this, HelpActivity.class);
+                Intent intent_help = new Intent(MainActivity.this, HelpActivity.class);
                 startActivity(intent_help);
                 finish();
-                break;*/
+                break;
         }
     }
 

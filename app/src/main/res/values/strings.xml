@@ -21,6 +21,8 @@
     <string name="quadrantQ4Title">Caractéristiques avancées</string>
     <string name="skill_mastery">Rang de maîtrise</string>
     <string name="skill_bonus">Bonus divers</string>
+    <string name="help_activity">Centre d\'aide</string>
+    <string name="buff_activity">Gestion des améliorations</string>
 
 
     <string-array name="values">

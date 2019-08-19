@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="stellarnear.yfa_companion.Activities.BuffActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/AppBarLayoutHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarHelp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/mire_test"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/buttonH1"
+                android:layout_width="@dimen/buff_hour_button"
+                android:layout_height="@dimen/buff_hour_button"
+                android:src="@drawable/mire_test"/>
+            <ImageButton
+                android:id="@+id/buttonH3"
+                android:layout_width="@dimen/buff_hour_button"
+                android:layout_height="@dimen/buff_hour_button"
+                android:src="@drawable/mire_test"/>
+            <ImageButton
+                android:id="@+id/buttonH5"
+                android:layout_width="@dimen/buff_hour_button"
+                android:layout_height="@dimen/buff_hour_button"
+                android:src="@drawable/mire_test"/>
+
+            <ImageButton
+                android:id="@+id/buttonH10"
+                android:layout_width="@dimen/buff_hour_button"
+                android:layout_height="@dimen/buff_hour_button"
+                android:src="@drawable/mire_test"/>
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buff_main_linear"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/general_margin"
+      >
+
+        <LinearLayout
+            android:id="@+id/buff_temp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/background_tier_title"
+            android:layout_marginEnd="@dimen/general_margin"
+        />
+
+        <LinearLayout
+            android:id="@+id/buff_perma"
+            android:foregroundGravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/background_tier_title"
+         />
+
+
+
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/temp"
+                android:layout_width="@dimen/buff_hour_button"
+                android:layout_height="@dimen/buff_hour_button"
+                android:src="@drawable/mire_test"/>
+            <ImageButton
+                android:id="@+id/perma"
+                android:layout_width="@dimen/buff_hour_button"
+                android:layout_height="@dimen/buff_hour_button"
+                android:src="@drawable/mire_test"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

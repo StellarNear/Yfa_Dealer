@@ -44,4 +44,20 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.NoActionBarHelp">
+        <item name="colorPrimary">@color/end_gradient_title_bar_help</item>
+        <item name="colorPrimaryDark">@color/start_gradient_title_bar_help</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBarBuff">
+        <item name="colorPrimary">@color/end_gradient_title_bar_buff</item>
+        <item name="colorPrimaryDark">@color/start_gradient_title_bar_buff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <color name="start_gradient_title_bar_buff">#48E898</color>
+    <color name="end_gradient_title_bar_buff">#0A8C4B</color>
 </resources>
