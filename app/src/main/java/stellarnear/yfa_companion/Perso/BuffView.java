@@ -33,7 +33,7 @@ public class BuffView {
         LinearLayout buffView = (LinearLayout) inflater.inflate(R.layout.buff_icon, null);
         this.buffView=buffView;
         ((ImageView)buffView.findViewById(R.id.buff_icon_image)).setImageDrawable(mA.getDrawable(R.drawable.mire_test_cercle));
-        ((TextView)buffView.findViewById(R.id.buff_icon_name)).setText(buff.getName()+ buff.getDurationText());
+        ((TextView)buffView.findViewById(R.id.buff_icon_name)).setText(buff.getName());
         buffView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,1));
 
         if(buff.isPerma()){
@@ -116,7 +116,8 @@ public class BuffView {
             @Override
             public void onClick(View view) {
                 if(closed || buff.isPerma()){
-                    String appendTime="\nTemps restant : "+buff.getDurationText();
+                    String appendTime="";
+                    if(buff.isActive()){appendTime="\nTemps restant "+buff.getDurationText();} else { appendTime="\nAmélioration inactive"; }
                     tools.customToast(mA,buff.getName()+appendTime,"center");
                 } else {
                     Perso yfa = MainActivity.yfa;
@@ -153,10 +154,7 @@ public class BuffView {
         getMainFrame().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if (closed || buff.isPerma()) {
-                    String appendTime = "\nTemps restant : " + buff.getDurationText();
-                    tools.customToast(mA, buff.getName() + appendTime, "center");
-                } else {
+                if (!closed && !buff.isPerma()) {
                     Perso yfa = MainActivity.yfa;
                     int currentRankAvail = yfa.getResourceValue("spell_rank_" + (int) (buff.getSpellRank()+2));
                     if (currentRankAvail > 0) {
@@ -190,7 +188,7 @@ public class BuffView {
                         tools.customToast(mA, "Tu n'as plus de sort de rang " + (int) (buff.getSpellRank()+2) + " de disponible...", "center");
                     }
                 }
-                return false;
+                return true;
             }
         });
     }
