@@ -31,6 +31,7 @@ public class Perso {
     private AllSkills allSkills;
     private AllMythicFeats allMythicFeats;
     private AllMythicCapacities allMythicCapacities;
+    private AllBuffs allBuffs;
 
     private Tools tools=new Tools();
     private Context mC;
@@ -38,6 +39,8 @@ public class Perso {
     private Calculation calculation=new Calculation();
 
     public Perso(Context mC) {
+        this.mC=mC;
+        this.prefs= PreferenceManager.getDefaultSharedPreferences(mC);
         inventory = new Inventory(mC);
         allResources = new AllResources(mC);
         stats = new Stats(mC);
@@ -48,8 +51,7 @@ public class Perso {
         allMythicCapacities = new AllMythicCapacities(mC);
         allAbilities = new AllAbilities(mC);
         allSkills = new AllSkills(mC);
-        this.mC=mC;
-        this.prefs= PreferenceManager.getDefaultSharedPreferences(mC);
+        allBuffs = new AllBuffs(mC);
     }
 
     public void refresh() {
@@ -228,4 +230,20 @@ public class Perso {
         return active;
     }
 
+    public void sleep() {
+        refresh();
+        allResources.sleepReset();
+        allBuffs.spendSleepTime();
+        resetTemp();
+    }
+    public void halfSleep(){
+        refresh();
+        allResources.halfSleepReset();
+        allBuffs.spendSleepTime();
+        resetTemp();
+    }
+
+    public AllBuffs getAllBuffs() {
+        return allBuffs;
+    }
 }

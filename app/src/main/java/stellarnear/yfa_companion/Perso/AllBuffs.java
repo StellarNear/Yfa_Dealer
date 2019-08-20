@@ -9,29 +9,42 @@ import java.util.List;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
+import stellarnear.yfa_companion.TinyDB;
 
 public class AllBuffs {
 
-    private static AllBuffs instance=null;
+    private ArrayList<Buff> listBuffs = null;
 
-    public ArrayList<Buff> tempBuffs = null;
-    public ArrayList<Buff> permaBuffs = null;
+    private TinyDB tinyDB;
+    private Context mC;
 
-    public static AllBuffs getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
-        if (instance==null){
-            instance = new AllBuffs(mC);
+    public AllBuffs(Context mC){
+        this.mC=mC;
+        refreshListBuffs();
+    }
+
+    private void refreshListBuffs() {
+        listBuffs = new ArrayList<>();
+        tinyDB = new TinyDB(mC);
+        ArrayList<Buff> listDB = tinyDB.getListBuffs("localSaveListBuffs");
+        if (listDB.size() == 0) {
+            buildList();
+            saveLocalBuffs();
+        } else {
+            listBuffs = listDB;
         }
-        return instance;
     }
 
-    public static void resetBuffsList() {
-        instance = null;
+    private void saveLocalBuffs() {
+        tinyDB.putListBuffs("localSaveListBuffs", listBuffs);
+    }
+
+    public void resetBuffsList() {
+        refreshListBuffs();
     }
 
 
-    private AllBuffs(Context mC){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
-        tempBuffs=new ArrayList<Buff>();
-        permaBuffs =new ArrayList<Buff>();
+    private void buildList(){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
         SpellList spellList = BuildSpellList.getInstance(mC).getSpellList();
         /* peau de pierre, lien télépathique, renvoi des sorts, moment de prescience, liberté de mouvement
 
@@ -42,18 +55,55 @@ Permanence: Détection de la magie, de l'invisibilité, dons des langues, lectur
 
         for (Spell spell : spellList.asList()){
             if(allBuffSpellsIds.contains(spell.getID())){
-                tempBuffs.add(new Buff(spell,false));
+                listBuffs.add(new Buff(spell,false));
             } else if (allBuffPermaSpellsIds.contains(spell.getID())){
-                permaBuffs.add(new Buff(spell,true));
+                listBuffs.add(new Buff(spell,true));
             }
         }
     }
 
+    public void spendSleepTime() {
+        makeTimePass(60*8);
+    }
 
     public ArrayList<Buff> getAllPermaBuffs() {
+        ArrayList permaBuffs=new ArrayList();
+        for (Buff buff : listBuffs){
+            if(buff.isPerma()){
+                permaBuffs.add(buff);
+            }
+        }
         return permaBuffs;
     }
     public ArrayList<Buff> getAllTempBuffs() {
+        ArrayList tempBuffs=new ArrayList();
+        for (Buff buff : listBuffs){
+            if(!buff.isPerma()){
+                tempBuffs.add(buff);
+            }
+        }
         return tempBuffs;
+    }
+
+    public void makeTimePass(int i) {
+        for(Buff buff: listBuffs){
+            buff.spendTime(i);
+        }
+        saveLocalBuffs();
+    }
+
+    public void saveBuffs() {
+        saveLocalBuffs();
+    }
+
+    public boolean buffIsActive(String id) {
+        Buff buffAnswer=null;
+        for (Buff buff : listBuffs){
+            if(buff.getName().equalsIgnoreCase(id)){
+                buffAnswer=buff;
+                break;
+            }
+        }
+        return buffAnswer!=null && buffAnswer.isActive();
     }
 }

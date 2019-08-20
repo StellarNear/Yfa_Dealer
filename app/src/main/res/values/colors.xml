@@ -95,4 +95,15 @@
     <color name="start_gradient_title_bar_help">#1f3b70</color>
     <color name="end_gradient_title_bar_help">#88b3f8</color>
 
+
+    <color name="buff_max">#1E9B4E</color>
+    <color name="buff_ok">#B2DC7D</color>
+    <color name="buff_meh">#DED85A</color>
+    <color name="buff_not_ok">#E6AF39</color>
+    <color name="buff_almost_gone">#DE501F</color>
+
+    <color name="buff_time_light">#F4D5C1</color>
+    <color name="buff_time_dark">#B87333</color>
+
+
 </resources>

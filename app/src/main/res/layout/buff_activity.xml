@@ -33,68 +33,110 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1"
+            android:layout_marginTop="@dimen/general_margin"
             android:gravity="center">
-            <ImageButton
-                android:id="@+id/buttonH1"
-                android:layout_width="@dimen/buff_hour_button"
-                android:layout_height="@dimen/buff_hour_button"
-                android:src="@drawable/mire_test"/>
-            <ImageButton
-                android:id="@+id/buttonH3"
-                android:layout_width="@dimen/buff_hour_button"
-                android:layout_height="@dimen/buff_hour_button"
-                android:src="@drawable/mire_test"/>
-            <ImageButton
-                android:id="@+id/buttonH5"
-                android:layout_width="@dimen/buff_hour_button"
-                android:layout_height="@dimen/buff_hour_button"
-                android:src="@drawable/mire_test"/>
 
-            <ImageButton
-                android:id="@+id/buttonH10"
-                android:layout_width="@dimen/buff_hour_button"
-                android:layout_height="@dimen/buff_hour_button"
-                android:src="@drawable/mire_test"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/buttonMin30"
+                    android:textSize="@dimen/buff_hour_text"
+                    android:layout_width="@dimen/buff_hour_button"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@drawable/background_tier_title"
+                    android:text="+30min"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/buttonH1"
+                    android:textSize="@dimen/buff_hour_text"
+                    android:layout_width="@dimen/buff_hour_button"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@drawable/background_tier_title"
+                    android:text="+1h"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/buttonH3"
+                    android:textSize="@dimen/buff_hour_text"
+                    android:layout_width="@dimen/buff_hour_button"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@drawable/background_tier_title"
+                    android:text="+3h"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/buttonH5"
+                    android:textSize="@dimen/buff_hour_text"
+                    android:layout_width="@dimen/buff_hour_button"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@drawable/background_tier_title"
+                    android:text="+5h"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buff_main_linear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/general_margin"
+            >
+
+            <LinearLayout
+                android:id="@+id/buff_temp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/background_tier_title"
+                android:layout_marginEnd="@dimen/general_margin"
+                />
+
+            <LinearLayout
+                android:id="@+id/buff_perma"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/background_tier_title"
+                />
+
 
 
         </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/buff_main_linear"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="horizontal"
-        android:layout_margin="@dimen/general_margin"
-      >
-
-        <LinearLayout
-            android:id="@+id/buff_temp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/background_tier_title"
-            android:layout_marginEnd="@dimen/general_margin"
-        />
-
-        <LinearLayout
-            android:id="@+id/buff_perma"
-            android:foregroundGravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/background_tier_title"
-         />
-
-
-
-    </LinearLayout>
 
 
         <LinearLayout
@@ -102,17 +144,42 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1"
+            android:layout_marginBottom="@dimen/general_margin"
             android:gravity="center">
-            <ImageButton
+
+            <LinearLayout
+                android:id="@+id/buff_temp_tab_icon"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                >
+            <ImageView
                 android:id="@+id/temp"
-                android:layout_width="@dimen/buff_hour_button"
-                android:layout_height="@dimen/buff_hour_button"
-                android:src="@drawable/mire_test"/>
-            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_sands_of_time"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buff_perma_tab_icon"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
                 android:id="@+id/perma"
-                android:layout_width="@dimen/buff_hour_button"
-                android:layout_height="@dimen/buff_hour_button"
-                android:src="@drawable/mire_test"/>
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+
+                android:src="@drawable/ic_infinity"/>
+        </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

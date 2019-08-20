@@ -59,19 +59,19 @@ public class Resource {
     }
 
     public void spend(Integer cost) {
-        if (this.current - cost <= 0) {
-            this.current = 0;
-        } else {
-            if (this.id.equalsIgnoreCase("resource_hp")) {
-                if (this.shield <= cost) {
-                    this.current -= (cost - this.shield);
-                    this.shield = 0;
-                } else {
-                    this.shield -= cost;
-                }
-            } else{
-                    this.current -= cost;
-                }
+        if (this.id.equalsIgnoreCase("resource_hp")) {
+            if (this.shield <= cost) {
+                this.current -= (cost - this.shield);
+                this.shield = 0;
+            } else {
+                this.shield -= cost;
+            }
+        } else{
+            if (this.current - cost <= 0) {
+                this.current = 0;
+            } else {
+                this.current -= cost;
+            }
         }
         saveCurrentToSettings();
     }

@@ -34,7 +34,6 @@ public class BuildSpellList extends AppCompatActivity {
         instance = null;
     }
 
-
     private BuildSpellList(Context mC){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
         this.allSpells=new SpellList();
         addSpells(mC,"");

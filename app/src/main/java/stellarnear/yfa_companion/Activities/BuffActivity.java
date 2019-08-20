@@ -12,19 +12,17 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import stellarnear.yfa_companion.Perso.AllBuffs;
 import stellarnear.yfa_companion.Perso.Buff;
+import stellarnear.yfa_companion.Perso.BuffManager;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.ViewWeightAnimationWrapper;
@@ -34,11 +32,12 @@ import stellarnear.yfa_companion.ViewWeightAnimationWrapper;
  */
 
 public class BuffActivity extends AppCompatActivity {
-    private Perso yfa = MainActivity.yfa;
     private Context mC;
     private String currentMode="temp";
     private LinearLayout permaLin;
     private LinearLayout tempLin;
+    private ArrayList<BuffManager> listTempManagers=new ArrayList<>();
+    private Perso yfa=MainActivity.yfa;
     private Activity mA;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class BuffActivity extends AppCompatActivity {
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         super.onCreate(savedInstanceState);
-        this.mA=this;
+        this.mA=BuffActivity.this;
         this.mC=getApplicationContext();
         setContentView(R.layout.buff_activity);
         tempLin=findViewById(R.id.buff_temp);
@@ -70,10 +69,47 @@ public class BuffActivity extends AppCompatActivity {
             }
         });
 
+
+        setTimeButtons();
+
         addBuffs();
         show("tempInit");
     }
 
+    private void setTimeButtons() {
+        findViewById(R.id.buttonMin30).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTimeToBuffs(30);
+            }
+        });
+        findViewById(R.id.buttonH1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTimeToBuffs(60);
+            }
+        });
+        findViewById(R.id.buttonH3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTimeToBuffs(60*3);
+            }
+        });
+        findViewById(R.id.buttonH5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTimeToBuffs(60*5);
+            }
+        });
+
+    }
+
+    private void addTimeToBuffs(int i) {
+        yfa.getAllBuffs().makeTimePass(i);
+        for(BuffManager buffManager:listTempManagers){
+            buffManager.refreshView();
+        }
+    }
 
 
     private void show(String mode) {
@@ -82,16 +118,23 @@ public class BuffActivity extends AppCompatActivity {
             switch (mode){
                 case "perma":
                     changeTab(8,2,tempLin,dura);
+                    changeTab(8,2,(LinearLayout)findViewById(R.id.buff_temp_tab_icon),dura);
                     changeTab(2,8,permaLin,dura);
+                    changeTab(2,8,(LinearLayout)findViewById(R.id.buff_perma_tab_icon),dura);
                     break;
                 case "temp":
                     changeTab(2,8,tempLin,dura);
+                    changeTab(2,8,(LinearLayout)findViewById(R.id.buff_temp_tab_icon),dura);
                     changeTab(8,2,permaLin,dura);
+                    changeTab(8,2,(LinearLayout)findViewById(R.id.buff_perma_tab_icon),dura);
                     break;
                 default:
                     dura=2000;
-                    changeTab(1,2,tempLin,dura);
-                    changeTab(1,8,permaLin,dura);
+                    changeTab(1,8,tempLin,dura);
+                    changeTab(1,8,(LinearLayout)findViewById(R.id.buff_temp_tab_icon),dura);
+                    changeTab(1,2,permaLin,dura);
+                    changeTab(1,2,(LinearLayout)findViewById(R.id.buff_perma_tab_icon),dura);
+                    mode="temp";
                     break;
             }
             this.currentMode=mode;
@@ -113,8 +156,8 @@ public class BuffActivity extends AppCompatActivity {
     private void addBuffs() {
         tempLin.removeAllViews();
         permaLin.removeAllViews();
-        ArrayList<Buff> tempBuffs = AllBuffs.getInstance(mC).getAllTempBuffs();
-        ArrayList<Buff> permaBuffs = AllBuffs.getInstance(mC).getAllPermaBuffs();
+        ArrayList<Buff> tempBuffs = yfa.getAllBuffs().getAllTempBuffs();
+        ArrayList<Buff> permaBuffs = yfa.getAllBuffs().getAllPermaBuffs();
         if(currentMode.equalsIgnoreCase("temp")){
             populate(permaLin,permaBuffs,true);
             populate(tempLin,tempBuffs,false);
@@ -129,12 +172,14 @@ public class BuffActivity extends AppCompatActivity {
         if(close){
             nCol=2;
         }
-
         LinearLayout lineHori = new LinearLayout(mC);
         lineHori.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,0,1));
         lin.addView(lineHori);
         int iElem=0;
+        listTempManagers=new ArrayList<>();
         for (Buff buff : listBuff){
+            BuffManager buffManager= new BuffManager(mA,buff);
+            listTempManagers.add(buffManager);
             iElem++;
             if(iElem>nCol){
                 lineHori = new LinearLayout(mC);
@@ -143,22 +188,19 @@ public class BuffActivity extends AppCompatActivity {
                 iElem=1;
             }
 
-            lineHori.addView(logoBuff(buff,close));
+            View ico;
+            if(close){
+                ico=buffManager.getbuffView().close().getView();
+            } else {
+                ico=buffManager.getbuffView().expand().getView();
+            }
+            if (ico.getParent() != null) {
+                ((ViewGroup) ico.getParent()).removeView(ico);
+            }
+            lineHori.addView(ico);
         }
     }
 
-    private LinearLayout logoBuff(Buff buff,boolean close) {
-        LayoutInflater inflater = mA.getLayoutInflater();
-        LinearLayout buffView = (LinearLayout) inflater.inflate(R.layout.buff_icon, null);
-        ((ImageView)buffView.findViewById(R.id.buff_icon_image)).setImageDrawable(getDrawable(R.drawable.mire_test));
-        if (close){
-            buffView.findViewById(R.id.buff_icon_name).setVisibility(View.GONE);
-        } else {
-            ((TextView)buffView.findViewById(R.id.buff_icon_name)).setText(buff.getSpellName());
-        }
-        buffView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,1));
-        return buffView;
-    }
 
 
 

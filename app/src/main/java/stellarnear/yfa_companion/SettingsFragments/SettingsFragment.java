@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
-import stellarnear.yfa_companion.Perso.AllBuffs;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildMetaList;
@@ -145,7 +144,7 @@ public class SettingsFragment extends PreferenceFragment {
                 case "pref_character_feat":
                     BuildMetaList.resetMetas();
                     BuildSpellList.resetSpellList();
-                    AllBuffs.resetBuffsList();
+                    yfa.getAllBuffs().resetBuffsList();
 
                     PreferenceCategory magic = (PreferenceCategory) findPreference("Dons Magie");
                     PreferenceCategory def = (PreferenceCategory) findPreference("Dons défensif");

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/buff_icon"
+<LinearLayout android:id="@+id/buff_icon"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center"
     android:orientation="vertical"
@@ -8,21 +7,40 @@
     android:clipToPadding="false"
     android:clipChildren="false"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/general_margin">
+    android:layout_margin="@dimen/general_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/buff_icon_image"
-        android:layout_gravity="center"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:clipToPadding="false"
-        android:src="@drawable/mire_test"/>
+    <FrameLayout
+        android:id="@+id/buff_icon_frame"
+        android:layout_width="@dimen/icon_buff"
+        android:layout_height="@dimen/icon_buff">
+
+
+        <stellarnear.yfa_companion.CircularProgressBar
+            android:id="@+id/circular_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:progress="35"
+            app:progressBarThickness="6dp"/>
+
+        <ImageView
+            android:id="@+id/buff_icon_image"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layout_margin="@dimen/general_margin"
+            android:src="@drawable/mire_test_cercle"/>
+
+
+    </FrameLayout>
     <TextView
         android:id="@+id/buff_icon_name"
         android:clipToPadding="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textSize="@dimen/size_text_buff"
         android:text="blabla name"/>
 
 </LinearLayout>

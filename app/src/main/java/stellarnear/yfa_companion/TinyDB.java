@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.Equipment;
 import stellarnear.yfa_companion.Stats.Stat;
 import stellarnear.yfa_companion.Stats.StatsList;
@@ -655,5 +656,27 @@ public class TinyDB {
             objStrings.add(gson.toJson(obj));
         }
         putListString(key, objStrings);
+    }
+
+
+    public void putListBuffs(String key, ArrayList<Buff> listBuffs) {
+            checkForNullKey(key);
+            Gson gson = new Gson();
+            ArrayList<String> objStrings = new ArrayList<String>();
+            for (Buff obj : listBuffs) {
+                objStrings.add(gson.toJson(obj));
+            }
+            putListString(key, objStrings);
+    }
+
+    public ArrayList<Buff> getListBuffs(String key) {
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = getListString(key);
+        ArrayList<Buff> objects = new ArrayList<Buff>();
+        for (String jObjString : objStrings) {
+            Buff value = gson.fromJson(jObjString, Buff.class);
+            objects.add(value);
+        }
+        return objects;
     }
 }
