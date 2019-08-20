@@ -22,6 +22,7 @@ public class BuffView {
     private Buff buff;
     private OnCastEventListener mListenerCast;
     private OnCancelEventListener mListenerCancel;
+    private OnCastExtendEventListener mListenerCastExtend;
     private boolean closed=false;
     private Tools tools=new Tools();
 
@@ -45,11 +46,10 @@ public class BuffView {
             circle.setMax(100);
             refresh(false);
         }
-        setListners();
+        setNameClick();
     }
 
-    private void setListners() {
-        // Listeners
+    private void setNameClick() {
         ((TextView)buffView.findViewById(R.id.buff_icon_name)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +150,49 @@ public class BuffView {
                 }
             }
         });
+        getMainFrame().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (closed || buff.isPerma()) {
+                    String appendTime = "\nTemps restant : " + buff.getDurationText();
+                    tools.customToast(mA, buff.getName() + appendTime, "center");
+                } else {
+                    Perso yfa = MainActivity.yfa;
+                    int currentRankAvail = yfa.getResourceValue("spell_rank_" + (int) (buff.getSpellRank()+2));
+                    if (currentRankAvail > 0) {
+                        AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
+                                .setIcon(R.drawable.ic_spell_book)
+                                .setTitle("Lancement du sort (Ext)")
+                                .setMessage("Veux tu lancer le sort étendu en durée : " + buff.getName() + "\nInfo : Il te reste " + currentRankAvail + " sort(s) du rang " +(int) (buff.getSpellRank()+2))
+                                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (mListenerCancel != null) {
+                                            mListenerCancel.onEvent();
+                                        }
+                                    }
+                                })
+                                .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (mListenerCastExtend != null) {
+                                            mListenerCastExtend.onEvent();
+                                        }
+                                    }
+                                });
+                        alertBuild.show();
+                    } else {
+                        tools.customToast(mA, "Tu n'as plus de sort de rang " + (int) (buff.getSpellRank()+2) + " de disponible...", "center");
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public interface OnCastEventListener {
@@ -158,6 +201,14 @@ public class BuffView {
 
     public void setCastEventListener(OnCastEventListener eventListener) {
         mListenerCast = eventListener;
+    }
+
+    public interface OnCastExtendEventListener {
+        void onEvent();
+    }
+
+    public void setCastExtendEventListener(OnCastExtendEventListener eventListener) {
+        mListenerCastExtend = eventListener;
     }
 
     public interface OnCancelEventListener {

@@ -30,6 +30,12 @@ public class BuffManager {
                     castBuff();
                 }
             });
+            buffView.setCastExtendEventListener(new BuffView.OnCastExtendEventListener() {
+                @Override
+                public void onEvent() {
+                    castBuffExtend();
+                }
+            });
         }
     }
 
@@ -63,6 +69,16 @@ public class BuffManager {
     private void castBuff(){
         buff.normalCast(calculateMinute());
         yfa.castSpell(buff.getSpellRank());
+        yfa.getAllBuffs().saveBuffs();
+        if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
+            yfa.getAllResources().getResource("resource_hp").shield(20);
+        }
+        refreshView();
+    }
+
+    private void castBuffExtend(){
+        buff.normalCast(calculateMinute()*2);
+        yfa.castSpell(buff.getSpellRank()+2);
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
             yfa.getAllResources().getResource("resource_hp").shield(20);
