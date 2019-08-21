@@ -11,6 +11,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -50,6 +54,13 @@ public class BuffActivity extends AppCompatActivity {
         this.mA=BuffActivity.this;
         this.mC=getApplicationContext();
         setContentView(R.layout.buff_activity);
+        String title=getString(R.string.buff_activity);
+        SpannableString titleSpan = new SpannableString(title);
+        titleSpan.setSpan(new ForegroundColorSpan(getColor(R.color.textColorPrimary)),0,title.length(),0);
+        titleSpan.setSpan(new RelativeSizeSpan(1.5f)  ,0,getString(R.string.buff_activity).length(),0);
+        Toolbar mActionBarToolbarhelp = (Toolbar) findViewById(R.id.toolbarBuff);
+        setSupportActionBar(mActionBarToolbarhelp);
+        getSupportActionBar().setTitle(titleSpan);
         tempLin=findViewById(R.id.buff_temp);
         permaLin=findViewById(R.id.buff_perma);
 

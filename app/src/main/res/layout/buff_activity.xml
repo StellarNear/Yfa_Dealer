@@ -7,17 +7,18 @@
     tools:context="stellarnear.yfa_companion.Activities.BuffActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/AppBarLayoutHelp"
+        android:id="@+id/AppBarLayoutBuff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarHelp"
+            android:id="@+id/toolbarBuff"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/mire_test"
+            app:titleTextColor="@color/black"
+            android:background="@drawable/buff_back_activity"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             persoCreation.start();
 
             final ImageView image = new ImageView(getApplicationContext());
-            image.setImageDrawable(getDrawable(R.drawable.mire_test)); //TODO
+            image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            image.setImageDrawable(getDrawable(R.drawable.background_loading)); //TODO
             image.setBackgroundColor(getColor(R.color.blue));
             setContentView(image);
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            image.setImageDrawable(getDrawable(R.drawable.mire_test)); //TODO
+                            image.setImageDrawable(getDrawable(R.drawable.background_loaded)); //TODO
                             image.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View arg0, MotionEvent arg1) {
