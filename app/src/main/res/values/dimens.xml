@@ -43,8 +43,9 @@
     <dimen name="general_margin_help_infos">8dp</dimen>
 
     <dimen name="buff_hour_text">20sp</dimen>
-    <dimen name="icon_buff">40dp</dimen>
-    <dimen name="icon_buff_perma">35dp</dimen>
+    <dimen name="icon_buff">55dp</dimen>
+    <dimen name="icon_buff_inner_image">40dp</dimen>
+    <dimen name="icon_buff_perma">30dp</dimen>
     <dimen name="size_text_buff">12sp</dimen>
     <dimen name="buff_hour_button">100dp</dimen>
 </resources>

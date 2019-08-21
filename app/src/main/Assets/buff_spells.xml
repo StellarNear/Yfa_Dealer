@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<records>
+    <spell>
+        <name>Vision dans le noir</name>
+        <descr>La cible du sort acquiert la faculté de voir jusqu’à dix-huit mètres (12 c) de distance dans le noir le plus complet. Il voit les formes normalement, mais en noir et blanc.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>2</rank>
+        <id>dark_vision</id>
+    </spell>
+    <spell>
+        <name>Vision des auras</name>
+        <descr>Permet de voir les auras d’alignement dans un rayon de 36 mètres (24 c). Cet effet est similaire à un sort de détection du Bien/du Chaos/de la Loi/du Mal mais vision des auras ne nécessite aucune concentration et permet de discerner la position et la puissance d’une aura plus rapidement. Le personnage connaît la position et la puissance de toutes les auras Bonnes, Chaotiques, Loyales et Mauvaises dans son champ de vision.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>3</rank>
+        <id>aura_vision</id>
+    </spell>
+
+    <spell>
+        <name>Vision lucide</name>
+        <descr>Voit normalement dans l’obscurité (normale comme magique), de remarquer les passages secrets dissimulés par magie, de repérer l’endroit exact où se situent les créatures protégées par des sorts tels que flou ou déplacement, de voir clairement les créatures et objets invisibles, de ne pas être trompé par les illusions, et d’apercevoir la véritable apparence des créatures ou objets métamorphosés ou transformés. Un simple exercice mental lui permet également de voir dans le plan Éthéré, mais pas à l’intérieur des espaces extradimensionnels. La vision lucide s’étend jusqu’à une portée de trente-six mètres.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G,M+</compo>
+        <id>lucid_vision</id>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Vision magique</name>
+        <descr>Voit les auras et intensités magiques à 36m. Comme avec détection de la magie. Peut effectuer un test d’Art de la magie pour déterminer l’école de magie de chacune (DD 15 + niveau du sort, ou 15 + la moitié du niveau de lanceur de sorts pour un effet ne relevant pas d’un sort). Avec une action simple, peut dire si une cible dispose de pouvoirs magiques ou de facultés de jeteur de sorts et son plus puissant sort ou pouvoir magique. Comme avec détection de la magie, le personnage peut utiliser ce sort pour discerner les propriétés d’un objet magique, mais pas d’un artefact.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <id>magic_vision</id>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+
+
+</records>

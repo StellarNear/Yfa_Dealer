@@ -104,6 +104,8 @@
 
     <color name="buff_time_light">#F4D5C1</color>
     <color name="buff_time_dark">#B87333</color>
+    <color name="buff_time_perma_light">#95A6F4</color>
+    <color name="buff_time_perma">#2C48C4</color>
 
 
 </resources>

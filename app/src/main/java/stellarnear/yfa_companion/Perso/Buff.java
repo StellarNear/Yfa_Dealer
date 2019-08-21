@@ -10,6 +10,7 @@ public class Buff {
     private float maxDuration=0;
     private String spellDuration;
     private String name;
+    private String id;
     private String descr;
     private int spellRank;
     private boolean perma;
@@ -17,6 +18,7 @@ public class Buff {
     public Buff(Spell spell, Boolean perma){
         this.name=spell.getName();
         this.descr=spell.getDescr();
+        this.id=spell.getID();
         this.spellDuration =spell.getDuration();
         this.spellRank=spell.getRank();
         this.perma=perma;
@@ -79,5 +81,9 @@ public class Buff {
 
     public String getDescr() {
         return descr;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

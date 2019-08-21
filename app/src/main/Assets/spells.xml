@@ -19,6 +19,7 @@
     
       <spell>
         <name>Détection de la magie</name>
+          <id>detect_magic</id>
         <descr>Grâce à ce sort, le personnage peut repérer les auras magiques. Les informations fournies par détection de la magie dépendent du temps que le personnage passe à étudier le sujet et ou la zone. Premier round : présence ou absence d’auras magiques. Deuxième round : nombre d’auras magiques et intensité de la plus puissante. Troisième round : intensité et emplacement précis de chaque aura</descr>
         <range>18m</range>
         <cast_time>simple</cast_time>
@@ -29,6 +30,7 @@
     
     <spell>
         <name>Lecture de la magie</name>
+        <id>read_magic</id>
         <descr>Grâce à ce sort, le personnage peut lire les inscriptions magiques normalement incompréhensibles (celles des parchemins, livres magiques, armes, etc.).</descr>
         <range>personnelle</range>
         <cast_time>simple</cast_time>
@@ -92,6 +94,7 @@
 
     <spell>
         <name>Résistance</name>
+        <id>resistance</id>
         <descr>Ce sort protège la cible en lui offrant temporairement un bonus de résistance de +1 aux jets de sauvegarde.</descr>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -112,6 +115,7 @@
     
     <spell>
         <name>Bouclier</name>
+        <id>shield</id>
         <descr>Bouclier conférant un bonus de bouclier de +4 à la CA. S’agissant d’un effet de force, ce bonus agit face aux attaques de contact à distance intangibles. Il ne présente ni malus d’armure aux tests ni risque d’échec des sorts profanes.</descr>
         <range>personnelle</range>
         <cast_time>simple</cast_time>
@@ -196,6 +200,7 @@
     
     <spell>
         <name>Détection de l'invisibilité</name>
+        <id>detect_invi</id>
         <descr>Ce sort permet au personnage de repérer les objets et les créatures invisibles situés dans son champ de vision, ainsi que celles qui sont éthérées, comme si elles étaient visibles.</descr>
         <range>personelle</range>
         <cast_time>simple</cast_time>
@@ -203,11 +208,10 @@
         <compo>V,G,M</compo>
         <rank>2</rank>
     </spell>
-    
-    
 
     <spell>
         <name>Flou</name>
+        <id>blur</id>
         <descr>La cible bénéficie d’un camouflage (20 % de chances que les attaques le ratent). Détection de l’invisibilité ne contre pas flou, mais vision lucide, si.</descr>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -300,6 +304,7 @@
 
     <spell>
         <name>Don des langues</name>
+        <id>all_languages</id>
         <descr>Ce sort donne à la créature touchée la capacité de parler et de comprendre le langage de n’importe quelle créature intelligente</descr>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -361,6 +366,7 @@
     
     <spell>
         <name>Liberté de mouvement</name>
+        <id>free_movement</id>
         <descr>Permet de se déplacer et de combattre normalement, même si elle subit les effets d’un sort ou d’une magie qui réduit ses déplacements. Le sujet peut également se déplacer et attaquer normalement quand il se trouve sous l’eau.</descr>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -388,6 +394,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
       <spell>
         <name>Peau de pierre</name>
+          <id>stone_skin</id>
         <descr>Bouclier de 10pts/lvl (max 150). Protection contre les attaques physiques qui se traduit par une réduction des dégâts de 10/adamantium.</descr>
         <range>contact</range>
         <cast_time>simple</cast_time>
@@ -402,6 +409,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Simulacre de vie supérieur</name>
+        <id>fake_life_sup</id>
         <descr>Gagne un nombre de points de vie temporaires égal à 2d10 +1 par niveau de lanceur de sorts (+20 maximum).</descr>
         <range>personelle</range>
         <cast_time>simple</cast_time>
@@ -443,6 +451,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     
     <spell>
         <name>Echolocalisation</name>
+        <id>echolocalisation</id>
         <descr>Procure vision aveugle dans un rayon de 12 mètres. Le personnage ne peut pas utiliser ce pouvoir s'il est sourd et il ne détecte rien dans une zone de silence.</descr>
         <range>personelle</range>
         <cast_time>simple</cast_time>
@@ -470,6 +479,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Lien télépathique</name>
+        <id>mind_link</id>
         <descr>Cibles le jeteur de sorts et 1 créature consentante/3 niveaux, distantes de moins de 9 m. Ce sort de divination génère un lien télépathique entre plusieurs créatures dont l’Intelligence doit au moins être égale ou supérieure à 3.</descr>
         <range>courte</range>
         <cast_time>simple</cast_time>
@@ -574,6 +584,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     </spell>
     <spell>
         <name>Renvoi des sorts</name>
+        <id>reflect_spell</id>
         <descr>Les sorts et effets magiques qui prennent le personnage pour cible (et seulement ceux-là) sont renvoyés sur celui qui les a lancés. Les sorts de zone ne sont pas affectés, pas plus que les sorts à effet. Cette protection est inefficace contre les sorts de contact. L’abjuration renvoie de sept à dix (1d4+6) niveaux de sort (ce chiffre est déterminé en secret). Chaque sort retourné à l’envoyeur est retranché à ce nombre.</descr>
         <range>personnelle</range>
         <cast_time>simple</cast_time>
@@ -609,6 +620,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
     
     <spell>
         <name>Esprit impénétrable</name>
+        <id>impenetrable_mind</id>
         <descr>Tous les sorts et objets qui permettent de recueillir des renseignements à son sujet grâce à la divination comme détection du Mal, localisation de créature, scrutation et détection de l’invisibilité. Ce sort offre aussi un bonus de résistance de +8 aux jets de sauvegarde contre tous les effets et sorts mentaux.</descr>
         <range>courte</range>
         <cast_time>simple</cast_time>
@@ -632,6 +644,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Moment de préscience</name>
+        <id>prescience_moment</id>
         <descr>Une seule fois pendant toute la durée du sort et il donne un bonus d’intuition égal au niveau de lanceur de sorts (maximum +25) à un jet d’attaque, un jet de manœuvre de combat, un test de caractéristique ou de compétence opposé, ou un jet de sauvegarde.  Si besoin, il est même possible de l’activer au tour de jeu d’un autre personnage. </descr>
         <range>personnelle</range>
         <cast_time>simple</cast_time>
@@ -743,6 +756,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
 
     <spell>
         <name>Prémonition</name>
+        <id>premonition</id>
         <descr>Averti dès qu’un péril menace la cible. +2 à la CA et aux jets de Réflexes si personnelle.</descr>
         <range>contact</range>
         <cast_time>simple</cast_time>

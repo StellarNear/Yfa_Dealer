@@ -32,21 +32,50 @@ public class BuffView {
         LayoutInflater inflater = mA.getLayoutInflater();
         LinearLayout buffView = (LinearLayout) inflater.inflate(R.layout.buff_icon, null);
         this.buffView=buffView;
-        ((ImageView)buffView.findViewById(R.id.buff_icon_image)).setImageDrawable(mA.getDrawable(R.drawable.mire_test_cercle));
+
         ((TextView)buffView.findViewById(R.id.buff_icon_name)).setText(buff.getName());
         buffView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,1));
 
+        setImage();
         if(buff.isPerma()){
-            buffView.findViewById(R.id.circular_progress).setVisibility(View.GONE);
             int dimPix = mA.getResources().getDimensionPixelSize(R.dimen.icon_buff_perma);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dimPix, dimPix);
             ((FrameLayout)buffView.findViewById(R.id.buff_icon_frame)).setLayoutParams(layoutParams);
+            ((ImageView) buffView.findViewById(R.id.buff_icon_image_big)).setVisibility(View.GONE);
+            circle = buffView.findViewById(R.id.circular_progress);
+            circle.setMax(100);
+            circle.setProgress(100);
+            circle.setColor(mA.getColor(R.color.buff_time_perma));
+            circle.setStrokeWidth(5);
+            ((FrameLayout)buffView.findViewById(R.id.buff_icon_frame)).removeView(circle);
+            ((FrameLayout)buffView.findViewById(R.id.buff_icon_frame)).addView(circle);//pour faire passer le cercle sur l'icone
         } else {
+            ((ImageView) buffView.findViewById(R.id.buff_icon_image_small)).setVisibility(View.GONE);
             circle = buffView.findViewById(R.id.circular_progress);
             circle.setMax(100);
             refresh(false);
         }
         setNameClick();
+    }
+
+    private void setImage() {
+        int imgInt = 0;
+        try {
+            imgInt = mA.getResources().getIdentifier(buff.getId(), "drawable", mA.getPackageName());
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        if(imgInt==0){imgInt =R.drawable.mire_test_cercle;}
+        if(buff.isPerma()) {
+            ((ImageView) buffView.findViewById(R.id.buff_icon_image_small)).setImageDrawable(mA.getDrawable(imgInt));
+        } else {
+            if (buff.isActive()) {
+                ((ImageView) buffView.findViewById(R.id.buff_icon_image_big)).setImageDrawable(mA.getDrawable(imgInt));
+            } else {
+                ((ImageView) buffView.findViewById(R.id.buff_icon_image_big)).setImageDrawable(tools.convertToGrayscale(mA.getDrawable(imgInt).mutate()));
+            }
+        }
     }
 
     private void setNameClick() {
@@ -83,6 +112,7 @@ public class BuffView {
     }
 
     public void refresh(Boolean... animationInput) {
+        setImage();
         boolean withAnim = animationInput.length > 0 ? animationInput[0] : true;  //paramet
         if(!buff.isPerma()) {
             float progress =0;

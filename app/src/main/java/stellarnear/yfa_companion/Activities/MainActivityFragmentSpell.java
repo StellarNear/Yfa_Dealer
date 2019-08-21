@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
@@ -20,6 +21,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -94,6 +97,7 @@ public class MainActivityFragmentSpell extends Fragment {
                 backToMain();
             }
         });
+        animate(((FrameLayout) returnFragView.findViewById(R.id.back_main_from_spell)));
         return returnFragView;
     }
 
@@ -106,6 +110,23 @@ public class MainActivityFragmentSpell extends Fragment {
         fragmentTransaction.replace(R.id.fragment_main_frame_layout, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    private void animate(final FrameLayout buttonMain) {
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Animation anim = new ScaleAnimation(1f,1.25f,1f,1.25f,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                anim.setRepeatCount(1);
+                anim.setRepeatMode(Animation.REVERSE);
+                anim.setDuration(666);
+
+                buttonMain.startAnimation(anim);
+            }
+        }, getResources().getInteger(R.integer.translationFragDuration));
+
+
     }
 
     private void unlockOrient() {

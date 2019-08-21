@@ -3,6 +3,8 @@ package stellarnear.yfa_companion;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -97,6 +99,15 @@ public class Tools {
             e.printStackTrace();
         }
         return image;
+    }
+
+    public Drawable convertToGrayscale(Drawable inputDraw) {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        Drawable newDraw = inputDraw.mutate();
+        newDraw.setColorFilter(filter);
+        return newDraw;
     }
 
 

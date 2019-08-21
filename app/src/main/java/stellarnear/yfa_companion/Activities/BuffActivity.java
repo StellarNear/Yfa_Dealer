@@ -29,6 +29,7 @@ import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.BuffManager;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.Tools;
 import stellarnear.yfa_companion.ViewWeightAnimationWrapper;
 
 /**
@@ -43,6 +44,7 @@ public class BuffActivity extends AppCompatActivity {
     private ArrayList<BuffManager> listTempManagers=new ArrayList<>();
     private Perso yfa=MainActivity.yfa;
     private Activity mA;
+    private Tools tools=new Tools();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -116,6 +118,7 @@ public class BuffActivity extends AppCompatActivity {
     }
 
     private void addTimeToBuffs(int i) {
+        tools.customToast(mC,i+" minutes plus tard ...","center");
         yfa.getAllBuffs().makeTimePass(i);
         for(BuffManager buffManager:listTempManagers){
             buffManager.refreshView();

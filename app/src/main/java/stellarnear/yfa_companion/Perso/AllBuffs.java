@@ -2,14 +2,24 @@ package stellarnear.yfa_companion.Perso;
 
 import android.content.Context;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.TinyDB;
+import stellarnear.yfa_companion.Tools;
 
 public class AllBuffs {
 
@@ -17,6 +27,7 @@ public class AllBuffs {
 
     private TinyDB tinyDB;
     private Context mC;
+    private Tools tools=new Tools();
 
     public AllBuffs(Context mC){
         this.mC=mC;
@@ -46,19 +57,71 @@ public class AllBuffs {
 
     private void buildList(){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
         SpellList spellList = BuildSpellList.getInstance(mC).getSpellList();
-        /* peau de pierre, lien télépathique, renvoi des sorts, moment de prescience, liberté de mouvement
-
-Permanence: Détection de la magie, de l'invisibilité, dons des langues, lecture de la magie, vision dans le noir, vision magique, vision des auras, flou, écholocalisation, prémonition, esprit impénétrable, bouclier, résistance, vision lucide*/
+        spellList.add(getAllBuffSpells());
         List<String> allBuffSpellsIds= Arrays.asList("Peau de pierre","Lien télépathique","Renvoi des sorts","Moment de préscience","Liberté de mouvement","Simulacre de vie supérieur");
         List<String> allBuffPermaSpellsIds= Arrays.asList("Détection de la magie","Détection de l'invisibilité","Don des langues","Lecture de la magie","Vision dans le noir","Vision magique", "Vision des auras","Flou","Echolocalisation","Prémonition","Esprit impénétrable","Bouclier","Résistance","Vision lucide");
-        //todo add permabuffonlyspell  "Vision dans le noir","Vision magique", "Vision des auras","Vision lucide"
-
         for (Spell spell : spellList.asList()){
-            if(allBuffSpellsIds.contains(spell.getID())){
+            if(allBuffSpellsIds.contains(spell.getName())){
                 listBuffs.add(new Buff(spell,false));
-            } else if (allBuffPermaSpellsIds.contains(spell.getID())){
+            } else if (allBuffPermaSpellsIds.contains(spell.getName())){
                 listBuffs.add(new Buff(spell,true));
             }
+        }
+    }
+
+    private SpellList getAllBuffSpells() {
+        SpellList buffSpells=new SpellList();
+        try {
+            InputStream is = mC.getAssets().open("buff_spells.xml");
+
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(is);
+
+            Element element=doc.getDocumentElement();
+            element.normalize();
+
+            NodeList nList = doc.getElementsByTagName("spell");
+
+            for (int i=0; i<nList.getLength(); i++) {
+
+                Node node = nList.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element2 = (Element) node;
+                    buffSpells.add(new Spell(getValue("id",element2),
+                            getValue("mythic",element2),
+                            getValue("normalSpellId",element2),
+                            getValue("name",element2),
+                            getValue("descr",element2),
+                            tools.toInt(getValue("n_sub_spell",element2)),
+                            getValue("dice_type",element2),
+                            tools.toDouble(getValue("n_dice_per_lvl",element2)),
+                            tools.toInt(getValue("cap_dice",element2)),
+                            getValue("dmg_type",element2),
+                            getValue("range",element2),
+                            getValue("contact",element2),
+                            getValue("area",element2),
+                            getValue("cast_time",element2),
+                            getValue("duration",element2),
+                            getValue("compo",element2),
+                            getValue("rm",element2),
+                            getValue("save_type",element2),
+                            tools.toInt(getValue("rank",element2)),
+                            mC));
+                }
+            }
+
+        } catch (Exception e) {e.printStackTrace();}
+        return buffSpells;
+    }
+
+    private String getValue(String tag, Element element) {
+        try {
+            NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+            Node node = nodeList.item(0);
+            return node.getNodeValue();
+        } catch (Exception e){
+            return "";
         }
     }
 
