@@ -59,7 +59,7 @@ public class Perso {
         allFeats.refreshAllSwitch();
         allMythicFeats.refreshAllSwitch();
         allSkills.refreshAllVals();
-        allResources.refreshMaxs();
+        allResources.refresh();
     }
 
 
@@ -127,7 +127,8 @@ public class Perso {
 
 
     public int getBaseAtk() {
-        return tools.toInt(prefs.getString("base_atk",String.valueOf(mC.getResources().getInteger(R.integer.base_atk_def))));
+        int val =tools.toInt(prefs.getString("base_atk",String.valueOf(mC.getResources().getInteger(R.integer.base_atk_def))));
+        return val;
     }
 
     public int getBonusAtk() {
@@ -186,19 +187,51 @@ public class Perso {
 
             if (abiId.equalsIgnoreCase("ability_ca")) {
                 abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_def))));
-
+                if(allBuffs.buffIsActive("Bouclier")){
+                    abiScore +=4;
+                }
+                if(allBuffs.buffIsActive("Prémonition")){
+                    abiScore +=2;
+                }
             }
 
             if (abiId.equalsIgnoreCase("ability_ref")||abiId.equalsIgnoreCase("ability_vig")||abiId.equalsIgnoreCase("ability_vol")) {
                 abiScore += tools.toInt(settings.getString("bonus_temp_save",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_save_def))));
                 abiScore += tools.toInt(settings.getString("epic_save",String.valueOf(mC.getResources().getInteger(R.integer.epic_save_def))));
-                if (abiId.equalsIgnoreCase("ability_ref")){abiScore+=getAbilityMod("ability_dexterite");}
-                if (abiId.equalsIgnoreCase("ability_vig")){abiScore+=getAbilityMod("ability_constitution");}
-                if (abiId.equalsIgnoreCase("ability_vol")){abiScore+=getAbilityMod("ability_sagesse");}
 
-                if (settings.getBoolean("switch_perma_resi",mC.getResources().getBoolean(R.bool.switch_perma_resi_def))) {
+                if (settings.getBoolean("ioun_stone_luck",true)) {
                     abiScore+=1;
                 }
+                if (inventory.getAllEquipments().getEquipmentsEquiped("armor_slot").getName().equalsIgnoreCase("Robe d'archimage grise")) {
+                    abiScore+=4;
+                } else {
+                    if(allBuffs.buffIsActive("Résistance")){
+                        abiScore +=1;
+                    }
+                }
+
+                if (abiId.equalsIgnoreCase("ability_ref")){
+                    abiScore+=getAbilityMod("ability_dexterite");
+                    if(allBuffs.buffIsActive("Prémonition")){
+                        abiScore +=2;
+                    }
+                    if(featIsActive("feat_inhuman_reflexes")){
+                        abiScore+=2;
+                    }
+                }
+                if (abiId.equalsIgnoreCase("ability_vig")){
+                    abiScore+=getAbilityMod("ability_constitution");
+
+                }
+                if (abiId.equalsIgnoreCase("ability_vol")){
+                    abiScore+=getAbilityMod("ability_sagesse");
+                    if(allCapacities.capacityExist("capacity_dual_spirit")){
+                        abiScore+=2;
+                    }
+                }
+            }
+            if(abiId.equalsIgnoreCase("ability_bmo")||abiId.equalsIgnoreCase("ability_dmd")){
+                abiScore+=getBaseAtk()+getBonusAtk();
             }
         }
         return abiScore;

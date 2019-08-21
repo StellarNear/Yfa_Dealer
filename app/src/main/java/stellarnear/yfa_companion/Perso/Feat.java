@@ -49,9 +49,10 @@ public class Feat {
         boolean val = false;
         try {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+            /*
             int switchDefId = mC.getResources().getIdentifier("switch_"+this.id+"_def", "bool", mC.getPackageName());
-            boolean switchDef = mC.getResources().getBoolean(switchDefId);
-            val = settings.getBoolean("switch_"+this.id, switchDef);
+            boolean switchDef = mC.getResources().getBoolean(switchDefId);*/  //Si on veut faire le slecture des dons switch depuis val en dur
+            val = settings.getBoolean("switch_"+this.id, true);
         } catch ( Exception e) {}
         this.active= val;
     }

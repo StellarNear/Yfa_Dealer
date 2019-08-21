@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <records>
     <capacity>
-        <name>TestCapa</name>
-        <descr>Lorsque le personnage tombe au-dessous de 0, il parvient à se stabiliser automatiquement. Les dégâts de saignement provoquent toujours une perte de points de vie lorsque le total de points de vie du personnage est en dessous de 0. De plus, le personnage ne meurt pas à moins que le montant total de ses points de vie négatifs soit supérieur ou égal au double de sa valeur de Constitution.</descr>
-        <id>capacity_blabla</id>
+        <name>Esprit dual</name>
+        <descr>L’ascendance mixte de certains demi-elfes leur permet de résister aux attaques mentales. Ceux qui possèdent ce trait racial gagnent un bonus de +2 aux jets de Volonté. Ce trait remplace adaptabilité.</descr>
+        <id>capacity_dual_spirit</id>
     </capacity>
 
 </records>

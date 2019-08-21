@@ -94,31 +94,6 @@ public class MainActivityFragmentSpell extends Fragment {
                 backToMain();
             }
         });
-        /*
-        ((TextView) returnFragView.findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("resource_mythic_points")));
-
-        ((FrameLayout) returnFragView.findViewById(R.id.mythic_pts)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if( yfa.getResourceValue("resource_mythic_points")>0) {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle("Demande de confirmation")
-                            .setMessage("Confirmes-tu la dépense d'un point mythique ?")
-                            .setIcon(android.R.drawable.ic_menu_help)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    yfa.getAllResources().getResource("resource_mythic_points").spend(1);
-                                    refreshMythicPoints();
-                                    tools.customToast(getContext(),"Il te reste "+yfa.getResourceValue("resource_mythic_points")+" point(s) mythique(s)","center");
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, null).show();
-                } else {
-                    tools.customToast(getContext(),"Tu n'as plus de point mythique","center");
-                }
-            }
-        }); TODO move dans quadrant myth point line */
-
         return returnFragView;
     }
 
@@ -137,22 +112,11 @@ public class MainActivityFragmentSpell extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
     }
 
-    /*
-    private void refreshMythicPoints() {
-        ((TextView) returnFragView.findViewById(R.id.mythic_pts_txt)).setText(String.valueOf(yfa.getResourceValue("resource_mythic_points")));
-    }*/
-
 
     private void buildPage1() {
         listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList();
 
-        int max_tier=0;
-        for(int i=0;i<=19;i++){
-            try{
-                if (yfa.getAllResources().getResource("spell_rank_"+i).getCurrent()>0) {max_tier=i;}
-            } catch (Exception e){ }
-        }
-
+        int max_tier=yfa.getAllResources().getRankManager().getHighestTier();
         for(int i=0;i<=max_tier;i++){
             final ScrollView scroll_tier=(ScrollView) returnFragView.findViewById(R.id.main_scroll_relat);
             LinearLayout Tiers=(LinearLayout) returnFragView.findViewById(R.id.linear1);

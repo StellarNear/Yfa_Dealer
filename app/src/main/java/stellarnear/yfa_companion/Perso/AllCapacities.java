@@ -84,4 +84,15 @@ public class AllCapacities {
             return "";
         }
     }
+
+    public boolean capacityExist(String id) {
+        boolean val = false;
+        for (Capacity capacity : allCapacities){
+            if (capacity.getId().equalsIgnoreCase(id)){
+                val=true;
+                break;
+            }
+        }
+        return val;
+    }
 }

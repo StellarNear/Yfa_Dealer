@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_companion.Spells.SpellsRanksManager;
 import stellarnear.yfa_companion.Tools;
 
 /**
@@ -28,6 +29,7 @@ public class AllResources {
     private Context mC;
     private Map<String, Resource> mapIDRes = new HashMap<>();
     private List<Resource> listResources = new ArrayList<>();
+    private SpellsRanksManager rankManager=null;
     private SharedPreferences settings;
     private Tools tools = new Tools();
 
@@ -72,21 +74,33 @@ public class AllResources {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        for (int rank=1;rank<=15;rank++){
-            Resource rankRes = new Resource("Sort disponible rang "+rank,"Spell "+rank,true,true,"spell_rank_"+rank,mC);
-            listResources.add(rankRes);
-            mapIDRes.put(rankRes.getId(), rankRes);
+        rankManager=new SpellsRanksManager(mC);
+        rankManager.setRefreshEventListener(new SpellsRanksManager.OnHighTierChange() {
+            @Override
+            public void onEvent() {
+                buildResourcesList();
+            }
+        });
+        for (Resource res : rankManager.getSpellTiers()){
+            listResources.add(res);
+            mapIDRes.put(res.getId(), res);
         }
-        for (int rankConv=1;rankConv<=6;rankConv++){
-            Resource rankRes = new Resource("Sort convertible disponible rang "+rankConv,"Spell Conv "+rankConv,true,true,"spell_conv_rank_"+rankConv,mC);
-            listResources.add(rankRes);
-            mapIDRes.put(rankRes.getId(), rankRes);
+        for (Resource convRes : rankManager.getSpellConvTiers()){
+            listResources.add(convRes);
+            mapIDRes.put(convRes.getId(), convRes);
         }
 
-        Resource strike = new Resource("Coup au but","Coup But",true,false,"true_strike",mC);
+        Resource strike = new Resource("Coup au but","Coup But",false,false,"true_strike",mC);
         listResources.add(strike);
         mapIDRes.put(strike.getId(), strike);
+
+        Resource display_spell = new Resource("Rang de sorts","Sorts",false,false,"resource_display_rank",mC);
+        listResources.add(display_spell);
+        mapIDRes.put(display_spell.getId(), display_spell);
+
+        Resource display_spell_conv = new Resource("Rang de sorts convertibles","Sorts Conv.",false,false,"resource_display_rank_conv",mC);
+        listResources.add(display_spell_conv);
+        mapIDRes.put(display_spell_conv.getId(), display_spell_conv);
     }
 
     public String readValue(String tag, Element element) {
@@ -138,14 +152,9 @@ public class AllResources {
         getResource("resource_hp").setMax(hpPool);
         getResource("resource_regen").setMax(readResource("resource_regen"));
         getResource("resource_heroic").setMax(readResource("resource_heroic"));
-
         getResource("resource_mythic_points").setMax(3+2*readResource("mythic_tier"));
-        for (int rank=1;rank<=15;rank++){
-            getResource("spell_rank_"+rank).setMax(readResource("n_rank_"+rank));
-        }
-        for (int rankConv=1;rankConv<=6;rankConv++){
-            getResource("spell_conv_rank_"+rankConv).setMax(readResource("n_rank_"+rankConv+"_conv"));
-        }
+
+        rankManager.refreshMax();
 
         getResource("true_strike").setMax(99);
     }
@@ -199,5 +208,18 @@ public class AllResources {
     public void halfSleepReset() {
         getResource("resource_mythic_points").resetCurrent();
         getResource("true_strike").resetCurrent();
+    }
+
+    public void resetRessources(){
+        buildResourcesList();
+    }
+
+    public void refresh() {
+        rankManager.refreshRanks();
+        refreshMaxs();
+    }
+
+    public SpellsRanksManager getRankManager() {
+        return rankManager;
     }
 }

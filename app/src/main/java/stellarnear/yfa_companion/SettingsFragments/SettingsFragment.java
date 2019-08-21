@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -44,16 +45,31 @@ public class SettingsFragment extends PreferenceFragment {
     private PrefInfoScreenFragment prefInfoScreenFragment;
     private PrefSkillFragment prefSkillFragment;
     private PrefSpellgemScreenFragment prefSpellgemScreenFragment;
+    private PrefSpellRankFragment prefSpellRankFragment;
     private PrefFeatFragment prefFeatFragment;
     private PrefCapaFragment prefCapaFragment;
     private PrefMythicFeatFragment prefMythicFeatFragment;
     private PrefMythicCapaFragment prefMythicCapaFragment;
     private Perso yfa = MainActivity.yfa;
 
+    private OnSharedPreferenceChangeListener listener =
+            new OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                    if (key.equalsIgnoreCase("highest_tier_spell") || key.equalsIgnoreCase("highest_tier_spell_conv") ) {
+                        prefSpellRankFragment.refresh();
+                    }
+                    if (key.contains("spell_rank_")|| key.contains("spell_conv_rank_")){
+                        yfa.getAllResources().getRankManager().refreshMax();
+                    }
+                }
+            };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+        settings.registerOnSharedPreferenceChangeListener(listener);
         this.mA=getActivity();
         this.mC=getContext();
         addPreferencesFromResource(R.xml.pref);
@@ -71,12 +87,16 @@ public class SettingsFragment extends PreferenceFragment {
         this.prefXpFragment.checkLevel(tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def)))));
         this.prefInfoScreenFragment=new PrefInfoScreenFragment(mA,mC);
         this.prefSpellgemScreenFragment=new PrefSpellgemScreenFragment(mA,mC);
+        this.prefSpellRankFragment=new PrefSpellRankFragment(mA,mC);
         this.prefSkillFragment=new PrefSkillFragment(mA,mC);
         this.prefFeatFragment=new PrefFeatFragment(mA,mC);
         this.prefCapaFragment =new PrefCapaFragment(mA,mC);
         this.prefMythicFeatFragment =new PrefMythicFeatFragment(mA,mC);
         this.prefMythicCapaFragment =new PrefMythicCapaFragment(mA,mC);
     }
+
+
+
 
     // will be called by SettingsActivity (Host Activity)
     public void onUpButton() {
@@ -141,11 +161,17 @@ public class SettingsFragment extends PreferenceFragment {
                     BigInteger xp = tools.toBigInt(settings.getString("current_xp", String.valueOf(getContext().getResources().getInteger(R.integer.current_xp_def))));
                     prefXpFragment.checkLevel(xp);
                     break;
+                case "pref_character_spells":
+                    PreferenceCategory spellCat = (PreferenceCategory) findPreference("tier_spell");
+                    PreferenceCategory spellConvCat = (PreferenceCategory) findPreference("tier_spell_conv");
+                    prefSpellRankFragment.addSpellRanks(spellCat,spellConvCat);
+
+                    setHasOptionsMenu(true);
+                    break;
                 case "pref_character_feat":
                     BuildMetaList.resetMetas();
                     BuildSpellList.resetSpellList();
                     yfa.getAllBuffs().resetBuffsList();
-
                     PreferenceCategory magic = (PreferenceCategory) findPreference("Dons Magie");
                     PreferenceCategory def = (PreferenceCategory) findPreference("Dons défensif");
                     PreferenceCategory other = (PreferenceCategory) findPreference("Dons autre");
@@ -241,13 +267,13 @@ public class SettingsFragment extends PreferenceFragment {
                 });
                 alert.show();
                 edittext.post(new Runnable() {
-                                  public void run() {
-                                      edittext.setFocusableInTouchMode(true);
-                                      edittext.requestFocusFromTouch();
-                                      InputMethodManager lManager = (InputMethodManager) mA.getSystemService(Context.INPUT_METHOD_SERVICE);
-                                      lManager.showSoftInput(edittext, InputMethodManager.SHOW_IMPLICIT);
-                                  }
-                              });
+                    public void run() {
+                        edittext.setFocusableInTouchMode(true);
+                        edittext.requestFocusFromTouch();
+                        InputMethodManager lManager = (InputMethodManager) mA.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        lManager.showSoftInput(edittext, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                });
                 break;
             case "create_bag_item":
                 prefAllInventoryFragment.createBagItem();
@@ -279,7 +305,9 @@ public class SettingsFragment extends PreferenceFragment {
             case "spellgem":
                 prefSpellgemScreenFragment.showSpellgem();
                 break;
+
         }
+
     }
         /*
         // Top level PreferenceScreen
@@ -287,5 +315,10 @@ public class SettingsFragment extends PreferenceFragment {
 
         // Second level PreferenceScreens
         if (key.equals("second_level_key_0")) {        // do something...    }       */
-
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+            prefs.unregisterOnSharedPreferenceChangeListener(listener);
+        }
 }

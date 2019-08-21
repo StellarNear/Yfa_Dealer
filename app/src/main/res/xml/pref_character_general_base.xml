@@ -64,6 +64,16 @@
         android:singleLine="true"
         android:inputType="number"
         android:summary="Valeur : %s m"/>
+
+    <stellarnear.yfa_companion.EditTextPreference
+        android:defaultValue="@integer/ability_rm_def"
+        android:key="ability_rm"
+        android:title="Résistance à la magie"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:summary="Valeur : %s"/>
+
     <stellarnear.yfa_companion.EditTextPreference
         android:defaultValue="@integer/ability_reduc_def"
         android:key="ability_reduc"

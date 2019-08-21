@@ -27,8 +27,6 @@ public class PrefSpellgemScreenFragment {
     public PrefSpellgemScreenFragment(Activity mA, Context mC) {
         this.mA = mA;
         this.mC = mC;
-
-        createSpellgemPopup();
     }
 
     private void createSpellgemPopup() {
@@ -41,9 +39,9 @@ public class PrefSpellgemScreenFragment {
         line.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,1));
         line.setGravity(Gravity.CENTER);
         mainLin.addView(line);
-        for (int rank=1;rank<=15;rank++){
-            final Resource res = yfa.getAllResources().getResource("spell_rank_"+rank);
-
+        yfa.getAllResources().getRankManager().refreshRanks();
+        yfa.getAllResources().getRankManager().refreshMax();
+        for (final Resource res : yfa.getAllResources().getRankManager().getSpellTiers()){
             if(res.getMax()>0) {
                 if(nPerLine>3){
                     line = new LinearLayout(mC);
@@ -53,19 +51,18 @@ public class PrefSpellgemScreenFragment {
                     nPerLine=0;
                 }
                 TextView text = new TextView(mC);
-                text.setText("T" + rank);
+                text.setText(res.getShortname().replace("Sort","Rang"));
                 text.setTextSize(20);
                 text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
                 text.setTextColor(Color.DKGRAY);
-                final int rankSelected = rank;
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                         new AlertDialog.Builder(mA)
                                 .setTitle("Recharger ce tier de sort")
-                                .setMessage("Confirmes tu recharger une utilisation du rang "+rankSelected+" ?")
+                                .setMessage("Confirmes tu recharger une utilisation de "+res.getName()+" ?")
                                 .setIcon(android.R.drawable.ic_menu_help)
                                 .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -106,6 +103,7 @@ public class PrefSpellgemScreenFragment {
     }
 
     public void showSpellgem() {
+        createSpellgemPopup();
         this.spellgemPopup.showAlert();
     }
 

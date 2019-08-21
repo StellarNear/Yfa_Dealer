@@ -138,5 +138,10 @@ public class Resource {
     public String getShortname() {
         return shortname;
     }
+
+    public void setCurrent(int val) {
+        this.current=val;
+        saveCurrentToSettings();
+    }
 }
 

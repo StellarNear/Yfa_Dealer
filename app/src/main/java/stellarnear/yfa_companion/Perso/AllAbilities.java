@@ -95,15 +95,13 @@ public class AllAbilities {
             //(abiKey.equals("FOR") && allStances.getCurrentStance()!=null && allStances.getCurrentStance().getId().equals("bear") pour test les stance en meme temps
             int val = 0;
             if (abi.getId().equalsIgnoreCase("ability_ca")) {
-                val = 10+readAbility("ability_ca_stuff") + getAbi("ability_dexterite").getMod() + ((int) (readAbility("ability_lvl")/4.0))+ getAbi("ability_sagesse").getMod();
+                val = 10+readAbility("ability_ca_stuff") + getAbi("ability_dexterite").getMod();
             } else if (abi.getId().equalsIgnoreCase("ability_bmo")) {
-                val = readAbility("ability_lvl") + getAbi("ability_force").getMod();
+                val = getAbi("ability_force").getMod();
             } else if (abi.getId().equalsIgnoreCase("ability_dmd")) {
-                val = readAbility("ability_lvl") + getAbi("ability_force").getMod() + 10 + getAbi("ability_dexterite").getMod() + ((int) (readAbility("ability_lvl")/4.0))+ getAbi("ability_sagesse").getMod() ;
+                val = getAbi("ability_force").getMod() + 10 + getAbi("ability_dexterite").getMod() ;
             } else if (abi.getId().equalsIgnoreCase("ability_init")) {
                 val = getAbi("ability_dexterite").getMod();
-            } else if (abi.getId().equalsIgnoreCase("ability_rm")) {
-                val = readAbility("ability_lvl") + 10;
             } else if (abi.getId().equalsIgnoreCase("ability_equipment")) {
                 //on laisse à 0 le nombre de piece de stuff est calculer au niveau du perso
             } else {

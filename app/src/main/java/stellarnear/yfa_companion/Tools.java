@@ -116,10 +116,10 @@ public class Tools {
 
     public void playVideo(Activity activity,Context context, String rawPath) {
         LayoutInflater inflater = activity.getLayoutInflater();
-        final View layoutRecordVideo = inflater.inflate(R.layout.video_full_screen, null);
+        final View layoutRecordVideo = inflater.inflate(R.layout.video_full_screen_gold_border, null);
         final CustomAlertDialog customVideo = new CustomAlertDialog(activity, context, layoutRecordVideo);
         customVideo.setPermanent(true);
-        final VideoView video = (VideoView) layoutRecordVideo.findViewById(R.id.fullscreen_video);
+        final VideoView video = (VideoView) layoutRecordVideo.findViewById(R.id.fullscreen_video_gold_border);
         video.setVisibility(View.VISIBLE);
         String fileName = "android.resource://" + activity.getPackageName() + rawPath;
         video.setMediaController(null);

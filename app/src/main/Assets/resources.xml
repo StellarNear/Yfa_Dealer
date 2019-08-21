@@ -19,7 +19,6 @@
     <resource>
         <name>Points héroique</name>
         <id>resource_heroic</id>
-        <hide>true</hide>
     </resource>
 
 </records>

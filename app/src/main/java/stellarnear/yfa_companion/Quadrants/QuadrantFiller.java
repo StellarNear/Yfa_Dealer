@@ -126,10 +126,9 @@ public class QuadrantFiller {
         quadrantSub1.removeAllViews();
         quadrantSub2.removeAllViews();
         for (Resource res : resList){
-            addTextRes(res,quadrantSub1,quadrantSub2,mode);
+                addTextRes(res, quadrantSub1, quadrantSub2, mode);
         }
     }
-
 
     private void addTextAbi(Ability abi, LinearLayout quadrantSub1, LinearLayout quadrantSub2, String mode) {
         float textSize;  int iconSize;
@@ -195,13 +194,23 @@ public class QuadrantFiller {
         TextView column2 = new TextView(mC);
         column2.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         String column2txt;
-        column2txt=String.valueOf(yfa.getResourceValue(res.getId()));
-        if(mode.equalsIgnoreCase("mini") && res.getId().equalsIgnoreCase("resource_hp")){
-            column2txt=String.valueOf(yfa.getAllResources().getResource(res.getId()).getCurrent()+yfa.getAllResources().getResource(res.getId()).getShield());
-        }
-        if(mode.equalsIgnoreCase("full") && res.getId().equalsIgnoreCase("resource_hp")){
-            column2txt=String.valueOf(yfa.getAllResources().getResource(res.getId()).getCurrent());
-            if(yfa.getAllResources().getResource(res.getId()).getShield()>0) {column2txt+=" ("+String.valueOf(yfa.getAllResources().getResource(res.getId()).getShield())+")";}
+        if(res.getId().equalsIgnoreCase("resource_display_rank")||res.getId().equalsIgnoreCase("resource_display_rank_conv")){
+            if(res.getId().equalsIgnoreCase("resource_display_rank")){
+                column2txt=yfa.getAllResources().getRankManager().getPercentAvail();
+            } else {
+                column2txt=yfa.getAllResources().getRankManager().getPercentAvailConv();
+            }
+        } else {
+            column2txt = String.valueOf(yfa.getResourceValue(res.getId()));
+            if (mode.equalsIgnoreCase("mini") && res.getId().equalsIgnoreCase("resource_hp")) {
+                column2txt = String.valueOf(yfa.getAllResources().getResource(res.getId()).getCurrent() + yfa.getAllResources().getResource(res.getId()).getShield());
+            }
+            if (mode.equalsIgnoreCase("full") && res.getId().equalsIgnoreCase("resource_hp")) {
+                column2txt = String.valueOf(yfa.getAllResources().getResource(res.getId()).getCurrent());
+                if (yfa.getAllResources().getResource(res.getId()).getShield() > 0) {
+                    column2txt += " (" + String.valueOf(yfa.getAllResources().getResource(res.getId()).getShield()) + ")";
+                }
+            }
         }
         column2.setText(column2txt);
         column2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1));

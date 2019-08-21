@@ -12,10 +12,10 @@
 
     <!-- DEF -->
     <feat>
-        <name>DonTestDefBla</name>
+        <name>Réflexes surhumains</name>
         <type>feat_def</type>
-        <descr>Face aux attaques permettant un jet de Réflexes pour réduire les dégâts de moitié, il continue à ne subir aucun dégât en cas de jet de sauvegarde réussi mais, en plus, il ne subit que la moitié des dégâts en cas d’échec du jet de sauvegarde. Le moine ne bénéficie pas de cette capacité s’il est sans défense.</descr>
-        <id>feat_inhuman_evade</id>
+        <descr>Le personnage bénéficie d’un bonus de +2 aux jets de Réflexes.</descr>
+        <id>feat_inhuman_reflexes</id>
     </feat>
 
 

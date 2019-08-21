@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ import stellarnear.yfa_companion.R;
 public class MainActivity extends AppCompatActivity {
     public static Perso yfa;
     private boolean loading = false;
+    private boolean changescreen=false;
     private boolean touched = false;
     private static boolean campaignShow = false;
     private LinearLayout mainFrameFrag;
@@ -69,15 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
             persoCreation.start();
 
-            final ImageView image = new ImageView(getApplicationContext());
-            image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            image.setImageDrawable(getDrawable(R.drawable.background_loading)); //TODO
+            ImageView image = new ImageView(getApplicationContext());
+            image.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            image.setScaleType(ImageView.ScaleType.FIT_XY);
+            image.setImageDrawable(getDrawable(R.drawable.splash_image));
             image.setBackgroundColor(getColor(R.color.blue));
             setContentView(image);
 
             Thread loadListner = new Thread(new Runnable() {
                 public void run() {
-                    setLoadCompleteListner(image);
+                    setLoadCompleteListner();
                 }
             });
             loadListner.start();
@@ -87,17 +90,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setLoadCompleteListner(final ImageView image) {
+    private void setLoadCompleteListner() {
         Timer timerRefreshLoading = new Timer();
+        changescreen=false;
         timerRefreshLoading.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (loading) {
+                if (loading && !changescreen) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            image.setImageDrawable(getDrawable(R.drawable.background_loaded)); //TODO
-                            image.setOnTouchListener(new View.OnTouchListener() {
+                            changescreen=true;
+                            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                            View videoLayout = inflater.inflate(R.layout.full_screen_video_player, null);
+                            setContentView(videoLayout);
+
+                            VideoView openning =videoLayout.findViewById(R.id.fullscreen_video);
+                            openning.setBackground(getDrawable(R.drawable.splash_image));
+                            String fileName = "android.resource://"+  getPackageName() + "/raw/yfa_openning";
+                            openning.setMediaController(null);
+                            openning.setVideoURI(Uri.parse(fileName));
+                            openning.setZOrderOnTop(true);
+                            openning.start();
+
+                            openning.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View arg0, MotionEvent arg1) {
                                     unlockOrient();
@@ -119,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
-
         final VideoView campaignVideo = (VideoView) findViewById(R.id.campaignContainer);
 
         Boolean switchCampaignBool = settings.getBoolean("switch_campaign_gif", getApplicationContext().getResources().getBoolean(R.bool.switch_campaign_gif_def));
