@@ -147,7 +147,7 @@ public class AllResources {
     public void refreshMaxs() {
         //partie from setting
         int hpPool = readResource("resource_hp");
-        hpPool += 5*readResource("mythic_tier");
+        hpPool += 3*readResource("mythic_tier"); //archimage
 
         getResource("resource_hp").setMax(hpPool);
         getResource("resource_regen").setMax(readResource("resource_regen"));

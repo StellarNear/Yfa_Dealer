@@ -68,12 +68,17 @@
 
 
     <!--  Rank de maitrise des compétences  -->
+    <integer name="skill_magic_art_rankDEF">26</integer>
     <integer name="skill_acrob_rankDEF">0</integer>
+    <integer name="skill_craft_rankDEF">12</integer>
+    <integer name="skill_bluff_rankDEF">16</integer>
     <integer name="skill_myst_rankDEF">26</integer>
     <integer name="skill_religion_rankDEF">0</integer>
     <integer name="skill_stealth_rankDEF">0</integer>
+    <integer name="skill_diplomacy_rankDEF">2</integer>
     <integer name="skill_ride_rankDEF">0</integer>
     <integer name="skill_climb_rankDEF">0</integer>
+    <integer name="skill_estimate_rankDEF">8</integer>
     <integer name="skill_escape_rankDEF">0</integer>
     <integer name="skill_intimidate_rankDEF">16</integer>
     <integer name="skill_swim_rankDEF">0</integer>
@@ -81,14 +86,21 @@
     <integer name="skill_heal_rankDEF">0</integer>
     <integer name="skill_psycho_rankDEF">15</integer>
     <integer name="skill_survival_rankDEF">0</integer>
+    <integer name="skill_magic_item_rankDEF">5</integer>
+    <integer name="skill_fly_rankDEF">1</integer>
 
     <!--  Bonus des compétences  -->
+    <integer name="skill_magic_art_bonusDEF">1</integer>
     <integer name="skill_acrob_bonusDEF">1</integer>
+    <integer name="skill_craft_bonusDEF">1</integer>
+    <integer name="skill_bluff_bonusDEF">1</integer>
     <integer name="skill_myst_bonusDEF">1</integer>
     <integer name="skill_religion_bonusDEF">0</integer>
     <integer name="skill_stealth_bonusDEF">6</integer>
+    <integer name="skill_diplomacy_bonusDEF">1</integer>
     <integer name="skill_ride_bonusDEF">1</integer>
     <integer name="skill_climb_bonusDEF">1</integer>
+    <integer name="skill_estimate_bonusDEF">4</integer>
     <integer name="skill_escape_bonusDEF">1</integer>
     <integer name="skill_intimidate_bonusDEF">1</integer>
     <integer name="skill_swim_bonusDEF">1</integer>
@@ -96,6 +108,8 @@
     <integer name="skill_heal_bonusDEF">1</integer>
     <integer name="skill_psycho_bonusDEF">1</integer>
     <integer name="skill_survival_bonusDEF">0</integer>
+    <integer name="skill_magic_item_bonusDEF">1</integer>
+    <integer name="skill_fly_bonusDEF">1</integer>
 
     <!-- Resources  -->
     <integer name="resource_hp_def">270</integer>

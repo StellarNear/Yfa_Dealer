@@ -9,11 +9,5 @@
                 android:endColor="@color/end_gradient_title_bar_main_skill" />
         </shape>
     </item>
-    <item  android:right="-2dp" android:left="-2dp">
-        <shape>
-            <stroke
-                android:width="2dp"
-                android:color="@color/stroke_main_action_bar" />
-        </shape>
-    </item>
+
 </layer-list>
