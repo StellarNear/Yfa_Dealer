@@ -73,7 +73,7 @@ public class DSSFDmgInfoManager {
         if(!allStats){label=selectedBracket;}
         t.setText(label);
         t.setGravity(Gravity.CENTER);
-        t.setTextSize(20);
+        t.setTextSize(18);
         t.setTextColor(Color.BLACK);
         bloc1.addView(t);
 
@@ -115,7 +115,7 @@ public class DSSFDmgInfoManager {
         TextView t = new TextView(mC);
         t.setText("Récent");
         t.setGravity(Gravity.CENTER);
-        t.setTextSize(20);
+        t.setTextSize(18);
         t.setTextColor(Color.BLACK);
         bloc2.addView(t);
 
@@ -124,7 +124,7 @@ public class DSSFDmgInfoManager {
         LinearLayout linePercent = createLine();
         bloc2.addView(linePercent);
 
-        TextView titleScore = createTextElement("score");
+        TextView titleScore = createTextElement("val");
         lineScore.addView(titleScore);
         TextView titlePercent = createTextElement(">=%");
         linePercent.addView(titlePercent);
@@ -168,9 +168,9 @@ public class DSSFDmgInfoManager {
 
     private void addInfosDetails(LinearLayout bloc2) {
         TextView t = new TextView(mC);
-        t.setText("Détails (moy)");
+        t.setText("Rank (moy)");
         t.setGravity(Gravity.CENTER);
-        t.setTextSize(20);
+        t.setTextSize(18);
         t.setTextColor(Color.BLACK);
         bloc2.addView(t);
 
@@ -183,21 +183,21 @@ public class DSSFDmgInfoManager {
         LinearLayout lineMythic = createLine();
         bloc2.addView(lineMythic);
 
-        TextView titleRank = createTextElement("rank");
+        TextView titleRank = createTextElement("sort");
         titleRank.setTextColor(Color.DKGRAY);
         lineRank.addView(titleRank);
         TextView rankText = createTextElement(String.valueOf(selectedDamageShortList.getRankMoy()));
         rankText.setTextColor(Color.DKGRAY);
         lineRank.addView(rankText);
 
-        TextView titleCrit = createTextElement("rankMeta");
+        TextView titleCrit = createTextElement("métamagie");
         titleCrit.setTextColor(Color.DKGRAY);
         lineMeta.addView(titleCrit);
         TextView rangMetaMoyText = createTextElement(String.valueOf(selectedDamageShortList.getMetaRankMoy()));
         rangMetaMoyText.setTextColor(Color.DKGRAY);
         lineMeta.addView(rangMetaMoyText);
 
-        TextView arcaneConvRankMoyTitle = createTextElement("arcaneConvRank");
+        TextView arcaneConvRankMoyTitle = createTextElement("conversion");
         arcaneConvRankMoyTitle.setTextColor(Color.DKGRAY);
         lineArcane.addView(arcaneConvRankMoyTitle);
         TextView arcaneConvRankMoy = createTextElement(String.valueOf(selectedDamageShortList.getArcaneConvRankMoy()));
