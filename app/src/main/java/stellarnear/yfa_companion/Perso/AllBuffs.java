@@ -69,7 +69,7 @@ public class AllBuffs {
         }
     }
 
-    private SpellList getAllBuffSpells() {
+    public SpellList getAllBuffSpells() {
         SpellList buffSpells=new SpellList();
         try {
             InputStream is = mC.getAssets().open("buff_spells.xml");

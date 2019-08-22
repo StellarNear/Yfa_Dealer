@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v1.0"</string>
-    <string name="time_spend">214h</string>
+    <string name="time_spend">229h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
-Patch note Companion V1.0 ! Yfa_Dealer évolue en Yfa_Companion
--
+Patch note Yfa Companion V1.0 !
+Yfa_Dealer évolue en Yfa_Companion !!!
+(Même si tu le lis pas allons-y pour le patchnote)
+-Ajout de trois activités differentes :
+    -Principale :
+        -Lancement de sort (yfa_dealer)
+        -Lancement des compétences
+        -Affichages de la fiche personnage (avec lancement des jets possible sur les aptitudes possibles)
+
+    -Activité des Amélioration (inclinaison gauche) :
+        -Lancement direct des buff en version normal (click) ou étendue (long clic)
+        -Affichage de la valeur de temsps restante
+        -Menu coulissant pour les affichange des buff permanents (logos sablier / infinie)
+        -Affichage des description en cliquant sur les noms
+
+    -Menu d'aide :
+        -Affichange de l'ensemble des propriétés du personnage !
+        -Liste swipable (ca te rappelleras Tinder) pour faire défiler les infos
+
+-Ajout dans les menu de settings de l'ensembles des propriétés du personnage
+-L'animation du logo avec la foudre représente l'avancement du chargement de l'appli et devient cliquable quand le chargement est fini
+-Ajout de plus de 50 images faites mains pour l'ensemble de l'appli
 ----------------------------------------------------------------------------------
 Patch note V10.0
 -Ajout de la feature HallOfFame !

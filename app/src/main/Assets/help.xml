@@ -7,12 +7,6 @@
         <id>help_save</id>
     </help>
     <help>
-        <name>Postures de combats</name>
-        <descr>On active une posture par une action rapide, et on en sort par une action libre. Certaines postures confèrent l’avantage d’un don. Dans ce cas, le personnage est dispensé de tout prérequis éventuels. On ne peut avoir qu’une seule posture active à la fois.</descr>
-        <id>help_stance</id>
-    </help>
-
-    <help>
         <name>Tests de compétences</name>
         <descr>Lorsque votre personnage utilise une compétence, rien ne garantit que son action soit un succès, vous devez faire un test de compétence. Si le résultat du test de compétence est égal ou supérieur au degré de difficulté (ou DD) de la tâche que vous tentez d’accomplir, c’est une réussite. Sinon c’est un échec. Un test de compétence est généralement réalisé dans des conditions de stress et de distraction. Parfois, cependant, un personnage peut utiliser une compétence dans de meilleures conditions. Dans ce cas il peut décider de faire automatiquement 10 à son jet, ou bien de prendre son temps en se concentrant et obtenir un jet à 20.</descr>
         <id>skill</id>

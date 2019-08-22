@@ -75,7 +75,7 @@
     </skill>
     <skill>
         <name>Intimidation</name>
-        <abilityDependence>ability_force</abilityDependence>
+        <abilityDependence>ability_charisme</abilityDependence>
         <descr>Cette compétence permet au personnage d’effrayer ses adversaires ou de les contraindre à agir à son avantage grâce à des menaces verbales et à des démonstrations de force. Modifier l’attitude de quelqu’un prend une minute de discussion. Démoraliser un adversaire en combat nécessite une action simple.</descr>
         <id>skill_intimidate</id>
     </skill>

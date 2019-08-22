@@ -31,6 +31,7 @@
 
     <!--  Feat myth def  -->
     <bool name="switch_mythicfeat_parangon_def">true</bool>
+    <bool name="materiel_epic_switch_def">true</bool>
 
     <!--  Capa def  -->
 

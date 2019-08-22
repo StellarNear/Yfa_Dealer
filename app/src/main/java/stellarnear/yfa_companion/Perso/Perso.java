@@ -161,6 +161,25 @@ public class Perso {
 
     public Integer getSkillBonus(Context mC,String skillId) {
         int bonusTemp = allSkills.getSkill(skillId).getBonus();
+
+        if(inventory.getAllEquipments().testIfNameItemIsEquipped("Pierre porte bonheur")){
+            bonusTemp+=1;
+        }
+
+        if(skillId.equalsIgnoreCase("skill_estimate")) {
+            Equipment gant = inventory.getAllEquipments().getEquipmentsEquiped("hand_slot");
+            if (gant != null && gant.getName().equalsIgnoreCase("Gant d'estimation")) {
+                bonusTemp += 3;
+            }
+        }
+
+        if(skillId.equalsIgnoreCase("skill_stealth")) {
+            Equipment boot = inventory.getAllEquipments().getEquipmentsEquiped("equipment_feet");
+            if (boot != null && boot.getName().equalsIgnoreCase("Bottes elfiques")) {
+                bonusTemp += 5;
+            }
+        }
+
         return bonusTemp;
     }
 
@@ -202,7 +221,8 @@ public class Perso {
                 if (settings.getBoolean("ioun_stone_luck",true)) {
                     abiScore+=1;
                 }
-                if (inventory.getAllEquipments().getEquipmentsEquiped("armor_slot").getName().equalsIgnoreCase("Robe d'archimage grise")) {
+                Equipment torse= inventory.getAllEquipments().getEquipmentsEquiped("armor_slot") ;
+                if (torse!=null && torse.getName().equalsIgnoreCase("Robe d'archimage grise")) {
                     abiScore+=4;
                 } else {
                     if(allBuffs.buffIsActive("Résistance")){

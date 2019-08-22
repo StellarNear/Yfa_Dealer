@@ -5,12 +5,6 @@
         android:title="Jets de sauvegarde">
         <Preference android:layout="@layout/divider_pref" android:selectable="false"/>
 
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="ioun_stone_luck"
-            android:summary="+1 à tout les jets de sauvegarde"
-            android:title="Pierre d'ioun  de chance"
-            />
         <stellarnear.yfa_companion.EditTextPreference
             android:defaultValue="@integer/epic_save_def"
             android:key="epic_save"

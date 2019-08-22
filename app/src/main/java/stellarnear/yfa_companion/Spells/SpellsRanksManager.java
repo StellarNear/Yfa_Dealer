@@ -27,9 +27,6 @@ public class SpellsRanksManager {
         this.mC=mC;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         refreshRanks();
-
-
-
     }
 
     public void refreshRanks() {
@@ -124,6 +121,7 @@ public class SpellsRanksManager {
         }
         return Math.round(100f*allRankCurrent/allRankMax)+"%";
     }
+
     public String getPercentAvailConv() {
         int allRankCurrent=0;
         int allRankMax=0;
@@ -133,7 +131,6 @@ public class SpellsRanksManager {
         }
         return Math.round(100f*allRankCurrent/allRankMax)+"%";
     }
-
 
     public interface OnHighTierChange {
         void onEvent();

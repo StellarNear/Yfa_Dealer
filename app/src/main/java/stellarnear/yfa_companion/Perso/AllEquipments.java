@@ -319,6 +319,16 @@ public class AllEquipments {
         saveLocalAllEquipments();
     }
 
+    public boolean testIfNameItemIsEquipped(String nameItem) {
+        boolean val=false;
+        for(Equipment equi:getListAllEquipmentsEquiped()){
+            if(equi.getName().equalsIgnoreCase(nameItem)){
+                val=true;
+            }
+        }
+        return val;
+    }
+
     public interface OnRefreshEventListener {
         void onEvent();
     }

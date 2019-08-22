@@ -54,6 +54,9 @@ public class DisplayedText {
         if(valList.contains("M") && settings.getBoolean("materiel_switch",mC.getResources().getBoolean(R.bool.materiel_switch_def)))  {
             valList.remove("M");
         }
+        if(valList.contains("M+") && settings.getBoolean("materiel_epic_switch",mC.getResources().getBoolean(R.bool.materiel_epic_switch_def)))  {
+            valList.remove("M+");
+        }
         if(valList.contains("V")&&spell.getMetaList().metaIdIsActive("meta_silent")){
             valList.remove("V");
         }

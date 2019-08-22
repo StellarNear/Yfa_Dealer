@@ -780,7 +780,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <name>Souhait</name>
         <descr>Souhait est le sort ultime des magiciens et des ensorceleurs. Il suffit en effet au personnage d’exprimer un souhait pour que le tissu de la réalité se modifie selon leurs désirs. Mais même un sort aussi puissant a ses limites.</descr>
         <cast_time>simple</cast_time>
-        <compo>V,G,M+</compo>
+        <compo>V,G,M++</compo>
         <rank>9</rank>
     </spell>
 

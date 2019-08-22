@@ -39,12 +39,17 @@ import java.util.Map;
 import stellarnear.yfa_companion.AllGeneralHelpInfos;
 import stellarnear.yfa_companion.GeneralHelpInfo;
 import stellarnear.yfa_companion.Perso.Ability;
+import stellarnear.yfa_companion.Perso.AllBuffs;
+import stellarnear.yfa_companion.Perso.Capacity;
 import stellarnear.yfa_companion.Perso.Feat;
 import stellarnear.yfa_companion.Perso.MythicCapacity;
 import stellarnear.yfa_companion.Perso.MythicFeat;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Perso.Skill;
 import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.Spells.BuildSpellList;
+import stellarnear.yfa_companion.Spells.Spell;
+import stellarnear.yfa_companion.Spells.SpellList;
 
 /**
  * Created by jchatron on 26/12/2017.
@@ -102,7 +107,7 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void buildCategories() {
-        List<String> categories = Arrays.asList("Général","Caractéristiques","Compétences","Dons","Dons Mythiques","Pouvoirs Mythiques");
+        List<String> categories = Arrays.asList("Général","Caractéristiques","Compétences","Dons","Capacités","Dons Mythiques","Capacités Mythiques","Sorts");
         LinearLayout buttons = findViewById(R.id.help_activity_button_linear);
         buttons.removeAllViews();
         LinearLayout line1Buttons = new LinearLayout(mC);
@@ -184,41 +189,57 @@ public class HelpActivity extends AppCompatActivity {
                 changeFields(view,help.getId(),help.getName(),"",help.getDescr());
                 flipper.addView(view);
             }
-        }
+        }else
         if(mapButtonCat.get(button).equalsIgnoreCase("Caractéristiques")){
             for (Ability abi : yfa.getAllAbilities().getAbilitiesList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
-                int typeId = getResources().getIdentifier("ability_"+abi.getType(), "string", getPackageName());
                 changeFields(view,abi.getId(),abi.getName(),"Type : "+abi.getType(),abi.getDescr());
                 flipper.addView(view);
             }
-        }
+        }else
         if(mapButtonCat.get(button).equalsIgnoreCase("Compétences")){
             for (Skill skill : yfa.getAllSkills().getSkillsList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
                 changeFields(view,skill.getId(),skill.getName(),"",skill.getDescr());
                 flipper.addView(view);
             }
-        }
+        }else
         if(mapButtonCat.get(button).equalsIgnoreCase("Dons")){
             for (Feat feat : yfa.getAllFeats().getFeatsList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
-                int typeId = getResources().getIdentifier(feat.getType(), "string", getPackageName());
-                changeFields(view,feat.getId(),feat.getName(),"Type : "+feat.getType(),feat.getDescr());
+                String type= feat.getType().equalsIgnoreCase("feat_magic")? "Magie":feat.getType().equalsIgnoreCase("feat_def")? "Défensif":"Autre";
+                changeFields(view,feat.getId(),feat.getName(),"Type : "+type,feat.getDescr());
                 flipper.addView(view);
             }
-        }
+        } else
+        if(mapButtonCat.get(button).equalsIgnoreCase("Capacités")){
+            for (Capacity capa : yfa.getAllCapacities().getAllCapacitiesList()){
+                View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
+                changeFields(view,capa.getId(),capa.getName(),"",capa.getDescr());
+                flipper.addView(view);
+            }
+        }else
         if(mapButtonCat.get(button).equalsIgnoreCase("Dons Mythiques")){
             for (MythicFeat mythicFeat : yfa.getAllMythicFeats().getMythicFeatsList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
                 changeFields(view,mythicFeat.getId(),mythicFeat.getName(),"",mythicFeat.getDescr());
                 flipper.addView(view);
             }
-        }
-        if(mapButtonCat.get(button).equalsIgnoreCase("Pouvoirs Mythiques")){
+        }else
+        if(mapButtonCat.get(button).equalsIgnoreCase("Capacités Mythiques")){
             for (MythicCapacity mythicCapacity : yfa.getAllMythicCapacities().getAllMythicCapacitiesList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
                 changeFields(view,mythicCapacity.getId(),mythicCapacity.getName(),"Catégorie : "+mythicCapacity.getType(),mythicCapacity.getDescr());
+                flipper.addView(view);
+            }
+        }else
+        if(mapButtonCat.get(button).equalsIgnoreCase("Sorts")){
+            SpellList spells= BuildSpellList.getInstance(mC).getSpellList();
+            spells.add(new AllBuffs(mC).getAllBuffSpells());
+            for (Spell spell : spells.asList()){
+                View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
+                String dmgTxt="Dégat : "+spell.getDmg_type(); if(spell.getDmg_type().equalsIgnoreCase("")){ dmgTxt="Utilitaire";}
+                changeFields(view,spell.getID(),spell.getName(),dmgTxt,spell.getDescr());
                 flipper.addView(view);
             }
         }
@@ -230,6 +251,7 @@ public class HelpActivity extends AppCompatActivity {
         try {
             img.setImageDrawable(mC.getDrawable(imgId));
         } catch (Exception e) {
+            img.setVisibility(View.GONE);
             e.printStackTrace();
         }
         TextView title = view.findViewById(R.id.help_info_textName);

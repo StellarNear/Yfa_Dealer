@@ -110,7 +110,12 @@
     <SwitchPreference
         android:defaultValue="@bool/materiel_switch_def"
         android:key="materiel_switch"
-        android:summary="Pas besoin de composantes matérielles pour lancer un sort"
+        android:summary="Pas besoin de composantes matérielles jusqu'à une valeur d'1po pour lancer un sort"
         android:title="Dispense de compo matérielles" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/materiel_epic_switch_def"
+        android:key="materiel_epic_switch"
+        android:summary="Pas besoin de composantes matérielles jusqu'à une valeur de 15000 po pour lancer un sort"
+        android:title="Dispense de compo matérielles Epique" />
 </PreferenceScreen>

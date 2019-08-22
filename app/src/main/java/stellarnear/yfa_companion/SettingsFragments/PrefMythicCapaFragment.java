@@ -19,7 +19,7 @@ public class PrefMythicCapaFragment {
         this.mC = mC;
     }
 
-    public void addMythicCapaList(PreferenceCategory common, PreferenceCategory protect ,PreferenceCategory all) {
+    public void addMythicCapaList(PreferenceCategory common, PreferenceCategory mage ,PreferenceCategory all) {
            for (MythicCapacity capacity : yfa.getAllMythicCapacities().getAllMythicCapacitiesList()) {
             SwitchPreference switch_feat = new SwitchPreference(mC);
             switch_feat.setKey("switch_"+capacity.getId());
@@ -28,9 +28,9 @@ public class PrefMythicCapaFragment {
             switch_feat.setDefaultValue(true);
             if (capacity.getType().contains("Commun")) {
                 common.addPreference(switch_feat);
-            } else if (capacity.getType().equals("Voie du Protecteur")) {
-                protect.addPreference(switch_feat);
-            } else if (capacity.getType().contains("Voie Universelle")) {
+            } else if (capacity.getType().equals("Archimage")) {
+                mage.addPreference(switch_feat);
+            } else if (capacity.getType().contains("Universelle")) {
                 all.addPreference(switch_feat);
             }
         }

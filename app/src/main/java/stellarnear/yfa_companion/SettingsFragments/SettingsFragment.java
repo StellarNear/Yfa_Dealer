@@ -194,10 +194,10 @@ public class SettingsFragment extends PreferenceFragment {
                     break;
                 case "pref_mythic_capa":
                     PreferenceCategory common_myth = (PreferenceCategory) findPreference("Commun");
-                    PreferenceCategory protect_myth = (PreferenceCategory) findPreference("Voie de l'Archimage");
+                    PreferenceCategory mage_myth = (PreferenceCategory) findPreference("Voie de l'Archimage");
                     PreferenceCategory all_myth = (PreferenceCategory) findPreference("Voie Universelle");
 
-                    prefMythicCapaFragment.addMythicCapaList(common_myth,protect_myth,all_myth);
+                    prefMythicCapaFragment.addMythicCapaList(common_myth,mage_myth,all_myth);
                     setHasOptionsMenu(true);
                     break;
                 case "pref_character_skill":

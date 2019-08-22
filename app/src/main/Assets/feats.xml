@@ -2,12 +2,16 @@
 <records>
     <!-- feat_magic -->
     <feat>
-        <name>DonTestMagie</name>
+        <name>Science du contresort</name>
         <type>feat_magic</type>
-        <descr>Le personnage est très doué pour attaquer des adversaires qu’il distingue mal. Lors d’un combat au corps à corps, à chaque fois que le personnage rate son adversaire à cause de son camouflage, il peut à nouveau jeter 1d100 afin de savoir s’il touche. Un adversaire invisible ne bénéficie d’aucun avantage offensif contre le personnage.</descr>
-        <id>feat_blind_fight</id>
+        <descr>Permet de contrer un sort avec un sort de la même école et d’un niveau supérieur.</descr>
     </feat>
 
+    <feat>
+        <name>Parade de sorts</name>
+        <type>feat_magic</type>
+        <descr>Renvoyer un sort contré vers le lanceur.</descr>
+    </feat>
 
 
     <!-- DEF -->
@@ -20,15 +24,18 @@
 
 
 
-
     <!-- feat_otherS -->
     <feat>
-        <name>DonsAutreTest</name>
+        <name>Prestige</name>
         <type>feat_other</type>
-        <descr>Le personnage peut utiliser sa réserve de ki de plus nombreuses fois que la normale. La réserve de ki du personnage est augmentée de 2 points.</descr>
-        <id>feat_bonus_ki</id>
+        <descr>Le personnage attire des suivants et un compagnon d’armes qui se joignent à sa cause et l’accompagnent au cours de ses aventures.</descr>
     </feat>
 
+    <feat>
+        <name>Création d'objets merveilleux</name>
+        <type>feat_other</type>
+        <descr>Le personnage sait fabriquer des objets merveilleux, un type d’objets magiques. Le personnage peut fabriquer une grande variété d’objets merveilleux. Le processus de fabrication prend un jour par tranche de 1000 po du prix de base de l’objet. Le personnage doit acheter les matières premières nécessaires à la moitié de leur prix de base (Voir la page sur la création d'objets magiques).</descr>
+    </feat>
 
 
 </records>

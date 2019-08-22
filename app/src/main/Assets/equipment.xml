@@ -98,7 +98,7 @@
 
     <equipment>
         <name>Pierre porte bonheur</name>
-        <descr>+1 jets de sauvegarde</descr>
+        <descr>+1 jets de sauvegarde et compétences</descr>
         <imgId>equipment_lucky_stone</imgId>
         <value>20000po</value>
         <slotId>other_slot</slotId>
