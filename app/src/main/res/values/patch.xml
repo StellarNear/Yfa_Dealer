@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v1.0"</string>
-    <string name="time_spend">229h</string>
+    <string name="time_spend">234h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
@@ -29,6 +29,7 @@ Yfa_Dealer évolue en Yfa_Companion !!!
 -Ajout dans les menu de settings de l'ensembles des propriétés du personnage
 -L'animation du logo avec la foudre représente l'avancement du chargement de l'appli et devient cliquable quand le chargement est fini
 -Ajout de plus de 50 images faites mains pour l'ensemble de l'appli
+-Cinématique de campagne !
 ----------------------------------------------------------------------------------
 Patch note V10.0
 -Ajout de la feature HallOfFame !
