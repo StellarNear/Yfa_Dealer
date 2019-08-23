@@ -17,7 +17,7 @@
     <bool name="meta_duration_switch_def">true</bool>
     <bool name="multispell_switch_def">true</bool>
     <bool name="switch_autoclose_dialog_def">true</bool>
-    <bool name="switch_manual_diceroll_def">false</bool>
+    <bool name="switch_manual_diceroll_def">true</bool>
 
 
     <bool name="glae_switch_tier1_def">true</bool>

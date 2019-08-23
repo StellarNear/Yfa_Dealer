@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean loading = false;
     private boolean changescreen=false;
     private boolean touched = false;
-    private static boolean campaignShow = false;
+    private static boolean campaignShow = true;
     private LinearLayout mainFrameFrag;
     private SharedPreferences settings;
 
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         if (campaignShow && switchCampaignBool) {
             campaignVideo.setVisibility(View.VISIBLE);
 
-            String fileName = "android.resource://"+  getPackageName() + "/raw/campaign";
+            String fileName = "android.resource://"+  getPackageName() + "/raw/"+getString(R.string.current_campaign)+"_campaign";
             campaignVideo.setMediaController(null);
             campaignVideo.setVideoURI(Uri.parse(fileName));
             campaignVideo.start();

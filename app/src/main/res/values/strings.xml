@@ -23,6 +23,7 @@
     <string name="skill_bonus">Bonus divers</string>
     <string name="help_activity">Centre d\'aide</string>
     <string name="buff_activity">Gestion des améliorations</string>
+    <string name="current_campaign">illu</string>
 
 
     <string-array name="values">
