@@ -86,7 +86,18 @@ public class BuffActivity extends AppCompatActivity {
         setTimeButtons();
 
         addBuffs();
-        show("tempInit");
+
+        tempLin.clearAnimation();
+        permaLin.clearAnimation();
+        findViewById(R.id.buff_perma_tab_icon).clearAnimation();
+        findViewById(R.id.buff_temp_tab_icon).clearAnimation();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                show("tempInit");
+            }
+        }, 333);
     }
 
     private void setTimeButtons() {
@@ -156,6 +167,7 @@ public class BuffActivity extends AppCompatActivity {
     }
 
     private void changeTab(int weightFrom, int weightTo, LinearLayout lin, int dura) {
+        lin.clearAnimation();
         ViewWeightAnimationWrapper animationWrapper = new ViewWeightAnimationWrapper(lin);
         ObjectAnimator anim = ObjectAnimator.ofFloat(
                 animationWrapper,
