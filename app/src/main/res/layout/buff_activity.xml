@@ -113,7 +113,7 @@
             <LinearLayout
                 android:id="@+id/buff_temp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="8"
                 android:clipToPadding="false"
                 android:clipChildren="false"
                 android:gravity="center"
@@ -127,15 +127,13 @@
                 android:id="@+id/buff_perma"
                 android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:clipToPadding="false"
                 android:clipChildren="false"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@drawable/background_tier_title"
                 />
-
-
 
         </LinearLayout>
 
@@ -150,7 +148,7 @@
             <LinearLayout
                 android:id="@+id/buff_temp_tab_icon"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="8"
                 android:clipToPadding="false"
                 android:clipChildren="false"
                 android:gravity="center"
@@ -168,7 +166,7 @@
             android:id="@+id/buff_perma_tab_icon"
             android:gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:clipToPadding="false"
             android:clipChildren="false"
             android:layout_height="wrap_content"

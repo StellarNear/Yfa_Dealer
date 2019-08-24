@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -87,17 +89,26 @@ public class BuffActivity extends AppCompatActivity {
 
         addBuffs();
 
-        tempLin.clearAnimation();
-        permaLin.clearAnimation();
-        findViewById(R.id.buff_perma_tab_icon).clearAnimation();
-        findViewById(R.id.buff_temp_tab_icon).clearAnimation();
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        animate();
+    }
+
+    private void animate() {
+        permaLin.post(new Runnable() {
             @Override
             public void run() {
-                show("tempInit");
+                Animation right = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.infromrightslow);
+                permaLin.startAnimation(right);
+                findViewById(R.id.buff_perma_tab_icon).startAnimation(right);
             }
-        }, 333);
+        });
+        tempLin.post(new Runnable() {
+            @Override
+            public void run() {
+                Animation left = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.infromleftslow);
+                tempLin.startAnimation(left);
+                findViewById(R.id.buff_temp_tab_icon).startAnimation(left);
+            }
+        });
     }
 
     private void setTimeButtons() {
@@ -152,14 +163,6 @@ public class BuffActivity extends AppCompatActivity {
                     changeTab(2,8,(LinearLayout)findViewById(R.id.buff_temp_tab_icon),dura);
                     changeTab(8,2,permaLin,dura);
                     changeTab(8,2,(LinearLayout)findViewById(R.id.buff_perma_tab_icon),dura);
-                    break;
-                default:
-                    dura=2000;
-                    changeTab(1,8,tempLin,dura);
-                    changeTab(1,8,(LinearLayout)findViewById(R.id.buff_temp_tab_icon),dura);
-                    changeTab(1,2,permaLin,dura);
-                    changeTab(1,2,(LinearLayout)findViewById(R.id.buff_perma_tab_icon),dura);
-                    mode="temp";
                     break;
             }
             this.currentMode=mode;
