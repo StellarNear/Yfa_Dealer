@@ -156,7 +156,7 @@ public class AllResources {
 
         rankManager.refreshMax();
 
-        getResource("true_strike").setMax(99);
+        getResource("true_strike").setMax(1);
     }
 
     private void loadCurrent() {

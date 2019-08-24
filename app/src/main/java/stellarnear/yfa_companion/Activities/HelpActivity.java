@@ -234,9 +234,10 @@ public class HelpActivity extends AppCompatActivity {
             }
         }else
         if(mapButtonCat.get(button).equalsIgnoreCase("Sorts")){
-            SpellList spells= BuildSpellList.getInstance(mC).getSpellList();
-            spells.add(new AllBuffs(mC).getAllBuffSpells());
-            for (Spell spell : spells.asList()){
+            SpellList spellsToDisplay=new SpellList();
+            spellsToDisplay.add(BuildSpellList.getInstance(mC).getSpellList());
+            spellsToDisplay.add(new AllBuffs(mC).getAllBuffSpells());
+            for (Spell spell : spellsToDisplay.asList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
                 String dmgTxt="Dégat : "+spell.getDmg_type(); if(spell.getDmg_type().equalsIgnoreCase("")){ dmgTxt="Utilitaire";}
                 changeFields(view,spell.getID(),spell.getName(),dmgTxt,spell.getDescr());

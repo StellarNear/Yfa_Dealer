@@ -56,11 +56,12 @@ public class AllBuffs {
 
 
     private void buildList(){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
-        SpellList spellList = BuildSpellList.getInstance(mC).getSpellList();
-        spellList.add(getAllBuffSpells());
+        SpellList allSpells = new SpellList();
+        allSpells.add(BuildSpellList.getInstance(mC).getSpellList());
+        allSpells.add(getAllBuffSpells());
         List<String> allBuffSpellsIds= Arrays.asList("Peau de pierre","Lien télépathique","Renvoi des sorts","Moment de préscience","Liberté de mouvement","Simulacre de vie supérieur");
         List<String> allBuffPermaSpellsIds= Arrays.asList("Détection de la magie","Détection de l'invisibilité","Don des langues","Lecture de la magie","Vision dans le noir","Vision magique", "Vision des auras","Flou","Echolocalisation","Prémonition","Esprit impénétrable","Bouclier","Résistance","Vision lucide");
-        for (Spell spell : spellList.asList()){
+        for (Spell spell : allSpells.asList()){
             if(allBuffSpellsIds.contains(spell.getName())){
                 listBuffs.add(new Buff(spell,false));
             } else if (allBuffPermaSpellsIds.contains(spell.getName())){
