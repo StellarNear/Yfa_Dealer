@@ -52,12 +52,10 @@
     </style>
 
     <style name="AppTheme.NoActionBarBuff">
-        <item name="colorPrimary">@color/end_gradient_title_bar_buff</item>
-        <item name="colorPrimaryDark">@color/start_gradient_title_bar_buff</item>
+        <item name="colorPrimary">@color/buff_time_light</item>
+        <item name="colorPrimaryDark">@color/buff_time_dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <color name="start_gradient_title_bar_buff">#48E898</color>
-    <color name="end_gradient_title_bar_buff">#0A8C4B</color>
 </resources>
