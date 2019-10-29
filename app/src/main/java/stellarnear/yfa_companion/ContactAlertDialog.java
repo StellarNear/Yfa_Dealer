@@ -78,7 +78,7 @@ public class ContactAlertDialog {
             sumScore+=yfa.getAbilityMod("ability_dexterite");
             summaryDetail+="\nBonus dexterité ("+(yfa.getAbilityMod("ability_dexterite")>0?"+":"")+yfa.getAbilityMod("ability_dexterite")+")";
         }
-        if(yfa.getResourceValue("true_strike")>0){
+        if(yfa.getAllBuffs().buffByIDIsActive("true_strike")){
             sumScore+=20;
             summaryDetail+="\nCoup au But (+20)";
         }
@@ -140,8 +140,6 @@ public class ContactAlertDialog {
 
     private void startRoll() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        yfa.getAllResources().getResource("true_strike").spend(1);
-
         dice = new Dice(mA,mC,20);
         if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_def))){
             dice.rand(true);

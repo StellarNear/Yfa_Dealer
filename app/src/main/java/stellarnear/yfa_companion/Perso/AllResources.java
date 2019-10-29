@@ -90,7 +90,7 @@ public class AllResources {
             mapIDRes.put(convRes.getId(), convRes);
         }
 
-        Resource strike = new Resource("Coup au but","Coup But",false,false,"true_strike",mC);
+        Resource strike = new Resource("Coup au but","Coup But",false,false,"res_true_strike",mC);
         listResources.add(strike);
         mapIDRes.put(strike.getId(), strike);
 
@@ -155,8 +155,6 @@ public class AllResources {
         getResource("resource_mythic_points").setMax(3+2*readResource("mythic_tier"));
 
         rankManager.refreshMax();
-
-        getResource("true_strike").setMax(1);
     }
 
     private void loadCurrent() {
@@ -207,7 +205,6 @@ public class AllResources {
 
     public void halfSleepReset() {
         getResource("resource_mythic_points").resetCurrent();
-        getResource("true_strike").resetCurrent();
     }
 
     public void resetRessources(){

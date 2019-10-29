@@ -6,7 +6,7 @@
         <normalSpellId>Immortalité</normalSpellId>
         <name>Immortalité (M)</name>
         <descr>Le personnage devient un point d’ancrage pour son âme et celles de ses alliés. La portée s’élève à 9 mètres et au lieu d’affecter une créature, le sort affecte tous les alliés situés dans une émanation de 9 mètres de rayon autour de lui.</descr>
-        <range>personelle</range>
+        <range>personnelle</range>
         <cast_time>simple</cast_time>
         <duration>1round/lvl</duration>
         <compo>V,G</compo>

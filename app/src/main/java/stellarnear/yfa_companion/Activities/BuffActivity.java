@@ -115,33 +115,33 @@ public class BuffActivity extends AppCompatActivity {
         findViewById(R.id.buttonMin30).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addTimeToBuffs(30);
+                addTimeToBuffs(30*60);
             }
         });
         findViewById(R.id.buttonH1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addTimeToBuffs(60);
+                addTimeToBuffs(60*60);
             }
         });
         findViewById(R.id.buttonH3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addTimeToBuffs(60*3);
+                addTimeToBuffs(60*60*3);
             }
         });
         findViewById(R.id.buttonH5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addTimeToBuffs(60*5);
+                addTimeToBuffs(60*60*5);
             }
         });
 
     }
 
-    private void addTimeToBuffs(int i) {
-        tools.customToast(mC,i+" minutes plus tard ...","center");
-        yfa.getAllBuffs().makeTimePass(i);
+    private void addTimeToBuffs(int iSec) {
+        tools.customToast(mC,(int)(iSec/60)+" minutes plus tard ...","center");
+        yfa.getAllBuffs().makeTimePass(iSec);
         for(BuffManager buffManager:listTempManagers){
             buffManager.refreshView();
         }
@@ -230,16 +230,11 @@ public class BuffActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
     /*
 
     Activity stuff
 
      */
-
 
     @Override
     protected void onResume(){

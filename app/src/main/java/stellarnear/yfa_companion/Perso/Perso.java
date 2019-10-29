@@ -83,6 +83,10 @@ public class Perso {
         return this.allResources;
     }
 
+    public AllBuffs getAllBuffs() {
+        return allBuffs;
+    }
+
     public Integer getResourceValue(String resId){
         Resource res = allResources.getResource(resId);
         Integer value=0;
@@ -107,8 +111,11 @@ public class Perso {
         if (!spell.isCast()){
             spell.cast();
             allResources.castSpell(calculation.currentRank(spell));
-            if (spell.getID().equalsIgnoreCase("true_strike")) {
-                getAllResources().getResource("true_strike").earn(1);
+            if(spell.getRange().equalsIgnoreCase("personnelle")){
+                Buff matchingBuff = allBuffs.getBuffByID(spell.getID());
+                if(matchingBuff!=null){
+                    if(spell.getMetaList().metaIdIsActive("meta_duration")){ matchingBuff.extendCast(getCasterLevel());} else { matchingBuff.normalCast(getCasterLevel());}
+                }
             }
         }
     }
@@ -206,10 +213,10 @@ public class Perso {
 
             if (abiId.equalsIgnoreCase("ability_ca")) {
                 abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_def))));
-                if(allBuffs.buffIsActive("Bouclier")){
+                if(allBuffs.buffByIDIsActive("shield")){
                     abiScore +=4;
                 }
-                if(allBuffs.buffIsActive("Prémonition")){
+                if(allBuffs.buffByIDIsActive("premonition")){
                     abiScore +=2;
                 }
             }
@@ -225,14 +232,14 @@ public class Perso {
                 if (torse!=null && torse.getName().equalsIgnoreCase("Robe d'archimage grise")) {
                     abiScore+=4;
                 } else {
-                    if(allBuffs.buffIsActive("Résistance")){
+                    if(allBuffs.buffByIDIsActive("resistance")){
                         abiScore +=1;
                     }
                 }
 
                 if (abiId.equalsIgnoreCase("ability_ref")){
                     abiScore+=getAbilityMod("ability_dexterite");
-                    if(allBuffs.buffIsActive("Prémonition")){
+                    if(allBuffs.buffByIDIsActive("premonition")){
                         abiScore +=2;
                     }
                     if(featIsActive("feat_inhuman_reflexes")){
@@ -296,7 +303,5 @@ public class Perso {
         resetTemp();
     }
 
-    public AllBuffs getAllBuffs() {
-        return allBuffs;
-    }
+
 }

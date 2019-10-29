@@ -100,9 +100,7 @@ public class Resource {
     }
 
     public void resetCurrent() {
-        if(this.id.equalsIgnoreCase("true_strike")){
-            this.current = 0;
-        } else if(!this.id.equalsIgnoreCase("resource_hp")){
+        if(!this.id.equalsIgnoreCase("resource_hp")){
             this.current = this.max;
         }
         saveCurrentToSettings();

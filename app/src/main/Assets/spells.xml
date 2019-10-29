@@ -140,7 +140,7 @@
         <name>Coup au but</name>
         <id>true_strike</id>
         <descr>Bonus de +20 au prochain jet d'attaque. De plus, il n’a aucune chance de manquer une cible camouflée.</descr>
-        <range>personelle</range>
+        <range>personnelle</range>
         <cast_time>simple</cast_time>
         <duration>1round</duration>
         <compo>V,M</compo>
@@ -202,7 +202,7 @@
         <name>Détection de l'invisibilité</name>
         <id>detect_invi</id>
         <descr>Ce sort permet au personnage de repérer les objets et les créatures invisibles situés dans son champ de vision, ainsi que celles qui sont éthérées, comme si elles étaient visibles.</descr>
-        <range>personelle</range>
+        <range>personnelle</range>
         <cast_time>simple</cast_time>
         <duration>10min/lvl</duration>
         <compo>V,G,M</compo>
@@ -411,7 +411,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <name>Simulacre de vie supérieur</name>
         <id>fake_life_sup</id>
         <descr>Gagne un nombre de points de vie temporaires égal à 2d10 +1 par niveau de lanceur de sorts (+20 maximum).</descr>
-        <range>personelle</range>
+        <range>personnelle</range>
         <cast_time>simple</cast_time>
         <duration>1h/lvl</duration>
         <compo>V,G,M</compo>
@@ -453,7 +453,7 @@ Chaque fois que son tour de jeu arrive, la victime a 50% de chances de pouvoir a
         <name>Echolocalisation</name>
         <id>echolocalisation</id>
         <descr>Procure vision aveugle dans un rayon de 12 mètres. Le personnage ne peut pas utiliser ce pouvoir s'il est sourd et il ne détecte rien dans une zone de silence.</descr>
-        <range>personelle</range>
+        <range>personnelle</range>
         <cast_time>simple</cast_time>
         <duration>10min/lvl</duration>
         <compo>V</compo>

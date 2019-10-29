@@ -39,27 +39,6 @@ public class BuffManager {
         }
     }
 
-    private float calculateMinute() {
-        String duration = buff.getSpellDuration();
-        float floatMinute=0f;
-        if(!duration.equalsIgnoreCase("permanente")){
-            Integer result= tools.toInt(duration.replaceAll("[^0-9?!]",""));
-            String duration_unit = duration.replaceAll("[0-9?!]","");
-            if(duration.contains("/lvl")){
-                Integer lvl =  yfa.getCasterLevel();
-                result = result * lvl;
-                duration_unit = duration.replaceAll("/lvl","").replaceAll("[0-9?!]","");
-            }
-
-            if(duration_unit.equalsIgnoreCase("h")){
-                floatMinute=result*60f;
-            } else if(duration_unit.equalsIgnoreCase("min")){
-                floatMinute=result*1f;
-            }
-        }
-        return floatMinute;
-    }
-
     private void cancelBuff(){
         buff.cancel();
         yfa.getAllBuffs().saveBuffs();
@@ -67,7 +46,7 @@ public class BuffManager {
     }
 
     private void castBuff(){
-        buff.normalCast(calculateMinute());
+        buff.normalCast(yfa.getCasterLevel());
         yfa.castSpell(buff.getSpellRank());
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
@@ -77,7 +56,7 @@ public class BuffManager {
     }
 
     private void castBuffExtend(){
-        buff.normalCast(calculateMinute()*2);
+        buff.extendCast(yfa.getCasterLevel());
         yfa.castSpell(buff.getSpellRank()+2);
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){

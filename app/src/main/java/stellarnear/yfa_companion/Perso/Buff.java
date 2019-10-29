@@ -3,10 +3,11 @@ package stellarnear.yfa_companion.Perso;
 import java.text.DecimalFormatSymbols;
 
 import stellarnear.yfa_companion.Spells.Spell;
+import stellarnear.yfa_companion.Tools;
 
 
 public class Buff {
-    private float currentDuration=0; //in minute
+    private float currentDuration=0; //duration are in seconds
     private float maxDuration=0;
     private String spellDuration;
     private String name;
@@ -28,11 +29,15 @@ public class Buff {
         String durationTxt ="";
         if(perma) {
             durationTxt= DecimalFormatSymbols.getInstance().getInfinity();
-        }else  if(currentDuration>=60){
-            int roundH=(int) currentDuration/60;
+        }else  if(currentDuration>=3600){
+            int roundH=(int) currentDuration/3600;
             durationTxt="["+roundH+"h]";
+        } else if(currentDuration>=60) {
+            int roundM=(int) currentDuration/60;
+            durationTxt="["+roundM+"min]";
         } else if(currentDuration>0) {
-            durationTxt="["+(int)currentDuration+"min]";
+            int roundS=(int) currentDuration;
+            durationTxt="["+roundS+"sec]";
         }
         return durationTxt;
 }
@@ -65,8 +70,13 @@ public class Buff {
         this.currentDuration=0;
     }
 
-    public void normalCast(float minutesDura) {
-        this.maxDuration=minutesDura;
+    public void extendCast(int casterLvl){
+        this.maxDuration=calculateSeconds(casterLvl)*2; //in sec
+        this.currentDuration=maxDuration;
+    }
+
+    public void normalCast(int casterLvl) {
+        this.maxDuration=calculateSeconds(casterLvl); //in sec
         this.currentDuration=maxDuration;
     }
 
@@ -85,5 +95,29 @@ public class Buff {
 
     public String getId() {
         return this.id;
+    }
+
+
+    private float calculateSeconds(int casterLvl) {
+        String duration = this.spellDuration;
+        Tools tools = new Tools();
+        float floatSeconds=0f;
+        if(!duration.equalsIgnoreCase("permanente")){
+            Integer result= tools.toInt(duration.replaceAll("[^0-9?!]",""));
+            String duration_unit = duration.replaceAll("[0-9?!]","");
+            if(duration.contains("/lvl")){
+                result = result * casterLvl;
+                duration_unit = duration.replaceAll("/lvl","").replaceAll("[0-9?!]","");
+            }
+
+            if(duration_unit.equalsIgnoreCase("h")){
+                floatSeconds=result*3600f;
+            } else if(duration_unit.equalsIgnoreCase("min")){
+                floatSeconds=result*60f;
+            } else if(duration_unit.equalsIgnoreCase("round")){
+                floatSeconds=result*6f;
+            }
+        }
+        return floatSeconds;
     }
 }

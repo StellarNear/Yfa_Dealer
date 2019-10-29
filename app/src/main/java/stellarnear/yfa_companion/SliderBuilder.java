@@ -92,6 +92,9 @@ public class SliderBuilder {
                 yfa.getAllResources().getResource("resource_mythic_points").spend(1);
                 tools.customToast(mC, "Conversion d'élément\nIl te reste " + yfa.getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
+            if(yfa.getAllBuffs().buffByIDIsActive("true_strike") && !spell.getContact().equalsIgnoreCase("")){
+                yfa.getAllBuffs().getBuffByID("true_strike").cancel();
+            }
         }
     }
 

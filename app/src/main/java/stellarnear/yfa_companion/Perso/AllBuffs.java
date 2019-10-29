@@ -59,12 +59,12 @@ public class AllBuffs {
         SpellList allSpells = new SpellList();
         allSpells.add(BuildSpellList.getInstance(mC).getSpellList());
         allSpells.add(getAllBuffSpells());
-        List<String> allBuffSpellsIds= Arrays.asList("Peau de pierre","Lien télépathique","Renvoi des sorts","Moment de préscience","Liberté de mouvement","Simulacre de vie supérieur");
-        List<String> allBuffPermaSpellsIds= Arrays.asList("Détection de la magie","Détection de l'invisibilité","Don des langues","Lecture de la magie","Vision dans le noir","Vision magique", "Vision des auras","Flou","Echolocalisation","Prémonition","Esprit impénétrable","Bouclier","Résistance","Vision lucide");
+        List<String> allBuffSpellsNames= Arrays.asList("Coup au but","Peau de pierre","Lien télépathique","Renvoi des sorts","Moment de préscience","Liberté de mouvement","Simulacre de vie supérieur");
+        List<String> allBuffPermaSpellsNames= Arrays.asList("Détection de la magie","Détection de l'invisibilité","Don des langues","Lecture de la magie","Vision dans le noir","Vision magique", "Vision des auras","Flou","Echolocalisation","Prémonition","Esprit impénétrable","Bouclier","Résistance","Vision lucide");
         for (Spell spell : allSpells.asList()){
-            if(allBuffSpellsIds.contains(spell.getName())){
+            if(allBuffSpellsNames.contains(spell.getName())){
                 listBuffs.add(new Buff(spell,false));
-            } else if (allBuffPermaSpellsIds.contains(spell.getName())){
+            } else if (allBuffPermaSpellsNames.contains(spell.getName())){
                 listBuffs.add(new Buff(spell,true));
             }
         }
@@ -127,7 +127,7 @@ public class AllBuffs {
     }
 
     public void spendSleepTime() {
-        makeTimePass(60*8);
+        makeTimePass(60*60*8);
     }
 
     public ArrayList<Buff> getAllPermaBuffs() {
@@ -160,14 +160,25 @@ public class AllBuffs {
         saveLocalBuffs();
     }
 
-    public boolean buffIsActive(String id) {
+    public boolean buffByIDIsActive(String id) {
         Buff buffAnswer=null;
         for (Buff buff : listBuffs){
-            if(buff.getName().equalsIgnoreCase(id)){
+            if(buff.getId().equalsIgnoreCase(id)){
                 buffAnswer=buff;
                 break;
             }
         }
         return buffAnswer!=null && buffAnswer.isActive();
+    }
+
+    public Buff getBuffByID(String id) {
+        Buff buffAnswer=null;
+        for (Buff buff : listBuffs){
+            if(buff.getId().equalsIgnoreCase(id)){
+                buffAnswer=buff;
+                break;
+            }
+        }
+        return buffAnswer;
     }
 }
