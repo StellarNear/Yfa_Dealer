@@ -29,6 +29,8 @@ import stellarnear.yfa_companion.ConvertElementView;
 import stellarnear.yfa_companion.ConvertView;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.GlaeTestAlertDialog;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.ResultBuilder;
 import stellarnear.yfa_companion.SliderBuilder;
@@ -100,20 +102,24 @@ public class SpellProfileManager {
         }
 
         //Slider
-        sliderBuild =new SliderBuilder(mC,spell);
-        sliderBuild.setSlider((SeekBar) profile.findViewById(R.id.slider));
-        sliderBuild.setCastEventListener(new SliderBuilder.OnCastEventListener() {
-            @Override
-            public void onEvent() {
-                ((ImageView)profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
-                ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
-                ((LinearLayout)profile.findViewById(R.id.fourth_panel)).removeAllViews();
-                new ResultBuilder(mA,mC,spell).addResults((LinearLayout)profile.findViewById(R.id.fourth_panel));
-                resultDisplayed =true;
-                movePanelTo("dmg");
-                if(mListener!=null){mListener.onEvent();}
-            }
-        });
+        if(sliderBuild==null) {
+            sliderBuild = new SliderBuilder(mC, spell);
+            sliderBuild.setSlider((SeekBar) profile.findViewById(R.id.slider));
+            sliderBuild.setCastEventListener(new SliderBuilder.OnCastEventListener() {
+                @Override
+                public void onEvent() {
+                    ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
+                    ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+                    ((LinearLayout) profile.findViewById(R.id.fourth_panel)).removeAllViews();
+                    new ResultBuilder(mA, mC, spell).addResults((LinearLayout) profile.findViewById(R.id.fourth_panel));
+                    resultDisplayed = true;
+                    movePanelTo("dmg");
+                    if (mListener != null) {
+                        mListener.onEvent();
+                    }
+                }
+            });
+        }
 
         //Glae test
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);

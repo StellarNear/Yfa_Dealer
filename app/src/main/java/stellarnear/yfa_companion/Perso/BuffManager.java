@@ -53,6 +53,7 @@ public class BuffManager {
             yfa.getAllResources().getResource("resource_hp").shield(20);
         }
         refreshView();
+
     }
 
     private void castBuffExtend(){

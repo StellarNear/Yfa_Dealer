@@ -2,6 +2,8 @@ package stellarnear.yfa_companion.Perso;
 
 import java.text.DecimalFormatSymbols;
 
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Tools;
 
@@ -73,11 +75,17 @@ public class Buff {
     public void extendCast(int casterLvl){
         this.maxDuration=calculateSeconds(casterLvl)*2; //in sec
         this.currentDuration=maxDuration;
+        postData();
     }
 
     public void normalCast(int casterLvl) {
         this.maxDuration=calculateSeconds(casterLvl); //in sec
         this.currentDuration=maxDuration;
+        postData();
+    }
+
+    private void postData() {
+        new PostData(new PostDataElement("Lancement du buff "+name,"Durée:"+getDurationText()));
     }
 
     public void spendTime(int i) {

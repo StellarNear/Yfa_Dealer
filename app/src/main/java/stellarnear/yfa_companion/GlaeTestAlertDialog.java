@@ -172,6 +172,7 @@ public class GlaeTestAlertDialog {
                 alertDialog.dismiss();
             }
         });
+        new PostData(new PostDataElement("Test Glaedäyes "+spell.getName(),dice.getRandValue(),dice.getRandValue()));
     }
 
     public interface OnEndEventListener {

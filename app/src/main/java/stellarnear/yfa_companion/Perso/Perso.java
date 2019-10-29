@@ -9,6 +9,8 @@ import java.util.List;
 
 import stellarnear.yfa_companion.Calculation;
 import stellarnear.yfa_companion.HallOfFame;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Stats.Stats;
@@ -117,6 +119,7 @@ public class Perso {
                     if(spell.getMetaList().metaIdIsActive("meta_duration")){ matchingBuff.extendCast(getCasterLevel());} else { matchingBuff.normalCast(getCasterLevel());}
                 }
             }
+            new PostData(new PostDataElement(spell));
         }
     }
 

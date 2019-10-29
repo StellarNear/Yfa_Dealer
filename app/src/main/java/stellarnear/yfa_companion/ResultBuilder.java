@@ -44,7 +44,6 @@ public class ResultBuilder {
     public void addResults(LinearLayout layout) {
         LayoutInflater inflater = mA.getLayoutInflater();
         LinearLayout resultTemplate = (LinearLayout) inflater.inflate(R.layout.spell_profile_result, null);
-
         if (spell.getDmg_type().equalsIgnoreCase("")) {
             resultTemplate.removeAllViews();
             TextView txt_view = new TextView(mC);
@@ -173,8 +172,5 @@ public class ResultBuilder {
                 spellColorId=mC.getColor(R.color.aucun_dark);
                 break;
         }
-
-
     }
-
 }

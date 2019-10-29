@@ -12,6 +12,7 @@ public class SliderBuilder {
     private Perso yfa= MainActivity.yfa;
     private Spell spell;
     private Context mC;
+    private boolean slided=false;
     private Calculation calculation=new Calculation();
     private OnCastEventListener mListener;
     private SeekBar seek;
@@ -70,15 +71,17 @@ public class SliderBuilder {
     }
 
     private void startCasting() {
-        spendCast();
         mListener.onEvent();
+        spendCast();
         Snackbar.make(seek, "Lancement du sort : " + spell.getName(), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
     public void spendCast() {
         if(!spell.isCast()) {
-            if (spell.getRank() != 0) {
+            slided=true;
+            if(spell.getRank()==0){new PostData(new PostDataElement(spell));} //pour quand meme signalé les grauit
+            if (spell.getRank() > 0) {
                 yfa.castSpell(spell);
             }
             if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
@@ -95,6 +98,9 @@ public class SliderBuilder {
             if(yfa.getAllBuffs().buffByIDIsActive("true_strike") && !spell.getContact().equalsIgnoreCase("")){
                 yfa.getAllBuffs().getBuffByID("true_strike").cancel();
             }
+        } else if(!slided) {
+            slided=true;
+            new PostData(new PostDataElement(spell)); // pour les sous sorts on peut avoir un sous sort pas lancé mais pas posté
         }
     }
 
