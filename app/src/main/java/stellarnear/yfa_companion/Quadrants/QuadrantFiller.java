@@ -195,7 +195,8 @@ public class QuadrantFiller {
         column2.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         String column2txt;
         if(res.getId().equalsIgnoreCase("res_true_strike")){
-            if(yfa.getAllBuffs().buffByIDIsActive("true_strike")){ column2txt="actif"; }else{ column2txt="inactif"; }
+            if(mode.equalsIgnoreCase("full")){if(yfa.getAllBuffs().buffByIDIsActive("true_strike")){ column2txt="actif"; }else{ column2txt="inactif"; }}
+            else {if(yfa.getAllBuffs().buffByIDIsActive("true_strike")){ column2txt="on"; }else{ column2txt="off"; }}
         } else if(res.getId().equalsIgnoreCase("resource_display_rank")||res.getId().equalsIgnoreCase("resource_display_rank_conv")){
             if(res.getId().equalsIgnoreCase("resource_display_rank")){
                 column2txt=yfa.getAllResources().getRankManager().getPercentAvail();

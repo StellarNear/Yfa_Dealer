@@ -215,7 +215,7 @@ public class BuffView {
                                 });
                         alertBuild.show();
                     } else {
-                        tools.customToast(mA, "Tu n'as plus de sort de rang " + (int) (buff.getSpellRank()+2) + " de disponible...", "center");
+                        tools.customToast(mA, "Tu n'as plus de sort de rang " + (int) (buff.getSpellRank()+1) + " de disponible...", "center");
                     }
                 }
                 return true;

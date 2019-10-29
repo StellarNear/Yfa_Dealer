@@ -305,7 +305,19 @@ public class SettingsFragment extends PreferenceFragment {
             case "spellgem":
                 prefSpellgemScreenFragment.showSpellgem();
                 break;
-
+            case "appli_refresh":
+                new AlertDialog.Builder(mC)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Confirmes-tu l'action de rafraîchissement du personnage ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.reset();
+                                tools.customToast(mC,"Rafraîchissement éffectué","center");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                break;
         }
 
     }

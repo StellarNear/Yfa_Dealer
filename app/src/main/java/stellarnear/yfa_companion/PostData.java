@@ -1,15 +1,10 @@
 package stellarnear.yfa_companion;
 
-import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -27,9 +22,12 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class PostData  {
     private PostDataElement element;
-    public PostData(PostDataElement postDataElement){
-        this.element=postDataElement;
-        new SendRequest().execute();
+    public PostData(Context mC, PostDataElement postDataElement){
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+        if (settings.getBoolean("switch_shadow_link",mC.getResources().getBoolean(R.bool.switch_shadow_link_def))) {
+            this.element = postDataElement;
+            new SendRequest().execute();
+        }
     }
 
     public class SendRequest extends AsyncTask<String, Void, String> {

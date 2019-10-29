@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.1"</string>
-    <string name="time_spend">237h</string>
+    <string name="version">"v1.2"</string>
+    <string name="time_spend">240h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V1.2
+-Mise en place du ShadowLink
+-Ajout de la possibilité de raffraichir les objets informatiques attributs du personnage sans réinitialiser l'ensemble des valeurs saisies
+----------------------------------------------------------------------------------
 Patch note V1.1
 -Coup au But est maintenant accessible en tant que Buff
 -Les sorts lancé depuis le menu de lacnement de sort qui ont une portée de type personnelle lanceront automatiquement le buff associé

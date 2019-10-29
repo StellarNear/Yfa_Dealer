@@ -80,7 +80,7 @@ public class SliderBuilder {
     public void spendCast() {
         if(!spell.isCast()) {
             slided=true;
-            if(spell.getRank()==0){new PostData(new PostDataElement(spell));} //pour quand meme signalé les grauit
+            if(spell.getRank()==0){new PostData(mC,new PostDataElement(spell));} //pour quand meme signalé les grauit
             if (spell.getRank() > 0) {
                 yfa.castSpell(spell);
             }
@@ -100,7 +100,7 @@ public class SliderBuilder {
             }
         } else if(!slided) {
             slided=true;
-            new PostData(new PostDataElement(spell)); // pour les sous sorts on peut avoir un sous sort pas lancé mais pas posté
+            new PostData(mC,new PostDataElement(spell)); // pour les sous sorts on peut avoir un sous sort pas lancé mais pas posté
         }
     }
 

@@ -200,7 +200,7 @@ public class TestRMAlertDialog {
                 alertDialog.dismiss();
             }
         });
-        new PostData(new PostDataElement("Test contre RM "+spell.getName(),dice.getRandValue(),sumResult));
+        new PostData(mC,new PostDataElement("Test contre RM "+spell.getName(),dice.getRandValue(),sumResult));
     }
 
     public interface OnRefreshEventListener {

@@ -29,8 +29,6 @@ import stellarnear.yfa_companion.ConvertElementView;
 import stellarnear.yfa_companion.ConvertView;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.GlaeTestAlertDialog;
-import stellarnear.yfa_companion.PostData;
-import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.ResultBuilder;
 import stellarnear.yfa_companion.SliderBuilder;

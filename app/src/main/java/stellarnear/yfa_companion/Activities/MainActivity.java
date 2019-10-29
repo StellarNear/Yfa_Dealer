@@ -32,7 +32,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import stellarnear.yfa_companion.Perso.Perso;
-import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.R;
 
 

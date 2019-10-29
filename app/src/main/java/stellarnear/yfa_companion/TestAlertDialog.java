@@ -269,6 +269,6 @@ public class TestAlertDialog {
             callToAction.setText("Fin du test de caractéristique");
             modePostData="Test caractéristique "+abi.getName();sumResultPostData=sumResult;
         }
-        new PostData(new PostDataElement(modePostData,dice.getRandValue(),sumResultPostData));
+        new PostData(mC,new PostDataElement(modePostData,dice.getRandValue(),sumResultPostData));
     }
 }

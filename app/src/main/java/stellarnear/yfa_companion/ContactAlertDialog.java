@@ -225,7 +225,7 @@ public class ContactAlertDialog {
         } else {
             success.setVisibility(View.VISIBLE);
         }
-        new PostData(new PostDataElement("Test contact "+spell.getName(),dice.getRandValue(),sumResult));
+        new PostData(mC,new PostDataElement("Test contact "+spell.getName(),dice.getRandValue(),sumResult));
     }
 
     public interface OnRefreshEventListener {

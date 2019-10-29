@@ -116,10 +116,10 @@ public class Perso {
             if(spell.getRange().equalsIgnoreCase("personnelle")){
                 Buff matchingBuff = allBuffs.getBuffByID(spell.getID());
                 if(matchingBuff!=null){
-                    if(spell.getMetaList().metaIdIsActive("meta_duration")){ matchingBuff.extendCast(getCasterLevel());} else { matchingBuff.normalCast(getCasterLevel());}
+                    if(spell.getMetaList().metaIdIsActive("meta_duration")){ matchingBuff.extendCast(mC,getCasterLevel());} else { matchingBuff.normalCast(mC,getCasterLevel());}
                 }
             }
-            new PostData(new PostDataElement(spell));
+            new PostData(mC,new PostDataElement(spell));
         }
     }
 
@@ -306,5 +306,11 @@ public class Perso {
         resetTemp();
     }
 
-
+    public void reset() {
+        resetTemp();
+        refresh();
+        allResources.sleepReset();
+        inventory.resetInventory();
+        allBuffs.resetBuffsList();
+    }
 }

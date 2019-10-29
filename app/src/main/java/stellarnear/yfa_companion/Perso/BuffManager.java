@@ -46,7 +46,7 @@ public class BuffManager {
     }
 
     private void castBuff(){
-        buff.normalCast(yfa.getCasterLevel());
+        buff.normalCast(mA,yfa.getCasterLevel());
         yfa.castSpell(buff.getSpellRank());
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
@@ -57,8 +57,8 @@ public class BuffManager {
     }
 
     private void castBuffExtend(){
-        buff.extendCast(yfa.getCasterLevel());
-        yfa.castSpell(buff.getSpellRank()+2);
+        buff.extendCast(mA,yfa.getCasterLevel());
+        yfa.castSpell(buff.getSpellRank()+1);
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
             yfa.getAllResources().getResource("resource_hp").shield(20);

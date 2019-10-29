@@ -1,5 +1,7 @@
 package stellarnear.yfa_companion.Perso;
 
+import android.content.Context;
+
 import java.text.DecimalFormatSymbols;
 
 import stellarnear.yfa_companion.PostData;
@@ -72,20 +74,20 @@ public class Buff {
         this.currentDuration=0;
     }
 
-    public void extendCast(int casterLvl){
+    public void extendCast(Context mC,int casterLvl){
         this.maxDuration=calculateSeconds(casterLvl)*2; //in sec
         this.currentDuration=maxDuration;
-        postData();
+        postData(mC);
     }
 
-    public void normalCast(int casterLvl) {
+    public void normalCast(Context mC, int casterLvl) {
         this.maxDuration=calculateSeconds(casterLvl); //in sec
         this.currentDuration=maxDuration;
-        postData();
+        postData(mC);
     }
 
-    private void postData() {
-        new PostData(new PostDataElement("Lancement du buff "+name,"Durée:"+getDurationText()));
+    private void postData(Context mC) {
+        new PostData(mC,new PostDataElement("Lancement du buff "+name,"Durée:"+getDurationText()));
     }
 
     public void spendTime(int i) {
