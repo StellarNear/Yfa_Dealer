@@ -288,11 +288,11 @@ public class QuadrantFiller {
         Animation out;
         if (modeSelected.equals("back"))
         {
-            in = AnimationUtils.loadAnimation(mC, R.anim.infromleft);
-            out = AnimationUtils.loadAnimation(mC, R.anim.outtoright);
+            in = AnimationUtils.loadAnimation(mC, R.anim.infromleftfilled);
+            out = AnimationUtils.loadAnimation(mC, R.anim.outtorightfilled);
         } else {
-            in = AnimationUtils.loadAnimation(mC, R.anim.infromright);
-            out = AnimationUtils.loadAnimation(mC, R.anim.outtoleft);
+            in = AnimationUtils.loadAnimation(mC, R.anim.infromrightfilled);
+            out = AnimationUtils.loadAnimation(mC, R.anim.outtoleftfilled);
         }
         out.setAnimationListener( new  Animation.AnimationListener(){
             @Override

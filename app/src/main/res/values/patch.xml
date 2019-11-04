@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.2"</string>
+    <string name="version">"v1.3"</string>
     <string name="time_spend">240h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V1.3
+-Fix de bugs d'animations lors des transitions du texte des panneaux (écran principal)
+----------------------------------------------------------------------------------
 Patch note V1.2
 -Mise en place du ShadowLink
 -Ajout de la possibilité de raffraichir les objets informatiques attributs du personnage sans réinitialiser l'ensemble des valeurs saisies
 ----------------------------------------------------------------------------------
 Patch note V1.1
 -Coup au But est maintenant accessible en tant que Buff
--Les sorts lancé depuis le menu de lacnement de sort qui ont une portée de type personnelle lanceront automatiquement le buff associé
+-Les sorts lancé depuis le menu de lancement de sort qui ont une portée de type personnelle lanceront automatiquement le buff associé
 -Le coup au but n'est plus consommé dès l'affichage de la fenetre de jet de contact
 ----------------------------------------------------------------------------------
 Patch note Yfa Companion V1.0 !
