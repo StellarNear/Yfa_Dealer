@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
@@ -83,6 +85,7 @@ public class PrefSleepScreenFragment extends Preference {
             public void run() {
                 yfa.sleep();
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
+                new PostData(mC,new PostDataElement("Nuit de repos","Recharge des ressources journalières et sorts"));
                 Intent intent = new Intent(mC, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mC.startActivity(intent);
@@ -100,6 +103,7 @@ public class PrefSleepScreenFragment extends Preference {
             public void run() {
                 yfa.halfSleep();
                 tools.customToast(mC, "Une journée sans sortilèges t'attends...", "center");
+                new PostData(mC,new PostDataElement("Nuit de repos (sans sorts)","Recharge des ressources journalières"));
                 Intent intent = new Intent(mC,  MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mC.startActivity(intent);

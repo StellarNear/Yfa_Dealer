@@ -89,10 +89,12 @@ public class SliderBuilder {
             }
             if (spell.isMyth()) {
                 yfa.getAllResources().getResource("resource_mythic_points").spend(1);
+                new PostData(mC,new PostDataElement("Lancement sort mythique","-1pt mythique"));
                 tools.customToast(mC, "Sort Mythique\nIl te reste " + yfa.getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
             if (spell.elementIsConverted()) {
                 yfa.getAllResources().getResource("resource_mythic_points").spend(1);
+                new PostData(mC,new PostDataElement("Conversiont d'élément mythique","-1pt mythique"));
                 tools.customToast(mC, "Conversion d'élément\nIl te reste " + yfa.getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
             if(yfa.getAllBuffs().buffByIDIsActive("true_strike") && !spell.getContact().equalsIgnoreCase("")){

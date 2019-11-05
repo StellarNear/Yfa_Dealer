@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
@@ -106,6 +108,7 @@ public class ImgForDice {
             } else {*/
                 surgeDice=new Dice(mA, mC, tools.toInt(settings.getString("mythic_dice",String.valueOf(mC.getResources().getInteger(R.integer.mythic_dice_def)))));
                 yfa.getAllResources().getResource("resource_mythic_points").spend(1);
+                new PostData(mC,new PostDataElement("Surcharge mythique du d20","-1pt mythique"));
             //}
 
             if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_def))){

@@ -41,6 +41,8 @@ import java.util.Iterator;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.Spell;
@@ -222,6 +224,7 @@ public class MainActivityFragmentSpell extends Fragment {
                                                 .setAction("Action", null).show();
 
                                         yfa.getAllResources().getResource("resource_mythic_points").spend(1);
+                                        new PostData(getContext(),new PostDataElement("Lancement sort arcane libre","-1pt mythique"));
                                         Toast toast = Toast.makeText(getContext(), "Il te reste " + yfa.getResourceValue("resource_mythic_points") + " point(s) mythique(s)", Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                                         toast.show();

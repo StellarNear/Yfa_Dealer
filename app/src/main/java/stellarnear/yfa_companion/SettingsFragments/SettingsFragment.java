@@ -24,6 +24,8 @@ import java.util.List;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildMetaList;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
@@ -294,6 +296,7 @@ public class SettingsFragment extends PreferenceFragment {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     yfa.getAllResources().getResource("resource_mythic_points").spend(1);
+                                    new PostData(mC,new PostDataElement("Utilisation d'un pouvoir mythique","Dépense d' un point mythique"));
                                     tools.customToast(mC,"Il te reste "+yfa.getResourceValue("resource_mythic_points")+" point(s) mythique(s)","center");
                                 }
                             })
