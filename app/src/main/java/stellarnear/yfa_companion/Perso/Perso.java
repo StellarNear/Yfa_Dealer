@@ -199,6 +199,15 @@ public class Perso {
         int abiScore = 0;
         if (allAbilities.getAbi(abiId) != null) {
             abiScore = allAbilities.getAbi(abiId).getValue();
+            if (abiId.equalsIgnoreCase("ability_ca")) {
+                if(abiScore < 4 && allBuffs.buffByIDIsActive("shield")){
+                    abiScore = 4;
+                }
+                if(allBuffs.buffByIDIsActive("premonition")){
+                    abiScore +=2;
+                }
+                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_def))));
+            }
 
             if (abiId.equalsIgnoreCase("ability_equipment")) {
                 abiScore= inventory.getAllItemsCount();
@@ -212,16 +221,6 @@ public class Perso {
             if (abiId.equalsIgnoreCase("ability_init")) {
                 int currentTier = tools.toInt(settings.getString("mythic_tier", String.valueOf(mC.getResources().getInteger(R.integer.mythic_tier_def))));
                 abiScore += currentTier;
-            }
-
-            if (abiId.equalsIgnoreCase("ability_ca")) {
-                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_def))));
-                if(allBuffs.buffByIDIsActive("shield")){
-                    abiScore +=4;
-                }
-                if(allBuffs.buffByIDIsActive("premonition")){
-                    abiScore +=2;
-                }
             }
 
             if (abiId.equalsIgnoreCase("ability_ref")||abiId.equalsIgnoreCase("ability_vig")||abiId.equalsIgnoreCase("ability_vol")) {
