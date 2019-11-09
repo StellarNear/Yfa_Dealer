@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import stellarnear.yfa_companion.Rolls.Dice;
 import stellarnear.yfa_companion.Spells.Spell;
 
 public class PostDataElement {
@@ -54,12 +55,16 @@ public class PostDataElement {
         this.result=resultTxt;
     }
 
-    public PostDataElement(String typeEvent,int dice,int result){
+    public PostDataElement(String typeEvent, Dice oriDice, int result){
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
         this.date=formater.format(new Date());
-        this.dice=String.valueOf(dice);
+
         this.typeEvent=typeEvent;
         this.result=String.valueOf(result);
+
+        String detailTxt = String.valueOf(oriDice.getRandValue());
+        if(oriDice.getMythicDice()!=null){detailTxt +=","+oriDice.getMythicDice().getRandValue();}
+        this.dice =detailTxt;
     }
 
     public String getDice() {
