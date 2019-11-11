@@ -48,6 +48,7 @@ public class Resource {
 
     public void setMax(int max) {
         this.max = max;
+        if(this.current>this.max){this.current=this.max;saveCurrentToSettings();}
     }
 
     public Integer getMax() {
@@ -145,6 +146,7 @@ public class Resource {
     public void fullHeal() {
         if (this.id.equalsIgnoreCase("resource_hp")) {
             this.current=this.max;
+            saveCurrentToSettings();
         }
     }
 }

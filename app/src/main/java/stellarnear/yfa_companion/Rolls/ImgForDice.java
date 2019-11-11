@@ -30,6 +30,7 @@ public class ImgForDice {
     private ImageView img;
     private Tools tools = new Tools();
     private Perso yfa = MainActivity.yfa;
+    private boolean wasRand=false;
 
     public ImgForDice(Dice dice, Activity mA, Context mC) {
         this.mA = mA;
@@ -38,10 +39,11 @@ public class ImgForDice {
     }
 
     public ImageView getImg() {
-        if (this.img == null) {
+        if (!wasRand) {
             int drawableId;
             if (dice.getRandValue() > 0) {
                 drawableId = mC.getResources().getIdentifier("d" + dice.getnFace() + "_" + String.valueOf(dice.getRandValue()) + (dice.getElement().equalsIgnoreCase("aucun")?"":dice.getElement()), "drawable", mC.getPackageName());
+                wasRand=true;
             } else {
                 drawableId = mC.getResources().getIdentifier("d" + dice.getnFace() + "_main", "drawable", mC.getPackageName());
             }

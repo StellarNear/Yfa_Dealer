@@ -75,11 +75,10 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="@dimen/icon_dice_NLS"
             android:layout_height="@dimen/icon_dice_NLS"
             android:id="@+id/customDialogTestResultDice"
-            android:orientation="horizontal"
             android:layout_marginBottom="@dimen/margin_customDialog_text" />
 
         <TextView

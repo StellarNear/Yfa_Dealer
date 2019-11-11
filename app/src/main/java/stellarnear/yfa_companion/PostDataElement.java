@@ -1,6 +1,7 @@
 package stellarnear.yfa_companion;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -65,6 +66,22 @@ public class PostDataElement {
         String detailTxt = String.valueOf(oriDice.getRandValue());
         if(oriDice.getMythicDice()!=null){detailTxt +=","+oriDice.getMythicDice().getRandValue();}
         this.dice =detailTxt;
+    }
+
+    public PostDataElement(String typeEvent, ArrayList<Dice> oriDices, int result){  //test contre RM peut avoir deux dès
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+        this.date=formater.format(new Date());
+        this.typeEvent=typeEvent;
+        this.result=String.valueOf(result);
+        String detailTxt="";
+        for(Dice dice:oriDices) {
+            if(!detailTxt.equalsIgnoreCase("")){detailTxt+=" || " ;}
+            detailTxt += String.valueOf(dice.getRandValue());
+            if (dice.getMythicDice() != null) {
+                detailTxt += "," + dice.getMythicDice().getRandValue();
+            }
+            this.dice = detailTxt;
+        }
     }
 
     public String getDice() {

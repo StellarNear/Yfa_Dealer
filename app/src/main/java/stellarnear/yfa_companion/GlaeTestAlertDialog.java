@@ -47,7 +47,7 @@ public class GlaeTestAlertDialog {
 
     private void buildAlertDialog() {
         LayoutInflater inflater = mA.getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.custom_rm_test_alert_dialog, null);
+        dialogView = inflater.inflate(R.layout.custom_glae_test_alert_dialog, null);
         ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
 
         if(spell.getDmg_type().equalsIgnoreCase("foudre")){

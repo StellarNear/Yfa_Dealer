@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Rolls.Dice;
@@ -32,6 +34,9 @@ public class TestRMAlertDialog {
     private int sumScore;
     private OnRefreshEventListener mListener;
     private boolean robe=false;
+    private Perso yfa=MainActivity.yfa;
+    private ArrayList<Dice> dices=new ArrayList<>();
+
     private Tools tools=new Tools();
 
     public TestRMAlertDialog(Activity mA, Context mC, Spell spell) {
@@ -121,19 +126,40 @@ public class TestRMAlertDialog {
     }
 
     private void startRoll() {
+        dices=new ArrayList<>();
+        if(yfa.getAllMythicCapacities().getMythiccapacity("mythiccapacity_penetration").isActive()){
+            Dice dice = new Dice(mA,mC,20);
+            Dice dice2 = new Dice(mA,mC,20);
+            dices.add(dice);
+            dices.add(dice2);
+        } else {
+            Dice dice = new Dice(mA,mC,20);
+            dices.add(dice);
+        }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        final Dice dice = new Dice(mA,mC,20);
         if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_def))){
+            setManualDicesRand();
+        } else {
+            setAutoDicesRand();
+        }
+    }
+
+    private void setManualDicesRand() {
+        for(Dice dice:dices) {
             dice.rand(true);
             dice.setRefreshEventListener(new Dice.OnRefreshEventListener() {
                 @Override
                 public void onEvent() {
-                    endSkillCalculation(dice);
+                    endSkillCalculation();
                 }
             });
-        } else {
+        }
+    }
+
+    private void setAutoDicesRand() {
+        for(Dice dice:dices) {
             dice.rand(false);
-            endSkillCalculation(dice);
+            endSkillCalculation();
         }
     }
 
@@ -158,10 +184,25 @@ public class TestRMAlertDialog {
         success.setVisibility(View.GONE);
     }
 
-    private void endSkillCalculation(final Dice dice) {
-        FrameLayout resultDice= dialogView.findViewById(R.id.customDialogTestResultDice);
+    private void endSkillCalculation() {
+        LinearLayout resultDice= dialogView.findViewById(R.id.customDialogTestResultDice);
         resultDice.removeAllViews();
-        resultDice.addView(dice.getImg());
+
+        if(dices.size()>1){
+            for(Dice dice :dices){
+                ViewGroup parentImg = (ViewGroup) dice.getImg().getParent();
+                if (parentImg != null) {
+                    parentImg.removeView(dice.getImg());
+                }
+                resultDice.addView(dice.getImg());
+            }
+        } else {
+            ViewGroup parentImg = (ViewGroup) dices.get(0).getImg().getParent();
+            if (parentImg != null) {
+                parentImg.removeView(dices.get(0).getImg());
+            }
+            resultDice.addView(dices.get(0).getImg());
+        }
 
         TextView resultTitle = dialogView.findViewById(R.id.customDialogTitleResult);
         TextView callToAction = dialogView.findViewById(R.id.customDialogTestCallToAction);
@@ -171,21 +212,28 @@ public class TestRMAlertDialog {
         successButton.setVisibility(View.VISIBLE);
 
         resultTitle.setText("Résultat du test de niveau de lanceur de sort :");
-        int sumResult=dice.getRandValue()+ calculation.casterLevelSR(spell);
-        if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
+        int bestRand=0;
+        for(Dice dice :dices){
+            int valDice=dice.getRandValue();
+            if(dice.getMythicDice()!=null){valDice+=dice.getMythicDice().getRandValue();}
+            if(bestRand<valDice){
+                bestRand=valDice;
+            }
+        }
+        int sumResult=bestRand+ calculation.casterLevelSR(spell);
+
         if(robe){sumResult+=2;}
 
         final TextView result = dialogView.findViewById(R.id.customDialogTestResult);
         result.setText(String.valueOf(sumResult));
-
-        dice.setMythicEventListener(new Dice.OnMythicEventListener() {
-            @Override
-            public void onEvent() {
-                int sumResult=dice.getRandValue()+ sumScore;
-                if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
-                result.setText(String.valueOf(sumResult));
-            }
-        });
+        for(Dice dice:dices) {
+            dice.setMythicEventListener(new Dice.OnMythicEventListener() {
+                @Override
+                public void onEvent() {
+                    endSkillCalculation();
+                }
+            });
+        }
 
         callToAction.setText("Fin du test de\nniveau de lanceur de sort.");
 
@@ -200,7 +248,7 @@ public class TestRMAlertDialog {
                 alertDialog.dismiss();
             }
         });
-        new PostData(mC,new PostDataElement("Test contre RM "+spell.getName(),dice,sumResult));
+        new PostData(mC,new PostDataElement("Test contre RM "+spell.getName(),dices,sumResult));
     }
 
     public interface OnRefreshEventListener {

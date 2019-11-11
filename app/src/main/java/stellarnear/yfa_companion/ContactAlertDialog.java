@@ -55,7 +55,7 @@ public class ContactAlertDialog {
 
     private void buildAlertDialog() {
         LayoutInflater inflater = mA.getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.custom_rm_test_alert_dialog, null);
+        dialogView = inflater.inflate(R.layout.custom_contact_test_alert_dialog, null);
         ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
         icon.setImageDrawable(mC.getDrawable(R.drawable.ic_filter_center_focus_black_24dp));
 
