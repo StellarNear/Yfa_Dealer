@@ -7,6 +7,15 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V1.4
+-Maj des valeurs par défaut
+-Revert du 1.3.1
+-Ajout des bonus temporaire de CA et jet de Sauvegarde
+-Revu du calcul des points de vie pour gerer dynamiquement les grade mythique et la consistution
+-Calcul de l'initiative avec le grade mythique (et parangon si actif)
+-Ajout d'esquive miroir (aptitute mythique archimage)
+-Ajout de Rétablissement (aptitute mythique commune)
+----------------------------------------------------------------------------------
 Patch note V1.3.1
 -Hotfix calcul d'armure avec le sort boucleir quand une armure est déjà présente
 ----------------------------------------------------------------------------------

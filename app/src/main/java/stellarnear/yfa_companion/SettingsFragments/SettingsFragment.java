@@ -305,6 +305,28 @@ public class SettingsFragment extends PreferenceFragment {
                     tools.customToast(mC,"Tu n'as plus de point mythique","center");
                 }
                 break;
+            case "mirror_evade":
+                if(yfa.getAllMythicCapacities().getMythiccapacity("mythiccapacity_mirror_evade").isActive()){
+                    if( yfa.getResourceValue("resource_mythic_points")>0) {
+                        new AlertDialog.Builder(mC)
+                                .setTitle("Demande de confirmation")
+                                .setMessage("Confirmes-tu l'utilisation d'esquive miroir ?")
+                                .setIcon(android.R.drawable.ic_menu_help)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        yfa.getAllResources().getResource("resource_mythic_points").spend(1);
+                                        new PostData(mC,new PostDataElement("Utilisation d'esquive miroir","Dépense d' un point mythique"));
+                                        tools.customToast(mC,"Il te reste "+yfa.getResourceValue("resource_mythic_points")+" point(s) mythique(s)","center");
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, null).show();
+                    } else {
+                        tools.customToast(mC,"Tu n'as plus de point mythique","center");
+                    }}else {
+                    tools.customToast(mC,"La capacité esquive miroir n'est pas active","center");
+                }
+                break;
+
             case "spellgem":
                 prefSpellgemScreenFragment.showSpellgem();
                 break;
@@ -324,16 +346,16 @@ public class SettingsFragment extends PreferenceFragment {
         }
 
     }
-        /*
-        // Top level PreferenceScreen
-        if (key.equals("top_key_0")) {         changePrefScreen(R.xml.pref_general, preference.getTitle().toString()); // descend into second level    }
+    /*
+    // Top level PreferenceScreen
+    if (key.equals("top_key_0")) {         changePrefScreen(R.xml.pref_general, preference.getTitle().toString()); // descend into second level    }
 
-        // Second level PreferenceScreens
-        if (key.equals("second_level_key_0")) {        // do something...    }       */
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-            prefs.unregisterOnSharedPreferenceChangeListener(listener);
-        }
+    // Second level PreferenceScreens
+    if (key.equals("second_level_key_0")) {        // do something...    }       */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+    }
 }

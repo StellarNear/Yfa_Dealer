@@ -44,7 +44,6 @@ public class Perso {
         this.mC=mC;
         this.prefs= PreferenceManager.getDefaultSharedPreferences(mC);
         inventory = new Inventory(mC);
-        allResources = new AllResources(mC);
         stats = new Stats(mC);
         hallOfFame=new HallOfFame(mC);
         allFeats = new AllFeats(mC);
@@ -52,6 +51,7 @@ public class Perso {
         allMythicFeats = new AllMythicFeats(mC);
         allMythicCapacities = new AllMythicCapacities(mC);
         allAbilities = new AllAbilities(mC);
+        allResources = new AllResources(mC,allAbilities,allMythicCapacities);
         allSkills = new AllSkills(mC);
         allBuffs = new AllBuffs(mC);
     }
@@ -149,7 +149,7 @@ public class Perso {
     }
 
     public void resetTemp() {
-        List<String> allTempList = Arrays.asList("NLS_bonus","bonus_atk_temp");
+        List<String> allTempList = Arrays.asList("NLS_bonus","bonus_atk_temp","bonus_temp_ca","bonus_temp_save","bonus_temp_rm");
         for (String temp : allTempList) {
             prefs.edit().putString(temp, "0").apply();
         }
@@ -200,13 +200,13 @@ public class Perso {
         if (allAbilities.getAbi(abiId) != null) {
             abiScore = allAbilities.getAbi(abiId).getValue();
             if (abiId.equalsIgnoreCase("ability_ca")) {
-                if(abiScore < 4 && allBuffs.buffByIDIsActive("shield")){
-                    abiScore = 4;
+                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(0)));
+                if(allBuffs.buffByIDIsActive("shield")){
+                    abiScore +=4;
                 }
                 if(allBuffs.buffByIDIsActive("premonition")){
                     abiScore +=2;
                 }
-                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_ca_def))));
             }
 
             if (abiId.equalsIgnoreCase("ability_equipment")) {
@@ -214,17 +214,22 @@ public class Perso {
             }
 
             if (abiId.equalsIgnoreCase("ability_rm")) {
-                int bonusRm = tools.toInt(settings.getString("bonus_temp_rm", String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_rm_def))));
+                int bonusRm = tools.toInt(settings.getString("bonus_temp_rm", String.valueOf(0)));
                 if (bonusRm>abiScore) { abiScore = bonusRm; }
             }
 
             if (abiId.equalsIgnoreCase("ability_init")) {
-                int currentTier = tools.toInt(settings.getString("mythic_tier", String.valueOf(mC.getResources().getInteger(R.integer.mythic_tier_def))));
-                abiScore += currentTier;
+                if(getAllMythicCapacities().getMythiccapacity("mythiccapacity_init").isActive()) {
+                    int currentTier = tools.toInt(settings.getString("mythic_tier", String.valueOf(mC.getResources().getInteger(R.integer.mythic_tier_def))));
+                    if(getAllMythicFeats().getMythicFeat("mythicfeat_parangon").isActive()){
+                        currentTier+=2;
+                    }
+                    abiScore += currentTier;
+                }
             }
 
             if (abiId.equalsIgnoreCase("ability_ref")||abiId.equalsIgnoreCase("ability_vig")||abiId.equalsIgnoreCase("ability_vol")) {
-                abiScore += tools.toInt(settings.getString("bonus_temp_save",String.valueOf(mC.getResources().getInteger(R.integer.bonus_temp_save_def))));
+                abiScore += tools.toInt(settings.getString("bonus_temp_save",String.valueOf(0)));
                 abiScore += tools.toInt(settings.getString("epic_save",String.valueOf(mC.getResources().getInteger(R.integer.epic_save_def))));
 
                 if (settings.getBoolean("ioun_stone_luck",true)) {

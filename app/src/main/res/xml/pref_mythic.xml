@@ -2,6 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
+        android:key="pref_mythic_tier"
+        android:icon="@drawable/ic_upgrade"
+        android:title="Grade"
+        android:summary="Grade du personnage mythique"
+        />
+    <PreferenceScreen
         android:key="pref_mythic_feat"
         android:icon="@drawable/ic_playlist_add_check_black_24dp"
         android:title="Dons mythiques actifs"
@@ -16,10 +22,10 @@
         />
 
     <PreferenceScreen
-        android:key="pref_mythic_tier"
-        android:icon="@drawable/ic_upgrade"
-        android:title="Grade"
-        android:summary="Grade du personnage mythique"
+        android:key="mirror_evade"
+        android:icon="@drawable/ic_target_dummy"
+        android:title="Esquive miroir"
+        android:summary="Eviter une attaque"
         />
     <PreferenceScreen
         android:key="spend_myth_point"

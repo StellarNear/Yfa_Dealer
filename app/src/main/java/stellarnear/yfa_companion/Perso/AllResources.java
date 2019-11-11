@@ -27,14 +27,18 @@ import stellarnear.yfa_companion.Tools;
 
 public class AllResources {
     private Context mC;
+    private AllAbilities allAbilities;
+    private AllMythicCapacities allMythicCapacities;
     private Map<String, Resource> mapIDRes = new HashMap<>();
     private List<Resource> listResources = new ArrayList<>();
     private SpellsRanksManager rankManager=null;
     private SharedPreferences settings;
     private Tools tools = new Tools();
 
-    public AllResources(Context mC) {
+    public AllResources(Context mC,AllAbilities allAbilities,AllMythicCapacities allMythicCapacities) {
         this.mC = mC;
+        this.allAbilities=allAbilities;
+        this.allMythicCapacities=allMythicCapacities;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         buildResourcesList();
         refreshMaxs();
@@ -146,8 +150,9 @@ public class AllResources {
 
     public void refreshMaxs() {
         //partie from setting
-        int hpPool = readResource("resource_hp");
+        int hpPool = readResource("resource_hp_base");
         hpPool += 3*readResource("mythic_tier"); //archimage
+        hpPool += allAbilities.getAbi("ability_constitution").getMod()*allAbilities.getAbi("ability_lvl").getValue();
 
         getResource("resource_hp").setMax(hpPool);
         getResource("resource_regen").setMax(readResource("resource_regen"));
@@ -166,6 +171,16 @@ public class AllResources {
     public void sleepReset() {
         for (Resource res : listResources) {
             res.resetCurrent();
+        }
+        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
+            getResource("resource_hp").fullHeal();
+        }
+    }
+
+    public void halfSleepReset() {
+        getResource("resource_mythic_points").resetCurrent();
+        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
+            getResource("resource_hp").fullHeal();
         }
     }
 
@@ -201,10 +216,6 @@ public class AllResources {
         if(getResource("spell_conv_rank_"+selected_rank)!=null && (getResource("spell_conv_rank_"+selected_rank).getCurrent()>getResource("spell_rank_"+selected_rank).getCurrent())){
             getResource("spell_conv_rank_"+selected_rank).spend(1);
         }
-    }
-
-    public void halfSleepReset() {
-        getResource("resource_mythic_points").resetCurrent();
     }
 
     public void resetRessources(){

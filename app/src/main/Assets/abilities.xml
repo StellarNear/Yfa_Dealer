@@ -119,7 +119,7 @@
     </ability>
 
     <ability>
-        <name>Initative</name>
+        <name>Initiative</name>
         <type>advanced</type>
         <descr>Au début du combat, chaque participant effectue un test d’initiative. Les personnages et leurs adversaires agissent dans l’ordre des résultats (celui qui obtient le test d’initiative le plus élevé commence, et ainsi de suite jusqu’au plus petit). Le résultat du test d’initiative initial s’applique à tout le combat.</descr>
         <id>ability_init</id>

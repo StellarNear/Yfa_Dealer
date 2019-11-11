@@ -52,7 +52,8 @@ public class AllMythicCapacities {
                             readValue("name", element2),
                             readValue("descr", element2),
                             readValue("type", element2),
-                            readValue("id", element2));
+                            readValue("id", element2),
+                            mC);
                     allMythicCapacities.add(MythicCapacity);
                     mapIdMythiccapacity.put(MythicCapacity.getId(),MythicCapacity);
                 }

@@ -141,5 +141,11 @@ public class Resource {
         this.current=val;
         saveCurrentToSettings();
     }
+
+    public void fullHeal() {
+        if (this.id.equalsIgnoreCase("resource_hp")) {
+            this.current=this.max;
+        }
+    }
 }
 
