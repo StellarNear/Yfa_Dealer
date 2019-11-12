@@ -16,6 +16,9 @@ Patch note V1.4
 -Ajout d'esquive miroir (aptitute mythique archimage)
 -Ajout de Rétablissement (aptitute mythique commune)
 -Ajout d'un double lancé lors des test cotnre RM (pénétration mythique)
+-Ajout du sort projectile magique mythique
+-Ajout d'un attribut flat damage dans l'objet sort (1d4 +1 par exemple du projectile magique)
+-Fix d'un bug qui permetait de modifier les metamagies apres le lancement d'un sous projectile d'un sort
 ----------------------------------------------------------------------------------
 Patch note V1.3.1
 -Hotfix calcul d'armure avec le sort boucleir quand une armure est déjà présente

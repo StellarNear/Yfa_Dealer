@@ -28,6 +28,7 @@ public class Spell {
     private String  dice_type;
     private Double  n_dice_per_lvl;
     private int     cap_dice;
+    private int flat_dmg=0;
 
     private DmgType  dmg_type;
     private String  range;
@@ -74,6 +75,7 @@ public class Spell {
         this.dice_type=spell.dice_type;
         this.n_dice_per_lvl=spell.n_dice_per_lvl;
         this.cap_dice=spell.cap_dice;
+        this.flat_dmg=spell.flat_dmg;
         this.range=spell.range;
         this.contact=spell.contact;
         this.area=spell.area;
@@ -94,7 +96,7 @@ public class Spell {
         this.settings=spell.settings;
     }
 
-    public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type,int flat_dmg, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         if(id.equalsIgnoreCase("")){
             this.id=name;
@@ -110,6 +112,7 @@ public class Spell {
         this.n_dice_per_lvl=n_dice_per_lvl;
         this.cap_dice=cap_dice;
         this.dmg_type=new DmgType(dmg_type);
+        this.flat_dmg=flat_dmg;
         this.range=range;
         this.contact=contact;
         this.area=area;
@@ -185,6 +188,10 @@ public class Spell {
     public String  getDmg_type(){
         return dmg_type.getDmgType();
     }
+    public int getFlat_dmg() {
+        return flat_dmg;
+    }
+
     public String getRange(){
         return this.range;
     }

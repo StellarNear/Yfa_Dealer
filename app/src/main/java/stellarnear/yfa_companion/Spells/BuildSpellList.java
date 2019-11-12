@@ -68,6 +68,7 @@ public class BuildSpellList extends AppCompatActivity {
                             tools.toDouble(getValue("n_dice_per_lvl",element2)),
                             tools.toInt(getValue("cap_dice",element2)),
                             getValue("dmg_type",element2),
+                            tools.toInt(getValue("flat_dmg",element2)),
                             getValue("range",element2),
                             getValue("contact",element2),
                             getValue("area",element2),

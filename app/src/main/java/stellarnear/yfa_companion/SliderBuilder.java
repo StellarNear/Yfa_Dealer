@@ -71,8 +71,8 @@ public class SliderBuilder {
     }
 
     private void startCasting() {
-        mListener.onEvent();
         spendCast();
+        mListener.onEvent();
         Snackbar.make(seek, "Lancement du sort : " + spell.getName(), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }

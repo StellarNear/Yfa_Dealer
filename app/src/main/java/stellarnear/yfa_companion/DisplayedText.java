@@ -21,15 +21,19 @@ public class DisplayedText {
     public String damageTxt(Spell spell) {
 
         String dmg=calculation.nDice(spell)+"d"+calculation.diceType(spell);
+        if(spell.getFlat_dmg()>0){dmg+="+"+spell.getFlat_dmg();}
 
         if(spell.getDice_type().contains("lvl")){
             Integer dmg_int = calculation.nDice(spell);
             dmg = String.valueOf(dmg_int);
+            if(spell.getFlat_dmg()>0){dmg_int+=spell.getFlat_dmg();}
         } else  if(spell.getMetaList().metaIdIsActive("meta_perfect")){
             Integer dmg_int =calculation.nDice(spell) * calculation.diceType(spell) *2;
+            if(spell.getFlat_dmg()>0){dmg_int+=spell.getFlat_dmg();}
             dmg = String.valueOf(dmg_int);
         }else  if(spell.getMetaList().metaIdIsActive("meta_max")) {
             Integer dmg_int = calculation.nDice(spell) * calculation.diceType(spell);
+            if(spell.getFlat_dmg()>0){dmg_int+=spell.getFlat_dmg();}
             dmg = String.valueOf(dmg_int);
         }
         return dmg;

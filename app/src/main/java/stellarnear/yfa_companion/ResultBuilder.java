@@ -93,6 +93,7 @@ public class ResultBuilder {
             }
             ((TextView)resultTemplate.findViewById(R.id.highscore)).setText("(record:"+String.valueOf(spell.getHighscore())+")");
             int sumDmg =diceList.getSum();
+            if(spell.getFlat_dmg()>0){sumDmg+=spell.getFlat_dmg();}
             if(spell.getGlaeManager().isBoosted()){
                 addGlaeBoost((LinearLayout) resultTemplate.findViewById(R.id.damage_top_icon));
                 addGlaeBoost((LinearLayout) resultTemplate.findViewById(R.id.damage_bot_icon));
