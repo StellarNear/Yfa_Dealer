@@ -3,6 +3,7 @@ package stellarnear.yfa_companion.Perso;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,9 +41,15 @@ public class AllResources {
         this.allAbilities=allAbilities;
         this.allMythicCapacities=allMythicCapacities;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        buildResourcesList();
-        refreshMaxs();
-        loadCurrent();
+        try {
+            buildResourcesList();
+            refreshMaxs();
+            loadCurrent();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Load_RES","Error loading resources"+e.getMessage());
+            reset();
+        }
     }
 
     private void buildResourcesList() {
@@ -169,7 +176,7 @@ public class AllResources {
         }
     }
 
-    public void sleepReset() {
+    public void resetCurrent() {
         for (Resource res : listResources) {
             res.resetCurrent();
         }
@@ -235,6 +242,6 @@ public class AllResources {
     public void reset() {
         buildResourcesList();
         refreshMaxs();
-        loadCurrent();
+        resetCurrent();
     }
 }

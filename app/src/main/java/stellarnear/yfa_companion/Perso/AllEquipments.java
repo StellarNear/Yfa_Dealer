@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,13 @@ public class AllEquipments {
 
     public AllEquipments(Context mC) {
         this.mC = mC;
-        refreshEquipment();
+        try {
+            refreshEquipment();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Load_EQUIP","Error loading bag"+e.getMessage());
+            reset();
+        }
     }
 
     private void refreshEquipment() {

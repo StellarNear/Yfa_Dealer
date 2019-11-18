@@ -12,6 +12,8 @@ Patch note V1.5
 -gestion de multiple tags dans le sac
 -ajout de menus de reset par attribut
 -ajout de l'eveil trois du baton légendaire
+-ajout d'un systeme de reset des attribut si les valeurs sauvegardées ne sont pas cohérentes
+-fix des animations de transitions entre buff temp et perma
 ----------------------------------------------------------------------------------
 Patch note V1.4.1
 -bugfix jet de contact à distance quand la métamagie eloignée est active

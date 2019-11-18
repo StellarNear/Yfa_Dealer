@@ -1,6 +1,7 @@
 package stellarnear.yfa_companion;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,13 @@ public class HallOfFame {
 
     public HallOfFame(Context mC){
         tinyDB = new TinyDB(mC);
-        refreshAllOfFame();
+        try {
+            refreshAllOfFame();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Load_HALL","Error loading hall of fame"+e.getMessage());
+            reset();
+        }
     }
 
     // hall of frame

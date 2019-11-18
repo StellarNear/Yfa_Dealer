@@ -1,6 +1,7 @@
 package stellarnear.yfa_companion.Perso;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -31,7 +32,13 @@ public class AllBuffs {
 
     public AllBuffs(Context mC){
         this.mC=mC;
-        refreshListBuffs();
+        try {
+            refreshListBuffs();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Load_BUFFS","Error loading buffs"+e.getMessage());
+            reset();
+        }
     }
 
     private void refreshListBuffs() {

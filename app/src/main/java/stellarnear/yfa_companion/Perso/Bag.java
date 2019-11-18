@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,13 @@ public class Bag {
     public Bag(Context mC){
         this.mC = mC;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        refreshBag();
+        try {
+            refreshBag();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Load_BAG","Error loading bag"+e.getMessage());
+            reset();
+        }
     }
 
     private void saveLocalBag() {

@@ -51,9 +51,9 @@ public class Perso {
         allMythicFeats = new AllMythicFeats(mC);
         allMythicCapacities = new AllMythicCapacities(mC);
         allAbilities = new AllAbilities(mC);
-        allResources = new AllResources(mC,allAbilities,allMythicCapacities);
         allSkills = new AllSkills(mC);
         allBuffs = new AllBuffs(mC);
+        allResources = new AllResources(mC,allAbilities,allMythicCapacities);
     }
 
     public void refresh() {
@@ -298,7 +298,7 @@ public class Perso {
     public void sleep() {
         resetTemp();
         refresh();
-        allResources.sleepReset();
+        allResources.resetCurrent();
         allBuffs.spendSleepTime();
     }
     public void halfSleep(){
@@ -322,6 +322,6 @@ public class Perso {
         this.allBuffs.reset();
         resetTemp();
         refresh();
-        allResources.sleepReset();
+        allResources.resetCurrent();
     }
 }

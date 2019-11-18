@@ -1,6 +1,7 @@
 package stellarnear.yfa_companion.Stats;
 
 import android.content.Context;
+import android.util.Log;
 
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.TinyDB;
@@ -11,7 +12,13 @@ public class Stats {
 
     public Stats(Context mC){
         tinyDB = new TinyDB(mC);
-        refreshStats();
+        try {
+            refreshStats();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Load_STATS","Error loading stats"+e.getMessage());
+            reset();
+        }
     }
 
     private void saveLocalStats() { //sauvegarde dans local DB
