@@ -1,6 +1,5 @@
 package stellarnear.yfa_companion.Activities;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,12 +26,12 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import stellarnear.yfa_companion.ExpandAnimation;
 import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.BuffManager;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
-import stellarnear.yfa_companion.ViewWeightAnimationWrapper;
 
 /**
  * Created by jchatron on 26/12/2017.
@@ -171,14 +170,9 @@ public class BuffActivity extends AppCompatActivity {
 
     private void changeTab(int weightFrom, int weightTo, LinearLayout lin, int dura) {
         lin.clearAnimation();
-        ViewWeightAnimationWrapper animationWrapper = new ViewWeightAnimationWrapper(lin);
-        ObjectAnimator anim = ObjectAnimator.ofFloat(
-                animationWrapper,
-                "weight",
-                weightFrom,
-                weightTo);
+        ExpandAnimation anim=new ExpandAnimation(lin,weightFrom,weightTo);
         anim.setDuration(dura);
-        anim.start();
+        lin.startAnimation(anim);
     }
 
 
