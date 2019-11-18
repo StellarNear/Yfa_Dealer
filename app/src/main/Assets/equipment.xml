@@ -2,13 +2,7 @@
 <records>
 
     <!-- SLOTS -->
-    <equipment>
-        <name>Glaedäyes Ah-Yaedeyes</name>
-        <descr>Premier eveil : + 2 charisme</descr>
-        <imgId>equipment_glad</imgId>
-        <slotId>mainhand_slot</slotId>
-        <equipped>true</equipped>
-    </equipment>
+
     <equipment>
         <name>Bandeau d’intelligence</name>
         <descr>+4 intelligence</descr>
@@ -19,8 +13,8 @@
     </equipment>
 
     <equipment>
-        <name>Brassard de dexterité</name>
-        <descr>+2 dexterité</descr>
+        <name>Brassard de dextérité</name>
+        <descr>+2 dextérité</descr>
         <imgId>equipment_wrist</imgId>
         <value>4000po</value>
         <slotId>wrist_slot</slotId>
@@ -37,7 +31,7 @@
 
     <equipment>
         <name>Anneau de contrôle du feu angélique</name>
-        <descr></descr>
+        <descr>+20 resist. feu + 2 sorts connus en plus.</descr>
         <imgId>equipment_fire_ring</imgId>
         <value>200000po</value>
         <slotId>ring1_slot</slotId>
@@ -46,7 +40,7 @@
 
     <equipment>
         <name>Anneau d'immunité à la foudre</name>
-        <descr></descr>
+        <descr>Immunité totale à l'élément foudre.</descr>
         <imgId>equipment_thunder_ring</imgId>
         <value>280000po</value>
         <slotId>ring2_slot</slotId>
@@ -54,7 +48,7 @@
     </equipment>
     <equipment>
         <name>Bottes elfiques</name>
-        <descr>+5 en discretion</descr>
+        <descr>+5 en jet de discrétion</descr>
         <imgId>equipment_feet</imgId>
         <value>2500po</value>
         <slotId>feet_slot</slotId>
@@ -78,16 +72,16 @@
     </equipment>
 
     <equipment>
-        <name>Main miraculeuse + anneau +2CA +2jet attaque</name>
-        <descr></descr>
-        <value>8000po+18000po</value>
+        <name>Main miraculeuse + Anneau d'arcane IX</name>
+        <descr>Double le nombre de sort de base du niveau 9 du porteur.</descr>
+        <value>8000po+1620000po</value>
         <imgId>equipment_neck</imgId>
         <slotId>neck_slot</slotId>
         <equipped>true</equipped>
     </equipment>
     <equipment>
-        <name>Centuron de consitution</name>
-        <descr>+8 consitution</descr>
+        <name>Ceinturon de constitution</name>
+        <descr>+8 constitution</descr>
         <value>640000po</value>
         <imgId>equipment_belt</imgId>
         <slotId>belt_slot</slotId>
@@ -95,7 +89,13 @@
     </equipment>
 
     <!-- SLOTLESS -->
-
+    <equipment>
+        <name>Glaedäyes Ah-Yaedeyes</name>
+        <descr>+ 2 charisme,+2 constitution, Sort de foudre crit et ignore resist sur 20 Autre sort echoue sur 1, 100% xp sur crit</descr>
+        <imgId>equipment_glad</imgId>
+        <slotId>other_slot</slotId>
+        <equipped>true</equipped>
+    </equipment>
     <equipment>
         <name>Pierre porte bonheur</name>
         <descr>+1 jets de sauvegarde et compétences</descr>
@@ -133,7 +133,6 @@
         1 fiole pleine de liquide verdâtre
         1 plume de pyrohydre
         1 amulette de détection de pensée
-        1 main miraculeuse
         1 baguette d'identification (5 charges/j)
         1 amulette de soin modéré(2d8/j)
         1 amulette de résistance à la canalisation(maudit)
@@ -147,24 +146,72 @@
         4 potion splendeur de l'aigle CHA+4
         1 potion sagesse du hibou SAG+4
         1 potion potion de marche sur l'eau
-        2 potion soin léger
-        9 potion soin moyen
+        12 potion soin léger
+        19 potion soin moyen
         1 potion respiration sous l'eau
         1 parchemin TP suprême
         1 parchemin dissipation malédictions
         4 parchemin détection du poison
         1 parchemin éclair multiple
         2 parchemin invisibilité suprême
-    Baton de feu[28250po]{revente}
-    Epée à une main(sanglante, rapidité, sotackage de sort)[200000 po]{revente}
-    Epée de givre +3[54475po]{revente}
-    Flasque de fer[170000po]{revente}
-    Traité d'intelligence +2[55000po]{revente}
-    Anneau d'invisibilité[10000po]{revente}
-    Baguette(on se souvient plus de l'effet...)[82000po]{revente}
-    Sceptre d'incentation silencieuse[24000po]{revente}
-    Baton de renforcement[20000po]{revente}
-    Baton des illusions[90000po]{revente}
-    Epée à deux mains(+8 vorpale)[128000po]{revente}</bag>
+        1 parchemin de lumière du jour
+        1 Diamant[5000po]
+        1 Rubis[10000po]
+        Chronique Aasimar sur la trahison, 3 valeurs : Foi, Bravoure, Ordre
+        Bâton prismatique(DC25)[327000po]
+        Bâton de transport(passe muraille, 2 portes de phase, 1 port dim, 2 projections astrale, 2 tp sup)[206000po]
+        Baguette d’invocation VI[82000po]{revente,Naïri}
+        Epée à une main(sanglante, rapidité, stockage de sort)[200000 po]{revente,Naïri}
+        Bâton des illusions[90000po]{revente,Naïri}
+        Flasque de fer[170000po]{revente,Naïri}
+        Bâton de défense[63000po]{revente,Naïri}
+        10 pièces ancienne x15[150000po]{revente,Naïri}
+        Epée à deux mains +8 vorpale[128000po]{revente}
+        Marteau de guerre de froid intense +5 en adamantium[300000po]{revente}
+        Épée courte +3[20000po]{revente}
+        Arc de froid et foudre intense[18000po]{revente}
+        Épée longue +5[50000po]{revente}
+        Bâton de désintégration[75000po]{revente}
+        Masque de géant mineur[30000po]{revente}
+        Cape de résistance magique +20[150000po]{revente}
+        Arbalète +5[400000po]{revente}
+        Bâton de pierre et de terre[80000po]{revente}
+        Harnois de défense intermédiaire +4[81000po]{revente}
+        Hache d’arme impie +3[200000po]{revente}
+        Puits des mondes[80000po]{revente}
+        Bâton de clarté[50000po]{revente}
+        Bâton de pierre et de terre[85000po]{revente}
+        Baguette de bombe boursouflée[20000po]{revente}
+        Épée acérée drainante +3[150000po]{revente}
+        Dague acérée drainante +3[150000po]{revente}
+        3 Morgenstern maudite +2[96000po]{revente}
+        Ceinture de la belette(DEX+2)[10000po]{revente}
+        Bâton d’évocation en if[82000po]{revente}
+        Baguette de magicien[21000po]{revente}
+        Bâton d’abjuration(1 charge de bouclier, 3 champs de force, 1 dissipation magie, 2 globes invul partielle, 2 de renvois, 1 resist énergies destructives)[82000po]{revente}
+        Armure de plaque +8 en sombrefeuille(CA15)[640000po]{revente}
+        Pierre d’ioun absorption(8 niveaux de sorts)[40000po]{revente}
+        Harnais +3[25000po]{revente}
+        Hache d’arme impie +3[100000po]{revente}
+        Bâton de feu[18000po]{revente}
+        Armure de cuir(RM17)[16000po]{revente}
+        Bâton de clarté[15000po]{revente}
+        Arc court comp. +3[8000po]{revente}
+        3 Faux +5 acérée sanglante[384000po]{revente}
+        Dague vitale +6[1280000po]{revente}
+        Le Funeste Présage(Bâton épique de nécromancie: 2 cercles de mort intensifiés jds29, 1 création de mort-vivants sup, 2 doigts de mort amplifié jds34, 2 captures d’âme amplifiée jds34)[1505000po]{revente}
+        Amulette des poings invincibles +5[100000po]{revente}
+        Bâton évocation(NLS13)[82000po]{revente}
+        Dague de magus[80000po]{revente}
+        Armure céleste(CA+3, malus -2, sort vol 1f/j)[23000po]{revente}
+        2 Anneaux de feu d’étoile[100000po]{revente,ville Drow}
+        2 Anneaux de protection (CA+4)[64000po]{revente,ville Drow}
+        2 Anneaux de régénération[192000po]{revente,ville Drow}
+        Tranche-rêve(épée longue +8 gardienne acérée spectrale)[2400000po]{revente,ville Drow}
+        Anneau d'invisibilité[20000po]{revente,ville Drow}
+        Diadème de résistance (CA+2, résistance à tous les éléments)[1000000po]{revente,ville Drow}
+        Dague perforante critique(annule toute résistance ou immunité)[2000000po]{revente}
+        Cape des ombres(set des ombres, +40 de discrétion quand immobile)[500000po]
+        Ceinture des ombres(set des ombres, DEX+2, perception+10)[500000po]
+        Couronne des ombres(set des ombres, DEX+2, initiative+2)[500000po]</bag>
 </records>
-

@@ -32,6 +32,8 @@ public class AllCapacities {
     }
 
     private void buildKiCapacitiesList() {
+        allCapacities = new ArrayList<>();
+        mapIdcapacity =new HashMap<>();
         try {
             InputStream is = mC.getAssets().open("capacities.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -94,5 +96,9 @@ public class AllCapacities {
             }
         }
         return val;
+    }
+
+    public void reset() {
+        buildKiCapacitiesList();
     }
 }

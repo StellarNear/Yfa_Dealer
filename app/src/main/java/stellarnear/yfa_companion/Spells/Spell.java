@@ -402,6 +402,7 @@ public class Spell {
 
     public void makeGlaeBoost() {
         this.glaeManager.setBoosted();
+        setRmPassed(); //awakening 3rd make the spell pass any resistance
     }
 
     public void refreshProfile() {

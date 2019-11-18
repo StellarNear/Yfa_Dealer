@@ -48,7 +48,7 @@ public class ContactAlertDialog {
         this.mA=mA;
         this.mC=mC;
         this.spell=spell;
-        this.mode = spell.getContact();
+        this.mode = calculation.getContact(spell);
         this.sumScore = 0;
         buildAlertDialog();
     }

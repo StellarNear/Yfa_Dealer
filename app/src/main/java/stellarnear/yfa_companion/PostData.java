@@ -54,7 +54,7 @@ public class PostData  {
                 postDataParams.put("sheet",element.getTargetSheet());
                 postDataParams.put("date",element.getDate());
                 postDataParams.put("type_event",element.getTypeEvent());
-                postDataParams.put("dice",element.getDice());
+                postDataParams.put("detail",element.getDetail());
                 postDataParams.put("result",element.getResult());
 
                 postDataParams.put("id",id);

@@ -14,7 +14,6 @@ public class MythicFeat {
     private String descr;
     private String id;
     private Context mC;
-    private Boolean active;
 
     public MythicFeat(String name, String type, String descr, String id, Context mC){
         this.name=name;
@@ -22,7 +21,6 @@ public class MythicFeat {
         this.descr=descr;
         this.id=id;
         this.mC=mC;
-        refreshSwitch();
     }
 
     public String getName() {
@@ -42,18 +40,16 @@ public class MythicFeat {
     }
 
     public boolean isActive(){
-       return active;
-    }
-
-    public void refreshSwitch() {
-        boolean val = false;
+        boolean active=false;
         try {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
             int switchDefId = mC.getResources().getIdentifier("switch_"+this.id+"_def", "bool", mC.getPackageName());
             boolean switchDef = mC.getResources().getBoolean(switchDefId);
-            val = settings.getBoolean("switch_"+this.id, switchDef);
-        } catch ( Exception e) {}
-        this.active= val;
+            active = settings.getBoolean("switch_"+this.id, switchDef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return active;
     }
 }
 

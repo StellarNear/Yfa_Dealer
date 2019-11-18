@@ -245,5 +245,10 @@ public class Calculation {
         }
         return val;
     }
+    public String getContact(Spell spell){
+        String contact=spell.getContact();
+        if(contact.equalsIgnoreCase("melee")&&spell.getMetaList().metaIdIsActive("meta_range")){contact="distance";}
+        return contact;
+    }
 
 }

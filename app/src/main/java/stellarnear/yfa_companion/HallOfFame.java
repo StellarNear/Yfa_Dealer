@@ -46,13 +46,18 @@ public class HallOfFame {
 
     public boolean containsStat(Stat lastStat) {
         boolean val=false;
-            if (hallOfFameList.size()>0 && hallOfFameList.get(hallOfFameList.size()-1).getStat().equals(lastStat)){
-                val=true;
-            }
+        if (hallOfFameList.size()>0 && hallOfFameList.get(hallOfFameList.size()-1).getStat().equals(lastStat)){
+            val=true;
+        }
         return val;
     }
 
     public void refreshSave() {
+        saveLocalHallOfFame();
+    }
+
+    public void reset() {
+        this.hallOfFameList= new ArrayList<>();
         saveLocalHallOfFame();
     }
 }

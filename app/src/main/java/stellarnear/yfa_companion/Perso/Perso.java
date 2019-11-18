@@ -58,8 +58,6 @@ public class Perso {
 
     public void refresh() {
         allAbilities.refreshAllAbilities();
-        allFeats.refreshAllSwitch();
-        allMythicFeats.refreshAllSwitch();
         allSkills.refreshAllVals();
         allResources.refresh();
     }
@@ -298,23 +296,32 @@ public class Perso {
     }
 
     public void sleep() {
+        resetTemp();
         refresh();
         allResources.sleepReset();
         allBuffs.spendSleepTime();
-        resetTemp();
     }
     public void halfSleep(){
+        resetTemp();
         refresh();
         allResources.halfSleepReset();
         allBuffs.spendSleepTime();
-        resetTemp();
     }
 
     public void reset() {
+        this.allFeats.reset();
+        this.allCapacities.reset();
+        this.allMythicFeats.reset();
+        this.allMythicCapacities.reset();
+        this.allAbilities.reset();
+        this.allResources.reset();
+        this.allSkills.reset();
+        this.stats.reset();
+        this.hallOfFame.reset();
+        this.inventory.reset();
+        this.allBuffs.reset();
         resetTemp();
         refresh();
         allResources.sleepReset();
-        inventory.resetInventory();
-        allBuffs.resetBuffsList();
     }
 }

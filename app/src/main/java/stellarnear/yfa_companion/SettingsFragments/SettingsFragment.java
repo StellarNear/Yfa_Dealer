@@ -173,7 +173,7 @@ public class SettingsFragment extends PreferenceFragment {
                 case "pref_character_feat":
                     BuildMetaList.resetMetas();
                     BuildSpellList.resetSpellList();
-                    yfa.getAllBuffs().resetBuffsList();
+                    yfa.getAllBuffs().reset();
                     PreferenceCategory magic = (PreferenceCategory) findPreference("Dons Magie");
                     PreferenceCategory def = (PreferenceCategory) findPreference("Dons défensif");
                     PreferenceCategory other = (PreferenceCategory) findPreference("Dons autre");
@@ -333,12 +333,64 @@ public class SettingsFragment extends PreferenceFragment {
             case "appli_refresh":
                 new AlertDialog.Builder(mC)
                         .setTitle("Demande de confirmation")
-                        .setMessage("Confirmes-tu l'action de rafraîchissement du personnage ?")
+                        .setMessage("Confirmes-tu l'action de réinitialiser les attributs du personnage ?")
                         .setIcon(android.R.drawable.ic_menu_help)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 yfa.reset();
                                 tools.customToast(mC,"Rafraîchissement éffectué","center");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                break;
+            case "appli_reset_stuff":
+                new AlertDialog.Builder(mC)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Confirmes-tu l'action de réinitialiser l'équipement du personnage ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.getInventory().getAllEquipments().reset();
+                                tools.customToast(mC,"Rafraîchissement éffectué","center");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                break;
+            case "appli_reset_bag":
+                new AlertDialog.Builder(mC)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Confirmes-tu l'action de réinitialiser le sac du personnage ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.getInventory().getBag().reset();
+                                tools.customToast(mC,"Rafraîchissement éffectué","center");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                break;
+            case "appli_reset_stats":
+                new AlertDialog.Builder(mC)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Confirmes-tu l'action de réinitialiser les statistiques du personnage ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.getStats().reset();
+                                tools.customToast(mC,"Reset éffectué","center");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                break;
+            case "appli_reset_hall":
+                new AlertDialog.Builder(mC)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Confirmes-tu l'action de réinitialiser le Panthéon personnage ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.getHallOfFame().reset();
+                                tools.customToast(mC,"Reset éffectué","center");
                             }
                         })
                         .setNegativeButton(android.R.string.no, null).show();

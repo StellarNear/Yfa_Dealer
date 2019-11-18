@@ -31,6 +31,8 @@ public class AllMythicFeats {
     }
 
     private void buildFeatsList() {
+        allMythicFeatsList = new ArrayList<>();
+        mapIdMythicFeat =new HashMap<>();
         try {
             InputStream is = mC.getAssets().open("mythicfeats.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -85,9 +87,7 @@ public class AllMythicFeats {
         }
     }
 
-    public void refreshAllSwitch() {
-        for (MythicFeat feat : allMythicFeatsList){
-            feat.refreshSwitch();
-        }
+    public void reset() {
+        buildFeatsList();
     }
 }

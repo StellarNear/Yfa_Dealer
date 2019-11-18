@@ -43,7 +43,7 @@ public class Stats {
         return statsList;
     }
 
-    public void resetStats() {
+    public void reset() {
         this.statsList =new StatsList();
         saveLocalStats();
     }

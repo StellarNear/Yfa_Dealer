@@ -16,4 +16,13 @@
         android:title="Deuxième éveil d'âme"
         />
 
+
+    <SwitchPreference
+        android:defaultValue="@bool/glae_switch_tier3_def"
+        android:dependency="glae_switch_tier2"
+        android:key="glae_switch_tier3"
+        android:summary="Ascension mythique. +100% XP en cas de critique. Le baton devient une arme sans emplacement"
+        android:title="Troisième éveil d'âme"
+        />
+
 </PreferenceScreen>

@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.Perso.Equipment;
@@ -139,8 +141,16 @@ public class PrefAllInventoryFragment {
             pref.setKey("bag_" + equi.getName());
             pref.setTitle(equi.getName());
             String txt = "Valeur : " + equi.getValue();
-            if (!equi.getSlotId().equalsIgnoreCase("")) {
-                txt += "\nTag : " + equi.getSlotId();
+            if (equi.getTags().size()>0) {
+                txt += "\nTag : ";
+                String tags="";
+                for(String tag:equi.getTags()){
+                    if(!tags.equalsIgnoreCase("")){
+                        tags+=",";
+                    }
+                    tags+=tag;
+                }
+                txt += tags;
             }
             if (!equi.getDescr().equalsIgnoreCase("")) {
                 txt += "\n" + equi.getDescr();
@@ -188,7 +198,7 @@ public class PrefAllInventoryFragment {
                 String value = ((EditText) creationView.findViewById(R.id.value_item_creation)).getText().toString() + " po";
                 String tag = ((EditText) creationView.findViewById(R.id.tag_item_creation)).getText().toString();
                 String descr = ((EditText) creationView.findViewById(R.id.descr_item_creation)).getText().toString();
-                Equipment equi = new Equipment(name, descr, value, "", tag, false);
+                Equipment equi = new Equipment(name, descr, value, Arrays.asList(tag.split(",")));
                 yfa.getInventory().getBag().createItem(equi);
                 mListener.onEvent();
                 tools.customToast(mC, equi.getName() + " ajouté !");

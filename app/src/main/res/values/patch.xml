@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.4"</string>
-    <string name="time_spend">246h</string>
+    <string name="version">"v1.5"</string>
+    <string name="time_spend">249h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V1.5
+-maj des objets d'équipement et du sac
+-gestion de multiple tags dans le sac
+-ajout de menus de reset par attribut
+-ajout de l'eveil trois du baton légendaire
+----------------------------------------------------------------------------------
+Patch note V1.4.1
+-bugfix jet de contact à distance quand la métamagie eloignée est active
+-gestion de l'appuie du bouton back du telephone dans l'activité de lancement des sorts
+----------------------------------------------------------------------------------
 Patch note V1.4
 -Maj des valeurs par défaut
 -Revert du 1.3.1
@@ -21,7 +31,7 @@ Patch note V1.4
 -Fix d'un bug qui permetait de modifier les metamagies apres le lancement d'un sous projectile d'un sort
 ----------------------------------------------------------------------------------
 Patch note V1.3.1
--Hotfix calcul d'armure avec le sort boucleir quand une armure est déjà présente
+-Hotfix calcul d'armure avec le sort bouclier quand une armure est déjà présente
 ----------------------------------------------------------------------------------
 Patch note V1.3
 -Fix de bugs d'animations lors des transitions du texte des panneaux (écran principal)

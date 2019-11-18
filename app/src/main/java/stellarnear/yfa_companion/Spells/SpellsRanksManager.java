@@ -34,7 +34,7 @@ public class SpellsRanksManager {
         int newHighConvTier=tools.toInt(settings.getString("highest_tier_spell_conv",String.valueOf(mC.getResources().getInteger(R.integer.highest_tier_spell_conv_def))));
         if(highestSpellRank!=newHighTier || highestSpellConvank!=newHighConvTier){
             highestSpellRank = newHighTier;
-            highestSpellConvank =newHighConvTier;
+            highestSpellConvank = newHighConvTier;
             refreshAllTiers();
             if(mListner!=null){mListner.onEvent();}
         }

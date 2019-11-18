@@ -14,7 +14,6 @@ public class Feat {
     private String descr;
     private String id;
     private Context mC;
-    private Boolean active;
 
     public Feat(String name, String type, String descr, String id, Context mC){
         this.name=name;
@@ -22,7 +21,6 @@ public class Feat {
         this.descr=descr;
         this.id=id;
         this.mC=mC;
-        refreshSwitch();
     }
 
     public String getName() {
@@ -42,19 +40,12 @@ public class Feat {
     }
 
     public boolean isActive(){
-       return active;
-    }
-
-    public void refreshSwitch() {
-        boolean val = false;
+        boolean active = false;
         try {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-            /*
-            int switchDefId = mC.getResources().getIdentifier("switch_"+this.id+"_def", "bool", mC.getPackageName());
-            boolean switchDef = mC.getResources().getBoolean(switchDefId);*/  //Si on veut faire le slecture des dons switch depuis val en dur
-            val = settings.getBoolean("switch_"+this.id, true);
+            active = settings.getBoolean("switch_"+this.id, true);
         } catch ( Exception e) {}
-        this.active= val;
+       return active;
     }
 }
 

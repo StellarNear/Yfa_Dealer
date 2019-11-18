@@ -47,6 +47,7 @@ public class AllResources {
 
     private void buildResourcesList() {
         listResources = new ArrayList<>();
+        mapIDRes = new HashMap<>();
         try {
             InputStream is = mC.getAssets().open("resources.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -229,5 +230,11 @@ public class AllResources {
 
     public SpellsRanksManager getRankManager() {
         return rankManager;
+    }
+
+    public void reset() {
+        buildResourcesList();
+        refreshMaxs();
+        loadCurrent();
     }
 }

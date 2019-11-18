@@ -22,6 +22,7 @@
 
     <bool name="glae_switch_tier1_def">true</bool>
     <bool name="glae_switch_tier2_def">true</bool>
+    <bool name="glae_switch_tier3_def">true</bool>
     <bool name="switch_campaign_gif_def">true</bool>
     <bool name="switch_fullscreen_mode_def">true</bool>
 
@@ -33,6 +34,7 @@
     <bool name="switch_mythicfeat_parangon_def">true</bool>
     <bool name="materiel_epic_switch_def">true</bool>
     <bool name="switch_shadow_link_def">true</bool>
+
 
     <!--  Capa def  -->
 

@@ -87,7 +87,9 @@ public class MainActivityFragmentSpellCast extends Fragment {
     private void addSpellsForTarget(List<Spell> targetSpells) {
         for (final Spell spell : targetSpells) {
             SpellProfile spellProfile = spell.getProfile() ;
-            mainLin.addView(spellProfile.getProfile(getActivity(),getContext()));
+            View spellProfileView=spellProfile.getProfile(getActivity(),getContext());
+            if(spellProfileView.getParent()!=null){((ViewGroup)spellProfileView.getParent()).removeView(spellProfileView);}
+            mainLin.addView(spellProfileView);
             spellProfile.setRefreshEventListener(new SpellProfile.OnRefreshEventListener() {
                 @Override
                 public void onEvent() {
@@ -127,7 +129,7 @@ public class MainActivityFragmentSpellCast extends Fragment {
         }
     }
 
-    private void backToSpell() {
+    public void backToSpell() {
         Fragment fragment = new MainActivityFragmentSpell();
         FragmentManager fragmentManager = getActivity().getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -136,6 +138,7 @@ public class MainActivityFragmentSpellCast extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 }
 
 

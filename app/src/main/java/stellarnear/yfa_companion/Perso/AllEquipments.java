@@ -47,7 +47,7 @@ public class AllEquipments {
         refreshEquipment();
     }
 
-    public void refreshEquipment() {
+    private void refreshEquipment() {
         tinyDB = new TinyDB(mC);
         List<Equipment> listDB = tinyDB.getListEquipments("localSaveListEquipments");
         if (listDB.size() == 0) {
@@ -327,6 +327,11 @@ public class AllEquipments {
             }
         }
         return val;
+    }
+
+    public void reset() {
+        buildList();
+        saveLocalAllEquipments();
     }
 
     public interface OnRefreshEventListener {

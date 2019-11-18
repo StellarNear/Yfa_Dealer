@@ -538,7 +538,7 @@ public class MainActivityFragmentSpell extends Fragment {
         FragmentManager fragmentManager = getActivity().getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.animator.infromrightfrag,R.animator.outfadefrag);
-        fragmentTransaction.replace(R.id.fragment_main_frame_layout, new MainActivityFragmentSpellCast());
+        fragmentTransaction.replace(R.id.fragment_main_frame_layout, new MainActivityFragmentSpellCast(),"frag_spell_cast");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

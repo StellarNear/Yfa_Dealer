@@ -32,6 +32,8 @@ public class AllMythicCapacities {
     }
 
     private void buildKiCapacitiesList() {
+        allMythicCapacities = new ArrayList<>();
+        mapIdMythiccapacity =new HashMap<>();
         try {
             InputStream is = mC.getAssets().open("mythiccapacities.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -84,5 +86,9 @@ public class AllMythicCapacities {
         } catch (Exception e){
             return "";
         }
+    }
+
+    public void reset() {
+        buildKiCapacitiesList();
     }
 }

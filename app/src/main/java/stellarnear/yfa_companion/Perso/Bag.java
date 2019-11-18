@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class Bag {
         tinyDB.putListEquipments("localSaveListBag", listBag);
     }
 
-    public void refreshBag(){
+    private void refreshBag(){
         tinyDB = new TinyDB(mC);
         List<Equipment> listDB = tinyDB.getListEquipments("localSaveListBag");
         if (listDB.size() == 0) {
@@ -67,10 +68,11 @@ public class Bag {
 
     private void buildBag() {
         listBag = new ArrayList<>();
+        listTags = new ArrayList<>();
         String rawToParse = readXMLBag();
         for (String line : rawToParse.split("\n")) {
             String lineTrim = line.trim();
-            String name = "";   String descr = "";     String value = "";      String tag = "";
+            String name = "";   String descr = "";     String value = "";      String tags = "";
 
             int indexFirstKeyDescr = 999;  int indexFirstKeyVal = 999;    int indexFirstKeyTag = 999;
             try {
@@ -87,9 +89,11 @@ public class Bag {
             }
 
             try {
-                tag = lineTrim.substring(lineTrim.indexOf("{") + 1, lineTrim.indexOf("}"));
-                if (!listBag.contains(tag)) {
-                    listTags.add(tag);
+                tags = lineTrim.substring(lineTrim.indexOf("{") + 1, lineTrim.indexOf("}"));
+                for(String tag:tags.split(",")) {
+                    if (!listBag.contains(tag)) {
+                        listTags.add(tag);
+                    }
                 }
                 indexFirstKeyTag = lineTrim.indexOf("{");
             } catch (Exception e) {
@@ -103,7 +107,7 @@ public class Bag {
             } else {
                 name = lineTrim;
             }
-            Equipment equi = new Equipment(name, descr, value, "", tag, false);
+            Equipment equi = new Equipment(name, descr, value, Arrays.asList(tags.split(",")));
             listBag.add(equi);
         }
     }
@@ -128,8 +132,10 @@ public class Bag {
     private void refreshTags() {
         listTags = new ArrayList<>();
         for (Equipment equi : listBag){
-            if(!equi.getSlotId().equalsIgnoreCase("")){
-                listTags.add(equi.getSlotId());
+            for(String tag:equi.getTags()) {
+                if (!listTags.contains(tag)) {
+                    listTags.add(tag);
+                }
             }
         }
     }
@@ -171,6 +177,7 @@ public class Bag {
                     text.setGravity(Gravity.CENTER);
                     text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     text.setText(tag + " : " + getAppedix(Long.parseLong(getSumPo(tag))));
+                    text.setTextColor(Color.GRAY);
                     text.setCompoundDrawablesWithIntrinsicBounds(null, null, mC.getDrawable(R.drawable.ic_gold_coin), null);
                     tagMain.addView(text);
                     displayedTags.add(tag);
@@ -182,7 +189,7 @@ public class Bag {
     private String getSumPo(String tag) {
         int moneySum = 0;
         for (Equipment equi : listBag) {
-            if (equi.getSlotId().equalsIgnoreCase(tag)) {
+            if (equi.getTags().contains(tag)) {
                 moneySum += getPo(equi.getValue());
             }
         }
@@ -240,15 +247,15 @@ public class Bag {
         ca.setPermanent(true);
         ca.clickToHide(view.findViewById(R.id.toast_list_title_frame));
 
-            LinearLayout money = view.findViewById(R.id.toast_list_money);
-            money.setVisibility(View.VISIBLE);
-            TextView title = view.findViewById(R.id.toast_list_title);
-            title.setText("Inventaire du sac");
-            ((TextView) view.findViewById(R.id.money_plat_text)).setText(getMoney("money_plat"));
-            ((TextView) view.findViewById(R.id.money_gold_text)).setText(getMoney("money_gold"));
-            ((TextView) view.findViewById(R.id.money_silver_text)).setText(getMoney("money_silver"));
-            ((TextView) view.findViewById(R.id.money_copper_text)).setText(getMoney("money_copper"));
-            calculateTagsSums(((LinearLayout) view.findViewById(R.id.linearTagMoney)));
+        LinearLayout money = view.findViewById(R.id.toast_list_money);
+        money.setVisibility(View.VISIBLE);
+        TextView title = view.findViewById(R.id.toast_list_title);
+        title.setText("Inventaire du sac");
+        ((TextView) view.findViewById(R.id.money_plat_text)).setText(getMoney("money_plat"));
+        ((TextView) view.findViewById(R.id.money_gold_text)).setText(getMoney("money_gold"));
+        ((TextView) view.findViewById(R.id.money_silver_text)).setText(getMoney("money_silver"));
+        ((TextView) view.findViewById(R.id.money_copper_text)).setText(getMoney("money_copper"));
+        calculateTagsSums(((LinearLayout) view.findViewById(R.id.linearTagMoney)));
 
         LinearLayout scrollLin = view.findViewById(R.id.toast_list_scroll_mainlin);
         scrollLin.removeAllViews();
@@ -303,5 +310,10 @@ public class Bag {
                         }).show();
             }
         });
+    }
+
+    public void reset() {
+        buildBag();
+        saveLocalBag();
     }
 }

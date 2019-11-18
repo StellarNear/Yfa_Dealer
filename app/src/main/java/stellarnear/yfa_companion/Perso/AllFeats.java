@@ -31,6 +31,7 @@ public class AllFeats {
     }
 
     private void buildFeatsList() {
+        allFeatsList = new ArrayList<>();
         try {
             InputStream is = mC.getAssets().open("feats.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -85,9 +86,7 @@ public class AllFeats {
         }
     }
 
-    public void refreshAllSwitch() {
-        for (Feat feat : allFeatsList){
-            feat.refreshSwitch();
-        }
+    public void reset() {
+        buildFeatsList();
     }
 }

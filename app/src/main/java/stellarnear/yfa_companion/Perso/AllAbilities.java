@@ -39,6 +39,8 @@ public class AllAbilities {
     }
 
     private void buildAbilitiesList() {
+        mapIDAbi = new HashMap<>();
+        listAbilities= new ArrayList<>();
         try {
             InputStream is = mC.getAssets().open("abilities.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -92,7 +94,6 @@ public class AllAbilities {
 
     public void refreshAllAbilities() {
         for (Ability abi : listAbilities) {
-            //(abiKey.equals("FOR") && allStances.getCurrentStance()!=null && allStances.getCurrentStance().getId().equals("bear") pour test les stance en meme temps
             int val = 0;
             if (abi.getId().equalsIgnoreCase("ability_ca")) {
                 val = 10+readAbility("ability_ca_stuff") + getAbi("ability_dexterite").getMod();
@@ -135,5 +136,10 @@ public class AllAbilities {
             selecteAbi=mapIDAbi.get(abiId.toLowerCase());
         } catch (Exception e){  selecteAbi=null;  }
         return selecteAbi;
+    }
+
+    public void reset() {
+        buildAbilitiesList();
+        refreshAllAbilities();
     }
 }

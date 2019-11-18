@@ -11,7 +11,7 @@ import stellarnear.yfa_companion.Spells.Spell;
 public class PostDataElement {
     private String targetSheet="Yfa";
     private String date;
-    private String dice="-";
+    private String detail ="-";
     private String typeEvent;
     private String result;
 
@@ -65,7 +65,7 @@ public class PostDataElement {
 
         String detailTxt = String.valueOf(oriDice.getRandValue());
         if(oriDice.getMythicDice()!=null){detailTxt +=","+oriDice.getMythicDice().getRandValue();}
-        this.dice =detailTxt;
+        this.detail =detailTxt;
     }
 
     public PostDataElement(String typeEvent, ArrayList<Dice> oriDices, int result){  //test contre RM peut avoir deux dès
@@ -80,12 +80,12 @@ public class PostDataElement {
             if (dice.getMythicDice() != null) {
                 detailTxt += "," + dice.getMythicDice().getRandValue();
             }
-            this.dice = detailTxt;
+            this.detail = detailTxt;
         }
     }
 
-    public String getDice() {
-        return dice;
+    public String getDetail() {
+        return detail;
     }
 
     public String getDate() {

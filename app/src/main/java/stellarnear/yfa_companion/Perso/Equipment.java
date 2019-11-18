@@ -2,6 +2,9 @@ package stellarnear.yfa_companion.Perso;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by jchatron on 04/01/2018.
@@ -13,6 +16,7 @@ public class Equipment {
     private String descr;
     private String value;
     private String slotId;
+    private List<String> tags=new ArrayList<>();
     private String img_path;
     private Boolean equiped;
 
@@ -27,6 +31,21 @@ public class Equipment {
         this.img_path=imgIdTxt;
         this.slotId = slotId;
         this.equiped=equiped;
+    }
+
+    public Equipment(String name, String descr, String value, List<String> tags) { //for bag items
+        this.name = name;
+        this.descr = descr;
+        if (value.equalsIgnoreCase("")){
+            this.value="-";
+        } else {
+            this.value=value;
+        }
+        for(String tag:tags){
+            if(!tag.equalsIgnoreCase("")){
+                this.tags.add(tag);
+            }
+        }
     }
 
     public String getName() {
@@ -66,6 +85,10 @@ public class Equipment {
 
     public void setEquiped(Boolean equiped) {
         this.equiped = equiped;
+    }
+
+    public List<String> getTags() {
+        return tags;
     }
 }
 

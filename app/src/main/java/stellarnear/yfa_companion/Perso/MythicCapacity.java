@@ -3,10 +3,6 @@ package stellarnear.yfa_companion.Perso;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.Window;
-import android.view.WindowManager;
-
-import stellarnear.yfa_companion.R;
 
 /**
  * Created by jchatron on 26/12/2017.

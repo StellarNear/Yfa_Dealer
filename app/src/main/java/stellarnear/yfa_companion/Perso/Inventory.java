@@ -136,9 +136,9 @@ public class Inventory {
         return bag.getBagSize() + allEquipments.getAllEquipmentsSize();
     }
 
-    public void resetInventory() {
-        bag.refreshBag();
-        allEquipments.refreshEquipment();
+    public void reset() {
+        bag.reset();
+        allEquipments.reset();
     }
 }
 

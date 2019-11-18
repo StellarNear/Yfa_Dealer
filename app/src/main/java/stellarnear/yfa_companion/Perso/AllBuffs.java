@@ -50,12 +50,8 @@ public class AllBuffs {
         tinyDB.putListBuffs("localSaveListBuffs", listBuffs);
     }
 
-    public void resetBuffsList() {
-        refreshListBuffs();
-    }
-
-
     private void buildList(){  // on construit la liste qu'une fois dans MainActivityFragmentSpell donc pas besoin de singleton
+        listBuffs = new ArrayList<>();
         SpellList allSpells = new SpellList();
         allSpells.add(BuildSpellList.getInstance(mC).getSpellList());
         allSpells.add(getAllBuffSpells());
@@ -181,5 +177,10 @@ public class AllBuffs {
             }
         }
         return buffAnswer;
+    }
+
+    public void reset() {
+        buildList();
+        saveLocalBuffs();
     }
 }

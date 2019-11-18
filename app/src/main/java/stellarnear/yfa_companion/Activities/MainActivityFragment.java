@@ -40,12 +40,12 @@ public class MainActivityFragment extends Fragment {
         returnFragView= inflater.inflate(R.layout.fragment_main, container, false);
 
         ImageButton fabSkill = (ImageButton) returnFragView.findViewById(R.id.button_frag_to_skill);
-        setButtonActivity(fabSkill, new MainActivityFragmentSkill(), R.animator.infromleftfrag,R.animator.outfadefrag);
+        setButtonActivity(fabSkill, new MainActivityFragmentSkill(), R.animator.infromleftfrag,R.animator.outfadefrag,"frag_skill");
         Animation left = AnimationUtils.loadAnimation(getContext(),R.anim.infromleft);
         fabSkill.startAnimation(left);
 
         ImageButton fabCast = (ImageButton) returnFragView.findViewById(R.id.button_frag_to_spell);
-        setButtonActivity(fabCast,new MainActivityFragmentSpell(),R.animator.infromrightfrag,R.animator.outfadefrag);
+        setButtonActivity(fabCast,new MainActivityFragmentSpell(),R.animator.infromrightfrag,R.animator.outfadefrag,"frag_spell");
         Animation right = AnimationUtils.loadAnimation(getContext(),R.anim.infromright);
         fabCast.startAnimation(right);
 
@@ -98,7 +98,7 @@ public class MainActivityFragment extends Fragment {
         quadrantList.get(3).startAnimation(pop4);
     }
 
-    private void setButtonActivity(ImageButton button, final Fragment ActivityFragment,final int animIn,final int animOut) {
+    private void setButtonActivity(ImageButton button, final Fragment ActivityFragment,final int animIn,final int animOut,final String frag_tag) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +106,7 @@ public class MainActivityFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(animIn,animOut);
-                fragmentTransaction.replace(R.id.fragment_main_frame_layout, ActivityFragment);
+                fragmentTransaction.replace(R.id.fragment_main_frame_layout, ActivityFragment,frag_tag);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

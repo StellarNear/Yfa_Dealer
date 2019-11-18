@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -191,8 +192,26 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = new MainActivityFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(mainFrameFrag.getId(), fragment);
+        fragmentTransaction.replace(mainFrameFrag.getId(), fragment,"frag_main");
         fragmentTransaction.commit();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        /*
+        MainActivityFragment fragMain = (MainActivityFragment) getFragmentManager().findFragmentByTag("frag_main");
+        MainActivityFragmentSpell fragSpell = (MainActivityFragmentSpell) getFragmentManager().findFragmentByTag("frag_spell");
+        MainActivityFragmentSkill fragSkill = (MainActivityFragmentSkill) getFragmentManager().findFragmentByTag("frag_skill");
+        Pour l'instant on fait un comportement particuluer uniquement pour le retour au spell list à partir de spell cast */
+
+        MainActivityFragmentSpellCast fragSpellCast = (MainActivityFragmentSpellCast) getFragmentManager().findFragmentByTag("frag_spell_cast");
+
+        if (fragSpellCast != null && fragSpellCast.isVisible()) { // and then you define a method allowBackPressed with the logic to allow back pressed or not
+          fragSpellCast.backToSpell();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

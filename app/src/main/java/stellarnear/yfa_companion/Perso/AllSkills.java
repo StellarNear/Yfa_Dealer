@@ -31,6 +31,8 @@ public class AllSkills {
     }
 
     private void buildSkillsList() {
+        allSkillsList = new ArrayList<>();
+        mapIdSkill=new HashMap<>();
         try {
             InputStream is = mC.getAssets().open("skills.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -89,5 +91,9 @@ public class AllSkills {
         for (Skill skill : allSkillsList){
             skill.refreshVals();
         }
+    }
+
+    public void reset() {
+        buildSkillsList();
     }
 }
