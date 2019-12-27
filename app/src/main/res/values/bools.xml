@@ -4,6 +4,7 @@
     <bool name="meta_enhance_switch_def">false</bool>
     <bool name="meta_silent_switch_def">true</bool>
     <bool name="materiel_switch_def">true</bool>
+    <bool name="materiel_epic_switch_def">true</bool>
     <bool name="meta_quicken_switch_def">true</bool>
     <bool name="meta_select_switch_def">true</bool>
     <bool name="meta_max_switch_def">true</bool>
@@ -32,7 +33,7 @@
 
     <!--  Feat myth def  -->
     <bool name="switch_mythicfeat_parangon_def">true</bool>
-    <bool name="materiel_epic_switch_def">true</bool>
+
     <bool name="switch_shadow_link_def">true</bool>
 
 

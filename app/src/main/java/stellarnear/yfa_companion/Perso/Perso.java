@@ -50,10 +50,10 @@ public class Perso {
         allCapacities = new AllCapacities(mC);
         allMythicFeats = new AllMythicFeats(mC);
         allMythicCapacities = new AllMythicCapacities(mC);
-        allAbilities = new AllAbilities(mC);
         allSkills = new AllSkills(mC);
         allBuffs = new AllBuffs(mC);
-        allResources = new AllResources(mC,allAbilities,allMythicCapacities);
+        allAbilities = new AllAbilities(mC);
+        allResources = new AllResources(mC,allAbilities);
     }
 
     public void refresh() {
@@ -299,6 +299,9 @@ public class Perso {
         resetTemp();
         refresh();
         allResources.resetCurrent();
+        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
+            allResources.getResource("resource_hp").fullHeal();
+        }
         allBuffs.spendSleepTime();
     }
     public void halfSleep(){
@@ -323,5 +326,8 @@ public class Perso {
         resetTemp();
         refresh();
         allResources.resetCurrent();
+        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
+            allResources.getResource("resource_hp").fullHeal();
+        }
     }
 }

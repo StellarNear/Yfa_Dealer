@@ -67,7 +67,6 @@ public class BuildMetaList {
 
     }
 
-
     private void removeUnavailableMetas(Context mC) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         MetaList allowedList=new MetaList();

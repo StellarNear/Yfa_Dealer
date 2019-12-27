@@ -15,8 +15,6 @@
         android:gravity="center"
         android:weightSum="4">
 
-
-
         <ImageView
             android:id="@+id/help_info_image"
             android:layout_width="0dp"

@@ -97,7 +97,7 @@ public class ImgForDice {
     private void launchingMythicDice(String mode) {
         int points=0;
         if(mode.equalsIgnoreCase("légendaire")){
-            points = MainActivity.yfa.getResourceValue("legendary_points");
+            points = MainActivity.yfa.getResourceValue("resource_legendary_points");
         } else {
             points = MainActivity.yfa.getResourceValue("resource_mythic_points");
         }

@@ -29,17 +29,15 @@ import stellarnear.yfa_companion.Tools;
 public class AllResources {
     private Context mC;
     private AllAbilities allAbilities;
-    private AllMythicCapacities allMythicCapacities;
     private Map<String, Resource> mapIDRes = new HashMap<>();
     private List<Resource> listResources = new ArrayList<>();
     private SpellsRanksManager rankManager=null;
     private SharedPreferences settings;
     private Tools tools = new Tools();
 
-    public AllResources(Context mC,AllAbilities allAbilities,AllMythicCapacities allMythicCapacities) {
+    public AllResources(Context mC,AllAbilities allAbilities) {
         this.mC = mC;
         this.allAbilities=allAbilities;
-        this.allMythicCapacities=allMythicCapacities;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         try {
             buildResourcesList();
@@ -180,16 +178,10 @@ public class AllResources {
         for (Resource res : listResources) {
             res.resetCurrent();
         }
-        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
-            getResource("resource_hp").fullHeal();
-        }
     }
 
     public void halfSleepReset() {
         getResource("resource_mythic_points").resetCurrent();
-        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
-            getResource("resource_hp").fullHeal();
-        }
     }
 
     public boolean checkSpellAvailable(Integer selected_rank) {

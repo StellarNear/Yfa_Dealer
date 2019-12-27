@@ -21,7 +21,7 @@ public class DisplayRolls {
         LayoutInflater inflate = mA.getLayoutInflater();
         this.mainView = inflate.inflate(R.layout.damagedetail, null);
 
-        fillWithRolls();
+        fillWithDices();
 
         metaPopup =new CustomAlertDialog(mA,mC,mainView);
         metaPopup.setPermanent(true);
@@ -33,7 +33,7 @@ public class DisplayRolls {
         metaPopup.showAlert();
     }
 
-    private void fillWithRolls() {
+    private void fillWithDices() {
         LinearLayout scrollLinear= this.mainView.findViewById(R.id.scroll_linear);
         int count=0;
         LinearLayout line = new LinearLayout(mC);

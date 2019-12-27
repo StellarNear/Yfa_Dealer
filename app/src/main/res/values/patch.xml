@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.5"</string>
-    <string name="time_spend">249h</string>
+    <string name="version">"v1.5.1"</string>
+    <string name="time_spend">251h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V1.5.1
+-Travail préventif pour la reserve de points légendaires
+-Fixes :
+    -Rétablissement soigne bien meme en demi sommeil
+    -Shadowlink qui donnait pas toujours le resultat des dès
+    -Optimisation du chargement de la page principale
+----------------------------------------------------------------------------------
 Patch note V1.5
 -maj des objets d'équipement et du sac
 -gestion de multiple tags dans le sac
