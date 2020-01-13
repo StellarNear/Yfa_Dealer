@@ -12,6 +12,7 @@ import stellarnear.yfa_companion.HallOfFame;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.RemoveDataElementAllSpellArrow;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Stats.Stats;
 import stellarnear.yfa_companion.Tools;
@@ -110,7 +111,11 @@ public class Perso {
     public void castSpell(Spell spell) {
         if (!spell.isCast()){
             spell.cast();
-            allResources.castSpell(calculation.currentRank(spell));
+
+            int currentRankSpell = calculation.currentRank(spell);
+            if(currentRankSpell>0) {
+                allResources.castSpell(currentRankSpell);
+            }
             if(spell.getRange().equalsIgnoreCase("personnelle")){
                 Buff matchingBuff = allBuffs.getBuffByID(spell.getID());
                 if(matchingBuff!=null){
@@ -296,19 +301,22 @@ public class Perso {
     }
 
     public void sleep() {
-        resetTemp();
-        refresh();
         allResources.resetCurrent();
-        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
-            allResources.getResource("resource_hp").fullHeal();
-        }
-        allBuffs.spendSleepTime();
+        commonSleep();
+        new PostData(mC,new RemoveDataElementAllSpellArrow());
     }
     public void halfSleep(){
-        resetTemp();
-        refresh();
         allResources.halfSleepReset();
+        commonSleep();
+    }
+
+    private void commonSleep() {
+        resetTemp();
         allBuffs.spendSleepTime();
+        if(allMythicCapacities!=null && allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
+            allResources.getResource("resource_hp").fullHeal();
+        }
+        refresh();
     }
 
     public void reset() {
@@ -325,9 +333,6 @@ public class Perso {
         this.allBuffs.reset();
         resetTemp();
         refresh();
-        allResources.resetCurrent();
-        if(allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
-            allResources.getResource("resource_hp").fullHeal();
-        }
+        sleep();
     }
 }

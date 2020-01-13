@@ -58,11 +58,11 @@ public class DSSFDmg {
         CheckBox checkFire = mainView.findViewById(R.id.dmg_type_fire);
         CheckBox checkShock = mainView.findViewById(R.id.dmg_type_shock);
         CheckBox checkFrost = mainView.findViewById(R.id.dmg_type_frost);
-        mapElemCheckbox.put("aucun",checkNone);
-        mapElemCheckbox.put("acide",checkAcid);
-        mapElemCheckbox.put("feu",checkFire);
-        mapElemCheckbox.put("foudre",checkShock);
-        mapElemCheckbox.put("froid",checkFrost);
+        mapElemCheckbox.put("none",checkNone);
+        mapElemCheckbox.put("acid",checkAcid);
+        mapElemCheckbox.put("fire",checkFire);
+        mapElemCheckbox.put("shock",checkShock);
+        mapElemCheckbox.put("frost",checkFrost);
 
         chartMaker = new DSSFDmgChartMaker((BarChart)mainView.findViewById(R.id.bar_chart_dmg),mapElemCheckbox,mC);
         setCheckboxListeners();

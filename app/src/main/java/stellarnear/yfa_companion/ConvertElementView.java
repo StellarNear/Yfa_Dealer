@@ -94,7 +94,7 @@ public class ConvertElementView extends AppCompatActivity {
 
     private void constructElementChoice() {
         convert_element_choices.removeAllViews();
-        List<String> listElement = Arrays.asList("froid","feu","foudre","acide");
+        List<String> listElement = Arrays.asList("frost","fire","shock","acid");
         for(String elemTxt : listElement) {
 
             final CheckBox elem = new CheckBox(mC);

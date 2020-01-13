@@ -49,20 +49,17 @@ public class Spell {
 
     private int     n_sub_spell;
 
-    private SharedPreferences settings;
-
     private MetaList metaList;
     private ArcaneConversion conversion=null;
 
     private boolean binded=false;
-    private Spell bindedParent =null;
+    private transient Spell bindedParent =null;
     private Cast cast;
     private boolean crit=false;
 
-    private Tools tools=new Tools();
     private GlaeManager glaeManager;
 
-    private SpellProfile spellProfile;
+    private transient SpellProfile spellProfile;
 
     private int dmgResult=0;
 
@@ -93,11 +90,9 @@ public class Spell {
         this.metaList=new MetaList(spell.metaList);
         this.cast =new Cast();
         this.glaeManager=new GlaeManager(spell.glaeManager);
-        this.settings=spell.settings;
     }
 
     public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type,int flat_dmg, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
-        settings = PreferenceManager.getDefaultSharedPreferences(mC);
         if(id.equalsIgnoreCase("")){
             this.id=name;
         } else {
@@ -123,6 +118,7 @@ public class Spell {
         this.save_type=save_type;
         this.rank=rank;
         if (this.id.equalsIgnoreCase("Désintégration") || this.normalSpellId.equalsIgnoreCase("Désintégration")) {
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
             if (settings.getBoolean("perfect_desint", mC.getResources().getBoolean(R.bool.perfect_desint_def))) {
                 this.perfect=true;
             }
@@ -229,8 +225,9 @@ public class Spell {
         return this.n_sub_spell;
     }
 
-    public boolean isHighscore(int val){
+    public boolean isHighscore(int val,Context mC){
         boolean returnVal=false;
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         int highscore=settings.getInt(this.id+"_highscore",0);
         if(val>highscore){
             returnVal=true;
@@ -243,7 +240,8 @@ public class Spell {
         return returnVal;
     }
 
-    public int getHighscore(){
+    public int getHighscore(Context mC){
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         int highscore=settings.getInt(this.id+"_highscore",0);
         return highscore;
     }
@@ -284,7 +282,8 @@ public class Spell {
         if(metaId.equalsIgnoreCase("meta_extend") && !this.dmg_type.getDmgType().equalsIgnoreCase("") &&  this.dice_type.equalsIgnoreCase("lvl")){
             check.setEnabled(false);
         }
-
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+        Tools tools =new Tools();
         int maxLevelWedge= tools.toInt(settings.getString("wedge_max_lvl_spell",String.valueOf(mC.getResources().getInteger(R.integer.wedge_max_lvl_spell_def))));
         if(this.rank> maxLevelWedge && metaId.equalsIgnoreCase("meta_arrow")){
             check.setEnabled(false);

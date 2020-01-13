@@ -50,7 +50,7 @@ public class GlaeTestAlertDialog {
         dialogView = inflater.inflate(R.layout.custom_glae_test_alert_dialog, null);
         ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
 
-        if(spell.getDmg_type().equalsIgnoreCase("foudre")){
+        if(spell.getDmg_type().equalsIgnoreCase("shock")){
             this.boost=true; this.fail=false;
             icon.setImageDrawable(mC.getDrawable(R.drawable.ic_crowned_explosion));
         } else {
@@ -65,7 +65,7 @@ public class GlaeTestAlertDialog {
 
 
         String summaryTxt="Test de ";
-        if(spell.getDmg_type().equalsIgnoreCase("foudre")){
+        if(spell.getDmg_type().equalsIgnoreCase("shock")){
             summaryTxt+=" surpuissance de la foudre";
         } else {
             summaryTxt+=" réprobation de l'élément "+spell.getDmg_type();

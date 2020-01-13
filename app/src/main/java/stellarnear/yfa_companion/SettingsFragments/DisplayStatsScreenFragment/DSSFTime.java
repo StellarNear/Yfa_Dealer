@@ -58,7 +58,7 @@ public class DSSFTime {
         CheckBox checkFire = mainView.findViewById(R.id.line_type_time_fire);
         CheckBox checkShock = mainView.findViewById(R.id.line_type_time_shock);
         CheckBox checkFrost = mainView.findViewById(R.id.line_type_time_frost);
-        mapElemCheckbox.put("",checkNoDmg);mapElemCheckbox.put("aucun",checkNone);mapElemCheckbox.put("acide",checkAcid); mapElemCheckbox.put("feu",checkFire);  mapElemCheckbox.put("foudre",checkShock); mapElemCheckbox.put("froid",checkFrost);
+        mapElemCheckbox.put("",checkNoDmg);mapElemCheckbox.put("none",checkNone);mapElemCheckbox.put("acid",checkAcid); mapElemCheckbox.put("fire",checkFire);  mapElemCheckbox.put("shock",checkShock); mapElemCheckbox.put("frost",checkFrost);
         setCheckboxListeners();
         initLineCharts();
     }

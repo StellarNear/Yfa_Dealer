@@ -93,15 +93,15 @@ public class SpellProfile {
 
     private void testSpellForColorTitle() {
         Drawable gd =null;
-        if (spell.getDmg_type().equals("aucun")) {
+        if (spell.getDmg_type().equals("none")) {
             gd=mC.getDrawable(R.drawable.round_corner_title_void);
-        }else  if (spell.getDmg_type().equals("feu")) {
+        }else  if (spell.getDmg_type().equals("fire")) {
             gd=mC.getDrawable(R.drawable.round_corner_title_fire);
-        }else if (spell.getDmg_type().equals("foudre")) {
+        }else if (spell.getDmg_type().equals("shock")) {
             gd=mC.getDrawable(R.drawable.round_corner_title_thunder);
-        }else if (spell.getDmg_type().equals("froid")) {
+        }else if (spell.getDmg_type().equals("frost")) {
             gd=mC.getDrawable(R.drawable.round_corner_title_cold);
-        } else if (spell.getDmg_type().equals("acide")) {
+        } else if (spell.getDmg_type().equals("acid")) {
             gd=mC.getDrawable(R.drawable.round_corner_title_acid);
         } else {
             gd=mC.getDrawable(R.drawable.round_corner_title);

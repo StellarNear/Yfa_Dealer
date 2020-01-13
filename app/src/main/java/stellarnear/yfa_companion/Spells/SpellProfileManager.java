@@ -121,11 +121,11 @@ public class SpellProfileManager {
 
         //Glae test
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        List<String> elems = Arrays.asList("froid","feu","foudre","acide");
+        List<String> elems = Arrays.asList("frost","fire","shock","acid");
         if( spell.getGlaeManager().isTested() || !elems.contains(spell.getDmg_type()) || !settings.getBoolean("glae_switch_tier2", mC.getResources().getBoolean(R.bool.glae_switch_tier2_def))){
             ((LinearLayout)profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
         } else {
-            if(spell.getDmg_type().equalsIgnoreCase("foudre")){
+            if(spell.getDmg_type().equalsIgnoreCase("shock")){
                 profile.findViewById(R.id.glae_fail).setVisibility(View.GONE);
                 profile.findViewById(R.id.glae_boost).setVisibility(View.VISIBLE);
             } else {

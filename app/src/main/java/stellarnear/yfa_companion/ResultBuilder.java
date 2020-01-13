@@ -91,7 +91,7 @@ public class ResultBuilder {
                     dice.rand(false);
                 }
             }
-            ((TextView)resultTemplate.findViewById(R.id.highscore)).setText("(record:"+String.valueOf(spell.getHighscore())+")");
+            ((TextView)resultTemplate.findViewById(R.id.highscore)).setText("(record:"+String.valueOf(spell.getHighscore(mC))+")");
             int sumDmg =diceList.getSum();
             if(spell.getFlat_dmg()>0){sumDmg+=spell.getFlat_dmg();}
             if(spell.getGlaeManager().isBoosted()){
@@ -144,7 +144,7 @@ public class ResultBuilder {
     }
 
     private void checkHighScore(int sumDmg) {
-        if(spell.isHighscore(sumDmg)){
+        if(spell.isHighscore(sumDmg,mC)){
             Tools tools = new Tools();
             tools.playVideo(mA,mC,"/raw/explosion");
             tools.customToast(mC, String.valueOf(sumDmg) + " dégats !\nC'est un nouveau record !", "center");
@@ -153,19 +153,19 @@ public class ResultBuilder {
 
     private void setSpellColor() {
         switch (spell.getDmg_type()){
-            case "froid":
+            case "frost":
                 spellColorId =mC.getColor(R.color.froid_dark);
                 break;
 
-            case "feu":
+            case "fire":
                 spellColorId =mC.getColor(R.color.feu_dark);
                 break;
 
-            case "foudre":
+            case "shock":
                 spellColorId =mC.getColor(R.color.foudre_dark);
                 break;
 
-            case "acide":
+            case "acid":
                 spellColorId =mC.getColor(R.color.acide_dark);
                 break;
 

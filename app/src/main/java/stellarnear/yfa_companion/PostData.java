@@ -21,46 +21,56 @@ import java.util.Iterator;
 import javax.net.ssl.HttpsURLConnection;
 
 public class PostData  {
-    private PostDataElement element;
-    public PostData(Context mC, PostDataElement postDataElement){
+    public PostData(Context mC, Object dataElement){
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         if (settings.getBoolean("switch_shadow_link",mC.getResources().getBoolean(R.bool.switch_shadow_link_def))) {
-            this.element = postDataElement;
-            new SendRequest().execute();
+            SendRequestData send = new SendRequestData();
+            send.addParams(dataElement);
+            send.execute();
+            if(dataElement instanceof  PostDataElement && ((PostDataElement)dataElement).getArrowSpell()!=null){
+                new PostData(mC,new PostDataElementSpellArrow(((PostDataElement)dataElement).getArrowSpell()));
+            }
         }
+
     }
 
-    public class SendRequest extends AsyncTask<String, Void, String> {
-
-
+    public class SendRequestData extends AsyncTask<String, Void, String> {
         protected void onPreExecute(){}
-
+        private Object element;
         protected String doInBackground(String... arg0) {
 
             try{
 
                 URL url = new URL("https://script.google.com/macros/s/AKfycbwi81ryWCJuLyQiybPqeTmmyQpb-tNYbRft2eXCH_Yn2QpzjAZI/exec");
-
                 JSONObject postDataParams = new JSONObject();
-
-                //int i;
-                //for(i=1;i<=70;i++)
-
-
-                //    String usn = Integer.toString(i);
-
                 String id= "1AmQOsFXgWBb9ipxhnKEj_JfKZUMt1bUJiBeNVNhH6oc";
-
-                postDataParams.put("sheet",element.getTargetSheet());
-                postDataParams.put("date",element.getDate());
-                postDataParams.put("type_event",element.getTypeEvent());
-                postDataParams.put("detail",element.getDetail());
-                postDataParams.put("result",element.getResult());
-
                 postDataParams.put("id",id);
+                if(element instanceof PostDataElement ) {
+                    postDataParams.put("sheet", ((PostDataElement)element).getTargetSheet());
+                    postDataParams.put("date", ((PostDataElement)element).getDate());
+                    postDataParams.put("type_event", ((PostDataElement)element).getTypeEvent());
+                    postDataParams.put("detail", ((PostDataElement)element).getDetail());
+                    postDataParams.put("result", ((PostDataElement)element).getResult());
+                } else if (element instanceof PostDataElementSpellArrow) {
+                    postDataParams.put("sheet",((PostDataElementSpellArrow)element).getTargetSheet());
+                    postDataParams.put("date",((PostDataElementSpellArrow)element).getDate());
+                    postDataParams.put("type_event",((PostDataElementSpellArrow)element).getTypeEvent());
+                    postDataParams.put("caster",((PostDataElementSpellArrow)element).getCaster());
+                    postDataParams.put("uuid",((PostDataElementSpellArrow)element).getUuid());
+                    postDataParams.put("result",((PostDataElementSpellArrow)element).getResult());
+                } else if(element instanceof  RemoveDataElementSpellArrow){
+                    postDataParams.put("sheet", ((RemoveDataElementSpellArrow)element).getTargetSheet());
+                    postDataParams.put("type_event", ((RemoveDataElementSpellArrow)element).getTypeEvent());
+                    postDataParams.put("uuid", ((RemoveDataElementSpellArrow)element).getUuid());
+                } else if (element instanceof RemoveDataElementAllSpellArrow) {
+                    postDataParams.put("sheet",((RemoveDataElementAllSpellArrow)element).getTargetSheet());
+                    postDataParams.put("caster", ((RemoveDataElementAllSpellArrow)element).getCaster());
+                    postDataParams.put("type_event", ((RemoveDataElementAllSpellArrow)element).getTypeEvent());
+                } else {
+                    throw new Exception("no compatible element to post");
+                }
 
-
-                Log.e("params",postDataParams.toString());
+                Log.i("params",postDataParams.toString());
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds */);
@@ -103,6 +113,10 @@ public class PostData  {
                 Log.e("PostData error",e.getMessage());
                 return new String("Exception: " + e.getMessage());
             }
+        }
+
+        public void addParams(Object postDataElement) {
+            this.element=postDataElement;
         }
     }
 

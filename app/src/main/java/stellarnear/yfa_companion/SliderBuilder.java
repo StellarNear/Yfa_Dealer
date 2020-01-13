@@ -80,10 +80,9 @@ public class SliderBuilder {
     public void spendCast() {
         if(!spell.isCast()) {
             slided=true;
-            if(spell.getRank()==0){new PostData(mC,new PostDataElement(spell));} //pour quand meme signalé les grauit
-            if (spell.getRank() > 0) {
-                yfa.castSpell(spell);
-            }
+
+            yfa.castSpell(spell);
+
             if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
                 yfa.castConvSpell(spell.getConversion().getRank());
             }
