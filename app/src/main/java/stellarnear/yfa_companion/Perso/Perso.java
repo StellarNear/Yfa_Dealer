@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import stellarnear.yfa_companion.Calculation;
 import stellarnear.yfa_companion.HallOfFame;
@@ -224,7 +223,7 @@ public class Perso {
         int bonus = tools.toInt(prefs.getString("bonus_atk",String.valueOf(mC.getResources().getInteger(R.integer.bonus_atk_def))));
         int bonusTemp= tools.toInt(prefs.getString("bonus_atk_temp",String.valueOf(0)));
         val+=epic+bonus+bonusTemp;
-        if(allBuffs.getBuffByID("capacity_destiny_touch").isActive()){
+        if(allBuffs!=null && allBuffs.getBuffByID("capacity_destiny_touch")!=null && allBuffs.getBuffByID("capacity_destiny_touch").isActive()){
             val+=allCapacities.getCapacity("capacity_destiny_touch").getValue();
         }
         return val;

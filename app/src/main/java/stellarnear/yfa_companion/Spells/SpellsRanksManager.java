@@ -48,6 +48,7 @@ public class SpellsRanksManager {
             int val = readResourceMax( rankRes.getId());
             rankRes.setMax(val);
             rankRes.setCurrent(readResourceCurrent(rankRes.getId()));
+            rankRes.setFromSpell();
             spellTiers.add(rankRes);
         }
         for(int rankConv=1;rankConv<=highestSpellConvank;rankConv++){
@@ -55,6 +56,7 @@ public class SpellsRanksManager {
             int valConv = readResourceMax( rankConvRes.getId());
             rankConvRes.setMax(valConv);
             rankConvRes.setCurrent(readResourceCurrent(rankConvRes.getId()));
+            rankConvRes.setFromSpell();
             spellConvTiers.add(rankConvRes);
         }
     }

@@ -136,7 +136,7 @@ public class MainActivityFragmentSkill extends Fragment {
         line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TestAlertDialog(getActivity(),getContext(),skill,yfa.getAbilityMod(skill.getAbilityDependence()));
+                new TestAlertDialog(getActivity(),getContext(),skill);
             }
         });
     }

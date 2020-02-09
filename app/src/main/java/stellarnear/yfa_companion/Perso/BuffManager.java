@@ -57,13 +57,15 @@ public class BuffManager {
             yfa.getAllResources().getResource("resource_hp").shield(20);
         }
         refreshView();
-
     }
 
     private void castBuffExtend(int nCastDuration){
         buff.extendCast(mA,yfa.getCasterLevel(),nCastDuration);
         if(buff.isFromSpell()) {
             yfa.castSpell(buff.getSpellRank() + nCastDuration);
+        }else {
+            yfa.getAllResources().getResource(buff.getId().replace("capacity","resource")).spend(1);
+            yfa.getAllResources().getResource("capacity_epic_bloodline".replace("capacity","resource")).spend(1);
         }
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){

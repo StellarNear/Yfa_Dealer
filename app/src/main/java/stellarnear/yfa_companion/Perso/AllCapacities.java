@@ -18,7 +18,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
 /**

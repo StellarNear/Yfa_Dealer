@@ -171,7 +171,7 @@ public class AllBuffs {
 
     public void makeTimePass(int i) {
         for(Buff buff: listBuffs){
-            buff.spendTime(i);
+            buff.spendTime(mC,i);
         }
         saveLocalBuffs();
     }

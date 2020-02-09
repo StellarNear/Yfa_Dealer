@@ -30,6 +30,8 @@ import stellarnear.yfa_companion.ExpandAnimation;
 import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.BuffManager;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.PostData;
+import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
@@ -66,7 +68,6 @@ public class BuffActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(titleSpan);
         tempLin=findViewById(R.id.buff_temp);
         permaLin=findViewById(R.id.buff_perma);
-
         findViewById(R.id.temp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +75,6 @@ public class BuffActivity extends AppCompatActivity {
                 addBuffs();
             }
         });
-
         findViewById(R.id.perma).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,12 +82,8 @@ public class BuffActivity extends AppCompatActivity {
                 addBuffs();
             }
         });
-
-
         setTimeButtons();
-
         addBuffs();
-
         animate();
     }
 
@@ -141,11 +137,17 @@ public class BuffActivity extends AppCompatActivity {
                 addTimeToBuffs(60*60*5);
             }
         });
-
     }
 
     private void addTimeToBuffs(int iSec) {
-        tools.customToast(mC,(int)(iSec/60)+" minutes plus tard ...","center");
+        String timeTxt;
+        if(iSec>60){
+            timeTxt=(int)(iSec/60)+" minutes";
+        } else {
+            timeTxt=(int)(iSec)+" secondes";
+        }
+        tools.customToast(mC,timeTxt+" plus tard ...","center");
+        new PostData(mC,new PostDataElement("Décompte de temps des buffs",timeTxt));
         yfa.getAllBuffs().makeTimePass(iSec);
         for(BuffManager buffManager:listTempManagers){
             buffManager.refreshView();

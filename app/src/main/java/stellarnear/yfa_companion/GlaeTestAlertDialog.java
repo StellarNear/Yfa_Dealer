@@ -59,7 +59,7 @@ public class GlaeTestAlertDialog {
         }
 
         String titleTxt = "Test de Glaedäyes :\n";
-        final TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
+        final TextView title = dialogView.findViewById(R.id.customDialogTitleName);
         title.setSingleLine(false);
         title.setText(titleTxt);
 

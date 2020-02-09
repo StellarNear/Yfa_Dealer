@@ -2,17 +2,12 @@ package stellarnear.yfa_companion.SettingsFragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.SwitchPreference;
-import android.text.InputType;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
-import stellarnear.yfa_companion.EditTextPreference;
 import stellarnear.yfa_companion.Perso.Capacity;
 import stellarnear.yfa_companion.Perso.Perso;
-import stellarnear.yfa_companion.R;
-import stellarnear.yfa_companion.Tools;
 
 public class PrefCapaFragment {
     private Perso yfa = MainActivity.yfa;

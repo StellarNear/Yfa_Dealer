@@ -53,7 +53,7 @@ public class TestRMAlertDialog {
         icon.setImageDrawable(mC.getDrawable(R.drawable.ic_surrounded_shield));
 
         String titleTxt = "Test du niveau de lanceur de sort :\n";
-        TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
+        TextView title = dialogView.findViewById(R.id.customDialogTitleName);
         title.setSingleLine(false);
         title.setText(titleTxt);
 

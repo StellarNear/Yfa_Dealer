@@ -39,7 +39,6 @@ import java.util.Map;
 import stellarnear.yfa_companion.AllGeneralHelpInfos;
 import stellarnear.yfa_companion.GeneralHelpInfo;
 import stellarnear.yfa_companion.Perso.Ability;
-import stellarnear.yfa_companion.Perso.AllBuffs;
 import stellarnear.yfa_companion.Perso.Capacity;
 import stellarnear.yfa_companion.Perso.Feat;
 import stellarnear.yfa_companion.Perso.MythicCapacity;

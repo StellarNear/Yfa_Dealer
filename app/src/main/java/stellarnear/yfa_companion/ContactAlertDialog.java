@@ -60,7 +60,7 @@ public class ContactAlertDialog {
         icon.setImageDrawable(mC.getDrawable(R.drawable.ic_filter_center_focus_black_24dp));
 
         String titleTxt = "Test de contact "+(mode.equalsIgnoreCase("melee") ? "au corps à corps" : "à distance") +" :\n";
-        final TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
+        final TextView title = dialogView.findViewById(R.id.customDialogTitleName);
         title.setSingleLine(false);
         title.setText(titleTxt);
 

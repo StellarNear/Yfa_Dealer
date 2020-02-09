@@ -65,7 +65,7 @@ public class Buff {
             durationTxt="["+roundS+"sec]";
         }
         return durationTxt;
-}
+    }
 
     public String getSpellDuration() {
         return spellDuration;
@@ -171,9 +171,10 @@ public class Buff {
         new PostData(mC,new PostDataElement("Lancement du buff "+name,"Durée:"+getDurationText()));
     }
 
-    public void spendTime(int i) {
+    public void spendTime(Context mC,int i) {
         currentDuration-=1f*i;
-        if(currentDuration<0){currentDuration=0;}
+        if(currentDuration<=0){currentDuration=0;
+            new PostData(mC,new PostDataElement("Expiration d'un buff",name+" a expiré"));}
         if(this.id.equalsIgnoreCase("parangon_tempfeat") && currentDuration==0){
             EchoList.resetEcho();
             BuildSpellList.resetMetas();

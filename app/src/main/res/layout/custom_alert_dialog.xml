@@ -23,13 +23,24 @@
             app:srcCompat="@drawable/mire_test" />
 
         <TextView
+            android:id="@+id/customDialogTitleCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_customDialog_text"
-            android:id="@+id/customDialogTestTitle"
             android:gravity="center_horizontal"
             android:text="Test de compétence :"
             android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_customDialog_text"
+            android:id="@+id/customDialogTitleName"
+            android:gravity="center_horizontal"
+            android:text="DUMMYNAME"
+            android:textSize="20sp"
+            android:textColor="@android:color/black" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

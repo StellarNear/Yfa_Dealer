@@ -204,7 +204,11 @@ public class AllResources {
     }
 
     public void halfSleepReset() {
-        getResource("resource_mythic_points").resetCurrent();
+        for (Resource res : listResources) {
+            if(!res.isSpellResource()) {
+                res.resetCurrent();
+            }
+        }
     }
 
     public boolean checkSpellAvailable(Integer selected_rank) {
@@ -233,7 +237,6 @@ public class AllResources {
     }
     public void castSpell(Integer selected_rank) {
         getResource("spell_rank_"+selected_rank).spend(1);
-
         if(getResource("spell_conv_rank_"+selected_rank)!=null && (getResource("spell_conv_rank_"+selected_rank).getCurrent()>getResource("spell_rank_"+selected_rank).getCurrent())){
             getResource("spell_conv_rank_"+selected_rank).spend(1);
         }

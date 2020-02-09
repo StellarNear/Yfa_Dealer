@@ -5,10 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.Arrays;
-import java.util.List;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Ability;
@@ -38,17 +34,17 @@ public class TestAlertDialog {
     private Ability abi;
     private View dialogView;
     private OnRefreshEventListener mListener;
-    private int modBonus;
-    String mode;
+    private String mode;
+    private Integer preRandScore=0;
 
-    public TestAlertDialog(Activity mA, Context mC, Skill skill, int modBonus) {
+    public TestAlertDialog(Activity mA, Context mC, Skill skill) {
         this.mA=mA;
         this.mC=mC;
         this.skill=skill;
-        this.modBonus=modBonus;
         this.mode="skill";
         buildAlertDialog();
         showAlertDialog();
+        ((TextView)dialogView.findViewById(R.id.customDialogTitleCategory)).setText("Test de compétence :");
     }
 
     public TestAlertDialog(Activity mA, Context mC, Ability abi) {
@@ -61,6 +57,7 @@ public class TestAlertDialog {
         } else {
             buildAlertDialog();
             showAlertDialog();
+            ((TextView)dialogView.findViewById(R.id.customDialogTitleCategory)).setText("Test de caractéristique :");
         }
     }
 
@@ -75,61 +72,15 @@ public class TestAlertDialog {
     private void buildAlertDialog() {
         LayoutInflater inflater = mA.getLayoutInflater();
         dialogView = inflater.inflate(R.layout.custom_alert_dialog, null);
-        ImageView icon = dialogView.findViewById(R.id.customDialogTestIcon);
-        int imgId;
-        String titleTxt;
-        int nameLength;
-        String summaryTxt;
-        if (mode.equalsIgnoreCase("skill")){
-            imgId = mC.getResources().getIdentifier(skill.getId(), "drawable", mC.getPackageName());
-            titleTxt = "Test de la compétence :\n"+skill.getName();
-            nameLength=skill.getName().length();
-            //summary
-            String abScore;
-            if(modBonus>=0){
-                abScore = "+"+modBonus;
-            } else {
-                abScore = String.valueOf(modBonus);
-            }
-            int sumScore=modBonus+skill.getRank()+ yfa.getSkillBonus(mC,skill.getId());
-            summaryTxt="Total : "+String.valueOf(sumScore)+"\nAbilité ("+skill.getAbilityDependence().substring(8,11)+") : "+abScore+",  Maîtrise : "+skill.getRank()+",  Bonus : "+ yfa.getSkillBonus(mC,skill.getId());
+        if(mode.equalsIgnoreCase("skill")){
+            fillWithSkill();
         } else {
-            imgId = mC.getResources().getIdentifier(abi.getId(), "drawable", mC.getPackageName());
-            titleTxt = "Test de la caractéristique :\n"+abi.getName();
-            nameLength=abi.getName().length();
-
-            //summary
-            if (abi.getType().equalsIgnoreCase("base")){
-                String abScore;
-                if(yfa.getAbilityMod(abi.getId())>=0){
-                    abScore = "+"+ yfa.getAbilityMod(abi.getId());
-                } else {
-                    abScore = String.valueOf(yfa.getAbilityMod(abi.getId()));
-                }
-                summaryTxt="Bonus : "+abScore;
-            } else {
-                summaryTxt="Bonus : "+ yfa.getAbilityScore(abi.getId());
-            }
+            fillWithAbi();
         }
-        if(yfa.getAllBuffs().getBuffByID("capacity_destiny_touch").isActive()){ //TODO REFACTO TestAlertDialog on a pa sbesoin du bonus skill et fair eun truc propre avec un private valueResult
-            summaryTxt+=" +"+yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();
-        }
-        icon.setImageDrawable(mC.getDrawable(imgId));
-
-        SpannableString titleSpan = new SpannableString(titleTxt);
-        titleSpan.setSpan(new RelativeSizeSpan(2.0f)  ,titleTxt.length()-nameLength,titleTxt.length(),0);
-        TextView title = dialogView.findViewById(R.id.customDialogTestTitle);
-        title.setSingleLine(false);
-        title.setText(titleSpan);
-
-        TextView summary = dialogView.findViewById(R.id.customDialogTestSummary);
-        summary.setText(summaryTxt);
-
         Button diceroll = dialogView.findViewById(R.id.button_customDialog_test_diceroll);
         diceroll.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(((TextView)dialogView.findViewById(R.id.customDialogTestResult)).getText().equals("")){
                     startRoll();
                 } else {
@@ -188,6 +139,39 @@ public class TestAlertDialog {
         alertDialog = dialogBuilder.create();
     }
 
+    private void fillWithSkill() {
+        Drawable draw = mC.getDrawable(mC.getResources().getIdentifier(skill.getId(), "drawable", mC.getPackageName()));
+        if(draw==null){draw=mC.getDrawable(R.drawable.mire_test);}
+        ((ImageView)dialogView.findViewById(R.id.customDialogTestIcon)).setImageDrawable(draw);
+        ((TextView)dialogView.findViewById(R.id.customDialogTitleName)).setText(skill.getName());
+        int abScore= yfa.getAbilityMod(skill.getAbilityDependence());
+        String abScoreTxt = abScore>0?"+"+abScore:String.valueOf(abScore);
+
+        preRandScore=abScore+skill.getRank()+ yfa.getSkillBonus(mC,skill.getId());
+        boolean destinyON=yfa.getAllBuffs()!=null && yfa.getAllBuffs().getBuffByID("capacity_destiny_touch")!=null && yfa.getAllBuffs().getBuffByID("capacity_destiny_touch").isActive();
+        if(destinyON){ preRandScore+=yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();  }
+        String summaryTxt="Total : "+String.valueOf(preRandScore)+"\n"+skill.getAbilityDependence().substring(8,11).toUpperCase()+" : "+abScoreTxt+",  Rang : "+skill.getRank()+",  Bonus : "+ yfa.getSkillBonus(mC,skill.getId());
+        if(destinyON){ summaryTxt+=",  Buff : "+yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();}
+        ((TextView)dialogView.findViewById(R.id.customDialogTestSummary)).setText(summaryTxt);
+    }
+
+    private void fillWithAbi() {
+        Drawable draw = mC.getDrawable(mC.getResources().getIdentifier(abi.getId(), "drawable", mC.getPackageName()));
+        if(draw==null){draw=mC.getDrawable(R.drawable.mire_test);}
+        ((ImageView)dialogView.findViewById(R.id.customDialogTestIcon)).setImageDrawable(draw);
+        ((TextView)dialogView.findViewById(R.id.customDialogTitleName)).setText(abi.getName());
+        if (abi.getType().equalsIgnoreCase("base")){
+            preRandScore=yfa.getAbilityMod(abi.getId());
+        } else {
+            preRandScore=yfa.getAbilityScore(abi.getId());
+        }
+        boolean destinyON=yfa.getAllBuffs()!=null && yfa.getAllBuffs().getBuffByID("capacity_destiny_touch")!=null && yfa.getAllBuffs().getBuffByID("capacity_destiny_touch").isActive();
+        String summaryTxt="Valeur de base : "+(preRandScore>0?"+"+preRandScore:String.valueOf(preRandScore));
+        if(destinyON){ preRandScore+=yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();
+            summaryTxt+=",  Buff : "+yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();}
+        ((TextView)dialogView.findViewById(R.id.customDialogTestSummary)).setText(summaryTxt);
+    }
+
     private void startRoll() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         final Dice dice = new Dice(mA,mC,20);
@@ -221,11 +205,11 @@ public class TestAlertDialog {
     }
 
     private void endSkillCalculation(final Dice dice) {
+        /* //la bague permet d'avoir un jet legendaire de montée en pusisance sur les jets de sauv
         List<String> listSave = Arrays.asList("ability_ref","ability_vig","ability_vol");
         if(abi!=null && listSave.contains(abi.getId())){
-            //dice.setLegendarySurge(true); //la bague permet d'avoir un jet legendaire de montée en pusisance sur les jets de sauv
-        }
-
+            //dice.setLegendarySurge(true);
+        }*/
         FrameLayout resultDice= dialogView.findViewById(R.id.customDialogTestResultDice);
         resultDice.removeAllViews();
         resultDice.addView(dice.getImg());
@@ -249,7 +233,7 @@ public class TestAlertDialog {
         callToAction.setTextColor(mC.getColor(R.color.secondaryTextCustomDialog));
         if (mode.equalsIgnoreCase("skill")){
             resultTitle.setText("Résultat du test de compétence :");
-            int sumResult=dice.getRandValue()+skill.getRank()+ yfa.getSkillBonus(mC,skill.getId())+ modBonus;
+            int sumResult=dice.getRandValue()+preRandScore;
             if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
             TextView result = dialogView.findViewById(R.id.customDialogTestResult);
             result.setText(String.valueOf(sumResult));
@@ -258,16 +242,10 @@ public class TestAlertDialog {
             modePostData="Test compétence "+skill.getName();sumResultPostData=sumResult;
         } else {
             resultTitle.setText("Résultat du test de caractéristique :");
-            int sumResult;
-            if (abi.getType().equalsIgnoreCase("base")){
-                sumResult=dice.getRandValue()+ yfa.getAbilityMod(abi.getId());
-            } else {
-                sumResult=dice.getRandValue()+ yfa.getAbilityScore(abi.getId());
-            }
+            int sumResult=dice.getRandValue()+ preRandScore;
             if(dice.getMythicDice()!=null){sumResult+=dice.getMythicDice().getRandValue();}
             TextView result = dialogView.findViewById(R.id.customDialogTestResult);
             result.setText(String.valueOf(sumResult));
-
             callToAction.setText("Fin du test de caractéristique");
             modePostData="Test caractéristique "+abi.getName();sumResultPostData=sumResult;
         }
