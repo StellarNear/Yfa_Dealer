@@ -18,6 +18,7 @@
     </resource>
     <resource>
         <name>Points héroique</name>
+        <shortname>Pts. héro</shortname>
         <id>resource_heroic</id>
     </resource>
 

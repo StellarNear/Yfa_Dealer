@@ -29,15 +29,17 @@ import stellarnear.yfa_companion.Tools;
 public class AllResources {
     private Context mC;
     private AllAbilities allAbilities;
+    private AllCapacities allCapacities;
     private Map<String, Resource> mapIDRes = new HashMap<>();
     private List<Resource> listResources = new ArrayList<>();
     private SpellsRanksManager rankManager=null;
     private SharedPreferences settings;
     private Tools tools = new Tools();
 
-    public AllResources(Context mC,AllAbilities allAbilities) {
+    public AllResources(Context mC,AllAbilities allAbilities,AllCapacities allCapacities) {
         this.mC = mC;
         this.allAbilities=allAbilities;
+        this.allCapacities=allCapacities;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         try {
             buildResourcesList();
@@ -111,6 +113,22 @@ public class AllResources {
         Resource display_spell_conv = new Resource("Rang de sorts convertibles","Sorts Conv.",false,false,"resource_display_rank_conv",mC);
         listResources.add(display_spell_conv);
         mapIDRes.put(display_spell_conv.getId(), display_spell_conv);
+
+        // Partie from capacities
+        addCapacitiesResources();
+    }
+
+    private void addCapacitiesResources() {
+        for(Capacity cap : allCapacities.getAllCapacitiesList()){
+            if ((cap.getDailyUse()>0|| cap.isInfinite()) && cap.isActive() && getResource(cap.getId().replace("capacity_", "resource_"))==null){
+                //on test si elle est pas deja presente pour la pertie rebuild  de refreshCapaListResources
+                boolean testable = true; boolean hide=false;
+                Resource capaRes = new Resource(cap.getName(),cap.getShortname(),testable,hide,cap.getId().replace("capacity_","resource_"),mC);
+                capaRes.setFromCapacity(cap);
+                listResources.add(capaRes);
+                mapIDRes.put(capaRes.getId(), capaRes);
+            }
+        }
     }
 
     public String readValue(String tag, Element element) {
@@ -166,6 +184,11 @@ public class AllResources {
         getResource("resource_mythic_points").setMax(3+2*readResource("mythic_tier"));
 
         rankManager.refreshMax();
+        for(Resource resource : listResources){
+            if(resource.isFromCapacity()){
+                resource.refreshFromCapacity();
+            }
+        }
     }
 
     private void loadCurrent() {
@@ -190,10 +213,8 @@ public class AllResources {
 
     public boolean checkConvertibleAvailable(Integer selected_rank) {
         boolean bool=false;
-        try {
-            bool=getResource("spell_conv_rank_"+selected_rank).getCurrent()>0;
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(getResource("spell_conv_rank_"+selected_rank) != null) {
+            bool = getResource("spell_conv_rank_" + selected_rank).getCurrent() > 0;
         }
         return bool;
     }
@@ -225,6 +246,7 @@ public class AllResources {
     public void refresh() {
         rankManager.refreshRanks();
         refreshMaxs();
+        loadCurrent();
     }
 
     public SpellsRanksManager getRankManager() {
@@ -235,5 +257,17 @@ public class AllResources {
         buildResourcesList();
         refreshMaxs();
         resetCurrent();
+    }
+
+    public void refreshCapaListResources() {
+        List<Resource> tempListIterate = new ArrayList<>(listResources);
+
+        for(Resource res : tempListIterate){
+            if(res.isFromCapacity() && !allCapacities.capacityIsActive(res.getId().replace("resource_", "capacity_"))){  //si la capacité n'est plus active on remove la resource
+                listResources.remove(res);
+                mapIDRes.remove(res.getId(),res);
+            }
+        }
+        addCapacitiesResources();
     }
 }

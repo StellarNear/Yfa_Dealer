@@ -33,6 +33,8 @@ import java.util.TimerTask;
 
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.Spells.BuildSpellList;
+import stellarnear.yfa_companion.Spells.EchoList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         public void run() {
                             yfa = new Perso(getApplicationContext());
+                            BuildSpellList.getInstance(getApplicationContext()); //s'assure qu'une instance est présente
+                            EchoList.getInstance(getApplicationContext()); //s'assure qu'une instance est présente
                             loading = true;
                         }
                 });

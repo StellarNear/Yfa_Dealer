@@ -25,6 +25,7 @@ public class BuffView {
     private OnCastExtendEventListener mListenerCastExtend;
     private boolean closed=false;
     private Tools tools=new Tools();
+    private Perso yfa = MainActivity.yfa;
 
     public BuffView(Activity mA,Buff buff){
         this.mA=mA;
@@ -149,78 +150,175 @@ public class BuffView {
                     String appendTime="";
                     if(buff.isActive()){appendTime="\nTemps restant "+buff.getDurationText();} else { appendTime="\nAmélioration inactive"; }
                     tools.customToast(mA,buff.getName()+appendTime,"center");
+                } else if (buff.isFromSpell()){
+                    popupSpellCastNormal();
                 } else {
-                    Perso yfa = MainActivity.yfa;
-                    int currentRankAvail = yfa.getAllResources().getResource("spell_rank_" + buff.getSpellRank()).getCurrent();
-                    if (currentRankAvail > 0) {
-                        AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
-                                .setIcon(R.drawable.ic_spell_book)
-                                .setTitle("Lancement du sort")
-                                .setMessage("Veux tu lancer le sort : " + buff.getName() + "\nInfo : Il te reste " + currentRankAvail + " sort(s) du rang " + buff.getSpellRank())
-                                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                })
-                                .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if(mListenerCancel!=null){mListenerCancel.onEvent();}
-                                    }
-                                })
-                                .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if(mListenerCast!=null){mListenerCast.onEvent();}
-                                    }
-                                });
-                        alertBuild.show();
-                    } else {
-                        tools.customToast(mA, "Tu n'as plus de sort de rang " + buff.getSpellRank() + " de disponible...", "center");
-                    }
+                    popupCapaCast();
                 }
             }
         });
         getMainFrame().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if (!closed && !buff.isPerma()) {
-                    Perso yfa = MainActivity.yfa;
-                    int currentRankAvail = yfa.getResourceValue("spell_rank_" + (int) (buff.getSpellRank()+2));
-                    if (currentRankAvail > 0) {
-                        AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
-                                .setIcon(R.drawable.ic_spell_book)
-                                .setTitle("Lancement du sort (Ext)")
-                                .setMessage("Veux tu lancer le sort étendu en durée : " + buff.getName() + "\nInfo : Il te reste " + currentRankAvail + " sort(s) du rang " +(int) (buff.getSpellRank()+2))
-                                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                })
-                                .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (mListenerCancel != null) {
-                                            mListenerCancel.onEvent();
-                                        }
-                                    }
-                                })
-                                .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (mListenerCastExtend != null) {
-                                            mListenerCastExtend.onEvent();
-                                        }
-                                    }
-                                });
-                        alertBuild.show();
-                    } else {
-                        tools.customToast(mA, "Tu n'as plus de sort de rang " + (int) (buff.getSpellRank()+1) + " de disponible...", "center");
+                if (!closed && !buff.isPerma() ) {
+                    if(buff.isFromSpell()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mA);
+                        builder.setTitle("Nombre d'utilisations de l'extension de durée");
+                        // add a radio button list
+                        int checkedItem = -1;
+                        String[] numbers = {"1", "2", "3", "4", "5"};
+                        builder.setSingleChoiceItems(numbers, checkedItem, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                popupMultiDuraExtend(which + 1);
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    } else if(buff.isFromBloodLine()) {
+                        popupCapaCastExtend();
                     }
                 }
                 return true;
             }
         });
+    }
+
+    private void popupSpellCastNormal() {
+        int currentRankAvail = yfa.getAllResources().getResource("spell_rank_" + buff.getSpellRank()).getCurrent();
+        if (currentRankAvail > 0) {
+            AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
+                    .setIcon(R.drawable.ic_spell_book)
+                    .setTitle("Lancement du sort")
+                    .setMessage("Veux tu lancer le sort : " + buff.getName() + "\nInfo : Il te reste " + currentRankAvail + " sort(s) du rang " + buff.getSpellRank())
+                    .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(mListenerCancel!=null){mListenerCancel.onEvent();}
+                        }
+                    })
+                    .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(mListenerCast!=null){mListenerCast.onEvent();}
+                        }
+                    });
+            alertBuild.show();
+        } else {
+            tools.customToast(mA, "Tu n'as plus de sort de rang " + buff.getSpellRank() + " de disponible...", "center");
+        }
+    }
+
+    private void popupCapaCast() {
+        int currentUsageAvail = yfa.getAllResources().getResource(buff.getId().replace("capacity","resource")).getCurrent();
+        if (currentUsageAvail > 0) {
+            AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
+                    .setIcon(R.drawable.ic_spell_book)
+                    .setTitle("Lancement de la capacité")
+                    .setMessage("Veux tu lancer la capacité : " + buff.getName() + "\nInfo : Il te reste " + currentUsageAvail + " utilisation.")
+                    .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(mListenerCancel!=null){mListenerCancel.onEvent();}
+                        }
+                    })
+                    .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(mListenerCast!=null){mListenerCast.onEvent();}
+                        }
+                    });
+            alertBuild.show();
+        } else {
+            tools.customToast(mA, "Tu n'as plus d'utilisation de la capacité " + buff.getName() + "...", "center");
+        }
+    }
+
+    private void popupCapaCastExtend() {
+        int currentUsageAvail = yfa.getAllResources().getResource(buff.getId().replace("capacity","resource")).getCurrent();
+        int surgeEpicBlood =  yfa.getAllResources().getResource("capacity_epic_bloodline".replace("capacity","resource")).getCurrent();
+        if (currentUsageAvail > 0 && surgeEpicBlood>0) {
+            final int nCast=yfa.getAllCapacities().getCapacity("capacity_epic_bloodline").getValue();
+            AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
+                    .setIcon(R.drawable.ic_spell_book)
+                    .setTitle("Lancement de la capacité (Ext*"+nCast+")")
+                    .setMessage("Veux tu surcharger la capacité : " + buff.getName() +
+                            "\nInfo : Il te reste " + currentUsageAvail + " utilisation de la capacité."+
+                            "\nEt " + surgeEpicBlood + " utilisation de lignage épique.")
+                    .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (mListenerCancel != null) {
+                                mListenerCancel.onEvent();
+                            }
+                        }
+                    })
+                    .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (mListenerCastExtend != null) {
+                                mListenerCastExtend.onEvent(nCast);
+                            }
+                        }
+                    });
+            alertBuild.show();
+        } else {
+            if(currentUsageAvail<=0) {
+                tools.customToast(mA, "Tu n'as plus d'utilisation de la capacité " + buff.getName() + "...", "center");
+            } else {
+                tools.customToast(mA, "Tu n'as plus d'utilisation de lignage épique ...", "center");
+            }
+        }
+    }
+
+    private void popupMultiDuraExtend(final int nCast) {
+        int currentRankAvail = yfa.getResourceValue("spell_rank_" + (int) (buff.getSpellRank()+nCast));
+        if (currentRankAvail > 0) {
+            AlertDialog.Builder alertBuild = new AlertDialog.Builder(mA)
+                    .setIcon(R.drawable.ic_spell_book)
+                    .setTitle("Lancement du sort (Ext*"+nCast+")")
+                    .setMessage("Veux tu lancer le sort étendu en durée : " + buff.getName() + "\nInfo : Il te reste " + currentRankAvail + " sort(s) du rang " +(int) (buff.getSpellRank()+nCast))
+                    .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setNeutralButton("Enlever", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (mListenerCancel != null) {
+                                mListenerCancel.onEvent();
+                            }
+                        }
+                    })
+                    .setPositiveButton("Lancer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (mListenerCastExtend != null) {
+                                mListenerCastExtend.onEvent(nCast);
+                            }
+                        }
+                    });
+            alertBuild.show();
+        } else {
+            tools.customToast(mA, "Tu n'as plus de sort de rang " + (int) (buff.getSpellRank()+1) + " de disponible...", "center");
+        }
     }
 
     public interface OnCastEventListener {
@@ -232,7 +330,7 @@ public class BuffView {
     }
 
     public interface OnCastExtendEventListener {
-        void onEvent();
+        void onEvent(int nCast);
     }
 
     public void setCastExtendEventListener(OnCastExtendEventListener eventListener) {

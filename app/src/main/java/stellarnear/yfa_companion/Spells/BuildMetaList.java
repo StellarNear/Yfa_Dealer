@@ -14,6 +14,9 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_companion.Activities.MainActivity;
+import stellarnear.yfa_companion.Perso.Buff;
+import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Tools;
 
 public class BuildMetaList {
@@ -21,11 +24,16 @@ public class BuildMetaList {
     private static BuildMetaList instance = null;
     private MetaList metaList;
     private Tools tools=new Tools();
+    private Perso yfa = MainActivity.yfa;
 
     public static BuildMetaList getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
         if (instance==null){
             instance = new BuildMetaList(mC);
         }
+        return instance;
+    }
+
+    public static BuildMetaList getInstance() {  //pour eviter de relire le xml à chaque fois
         return instance;
     }
 
@@ -91,6 +99,11 @@ public class BuildMetaList {
     }
 
     public MetaList getMetaList() {
-        return new MetaList(this.metaList); //pour que chaque sort ai sa version de la métalist
+        MetaList metaList = new MetaList(this.metaList); //pour que chaque sort ai sa version de la métalist
+        Buff parangon = yfa.getAllBuffs().getBuffByID("parangon_tempfeat");
+        if(parangon!=null && parangon.isActive() && parangon.getTempFeat().equalsIgnoreCase("tempfeat_magic_echo")){
+            metaList.add(0,new Metamagic("meta_echo","Écho magique","Peut le lancer le sort une seconde fois dans la même journée. Aucun effet permettant au personnage de préparer à nouveau ou de relancer un sort n'est utilisable avec Écho magique. La seconde incantation ne nécessite pas de dépenser un emplacement de sort utilisable. Un écho magique utilise un emplacement de sort de trois niveaux de plus que le niveau réel du sort.",3,true));
+        }
+        return metaList;
     }
 }

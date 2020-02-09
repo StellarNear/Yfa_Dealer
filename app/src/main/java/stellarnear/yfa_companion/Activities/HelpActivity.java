@@ -236,7 +236,7 @@ public class HelpActivity extends AppCompatActivity {
         if(mapButtonCat.get(button).equalsIgnoreCase("Sorts")){
             SpellList spellsToDisplay=new SpellList();
             spellsToDisplay.add(BuildSpellList.getInstance(mC).getSpellList());
-            spellsToDisplay.add(new AllBuffs(mC).getAllBuffSpells());
+            spellsToDisplay.add(yfa.getAllBuffs().getAllBuffSpells());
             for (Spell spell : spellsToDisplay.asList()){
                 View view = getLayoutInflater().inflate(R.layout.custom_help_info_flipper,vg,false);
                 String dmgTxt="Dégat : "+spell.getDmg_type(); if(spell.getDmg_type().equalsIgnoreCase("")){ dmgTxt="Utilitaire";}

@@ -1,6 +1,8 @@
 package stellarnear.yfa_companion.Perso;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,6 +18,9 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.Tools;
+
 /**
  * Created by jchatron on 26/12/2017.
  */
@@ -24,17 +29,19 @@ public class AllCapacities {
     private Context mC;
     private List<Capacity> allCapacities = new ArrayList<>();
     private Map<String,Capacity> mapIdcapacity =new HashMap<>();
+    private Tools tools=new Tools();
 
     public AllCapacities(Context mC)
     {
         this.mC = mC;
-        buildKiCapacitiesList();
+        buildCapacitiesList();
     }
 
-    private void buildKiCapacitiesList() {
+    private void buildCapacitiesList() {
         allCapacities = new ArrayList<>();
         mapIdcapacity =new HashMap<>();
         try {
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
             InputStream is = mC.getAssets().open("capacities.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -50,13 +57,19 @@ public class AllCapacities {
                 Node node = nList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
-                    Capacity Capacity=new Capacity(
+                    Capacity capacity=new Capacity(
                             readValue("name", element2),
-                            readValue("descr", element2),
+                            readValue("shortname", element2),
                             readValue("type", element2),
-                            readValue("id", element2));
-                    allCapacities.add(Capacity);
-                    mapIdcapacity.put(Capacity.getId(),Capacity);
+                            readValue("descr", element2),
+                            readValue("id", element2),
+                            readValue("dailyuse", element2),
+                            readValue("value", element2),
+                            readValue("duration", element2),
+                            tools.toBool(readValue("blood_line", element2)),
+                            mC);
+                    allCapacities.add(capacity);
+                    mapIdcapacity.put(capacity.getId(),capacity);
                 }
             }
             is.close();
@@ -87,18 +100,25 @@ public class AllCapacities {
         }
     }
 
-    public boolean capacityExist(String id) {
-        boolean val = false;
-        for (Capacity capacity : allCapacities){
-            if (capacity.getId().equalsIgnoreCase(id)){
-                val=true;
-                break;
-            }
-        }
-        return val;
+    public Capacity getCapacity(String id) {
+        Capacity selectedCapa;
+        try {
+            selectedCapa= mapIdcapacity.get(id);
+        } catch (Exception e){  selectedCapa=null;  }
+        return selectedCapa;
     }
 
     public void reset() {
-        buildKiCapacitiesList();
+        buildCapacitiesList();
+    }
+
+    public boolean capacityIsActive(String id) {
+        boolean val=false;
+        try {
+            val= getCapacity(id).isActive();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return val;
     }
 }

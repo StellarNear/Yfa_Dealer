@@ -64,6 +64,7 @@ public class SettingsFragment extends PreferenceFragment {
                     if (key.contains("spell_rank_")|| key.contains("spell_conv_rank_")){
                         yfa.getAllResources().getRankManager().refreshMax();
                     }
+                    if (key.contains("switch_capacity_")){yfa.getAllResources().refreshCapaListResources();}
                 }
             };
 
@@ -390,6 +391,19 @@ public class SettingsFragment extends PreferenceFragment {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 yfa.getHallOfFame().reset();
+                                tools.customToast(mC,"Reset éffectué","center");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+                break;
+            case "appli_reset_buff":
+                new AlertDialog.Builder(mC)
+                        .setTitle("Demande de confirmation")
+                        .setMessage("Confirmes-tu l'action de réinitialiser la liste des buffs ?")
+                        .setIcon(android.R.drawable.ic_menu_help)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                yfa.getAllBuffs().reset();
                                 tools.customToast(mC,"Reset éffectué","center");
                             }
                         })

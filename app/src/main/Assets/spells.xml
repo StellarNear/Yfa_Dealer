@@ -330,7 +330,20 @@
         <save_type>ref[1/2]</save_type>
         <rank>3</rank>
     </spell>
-    
+
+
+    <spell>
+        <name>Parangon soudain</name>
+        <descr>Le personnage déborde temporairement de pouvoir et incarne tous les points forts de ses ancêtres humains et elfiques, pour devenir un parangon des deux races, un être plus accompli qu’un elfe ou un humain ne peut l’être. Contrairement aux autres effets de métamorphose, celui-ci ne modifie pas la forme générale du personnage qui conserve donc tous ses pouvoirs surnaturels et extraordinaires, ainsi que son équipement.
+Tant que le sort fait effet, il reçoit un bonus d’altération de +2 à la Dextérité et l’Intelligence et gagne un don supplémentaire, au choix, pour lequel il remplit les conditions requises, à choisir au moment de l’incantation.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>3</rank>
+        <id>parangon_tempfeat</id>
+    </spell>
+
      <spell>
         <name>Protection contre les énérgies destructives</name>
         <descr>Bouclier de 12pts/lvl (max +120). Ce sort offre une immunité temporaire contre le type d’énergie sélectionné (acide, électricité, feu, froid ou son).</descr>

@@ -42,6 +42,8 @@ import java.util.Map;
 
 import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.Equipment;
+import stellarnear.yfa_companion.Spells.Spell;
+import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.Stats.Stat;
 import stellarnear.yfa_companion.Stats.StatsList;
 
@@ -675,6 +677,28 @@ public class TinyDB {
         ArrayList<Buff> objects = new ArrayList<Buff>();
         for (String jObjString : objStrings) {
             Buff value = gson.fromJson(jObjString, Buff.class);
+            objects.add(value);
+        }
+        return objects;
+    }
+
+
+    public void putSpellList(String key, SpellList echoList) {
+        checkForNullKey(key);
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for (Spell obj : echoList.asList()) {
+            objStrings.add(gson.toJson(obj));
+        }
+        putListString(key, objStrings);
+    }
+
+    public SpellList getSpellList(String key) {
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = getListString(key);
+        SpellList objects = new SpellList();
+        for (String jObjString : objStrings) {
+            Spell value = gson.fromJson(jObjString, Spell.class);
             objects.add(value);
         }
         return objects;

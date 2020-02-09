@@ -5,16 +5,16 @@
 
     <integer name="spell_rank_1_def">10</integer>
     <integer name="spell_rank_2_def">10</integer>
-    <integer name="spell_rank_3_def">9</integer>
+    <integer name="spell_rank_3_def">10</integer>
     <integer name="spell_rank_4_def">9</integer>
     <integer name="spell_rank_5_def">9</integer>
     <integer name="spell_rank_6_def">9</integer>
-    <integer name="spell_rank_7_def">8</integer>
+    <integer name="spell_rank_7_def">9</integer>
     <integer name="spell_rank_8_def">8</integer>
     <integer name="spell_rank_9_def">14</integer>
     <integer name="spell_rank_10_def">8</integer>
-    <integer name="spell_rank_11_def">7</integer>
-    <integer name="spell_rank_12_def">4</integer>
+    <integer name="spell_rank_11_def">8</integer>
+    <integer name="spell_rank_12_def">5</integer>
     <integer name="spell_rank_13_def">0</integer>
 
     <integer name="spell_conv_rank_1_def">0</integer>
@@ -23,18 +23,19 @@
     <integer name="spell_conv_rank_4_def">9</integer>
     <integer name="spell_conv_rank_5_def">2</integer>
     <integer name="spell_conv_rank_6_def">2</integer>
+    <integer name="spell_conv_rank_7_def">2</integer>
 
     <integer name="percent_fullscreen_customdialog">90</integer>
     <integer name="percent_fullscreen_customdialog_equipment_list">80</integer>
     <integer name="custom_alert_long_duration_def">5000</integer>
 
-    <integer name="ability_lvl_def">26</integer>
-    <integer name="current_xp_def">20369000</integer>
+    <integer name="ability_lvl_def">27</integer>
+    <integer name="current_xp_def">29018830</integer>
     <integer name="add_current_xp_def">0</integer>
     <integer name="add_gold_def">0</integer>
 
     <integer name="money_plat_def">1839</integer>
-    <integer name="money_gold_def">1408819</integer>
+    <integer name="money_gold_def">1409001</integer>
     <integer name="money_silver_def">6</integer>
     <integer name="money_copper_def">0</integer>
 
@@ -69,11 +70,11 @@
 
 
     <!--  Rank de maitrise des compétences  -->
-    <integer name="skill_magic_art_rankDEF">26</integer>
+    <integer name="skill_magic_art_rankDEF">27</integer>
     <integer name="skill_acrob_rankDEF">0</integer>
-    <integer name="skill_craft_rankDEF">12</integer>
-    <integer name="skill_bluff_rankDEF">16</integer>
-    <integer name="skill_myst_rankDEF">26</integer>
+    <integer name="skill_craft_rankDEF">13</integer>
+    <integer name="skill_bluff_rankDEF">17</integer>
+    <integer name="skill_myst_rankDEF">27</integer>
     <integer name="skill_religion_rankDEF">0</integer>
     <integer name="skill_stealth_rankDEF">0</integer>
     <integer name="skill_diplomacy_rankDEF">2</integer>
@@ -81,7 +82,7 @@
     <integer name="skill_climb_rankDEF">0</integer>
     <integer name="skill_estimate_rankDEF">8</integer>
     <integer name="skill_escape_rankDEF">0</integer>
-    <integer name="skill_intimidate_rankDEF">16</integer>
+    <integer name="skill_intimidate_rankDEF">17</integer>
     <integer name="skill_swim_rankDEF">0</integer>
     <integer name="skill_percept_rankDEF">0</integer>
     <integer name="skill_heal_rankDEF">0</integer>
@@ -113,10 +114,10 @@
     <integer name="skill_fly_bonusDEF">3</integer>
 
     <!-- Resources  -->
-    <integer name="resource_hp_base_def">134</integer>
+    <integer name="resource_hp_base_def">137</integer>
     <integer name="resource_hp_shield_def">0</integer>
     <integer name="resource_regen_def">0</integer>
-    <integer name="resource_heroic_def">2</integer>
-    <integer name="epic_save_def">2</integer>
+    <integer name="resource_heroic_def">1</integer>
+    <integer name="epic_save_def">3</integer>
 
 </resources>

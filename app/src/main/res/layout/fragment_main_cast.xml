@@ -70,22 +70,37 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:weightSum="100">
-
-            <ScrollView
-                android:id="@+id/main_scroll_relat"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="89"
-                >
-
+                android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/linear1"
+                    android:id="@+id/special_spellslists_bar"
+                    android:background="@drawable/background_special_spellslists"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:textAlignment="center"
-                    />
-            </ScrollView>
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/general_margin"
+                    android:visibility="gone"/>
+
+
+                <ScrollView
+                    android:id="@+id/main_scroll_relat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/linear1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:textAlignment="center"
+                        />
+                </ScrollView>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/side_bar"

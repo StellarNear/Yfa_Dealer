@@ -438,4 +438,8 @@ public class Spell {
     public int getDmgResult() {
        return this.dmgResult;
     }
+
+    public void resetMetas() {
+        this.metaList= BuildMetaList.getInstance().getMetaList();
+    }
 }

@@ -28,7 +28,8 @@ public class DisplayedText {
             dmg = String.valueOf(dmg_int);
             if(spell.getFlat_dmg()>0){dmg_int+=spell.getFlat_dmg();}
         } else  if(spell.getMetaList().metaIdIsActive("meta_perfect")){
-            Integer dmg_int =calculation.nDice(spell) * calculation.diceType(spell) *2;
+            int nCast = spell.getMetaList().getMetaByID("meta_perfect").getnCast();
+            Integer dmg_int =calculation.nDice(spell) * calculation.diceType(spell) *(1+nCast);
             if(spell.getFlat_dmg()>0){dmg_int+=spell.getFlat_dmg();}
             dmg = String.valueOf(dmg_int);
         }else  if(spell.getMetaList().metaIdIsActive("meta_max")) {
@@ -86,7 +87,10 @@ public class DisplayedText {
                 result = result * lvl;
                 duration_unit = dura.replaceAll("/lvl","").replaceAll("[0-9?!]","");
             }
-            if(spell.getMetaList().metaIdIsActive("meta_duration")){ result=result*2; }
+            if(spell.getMetaList().metaIdIsActive("meta_duration")){
+                int nCast=spell.getMetaList().getMetaByID("meta_duration").getnCast();
+                result=result*(1+nCast);
+            }
             dura = result+duration_unit;
         }
         return dura;

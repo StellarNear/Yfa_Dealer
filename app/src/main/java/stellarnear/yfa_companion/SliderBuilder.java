@@ -81,7 +81,7 @@ public class SliderBuilder {
         if(!spell.isCast()) {
             slided=true;
 
-            yfa.castSpell(spell);
+            yfa.castSpell(spell,mC);
 
             if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
                 yfa.castConvSpell(spell.getConversion().getRank());

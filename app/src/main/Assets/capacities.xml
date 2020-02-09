@@ -22,7 +22,12 @@
         <type>Trait</type>
         <descr>+2 aux tests de Perception.</descr>
     </capacity>
-
+    <capacity>
+        <name>Lignage magique</name>
+        <type>Trait</type>
+        <descr>Un des parents du personnage était un lanceur de sorts doué qui utilisait souvent la métamagie et qui a développé de nombreux objets magiques, voire peut-être même un nouveau sort ou deux. Le personnage a hérité d’une partie de son talent. Choisissez un sort lorsque le personnage acquiert ce trait. Lorsque le personnage applique des dons de métamagie à ce sort, le niveau final du sort modifié est calculé comme si le niveau normal du sort était inférieur de 1 à son niveau réel.</descr>
+        <id>capacity_magic_shock_spell</id>
+    </capacity>
     <capacity>
         <name>Voué à un grand destin</name>
         <type>Spécial</type>
@@ -30,8 +35,14 @@
     </capacity>
     <capacity>
         <name>Toucher de la destinée</name>
+        <id>capacity_destiny_touch</id>
+        <shortname>Touch. dest.</shortname>
+        <duration>1round</duration>
+        <value>lvl/2</value>
+        <dailyuse>3+ability_charisme</dailyuse>
         <type>Lignage</type>
         <descr>Par une action simple accorder un bonus d’intuition aux jets d’attaque, tests de compétence, carac et JDS =1/2 NIV ensorceleur pendant 1 round, utilisable 3 + modif CHA par jour.</descr>
+        <blood_line>true</blood_line>
     </capacity>
     <capacity>
         <name>Destiné</name>
@@ -54,5 +65,15 @@
         <descr>Tout crit contre l’ensorceleur n'est confirmé que par 20 nat. Tout crit du personnage sur un sort est confirmé. Possibilité de réussir un test de NLS contre RM 1fois/jour avant de lancer le dé.</descr>
     </capacity>
 
+
+    <capacity>
+        <name>Lignage épique</name>
+        <shortname>Lign. épique</shortname>
+        <type>Lignage</type>
+        <descr>L’ensorceleur peut appliquer un don de métamagie sur ses pouvoirs de lignage. L’ensorceleur peut utiliser cette compétence un nombre de fois égal à son modificateur de charisme par jour (minimum 1).</descr>
+        <id>capacity_epic_bloodline</id>
+        <dailyuse>ability_charisme</dailyuse>
+        <value>(lvl-18)/2</value>
+    </capacity>
 
 </records>

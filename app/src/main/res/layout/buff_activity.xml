@@ -37,6 +37,23 @@
             android:layout_marginTop="@dimen/general_margin"
             android:gravity="center">
 
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/buttonSec6"
+                    android:textSize="@dimen/buff_hour_text"
+                    android:layout_width="@dimen/buff_hour_button"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@drawable/background_tier_title"
+                    android:text="+1round"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -27,7 +27,7 @@ public class Calculation {
             val+=spell.getMetaList().getMetaByID("meta_heighten").getnCast() * spell.getMetaList().getMetaByID("meta_heighten").getUprank();
         }
         if(spell.getMetaList().metaIdIsActive("meta_focus")){
-            val+=2;
+            val+=2*spell.getMetaList().getMetaByID("meta_focus").getnCast();
         }
         if(spell.getConversion().getArcaneId().equalsIgnoreCase("save")){
             val+=(int) (spell.getConversion().getRank()/2.0);
@@ -88,7 +88,8 @@ public class Calculation {
             val = val * 2;
         }
         if(spell.getMetaList().metaIdIsActive("meta_extend")){
-            val = (int)(val * 1.5);
+            int nCast = spell.getMetaList().getMetaByID("meta_extend").getnCast();
+            val = (int)(val * (1+  nCast*0.5));
         }
         return val;
     }
@@ -114,8 +115,15 @@ public class Calculation {
             boolean metaFreePerfect = spell.getPerfectMetaId().equalsIgnoreCase(meta.getId());
             boolean metaFreeArcaneConv = spell.getConversion().getArcaneId().contains("metamagic") && spell.getConversion().getArcaneId().contains(meta.getId());
             if( !( metaFreeArcaneConv || metaFreePerfect ) ){
-                val += meta.getUprank()*meta.getnCast();
+                int rankCost = meta.getUprank();
+                if(meta.getUprank()>1 && yfa.featIsActive("feat_improved_metamagic")){ rankCost--; }
+                val += rankCost*meta.getnCast();
             }
+        }
+        if(spell.getID().equalsIgnoreCase("Éclair")
+                &&spell.getMetaList().getAllActivesMetas().asList().size()>0
+                &&yfa.getAllCapacities().capacityIsActive("capacity_magic_shock_spell")){
+            val--;
         }
         return val;
     }

@@ -110,7 +110,9 @@ public class TestAlertDialog {
             } else {
                 summaryTxt="Bonus : "+ yfa.getAbilityScore(abi.getId());
             }
-
+        }
+        if(yfa.getAllBuffs().getBuffByID("capacity_destiny_touch").isActive()){ //TODO REFACTO TestAlertDialog on a pa sbesoin du bonus skill et fair eun truc propre avec un private valueResult
+            summaryTxt+=" +"+yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();
         }
         icon.setImageDrawable(mC.getDrawable(imgId));
 

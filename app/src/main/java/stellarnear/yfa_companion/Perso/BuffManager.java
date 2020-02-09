@@ -32,8 +32,8 @@ public class BuffManager {
             });
             buffView.setCastExtendEventListener(new BuffView.OnCastExtendEventListener() {
                 @Override
-                public void onEvent() {
-                    castBuffExtend();
+                public void onEvent(int nCast) {
+                    castBuffExtend(nCast);
                 }
             });
         }
@@ -47,7 +47,11 @@ public class BuffManager {
 
     private void castBuff(){
         buff.normalCast(mA,yfa.getCasterLevel());
-        yfa.castSpell(buff.getSpellRank());
+        if(buff.isFromSpell()) {
+            yfa.castSpell(buff.getSpellRank());
+        } else {
+            yfa.getAllResources().getResource(buff.getId().replace("capacity","resource")).spend(1);
+        }
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
             yfa.getAllResources().getResource("resource_hp").shield(20);
@@ -56,9 +60,11 @@ public class BuffManager {
 
     }
 
-    private void castBuffExtend(){
-        buff.extendCast(mA,yfa.getCasterLevel());
-        yfa.castSpell(buff.getSpellRank()+1);
+    private void castBuffExtend(int nCastDuration){
+        buff.extendCast(mA,yfa.getCasterLevel(),nCastDuration);
+        if(buff.isFromSpell()) {
+            yfa.castSpell(buff.getSpellRank() + nCastDuration);
+        }
         yfa.getAllBuffs().saveBuffs();
         if(buff.getName().equalsIgnoreCase("Simulacre de vie supérieur")){
             yfa.getAllResources().getResource("resource_hp").shield(20);

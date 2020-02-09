@@ -26,6 +26,10 @@ public class MetaList {
         listMeta.add(metamagic);
     }
 
+    public void add(int i, Metamagic metamagic) {
+        listMeta.add(i,metamagic);
+    }
+
     public Metamagic getMetaByID(String id){
         Metamagic metaAnswer = null;
         for (Metamagic meta : listMeta){
@@ -98,4 +102,6 @@ public class MetaList {
         }
         return listMetaActives;
     }
+
+
 }

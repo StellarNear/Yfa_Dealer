@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.5.3"</string>
-    <string name="time_spend">253h</string>
+    <string name="version">"v2.0"</string>
+    <string name="time_spend">264h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V2.0
+-Ajout d'un nouveau manager des cadrans de l'écran principal pour une meilleur visibilité
+-Nouveau dons métamagie améliorée épique
+-Lignage magique sur le sort Eclair
+-Nouveau sort Parangon soudain (avec Buff associé)
+-Selection du dons associé et possibilité
+-Gestion de lancement multiple des métamagies
+-Les buffs peuvent etre lancer avec de multiple extension de durée dans le menu des buffs (long click)
+-Ajout des capacitées actives ! avec ressoruces associées affichés dans la page principale
+-Un buff peut etre associé à une capacité si elle a une durée
+-Si un buff vient du lignage il peut etre surcharger avec le Lignage épique pour augementer sa durée (long click)
+-Ajout de la capacité Touchée de la destinée
+----------------------------------------------------------------------------------
 Patch note V1.5.3
 -Serialisation des sorts pour envoi sur internet
 -Metamagie flèche naturalisée via shadowlink

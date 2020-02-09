@@ -25,12 +25,14 @@ import stellarnear.yfa_companion.Tools;
 public class AllBuffs {
 
     private ArrayList<Buff> listBuffs = null;
-
+    private AllCapacities allCapacities;
     private TinyDB tinyDB;
     private Context mC;
     private Tools tools=new Tools();
 
-    public AllBuffs(Context mC){
+
+    public AllBuffs(Context mC,AllCapacities allCapacities){
+        this.allCapacities=allCapacities;
         this.mC=mC;
         try {
             refreshListBuffs();
@@ -62,13 +64,27 @@ public class AllBuffs {
         SpellList allSpells = new SpellList();
         allSpells.add(BuildSpellList.getInstance(mC).getSpellList());
         allSpells.add(getAllBuffSpells());
-        List<String> allBuffSpellsNames= Arrays.asList("Coup au but","Peau de pierre","Lien télépathique","Renvoi des sorts","Moment de préscience","Liberté de mouvement","Simulacre de vie supérieur");
+        List<String> allBuffSpellsNames= Arrays.asList("Coup au but","Peau de pierre","Lien télépathique","Renvoi des sorts","Moment de préscience","Liberté de mouvement","Parangon soudain","Simulacre de vie supérieur");
         List<String> allBuffPermaSpellsNames= Arrays.asList("Détection de la magie","Détection de l'invisibilité","Don des langues","Lecture de la magie","Vision dans le noir","Vision magique", "Vision des auras","Flou","Echolocalisation","Prémonition","Esprit impénétrable","Bouclier","Résistance","Vision lucide");
         for (Spell spell : allSpells.asList()){
             if(allBuffSpellsNames.contains(spell.getName())){
-                listBuffs.add(new Buff(spell,false));
+                Buff buff = new Buff(spell,false);
+                listBuffs.add(buff);
+                if(spell.getName().equalsIgnoreCase("Parangon soudain")){
+                    buff.setAddFeatEventListener(new Buff.OnAddFeatEventListener() {
+                        @Override
+                        public void onEvent() {
+                            saveLocalBuffs();
+                        }
+                    });
+                }
             } else if (allBuffPermaSpellsNames.contains(spell.getName())){
                 listBuffs.add(new Buff(spell,true));
+            }
+        }
+        for (Capacity capacity:allCapacities.getAllCapacitiesList()){
+            if(!capacity.getDuration().equalsIgnoreCase("")){
+                listBuffs.add(new Buff(capacity,false));
             }
         }
     }

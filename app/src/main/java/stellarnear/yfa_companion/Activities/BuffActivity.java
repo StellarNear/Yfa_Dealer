@@ -111,6 +111,12 @@ public class BuffActivity extends AppCompatActivity {
     }
 
     private void setTimeButtons() {
+        findViewById(R.id.buttonSec6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTimeToBuffs(6);
+            }
+        });
         findViewById(R.id.buttonMin30).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

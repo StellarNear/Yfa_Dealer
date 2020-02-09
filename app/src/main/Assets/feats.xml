@@ -13,6 +13,14 @@
         <descr>Renvoyer un sort contré vers le lanceur.</descr>
     </feat>
 
+    <feat>
+        <name>Métamagie améliorée</name>
+        <type>feat_magic</type>
+        <descr>Réduit le coût en emplacement de sort de tous vos dons de métamagie de 1, jusqu’à un minimum de +1. Ce don n’a aucun effet sur les dons de métamagie dont la modification de l’emplacement de sort est de 1 ou moins.
+
+Ce don peut être pris plusieurs fois. Ses effets se cumulent, néanmoins le minimum pour la modification de l’emplacement de sort de vos dons de métamagie sera toujours de +1.</descr>
+        <id>feat_improved_metamagic</id>
+    </feat>
 
     <!-- DEF -->
     <feat>
@@ -36,6 +44,8 @@
         <type>feat_other</type>
         <descr>Le personnage sait fabriquer des objets merveilleux, un type d’objets magiques. Le personnage peut fabriquer une grande variété d’objets merveilleux. Le processus de fabrication prend un jour par tranche de 1000 po du prix de base de l’objet. Le personnage doit acheter les matières premières nécessaires à la moitié de leur prix de base (Voir la page sur la création d'objets magiques).</descr>
     </feat>
+
+
 
 
 </records>

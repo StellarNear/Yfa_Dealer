@@ -40,6 +40,7 @@ public class BuildSpellList extends AppCompatActivity {
         addSpells(mC,"Mythic");
     }
 
+
     private void addSpells(Context mC, String mode) {
         try {
             InputStream is = mC.getAssets().open("spells"+mode+".xml");
@@ -99,5 +100,12 @@ public class BuildSpellList extends AppCompatActivity {
             return "";
         }
     }
+
+    public static void resetMetas() {
+        for (Spell spell : instance.getSpellList().asList()){
+            spell.resetMetas();
+        }
+    }
+
 
 }

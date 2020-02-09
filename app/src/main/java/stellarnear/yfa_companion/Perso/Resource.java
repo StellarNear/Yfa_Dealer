@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
+import stellarnear.yfa_companion.R;
+
 /**
  * Created by jchatron on 04/01/2018.
  */
@@ -18,8 +20,14 @@ public class Resource {
     private int shield=0;//pour les hps
     private boolean testable;
     private boolean hide;
-    private Drawable img;
+    private boolean fromCapacity=false;
+    private boolean fromSpell=false;
+    private boolean infinite=false;
+    private Capacity cap=null;
+    private int imgId;
     private SharedPreferences settings;
+    private String capaDescr="";
+    private Context mC;
 
     public Resource(String name, String shortname, Boolean testable, Boolean hide, String id, Context mC) {
         this.name = name;
@@ -30,11 +38,15 @@ public class Resource {
         this.id = id;
         this.settings = PreferenceManager.getDefaultSharedPreferences(mC);
         int imgId = mC.getResources().getIdentifier(id, "drawable", mC.getPackageName());
+        int imgIdCapa =mC.getResources().getIdentifier(id.replace("resource_","capacity_"), "drawable", mC.getPackageName()); // pour les resoruces issue de capa
         if (imgId != 0) {
-            this.img = mC.getDrawable(imgId);
+            this.imgId =imgId;
+        } else if( imgIdCapa!= 0) {
+            this.imgId = imgIdCapa;
         } else {
-            this.img = null;
+            this.imgId = 0;
         }
+        this.mC=mC;
     }
 
     public String getName() {
@@ -47,8 +59,54 @@ public class Resource {
     }
 
     public void setMax(int max) {
+        if(this.id.equalsIgnoreCase("resource_hp")&&this.max !=0 && max>this.max){
+            this.current+=max-this.max;
+            saveCurrentToSettings();
+        }
+
         this.max = max;
         if(this.current>this.max){this.current=this.max;saveCurrentToSettings();}
+    }
+
+    public void setFromCapacity(Capacity cap){
+        this.fromCapacity=true;
+        this.cap=cap;
+        this.capaDescr=cap.getDescr();
+        if(cap.isInfinite()){
+            this.infinite=true;
+        } else {
+            setMax(cap.getDailyUse());
+        }
+    }
+
+    public void refreshFromCapacity(){
+        if(!cap.isInfinite()){
+            setMax(cap.getDailyUse());
+        }
+    }
+
+    public boolean isInfinite() {
+        return infinite;
+    }
+
+    public void setFromSpell() {
+        this.fromSpell=true;
+    }
+
+    public boolean isSpellResource() {
+        return this.fromSpell;
+    }
+
+    public String getCapaDescr() {
+        String res=capaDescr;
+        if(this.cap.getValue()>0){
+            res+="\n\nValeur : "+this.cap.getValue();
+        }
+        return res;
+    }
+
+    public boolean isFromCapacity() {
+        return fromCapacity;
     }
 
     public Integer getMax() {
@@ -131,7 +189,11 @@ public class Resource {
     }
 
     public Drawable getImg() {
-        return this.img;
+        if (imgId != 0) {
+            return mC.getDrawable(imgId);
+        } else {
+            return mC.getDrawable(R.drawable.mire_test);
+        }
     }
 
     public String getShortname() {
@@ -148,6 +210,10 @@ public class Resource {
             this.current=this.max;
             saveCurrentToSettings();
         }
+    }
+
+    public Capacity getCapa() {
+        return cap;
     }
 }
 

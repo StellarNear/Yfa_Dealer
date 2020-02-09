@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -45,6 +46,7 @@ import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
+import stellarnear.yfa_companion.Spells.EchoList;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.Targets;
@@ -137,6 +139,8 @@ public class MainActivityFragmentSpell extends Fragment {
 
 
     private void buildPage1() {
+        testEchosAndGuardians();
+
         listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList();
 
         int max_tier=yfa.getAllResources().getRankManager().getHighestTier();
@@ -310,6 +314,39 @@ public class MainActivityFragmentSpell extends Fragment {
                 }
                 Tiers.addView(spellLine);
             }
+        }
+    }
+
+    private void testEchosAndGuardians() {
+        if(EchoList.getInstance(getContext()).hasEcho()){
+            returnFragView.findViewById(R.id.special_spellslists_bar).setVisibility(View.VISIBLE);
+            addEchosAndGuardians((LinearLayout)returnFragView.findViewById(R.id.special_spellslists_bar));
+        } else {
+            returnFragView.findViewById(R.id.special_spellslists_bar).setVisibility(View.GONE);
+        }
+    }
+
+    private void addEchosAndGuardians(LinearLayout linear) {
+        linear.removeAllViews();
+        if(EchoList.getInstance(getContext()).hasEcho()){
+            TextView echo = new TextView(getContext());
+            String title = EchoList.getInstance(getContext()).getEchoList().size()+" Écho";
+            if(EchoList.getInstance(getContext()).getEchoList().size()>1){ title+="s magiques";}else { title+=" magique";}
+            echo.setText(title); echo.setTextSize(18);echo.setTypeface(null, Typeface.BOLD);
+            echo.setTextColor(getContext().getColor(R.color.colorPrimaryDark));
+            echo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EchoList.getInstance(getContext()).popupList(getActivity(),getContext());
+                }
+            });
+            EchoList.getInstance(getContext()).setRefreshEventListener(new EchoList.OnRefreshEventListener() {
+                @Override
+                public void onEvent() {
+                    testEchosAndGuardians();
+                }
+            });
+            linear.addView(echo);
         }
     }
 
