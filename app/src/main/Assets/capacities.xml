@@ -51,8 +51,11 @@
     </capacity>
     <capacity>
         <name>Accomplissement de la prophétie</name>
+        <shortname>Prophétie</shortname>
         <type>Lignage</type>
         <descr>Peut relancer n’importe quel jet d’attaque, confirmation de crit ou test NLS contre RM. Utilisable après le premier jet mais avant que le MJ en révèle les résultats. 1/jour au niv 9, 2 au niv 17.</descr>
+        <dailyuse>2</dailyuse>
+        <id>capacity_prophecy</id>
     </capacity>
     <capacity>
         <name>Près du but</name>

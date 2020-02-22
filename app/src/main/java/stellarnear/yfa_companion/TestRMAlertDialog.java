@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -234,7 +236,22 @@ public class TestRMAlertDialog {
             });
         }
 
-        callToAction.setText("Fin du test de\nniveau de lanceur de sort.");
+        if(yfa.getAllResources().getResource("resource_prophecy").getCurrent()>0){
+            callToAction.setText("Tu peux relancer une fois le test");
+            callToAction.setTextColor(Color.BLACK);  callToAction.setTextSize(18); callToAction.setGravity(Gravity.CENTER);
+            callToAction.setCompoundDrawablesWithIntrinsicBounds(tools.resize(mC,mC.getDrawable(R.drawable.resource_prophecy),100),null,null,null);
+            callToAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    yfa.getAllResources().getResource("resource_prophecy").spend(1);
+                    new PostData(mC,new PostDataElement(yfa.getAllCapacities().getCapacity("capacity_prophecy")));
+                    alertDialog.cancel();
+                    new TestRMAlertDialog( mA,  mC, spell ).showAlertDialog();
+                }
+            });
+        } else {
+            callToAction.setText("Fin du test de\nniveau de lanceur de sort.");
+        }
 
         Button failButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         failButton.setText("Raté");

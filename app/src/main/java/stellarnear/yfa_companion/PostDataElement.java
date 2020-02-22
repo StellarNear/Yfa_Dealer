@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import stellarnear.yfa_companion.Perso.Capacity;
 import stellarnear.yfa_companion.Rolls.Dice;
 import stellarnear.yfa_companion.Spells.Metamagic;
 import stellarnear.yfa_companion.Spells.Spell;
@@ -148,6 +149,16 @@ public class PostDataElement {
                     this.result = "Dégâts : " + spell.getDmgResult();
                 }
             }
+        }
+    }
+
+    public PostDataElement(Capacity capa) {
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+        this.date=formater.format(new Date());
+        this.typeEvent="Lancement capacité "+capa.getName();
+        this.detail=capa.getDescr();
+        if(capa.getValue()>0) {
+            this.result = "Valeur : " + capa.getValue();
         }
     }
 

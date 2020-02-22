@@ -100,10 +100,15 @@ public class BuildMetaList {
 
     public MetaList getMetaList() {
         MetaList metaList = new MetaList(this.metaList); //pour que chaque sort ai sa version de la métalist
-        Buff parangon = yfa.getAllBuffs().getBuffByID("parangon_tempfeat");
-        if(parangon!=null && parangon.isActive() && parangon.getTempFeat().equalsIgnoreCase("tempfeat_magic_echo")){
-            metaList.add(0,new Metamagic("meta_echo","Écho magique","Peut le lancer le sort une seconde fois dans la même journée. Aucun effet permettant au personnage de préparer à nouveau ou de relancer un sort n'est utilisable avec Écho magique. La seconde incantation ne nécessite pas de dépenser un emplacement de sort utilisable. Un écho magique utilise un emplacement de sort de trois niveaux de plus que le niveau réel du sort.",3,true));
+        try {
+            Buff parangon = yfa.getAllBuffs().getBuffByID("parangon_tempfeat");
+            if(parangon!=null && parangon.isActive() && parangon.getTempFeat().equalsIgnoreCase("tempfeat_magic_echo")){
+                metaList.add(0,new Metamagic("meta_echo","Écho magique","Peut le lancer le sort une seconde fois dans la même journée. Aucun effet permettant au personnage de préparer à nouveau ou de relancer un sort n'est utilisable avec Écho magique. La seconde incantation ne nécessite pas de dépenser un emplacement de sort utilisable. Un écho magique utilise un emplacement de sort de trois niveaux de plus que le niveau réel du sort.",3,true));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return metaList;
     }
 }
