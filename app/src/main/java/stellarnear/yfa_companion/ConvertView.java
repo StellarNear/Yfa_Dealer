@@ -44,7 +44,7 @@ public class ConvertView extends AppCompatActivity {
     private List<CheckBox> meta_selected=new ArrayList<>();
 
     private Perso yfa = MainActivity.yfa;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private Calculation calculation=new Calculation();
 
     private OnValidationEventListener mListener;

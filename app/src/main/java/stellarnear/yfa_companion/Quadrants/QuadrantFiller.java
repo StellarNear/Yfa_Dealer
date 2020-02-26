@@ -47,7 +47,7 @@ public class QuadrantFiller {
     private LayoutInflater inflater;
 
     private boolean fullscreen=false;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private View fullView;
     public QuadrantFiller(View mainView, Context mC, Activity mA) {
         this.mC=mC;

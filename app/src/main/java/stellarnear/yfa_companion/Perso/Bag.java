@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class Bag {
     private Activity mA;
     private Boolean removable;
     private Context mC;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private TinyDB tinyDB;
 
     public Bag(Context mC){
@@ -57,11 +58,11 @@ public class Bag {
 
     private void saveLocalBag() {
         tinyDB.putListEquipments("localSaveListBag", listBag);
-    }
+    }  //on save avec le pjID pour avoir une database differente pour halda
 
     private void refreshBag(){
         tinyDB = new TinyDB(mC);
-        List<Equipment> listDB = tinyDB.getListEquipments("localSaveListBag");
+        List<Equipment> listDB = tinyDB.getListEquipments("localSaveListBag"); //on save avec le pjID pour avoir une database differente pour halda
         if (listDB.size() == 0) {
             buildBag();
             saveLocalBag();
@@ -149,7 +150,13 @@ public class Bag {
 
     private String getMoney(String key) {
         int money_defID = mC.getResources().getIdentifier(key+"_def", "integer", mC.getPackageName());
-        long money = tools.toLong(settings.getString(key,String.valueOf(mC.getResources().getInteger(money_defID))));
+        int money_def_val = 0;
+        try {
+            money_def_val = mC.getResources().getInteger(money_defID);
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        long money = tools.toLong(settings.getString(key,String.valueOf(money_def_val)));
         String moneyTxt=getAppedix(money);
         return moneyTxt;
     }
@@ -255,7 +262,6 @@ public class Bag {
         ca.clickToHide(view.findViewById(R.id.toast_list_title_frame));
 
         LinearLayout money = view.findViewById(R.id.toast_list_money);
-        money.setVisibility(View.VISIBLE);
         TextView title = view.findViewById(R.id.toast_list_title);
         title.setText("Inventaire du sac");
         ((TextView) view.findViewById(R.id.money_plat_text)).setText(getMoney("money_plat"));
@@ -322,5 +328,9 @@ public class Bag {
     public void reset() {
         buildBag();
         saveLocalBag();
+    }
+
+    public void loadFromSave() {
+        refreshBag();
     }
 }

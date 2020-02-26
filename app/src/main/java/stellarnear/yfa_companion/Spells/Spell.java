@@ -283,7 +283,7 @@ public class Spell {
             check.setEnabled(false);
         }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        Tools tools =new Tools();
+        Tools tools =Tools.getTools();
         int maxLevelWedge= tools.toInt(settings.getString("wedge_max_lvl_spell",String.valueOf(mC.getResources().getInteger(R.integer.wedge_max_lvl_spell_def))));
         if(this.rank> maxLevelWedge && metaId.equalsIgnoreCase("meta_arrow")){
             check.setEnabled(false);

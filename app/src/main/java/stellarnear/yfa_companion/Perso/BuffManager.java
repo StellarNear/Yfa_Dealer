@@ -10,7 +10,7 @@ public class BuffManager {
     private Buff buff;
     private BuffView buffView;
     private Perso yfa=MainActivity.yfa;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
     public BuffManager(Activity mA,Buff buff){
         this.mA=mA;

@@ -134,6 +134,10 @@ public class Metamagic {
         return changeListener;
     }
 
+    public void reducCost(int i) {
+        this.uprank-=i;
+    }
+
     public interface OnRefreshEventListener {
         void onEvent();
     }

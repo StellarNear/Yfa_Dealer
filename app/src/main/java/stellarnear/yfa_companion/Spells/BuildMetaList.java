@@ -23,7 +23,7 @@ public class BuildMetaList {
 
     private static BuildMetaList instance = null;
     private MetaList metaList;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private Perso yfa = MainActivity.yfa;
 
     public static BuildMetaList getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
@@ -70,9 +70,21 @@ public class BuildMetaList {
                 }
             }
             removeUnavailableMetas(mC);
+            testForGeneralReduction();
         } catch (Exception e) {e.printStackTrace();}
 
 
+    }
+
+    private void testForGeneralReduction() {
+        boolean featActive = yfa.featIsActive("feat_improved_metamagic");
+        if(featActive) {
+            for (Metamagic metamagic : metaList.asList()) {
+                if (metamagic.getUprank() > 1 ) {
+                    metamagic.reducCost(1);
+                }
+            }
+        }
     }
 
     private void removeUnavailableMetas(Context mC) {

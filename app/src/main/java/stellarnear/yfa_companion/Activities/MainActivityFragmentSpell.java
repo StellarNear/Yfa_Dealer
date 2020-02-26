@@ -5,13 +5,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
@@ -61,7 +62,7 @@ public class MainActivityFragmentSpell extends Fragment {
 
     private SpellList listAllSpell=null;
 
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
     public MainActivityFragmentSpell() {
     }
@@ -462,9 +463,13 @@ public class MainActivityFragmentSpell extends Fragment {
     }
 
     private void testSpellSelection() {
-        if (!selectedSpells.isEmpty()) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (settings.getBoolean("switch_multi_target",getContext().getResources().getBoolean(R.bool.switch_multi_target_def))) {
             askNTarget();
-        } else { startActivity(new Intent(getContext(), MainActivityFragmentSpell.class));}
+        } else {
+            targets.assignAllToMain("Cible principale",selectedSpells);
+            buildPage2();
+        }
     }
 
     private void askNTarget() {

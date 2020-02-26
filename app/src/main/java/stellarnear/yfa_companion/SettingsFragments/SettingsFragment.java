@@ -40,7 +40,7 @@ public class SettingsFragment extends PreferenceFragment {
     private String currentPageKey;
     private String currentPageTitle;
 
-    private Tools tools = new Tools();
+    private Tools tools = Tools.getTools();
     private SharedPreferences settings;
     private PrefAllInventoryFragment prefAllInventoryFragment;
     private PrefXpFragment prefXpFragment;
@@ -65,6 +65,12 @@ public class SettingsFragment extends PreferenceFragment {
                         yfa.getAllResources().getRankManager().refreshMax();
                     }
                     if (key.contains("switch_capacity_")){yfa.getAllResources().refreshCapaListResources();}
+
+                    if(key.contains("switch_feat_")){
+                        BuildMetaList.resetMetas();
+                        BuildSpellList.resetSpellList();
+                        yfa.getAllBuffs().reset();
+                    }
                 }
             };
 
@@ -172,9 +178,6 @@ public class SettingsFragment extends PreferenceFragment {
                     setHasOptionsMenu(true);
                     break;
                 case "pref_character_feat":
-                    BuildMetaList.resetMetas();
-                    BuildSpellList.resetSpellList();
-                    yfa.getAllBuffs().reset();
                     PreferenceCategory magic = (PreferenceCategory) findPreference("Dons Magie");
                     PreferenceCategory def = (PreferenceCategory) findPreference("Dons défensif");
                     PreferenceCategory other = (PreferenceCategory) findPreference("Dons autre");

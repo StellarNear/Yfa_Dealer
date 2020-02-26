@@ -34,7 +34,7 @@ public class AllResources {
     private List<Resource> listResources = new ArrayList<>();
     private SpellsRanksManager rankManager=null;
     private SharedPreferences settings;
-    private Tools tools = new Tools();
+    private Tools tools = Tools.getTools();
 
     public AllResources(Context mC,AllAbilities allAbilities,AllCapacities allCapacities) {
         this.mC = mC;

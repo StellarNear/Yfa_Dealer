@@ -43,7 +43,7 @@ public class DSSFDmg {
     private DamagesShortList selectedDamagesShortList =new DamagesShortList();
     private int infoTxtSize = 12;
 
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
     public DSSFDmg(View mainView, Context mC) {
         this.mainView = mainView;

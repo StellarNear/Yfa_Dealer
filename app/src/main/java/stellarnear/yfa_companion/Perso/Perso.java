@@ -37,7 +37,7 @@ public class Perso {
     private AllMythicCapacities allMythicCapacities;
     private AllBuffs allBuffs;
 
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private Context mC;
     private SharedPreferences prefs;
 
@@ -52,7 +52,7 @@ public class Perso {
         allMythicFeats = new AllMythicFeats(mC);
         allMythicCapacities = new AllMythicCapacities(mC);
         allSkills = new AllSkills(mC);
-        allAbilities = new AllAbilities(mC);
+        allAbilities = new AllAbilities(mC,inventory);
         computeCapacities(); // on a besoin de skill et abi pour les usages et valeur des capas
         allBuffs = new AllBuffs(mC,allCapacities);
         allResources = new AllResources(mC,allAbilities,allCapacities);
@@ -250,26 +250,14 @@ public class Perso {
         return allSkills;
     }
 
-    public Integer getSkillBonus(Context mC,String skillId) {
+    public Integer getSkillBonus(String skillId) {
         int bonusTemp = allSkills.getSkill(skillId).getBonus();
+        bonusTemp+= inventory.getAllEquipments().getSkillBonus(skillId);
 
         if(inventory.getAllEquipments().testIfNameItemIsEquipped("Pierre porte bonheur")){
             bonusTemp+=1;
         }
 
-        if(skillId.equalsIgnoreCase("skill_estimate")) {
-            Equipment gant = inventory.getAllEquipments().getEquipmentsEquiped("hand_slot");
-            if (gant != null && gant.getName().equalsIgnoreCase("Gant d'estimation")) {
-                bonusTemp += 3;
-            }
-        }
-
-        if(skillId.equalsIgnoreCase("skill_stealth")) {
-            Equipment boot = inventory.getAllEquipments().getEquipmentsEquiped("equipment_feet");
-            if (boot != null && boot.getName().equalsIgnoreCase("Bottes elfiques")) {
-                bonusTemp += 5;
-            }
-        }
         return bonusTemp;
     }
 
@@ -280,7 +268,21 @@ public class Perso {
         if (allAbilities.getAbi(abiId) != null) {
             abiScore = allAbilities.getAbi(abiId).getValue();
             if (abiId.equalsIgnoreCase("ability_ca")) {
-                abiScore += tools.toInt(settings.getString("bonus_temp_ca",String.valueOf(0)));
+                abiScore=10;
+                abiScore += tools.toInt(prefs.getString("bonus_temp_ca",String.valueOf(0)));
+                int abiMod=0;
+                if(allCapacities.capacityIsActive("capacity_revelation_prophetic_armor")){
+                    abiMod = getAbilityMod("ability_charisme");
+                } else {
+                    abiMod = getAbilityMod("ability_dexterite");
+                }
+                if (inventory.getAllEquipments().hasArmorDexLimitation() && inventory.getAllEquipments().getArmorDexLimitation() < abiMod) {
+                    abiScore += inventory.getAllEquipments().getArmorDexLimitation();
+                } else {
+                    abiScore += abiMod;
+                }
+                abiScore+=inventory.getAllEquipments().getArmorBonus();
+
                 if(allBuffs.buffByIDIsActive("shield")){
                     abiScore +=4;
                 }
@@ -288,6 +290,7 @@ public class Perso {
                     abiScore +=2;
                 }
             }
+
 
             if (abiId.equalsIgnoreCase("ability_equipment")) {
                 abiScore= inventory.getAllItemsCount();
@@ -299,6 +302,7 @@ public class Perso {
             }
 
             if (abiId.equalsIgnoreCase("ability_init")) {
+                abiScore= getAbilityMod("ability_dexterite");
                 if(getAllMythicCapacities().getMythiccapacity("mythiccapacity_init").isActive()) {
                     int currentTier = tools.toInt(settings.getString("mythic_tier", String.valueOf(mC.getResources().getInteger(R.integer.mythic_tier_def))));
                     if(getAllMythicFeats().getMythicFeat("mythicfeat_parangon").isActive()){
@@ -315,15 +319,10 @@ public class Perso {
                 if (settings.getBoolean("ioun_stone_luck",true)) {
                     abiScore+=1;
                 }
-                Equipment torse= inventory.getAllEquipments().getEquipmentsEquiped("armor_slot") ;
-                if (torse!=null && torse.getName().equalsIgnoreCase("Robe d'archimage grise")) {
-                    abiScore+=4;
-                } else {
+
                     if(allBuffs.buffByIDIsActive("resistance")){
                         abiScore +=1;
                     }
-                }
-
                 if (abiId.equalsIgnoreCase("ability_ref")){
                     abiScore+=getAbilityMod("ability_dexterite");
                     if(allBuffs.buffByIDIsActive("premonition")){
@@ -345,7 +344,11 @@ public class Perso {
                 }
             }
             if(abiId.equalsIgnoreCase("ability_bmo")||abiId.equalsIgnoreCase("ability_dmd")){
-                abiScore+=getBaseAtk()+getBonusAtk();
+                abiScore=getBaseAtk()+getBonusAtk()+getAbilityMod("ability_force");
+                if(abiId.equalsIgnoreCase("ability_dmd")){
+                    abiScore+=getAbilityMod("ability_dexterite");
+                    abiScore+=10;
+                }
             }
         }
         return abiScore;
@@ -398,6 +401,7 @@ public class Perso {
 
     public void reset() {
         EchoList.resetEcho();
+        this.inventory.reset();
         this.allFeats.reset();
         this.allCapacities.reset();
         this.allMythicFeats.reset();
@@ -407,7 +411,6 @@ public class Perso {
         this.allSkills.reset();
         this.stats.reset();
         this.hallOfFame.reset();
-        this.inventory.reset();
         this.allBuffs.reset();
         resetTemp();
         refresh();

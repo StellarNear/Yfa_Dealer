@@ -15,7 +15,7 @@ public class PrefMythicFeatFragment {
     private Perso yfa = MainActivity.yfa;
     private Activity mA;
     private Context mC;
-    private Tools tools = new Tools();
+    private Tools tools = Tools.getTools();
 
     public PrefMythicFeatFragment(Activity mA, Context mC) {
         this.mA = mA;

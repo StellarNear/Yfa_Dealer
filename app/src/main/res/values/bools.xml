@@ -35,6 +35,7 @@
     <bool name="switch_mythicfeat_parangon_def">true</bool>
 
     <bool name="switch_shadow_link_def">true</bool>
+    <bool name="switch_multi_target_def">true</bool>
 
 
     <!--  Capa def  -->

@@ -34,7 +34,7 @@ public class ConvertElementView extends AppCompatActivity {
     private LinearLayout convert_element_choices;
     private LinearLayout convert_element_result;
     private LinearLayout convert_element_confirm;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private OnValidationEventListener mListener;
     private Perso yfa = MainActivity.yfa;
 

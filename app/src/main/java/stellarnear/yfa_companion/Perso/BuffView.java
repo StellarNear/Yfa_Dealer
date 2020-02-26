@@ -24,7 +24,7 @@ public class BuffView {
     private OnCancelEventListener mListenerCancel;
     private OnCastExtendEventListener mListenerCastExtend;
     private boolean closed=false;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private Perso yfa = MainActivity.yfa;
 
     public BuffView(Activity mA,Buff buff){
@@ -83,7 +83,7 @@ public class BuffView {
         ((TextView)buffView.findViewById(R.id.buff_icon_name)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Tools().customToast(mA,buff.getDescr(),"center");
+                Tools.getTools().customToast(mA,buff.getDescr(),"center");
             }
         });
     }

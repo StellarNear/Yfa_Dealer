@@ -29,7 +29,7 @@ public class MainActivityFragmentSpellCast extends Fragment {
     private SpellList selectedSpells;
     private Perso yfa = MainActivity.yfa;
     private Targets targets = Targets.getInstance();
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private Calculation calculation=new Calculation();
     private TextView round;
     private LinearLayout mainLin;

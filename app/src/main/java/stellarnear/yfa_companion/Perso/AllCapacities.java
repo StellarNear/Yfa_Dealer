@@ -28,7 +28,7 @@ public class AllCapacities {
     private Context mC;
     private List<Capacity> allCapacities = new ArrayList<>();
     private Map<String,Capacity> mapIdcapacity =new HashMap<>();
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
     public AllCapacities(Context mC)
     {

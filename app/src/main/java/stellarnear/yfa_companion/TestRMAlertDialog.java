@@ -38,7 +38,8 @@ public class TestRMAlertDialog {
     private Perso yfa=MainActivity.yfa;
     private ArrayList<Dice> dices=new ArrayList<>();
 
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
+    private boolean proprophecyAlreadyUsed=false;
 
     public TestRMAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;
@@ -235,8 +236,7 @@ public class TestRMAlertDialog {
                 }
             });
         }
-
-        if(yfa.getAllResources().getResource("resource_prophecy").getCurrent()>0){
+        if(!proprophecyAlreadyUsed && yfa.getAllResources().getResource("resource_prophecy").getCurrent()>0){
             callToAction.setText("Tu peux relancer une fois le test");
             callToAction.setTextColor(Color.BLACK);  callToAction.setTextSize(18); callToAction.setGravity(Gravity.CENTER);
             callToAction.setCompoundDrawablesWithIntrinsicBounds(tools.resize(mC,mC.getDrawable(R.drawable.resource_prophecy),100),null,null,null);
@@ -246,13 +246,12 @@ public class TestRMAlertDialog {
                     yfa.getAllResources().getResource("resource_prophecy").spend(1);
                     new PostData(mC,new PostDataElement(yfa.getAllCapacities().getCapacity("capacity_prophecy")));
                     alertDialog.cancel();
-                    new TestRMAlertDialog( mA,  mC, spell ).showAlertDialog();
+                    new TestRMAlertDialog( mA,  mC, spell ).prophecyAlreadyUsed().showAlertDialog();
                 }
             });
         } else {
             callToAction.setText("Fin du test de\nniveau de lanceur de sort.");
         }
-
         Button failButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         failButton.setText("Raté");
         failButton.setOnClickListener(new View.OnClickListener() {
@@ -265,6 +264,11 @@ public class TestRMAlertDialog {
             }
         });
         new PostData(mC,new PostDataElement("Test contre RM "+spell.getName(),dices,sumResult));
+    }
+
+    private TestRMAlertDialog prophecyAlreadyUsed() {
+        this.proprophecyAlreadyUsed=true;
+        return this;
     }
 
     public interface OnRefreshEventListener {

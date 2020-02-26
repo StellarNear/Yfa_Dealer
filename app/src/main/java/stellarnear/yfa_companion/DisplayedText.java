@@ -13,7 +13,7 @@ import stellarnear.yfa_companion.Spells.Spell;
 
 public class DisplayedText {
     private Perso yfa= MainActivity.yfa;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     private Calculation calculation=new Calculation();
 
     public DisplayedText(){  }

@@ -23,7 +23,7 @@ public class PrefSpellgemScreenFragment {
     private Context mC;
     private CustomAlertDialog spellgemPopup;
     private Perso yfa = MainActivity.yfa;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     public PrefSpellgemScreenFragment(Activity mA, Context mC) {
         this.mA = mA;
         this.mC = mC;

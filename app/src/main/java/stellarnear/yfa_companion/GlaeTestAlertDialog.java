@@ -36,7 +36,7 @@ public class GlaeTestAlertDialog {
 
     private OnEndEventListener mListener;
 
-    private Tools tools = new Tools();
+    private Tools tools = Tools.getTools();
 
     public GlaeTestAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;

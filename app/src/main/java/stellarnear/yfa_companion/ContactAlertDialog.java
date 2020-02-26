@@ -44,7 +44,8 @@ public class ContactAlertDialog {
 
     private OnRefreshEventListener mListener;
 
-    private Tools tools = new Tools();
+    private Tools tools = Tools.getTools();
+    private boolean prophecyAlreadyUsed=false;
 
     public ContactAlertDialog(Activity mA, Context mC, Spell spell) {
         this.mA=mA;
@@ -207,7 +208,7 @@ public class ContactAlertDialog {
             }
         });
 
-        if(yfa.getAllResources().getResource("resource_prophecy").getCurrent()>0){
+        if(!prophecyAlreadyUsed && yfa.getAllResources().getResource("resource_prophecy").getCurrent()>0){
             callToAction.setText("Tu peux relancer une fois le test");
             callToAction.setTextColor(Color.BLACK);  callToAction.setTextSize(18); callToAction.setGravity(Gravity.CENTER);
             callToAction.setCompoundDrawablesWithIntrinsicBounds(tools.resize(mC,mC.getDrawable(R.drawable.resource_prophecy),100),null,null,null);
@@ -217,7 +218,7 @@ public class ContactAlertDialog {
                     yfa.getAllResources().getResource("resource_prophecy").spend(1);
                     new PostData(mC,new PostDataElement(yfa.getAllCapacities().getCapacity("capacity_prophecy")));
                     alertDialog.cancel();
-                    new ContactAlertDialog( mA,  mC, spell ).showAlertDialog();
+                    new ContactAlertDialog( mA,  mC, spell ).prophecyAlreadyUsed().showAlertDialog();
                 }
             });
         } else {
@@ -243,6 +244,11 @@ public class ContactAlertDialog {
             success.setVisibility(View.VISIBLE);
         }
         new PostData(mC,new PostDataElement("Test contact "+spell.getName(),dice,sumResult));
+    }
+
+    private ContactAlertDialog prophecyAlreadyUsed() {
+        this.prophecyAlreadyUsed=true;
+        return this;
     }
 
     public interface OnRefreshEventListener {

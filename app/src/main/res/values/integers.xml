@@ -34,7 +34,7 @@
     <integer name="add_current_xp_def">0</integer>
     <integer name="add_gold_def">0</integer>
 
-    <integer name="money_plat_def">1839</integer>
+    <integer name="money_plat_def">3694</integer>
     <integer name="money_gold_def">1409001</integer>
     <integer name="money_silver_def">6</integer>
     <integer name="money_copper_def">0</integer>
@@ -53,20 +53,26 @@
 
 
     <!--  Stat de base du perso  -->
-    <integer name="ability_force_def">9</integer>
-    <integer name="ability_dexterite_def">16</integer>
-    <integer name="ability_constitution_def">23</integer>
-    <integer name="ability_intelligence_def">21</integer>
-    <integer name="ability_sagesse_def">10</integer>
-    <integer name="ability_charisme_def">41</integer>
+     <integer name="ability_force_base_def">9</integer>
+    <integer name="ability_dexterite_base_def">14</integer>
+    <integer name="ability_constitution_base_def">13</integer>
+    <integer name="ability_intelligence_base_def">14</integer>
+    <integer name="ability_sagesse_base_def">10</integer>
+    <integer name="ability_charisme_base_def">28</integer>
+
+    <!-- augement perma -->
+    <integer name="ability_force_augment_def">0</integer>
+    <integer name="ability_dexterite_augment_def">0</integer>
+    <integer name="ability_constitution_augment_def">0</integer>
+    <integer name="ability_intelligence_augment_def">3</integer>
+    <integer name="ability_sagesse_augment_def">0</integer>
+    <integer name="ability_charisme_augment_def">5</integer>
+
+    <!-- autre -->
     <integer name="ability_ms_def">9</integer>
-    <integer name="ability_reduc_def">0</integer>
-    <integer name="ability_reduc_elem_def">0</integer>
-    <integer name="ability_ca_stuff_def">5</integer>
-    <integer name="ability_vig_def">6</integer>
     <integer name="ability_ref_def">6</integer>
+    <integer name="ability_vig_def">6</integer>
     <integer name="ability_vol_def">12</integer>
-    <integer name="ability_rm_def">18</integer>
 
 
     <!--  Rank de maitrise des compétences  -->

@@ -15,7 +15,7 @@ import stellarnear.yfa_companion.Spells.SpellList;
 
 public class Calculation {
     private Perso yfa= MainActivity.yfa;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
     public Calculation(){  }
 
@@ -116,7 +116,6 @@ public class Calculation {
             boolean metaFreeArcaneConv = spell.getConversion().getArcaneId().contains("metamagic") && spell.getConversion().getArcaneId().contains(meta.getId());
             if( !( metaFreeArcaneConv || metaFreePerfect ) ){
                 int rankCost = meta.getUprank();
-                if(meta.getUprank()>1 && yfa.featIsActive("feat_improved_metamagic")){ rankCost--; }
                 val += rankCost*meta.getnCast();
             }
         }

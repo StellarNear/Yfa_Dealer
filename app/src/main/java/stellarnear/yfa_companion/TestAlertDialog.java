@@ -147,10 +147,10 @@ public class TestAlertDialog {
         int abScore= yfa.getAbilityMod(skill.getAbilityDependence());
         String abScoreTxt = abScore>0?"+"+abScore:String.valueOf(abScore);
 
-        preRandScore=abScore+skill.getRank()+ yfa.getSkillBonus(mC,skill.getId());
+        preRandScore=abScore+skill.getRank()+ yfa.getSkillBonus(skill.getId());
         boolean destinyON=yfa.getAllBuffs()!=null && yfa.getAllBuffs().getBuffByID("capacity_destiny_touch")!=null && yfa.getAllBuffs().getBuffByID("capacity_destiny_touch").isActive();
         if(destinyON){ preRandScore+=yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();  }
-        String summaryTxt="Total : "+String.valueOf(preRandScore)+"\n"+skill.getAbilityDependence().substring(8,11).toUpperCase()+" : "+abScoreTxt+",  Rang : "+skill.getRank()+",  Bonus : "+ yfa.getSkillBonus(mC,skill.getId());
+        String summaryTxt="Total : "+String.valueOf(preRandScore)+"\n"+skill.getAbilityDependence().substring(8,11).toUpperCase()+" : "+abScoreTxt+",  Rang : "+skill.getRank()+",  Bonus : "+ yfa.getSkillBonus(skill.getId());
         if(destinyON){ summaryTxt+=",  Buff : "+yfa.getAllCapacities().getCapacity("capacity_destiny_touch").getValue();}
         ((TextView)dialogView.findViewById(R.id.customDialogTestSummary)).setText(summaryTxt);
     }

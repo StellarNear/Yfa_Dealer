@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v2.0"</string>
-    <string name="time_spend">264h</string>
+    <string name="version">"v2.2"</string>
+    <string name="time_spend">268h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V2.2
+-Ajout du smartItem system ! (creation et anciennes items transférées en smart)
+-Refonte de l'affichage des attributs des sorts
+-Decompte des couts de métamagie amélioré dès l'affichage de la liste
+-Possibilité de désactiver le multiciblage depuis les options d'applciation
+----------------------------------------------------------------------------------
 Patch note V2.1
 -Ajout de la capacité Accomplissement de la prophétie
 -Changement de certains noms pour un meilleur affichage

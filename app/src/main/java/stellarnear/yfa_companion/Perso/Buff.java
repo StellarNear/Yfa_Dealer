@@ -173,8 +173,10 @@ public class Buff {
 
     public void spendTime(Context mC,int i) {
         currentDuration-=1f*i;
-        if(currentDuration<=0){currentDuration=0;
-            new PostData(mC,new PostDataElement("Expiration d'un buff",name+" a expiré"));}
+        if(currentDuration<=0){
+            currentDuration=0;
+            new PostData(mC,new PostDataElement("Expiration d'un buff",name+" a expiré"));
+        }
         if(this.id.equalsIgnoreCase("parangon_tempfeat") && currentDuration==0){
             EchoList.resetEcho();
             BuildSpellList.resetMetas();
@@ -196,7 +198,7 @@ public class Buff {
 
     private float calculateSeconds(int casterLvl) {
         String duration = this.spellDuration;
-        Tools tools = new Tools();
+        Tools tools = Tools.getTools();
         float floatSeconds=0f;
         if(!duration.equalsIgnoreCase("permanente")){
             Integer result= tools.toInt(duration.replaceAll("[^0-9?!]",""));

@@ -21,7 +21,7 @@ public class BuildSpellList extends AppCompatActivity {
     private static BuildSpellList instance=null;
 
     public SpellList allSpells = null;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
     public static BuildSpellList getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
         if (instance==null){

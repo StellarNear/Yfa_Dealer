@@ -2,6 +2,7 @@ package stellarnear.yfa_companion.Perso;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
 import org.w3c.dom.Document;
@@ -11,6 +12,7 @@ import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +32,12 @@ public class AllAbilities {
     private Map<String, Ability> mapIDAbi = new HashMap<>();
     private List<Ability> listAbilities= new ArrayList<>();
     private Context mC;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
+    private Inventory inventory;
 
-    public AllAbilities(Context mC) {
+    public AllAbilities(Context mC,Inventory inventory) {
         this.mC = mC;
+        this.inventory=inventory;
         buildAbilitiesList();
         refreshAllAbilities();
     }
@@ -87,26 +91,38 @@ public class AllAbilities {
     }
 
     private int readAbility(String key) {
+        int val=0;
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
         int resId = mC.getResources().getIdentifier( key.toLowerCase() + "_def", "integer", mC.getPackageName());
-        return tools.toInt(settings.getString( key.toLowerCase(), String.valueOf(mC.getResources().getInteger(resId))));
+        try {
+            val=tools.toInt(settings.getString( key.toLowerCase(), String.valueOf(mC.getResources().getInteger(resId))));
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return val;
     }
 
     public void refreshAllAbilities() {
         for (Ability abi : listAbilities) {
             int val = 0;
-            if (abi.getId().equalsIgnoreCase("ability_ca")) {
-                val = 10+readAbility("ability_ca_stuff") + getAbi("ability_dexterite").getMod();
-            } else if (abi.getId().equalsIgnoreCase("ability_bmo")) {
-                val = getAbi("ability_force").getMod();
-            } else if (abi.getId().equalsIgnoreCase("ability_dmd")) {
-                val = getAbi("ability_force").getMod() + 10 + getAbi("ability_dexterite").getMod() ;
-            } else if (abi.getId().equalsIgnoreCase("ability_init")) {
-                val = getAbi("ability_dexterite").getMod();
-            } else if (abi.getId().equalsIgnoreCase("ability_equipment")) {
-                //on laisse à 0 le nombre de piece de stuff est calculer au niveau du perso
-            } else {
+            List<String> allBasicAbi = Arrays.asList("ability_force","ability_dexterite","ability_constitution","ability_sagesse","ability_intelligence","ability_charisme");
+            if(allBasicAbi.contains(abi.getId())) {
+                val = readAbility(abi.getId()+"_base"); //on prend que la valeur de base + augement perma le reste est faut au niveau du perso avec le stuff
+                val += readAbility(abi.getId()+"_augment");
+                if((abi.getId().equalsIgnoreCase("ability_constitution") || abi.getId().equalsIgnoreCase("ability_charisme"))&& inventory.getAllEquipments().testIfNameItemIsEquipped("Glaedäyes Ah-Yaedeyes")){
+                 val+=2;
+                }
+            }  else {
                 val = readAbility(abi.getId());
+            }
+
+            if(abi.getId().equalsIgnoreCase("ability_rm")){
+                int valRMInvent = inventory.getAllEquipments().getAbiBonus(abi.getId());
+                if(valRMInvent>val){
+                    val=valRMInvent;
+                }
+            } else {
+                val += inventory.getAllEquipments().getAbiBonus(abi.getId());
             }
             abi.setValue(val);
         }

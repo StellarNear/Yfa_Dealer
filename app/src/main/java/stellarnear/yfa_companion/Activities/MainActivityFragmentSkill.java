@@ -30,7 +30,7 @@ public class MainActivityFragmentSkill extends Fragment {
     private Perso yfa= MainActivity.yfa;
     private LinearLayout linearSkillScroll;
     private View returnFragView;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     public MainActivityFragmentSkill() {
     }
 
@@ -93,7 +93,7 @@ public class MainActivityFragmentSkill extends Fragment {
         TextView totalTxt = new TextView(getContext());
         TextView totalTitle = returnFragView.findViewById(R.id.skillTotalTitle);
         totalTxt.setLayoutParams(totalTitle.getLayoutParams());
-        int total = yfa.getAbilityMod(skill.getAbilityDependence())+skill.getRank()+yfa.getSkillBonus(getContext(),skill.getId());
+        int total = yfa.getAbilityMod(skill.getAbilityDependence())+skill.getRank()+yfa.getSkillBonus(skill.getId());
         totalTxt.setText(String.valueOf(total));
         totalTxt.setTypeface(null, Typeface.BOLD);
         totalTxt.setGravity(Gravity.CENTER);
@@ -119,7 +119,7 @@ public class MainActivityFragmentSkill extends Fragment {
         TextView bonusTxt = new TextView(getContext());
         TextView bonusTitle = returnFragView.findViewById(R.id.skillBonusTitle);
         bonusTxt.setLayoutParams(bonusTitle.getLayoutParams());
-        bonusTxt.setText(String.valueOf(yfa.getSkillBonus(getContext(),skill.getId())));
+        bonusTxt.setText(String.valueOf(yfa.getSkillBonus(skill.getId())));
         bonusTxt.setGravity(Gravity.CENTER);
 
         line.addView(nameTxt);

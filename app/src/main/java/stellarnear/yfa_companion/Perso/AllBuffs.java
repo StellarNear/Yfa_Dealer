@@ -28,7 +28,7 @@ public class AllBuffs {
     private AllCapacities allCapacities;
     private TinyDB tinyDB;
     private Context mC;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
 
 
     public AllBuffs(Context mC,AllCapacities allCapacities){
@@ -171,7 +171,9 @@ public class AllBuffs {
 
     public void makeTimePass(int i) {
         for(Buff buff: listBuffs){
-            buff.spendTime(mC,i);
+            if(buff.isActive()) {
+                buff.spendTime(mC, i);
+            }
         }
         saveLocalBuffs();
     }

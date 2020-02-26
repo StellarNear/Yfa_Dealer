@@ -11,6 +11,10 @@
         android:key="switch_campaign_gif"
         android:title="Voir la cinématique de campagne"/>
 
+    <SwitchPreference
+        android:defaultValue="@bool/switch_multi_target_def"
+        android:key="switch_multi_target"
+        android:title="Multiciblage lors du lancement des sorts"/>
 
     <SwitchPreference
         android:defaultValue="@bool/switch_manual_diceroll_def"

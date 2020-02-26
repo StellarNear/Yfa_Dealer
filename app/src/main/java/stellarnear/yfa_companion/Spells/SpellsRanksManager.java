@@ -14,7 +14,7 @@ import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
 public class SpellsRanksManager {
-    private Tools tools= new Tools();
+    private Tools tools= Tools.getTools();
     private SharedPreferences settings;
     private int highestSpellRank=0;
     private int highestSpellConvank=0;

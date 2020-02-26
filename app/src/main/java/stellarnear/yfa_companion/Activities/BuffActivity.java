@@ -47,7 +47,7 @@ public class BuffActivity extends AppCompatActivity {
     private ArrayList<BuffManager> listTempManagers=new ArrayList<>();
     private Perso yfa=MainActivity.yfa;
     private Activity mA;
-    private Tools tools=new Tools();
+    private Tools tools=Tools.getTools();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
