@@ -1,8 +1,9 @@
 package stellarnear.yfa_companion;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.widget.SeekBar;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;

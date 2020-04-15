@@ -67,4 +67,8 @@ public class HallOfFame {
         this.hallOfFameList= new ArrayList<>();
         saveLocalHallOfFame();
     }
+
+    public void loadFromSave() {
+        refreshAllOfFame();
+    }
 }

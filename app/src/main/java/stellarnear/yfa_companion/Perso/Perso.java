@@ -416,4 +416,11 @@ public class Perso {
         refresh();
         sleep();
     }
+
+    public void loadFromSave() {
+        inventory.loadFromSave();
+        stats.loadFromSave();
+        hallOfFame.loadFromSave();
+        refresh();
+    }
 }

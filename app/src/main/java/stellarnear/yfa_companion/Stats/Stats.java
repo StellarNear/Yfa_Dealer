@@ -55,4 +55,7 @@ public class Stats {
         saveLocalStats();
     }
 
+    public void loadFromSave() {
+        refreshStats();
+    }
 }

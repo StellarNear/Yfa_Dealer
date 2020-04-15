@@ -82,7 +82,7 @@ public class PostData  {
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));
+                writer.write(formatDataAsSingleString(postDataParams));
 
                 writer.flush();
                 writer.close();
@@ -120,7 +120,7 @@ public class PostData  {
         }
     }
 
-    public String getPostDataString(JSONObject params) throws Exception {
+    public String formatDataAsSingleString(JSONObject params) throws Exception {
 
         StringBuilder result = new StringBuilder();
         boolean first = true;

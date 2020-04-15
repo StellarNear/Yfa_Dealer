@@ -24,6 +24,7 @@
     <string name="help_activity">Centre d\'aide</string>
     <string name="buff_activity">Gestion des améliorations</string>
     <string name="current_campaign">illu</string>
+    <string name="title_activity_saving">Sauvegarde</string>
 
 
     <string-array name="values">

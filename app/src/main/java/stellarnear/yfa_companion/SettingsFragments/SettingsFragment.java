@@ -13,16 +13,18 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
+import stellarnear.yfa_companion.Activities.SaveSharedPreferencesActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
@@ -411,6 +413,18 @@ public class SettingsFragment extends PreferenceFragment {
                             }
                         })
                         .setNegativeButton(android.R.string.no, null).show();
+                break;
+            case "export_save":
+                Intent intentSave = new Intent(mC, SaveSharedPreferencesActivity.class);
+                intentSave.putExtra("ACTION_TYPE", "SAVE");
+                intentSave.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                mC.startActivity(intentSave);
+                break;
+            case "import_save":
+                Intent intentLoad = new Intent(mC, SaveSharedPreferencesActivity.class);
+                intentLoad.putExtra("ACTION_TYPE", "LOAD");
+                intentLoad.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                mC.startActivity(intentLoad);
                 break;
         }
 

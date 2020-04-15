@@ -1,12 +1,13 @@
 package stellarnear.yfa_companion.Rolls;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
