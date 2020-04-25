@@ -128,6 +128,10 @@ public class CustomAlertDialog {
         this.mode+=fill;
     }
 
+    public View getConfirmButton() {
+        return alert.getButton(DialogInterface.BUTTON_POSITIVE);
+    }
+
     public interface OnAcceptEventListener {
         void onEvent();
     }

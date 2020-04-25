@@ -204,12 +204,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        /*
-        MainActivityFragment fragMain = (MainActivityFragment) getFragmentManager().findFragmentByTag("frag_main");
-        MainActivityFragmentSpell fragSpell = (MainActivityFragmentSpell) getFragmentManager().findFragmentByTag("frag_spell");
-        MainActivityFragmentSkill fragSkill = (MainActivityFragmentSkill) getFragmentManager().findFragmentByTag("frag_skill");
-        Pour l'instant on fait un comportement particuluer uniquement pour le retour au spell list à partir de spell cast */
-
         MainActivityFragmentSpellCast fragSpellCast = (MainActivityFragmentSpellCast) getFragmentManager().findFragmentByTag("frag_spell_cast");
 
         if (fragSpellCast != null && fragSpellCast.isVisible()) { // and then you define a method allowBackPressed with the logic to allow back pressed or not

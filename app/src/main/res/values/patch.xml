@@ -2,10 +2,16 @@
 <resources>
     <string name="time_spend">269h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
-Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."
-    </string>
+Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."</string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V3.1
+-Nouveau menu de rechargement des rangs de sort à partir de gemmes
+    -Visibilité des rangs actuellement disponibles
+    -Plus de possibilité de perdre des rangs en dépassant le maximum
+    -Aide au calcul des rangs restants à dépenser
+    -Enlever un rang selectionné en maintenant le click
+----------------------------------------------------------------------------------
 Patch note V3.0
 -Maj automatique de l'application
 -Sauvegarde et chargement de l'ensemble des valeurs de l'application (depuis paramètres d'application)

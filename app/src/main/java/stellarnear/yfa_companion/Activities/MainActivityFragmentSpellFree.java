@@ -55,7 +55,7 @@ import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.Targets;
 import stellarnear.yfa_companion.Tools;
 
-public class MainActivityFragmentSpell extends Fragment {
+public class MainActivityFragmentSpellFree extends Fragment {
     private SpellList selectedSpells=new SpellList();
     private Targets targets;
     private Perso yfa=MainActivity.yfa;
@@ -63,7 +63,9 @@ public class MainActivityFragmentSpell extends Fragment {
     private SpellList listAllSpell=null;
     private Tools tools=Tools.getTools();
 
-    public MainActivityFragmentSpell() {
+    public MainActivityFragmentSpellFree() {
+        //todo les spend cast de sort libre sont que ne point myth
+        //todo les calcul de meta max pour les sort libre sont different ?
     }
 
     @Override
@@ -74,7 +76,7 @@ public class MainActivityFragmentSpell extends Fragment {
             container.removeAllViews();
         }
 
-        returnFragView= inflater.inflate(R.layout.fragment_main_cast, container, false);
+        returnFragView= inflater.inflate(R.layout.fragment_main_cast_free, container, false);
         targets = Targets.getInstance();
 
         buildPage1();
@@ -94,15 +96,12 @@ public class MainActivityFragmentSpell extends Fragment {
             }
         });
 
-        /*  Todo accepter ce click quand tout est bon
         returnFragView.findViewById(R.id.Titre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToFreeList();
+                goToSpellList();
             }
         });
-
-         */
 
         ((FrameLayout) returnFragView.findViewById(R.id.back_main_from_spell)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +109,7 @@ public class MainActivityFragmentSpell extends Fragment {
                 backToMain();
             }
         });
-        animate(((FrameLayout) returnFragView.findViewById(R.id.back_main_from_spell)));
+
         return returnFragView;
     }
 
@@ -125,18 +124,6 @@ public class MainActivityFragmentSpell extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private void animate(final FrameLayout buttonMain) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                Animation anim = new ScaleAnimation(1f,1.25f,1f,1.25f,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                anim.setRepeatCount(1);
-                anim.setRepeatMode(Animation.REVERSE);
-                anim.setDuration(666);
-                buttonMain.startAnimation(anim);
-            }
-        }, getResources().getInteger(R.integer.translationFragDuration));
-    }
 
     private void unlockOrient() {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
@@ -144,13 +131,11 @@ public class MainActivityFragmentSpell extends Fragment {
 
 
     private void buildPage1() {
-        testEchosAndGuardians();
 
-        listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList();
+        listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList(); //todo free list
 
-        int max_tier=yfa.getAllResources().getRankManager().getHighestTier();
+        int max_tier=yfa.getAllResources().getRankManager().getHighestTier(); //todo max rank free list
         for(int i=0;i<=max_tier;i++){
-            final ScrollView scroll_tier=(ScrollView) returnFragView.findViewById(R.id.main_scroll_relat);
             LinearLayout tiers=(LinearLayout) returnFragView.findViewById(R.id.linear1);
             final TextView tierTxt= new TextView(getContext());
             LinearLayout.LayoutParams para= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -160,55 +145,19 @@ public class MainActivityFragmentSpell extends Fragment {
             tierTxt.setBackground(getContext().getDrawable(R.drawable.background_tier_title));
 
             String tier_txt="Tier "+i;
-
-            String titre_tier=tier_txt +" ["+ yfa.getResourceValue("spell_rank_"+i)+" restant(s)]";
-            if (i==0){titre_tier=tier_txt +" [illimité]";}
-            SpannableString titre=  new SpannableString(titre_tier);
-            titre.setSpan(new RelativeSizeSpan(0.65f), tier_txt.length(),titre_tier.length(), 0);
-            tierTxt.setText(titre);
+            tierTxt.setText(tier_txt);
 
             tierTxt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             tierTxt.setTextColor(Color.BLACK);
             tierTxt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tiers.addView(tierTxt);
 
-            // side bar
-            LinearLayout side=(LinearLayout) returnFragView.findViewById(R.id.side_bar);
-            side.setElevation(10);
-            side.setBackground(getContext().getDrawable(R.drawable.background_side_bar));
-            final TextView side_txt=new TextView(getContext());
-            side_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            side_txt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-
-            side_txt.setTextColor(Color.DKGRAY);
-            side_txt.setText("T" + i + "\n(" + yfa.getResourceValue("spell_rank_"+i) + ")");
-            if (i==0){side_txt.setText("T"+i+"\n("+ DecimalFormatSymbols.getInstance().getInfinity()+")");}
-            else if (yfa.getAllResources().checkConvertibleAvailable(i)) {
-                String n_spell_conv_txt="T" + i + "\n(" + yfa.getResourceValue("spell_rank_"+i)+","+ yfa.getResourceValue("spell_conv_rank_"+i) + ")";
-                String before_conv="T" + i + "\n(" + yfa.getResourceValue("spell_rank_"+i)+",";
-                SpannableString n_spell_conv=  new SpannableString(n_spell_conv_txt);
-                n_spell_conv.setSpan(new ForegroundColorSpan(getContext().getColor(R.color.conversion)),before_conv.length(),before_conv.length()+yfa.getResourceValue("spell_conv_rank_"+i).toString().length(), 0);// set color2
-                side_txt.setText(n_spell_conv);
-            }
-
-            side_txt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    scroll_tier.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            scroll_tier.scrollTo(0, tierTxt.getTop());
-                        }
-                    });
-                }
-            });
-
-            side.addView(side_txt);
-
             SpellList rank_list= listAllSpell.getNormalSpells().filterByRank(i).filterDisplayable();
             if (rank_list.size()==0){ continue;}
 
             for(final Spell spell : rank_list.asList()){
+
+
                 LinearLayout spellLine = new LinearLayout(getContext());
                 spellLine.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -238,70 +187,8 @@ public class MainActivityFragmentSpell extends Fragment {
                     }
                 });
                 spellLine.addView(spellName);
-                final Spell mythicSpell = listAllSpell.getMythicSpells().getNormalSpellFromID(spell.getID());
-                if (mythicSpell!=null){
-                    LinearLayout mythLine =  new LinearLayout(getContext());
-                    mythLine.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-                    int px = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, getResources().getDimension(R.dimen.general_margin),    getResources().getDisplayMetrics()    );
-                    mythLine.setPadding(0,0,px,0);
-                    mythLine.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
-                    final CheckBox checkMyth = new CheckBox(getContext());
-                    setCheckBoxColor(checkMyth);
-                    setAddingSpell(checkMyth,mythicSpell);
-                    mythLine.addView(checkMyth);
-                    ImageView img = new ImageView(getContext());
-                    img.setImageDrawable(getContext().getDrawable(R.drawable.ic_embrassed_energy));
-                    img.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            checkMyth.setChecked(!checkMyth.isChecked());
-                        }
-                    });
-                    img.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View view) {
-                            tools.customToast(getContext(),mythicSpell.getDescr(),"center");
-                            return true;
-                        }
-                    });
-                    mythLine.addView(img);
-                    spellLine.addView(mythLine);
-                }
                 tiers.addView(spellLine);
             }
-        }
-    }
-
-    private void testEchosAndGuardians() {
-        if(EchoList.getInstance(getContext()).hasEcho()){
-            returnFragView.findViewById(R.id.special_spellslists_bar).setVisibility(View.VISIBLE);
-            addEchosAndGuardians((LinearLayout)returnFragView.findViewById(R.id.special_spellslists_bar));
-        } else {
-            returnFragView.findViewById(R.id.special_spellslists_bar).setVisibility(View.GONE);
-        }
-    }
-
-    private void addEchosAndGuardians(LinearLayout linear) {
-        linear.removeAllViews();
-        if(EchoList.getInstance(getContext()).hasEcho()){
-            TextView echo = new TextView(getContext());
-            String title = EchoList.getInstance(getContext()).getEchoList().size()+" Écho";
-            if(EchoList.getInstance(getContext()).getEchoList().size()>1){ title+="s magiques";}else { title+=" magique";}
-            echo.setText(title); echo.setTextSize(18);echo.setTypeface(null, Typeface.BOLD);
-            echo.setTextColor(getContext().getColor(R.color.colorPrimaryDark));
-            echo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    EchoList.getInstance(getContext()).popupList(getActivity(),getContext());
-                }
-            });
-            EchoList.getInstance(getContext()).setRefreshEventListener(new EchoList.OnRefreshEventListener() {
-                @Override
-                public void onEvent() {
-                    testEchosAndGuardians();
-                }
-            });
-            linear.addView(echo);
         }
     }
 
@@ -531,11 +418,11 @@ public class MainActivityFragmentSpell extends Fragment {
     }
 
 
-    private void goToFreeList(){
+    private void goToSpellList(){
         FragmentManager fragmentManager = getActivity().getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.animator.infrombotfrag,R.animator.outfadefrag);
-        fragmentTransaction.replace(R.id.fragment_main_frame_layout, new MainActivityFragmentSpellFree(),"frag_spell_free");
+        fragmentTransaction.replace(R.id.fragment_main_frame_layout, new MainActivityFragmentSpell(),"frag_spell");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
