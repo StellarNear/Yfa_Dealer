@@ -1,5 +1,7 @@
 package stellarnear.yfa_companion.Activities;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -99,6 +101,15 @@ public class SplashActivity extends AppCompatActivity {
         ((TextView)popupView.findViewById(R.id.ask_upgrade_old)).setText(BuildConfig.VERSION_NAME);
         ((TextView)popupView.findViewById(R.id.ask_upgrade_new)).setText(newVersion.getVersion_name());
         ((TextView)popupView.findViewById(R.id.ask_upgrade_new_sub)).setText("Faite le : "+newVersion.getRelease_date());
+        popupView.findViewById(R.id.ask_upgrade_link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("link_new_version", newVersion.getDl_link());
+                clipboard.setPrimaryClip(clip);
+                tools.customToast(getApplicationContext(),"Lien ajouté dans le presse papier","center");
+            }
+        });
 
         popupView.findViewById(R.id.ask_upgrade_patch).setOnClickListener(new View.OnClickListener() {
             @Override
