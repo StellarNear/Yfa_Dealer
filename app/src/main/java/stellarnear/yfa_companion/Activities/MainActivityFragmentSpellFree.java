@@ -9,47 +9,32 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
-import stellarnear.yfa_companion.PostData;
-import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
-import stellarnear.yfa_companion.Spells.EchoList;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.Targets;

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import stellarnear.yfa_companion.Perso.Capacity;
-import stellarnear.yfa_companion.Rolls.Dice;
+import stellarnear.yfa_companion.Rolls.Dice20;
 import stellarnear.yfa_companion.Spells.Metamagic;
 import stellarnear.yfa_companion.Spells.Spell;
 
@@ -46,7 +46,7 @@ public class PostDataElement {
         this.result=resultTxt;
     }
 
-    public PostDataElement(String typeEvent, Dice oriDice, int result){
+    public PostDataElement(String typeEvent, Dice20 oriDice, int result){
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
         this.date=formater.format(new Date());
 
@@ -58,13 +58,13 @@ public class PostDataElement {
         this.detail =detailTxt;
     }
 
-    public PostDataElement(String typeEvent, ArrayList<Dice> oriDices, int result){  //test contre RM peut avoir deux dès
+    public PostDataElement(String typeEvent, ArrayList<Dice20> oriDices, int result){  //test contre RM peut avoir deux dès
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
         this.date=formater.format(new Date());
         this.typeEvent=typeEvent;
         this.result=String.valueOf(result);
         String detailTxt="";
-        for(Dice dice:oriDices) {
+        for(Dice20 dice:oriDices) {
             if(!detailTxt.equalsIgnoreCase("")){detailTxt+=" || " ;}
             detailTxt += String.valueOf(dice.getRandValue());
             if (dice.getMythicDice() != null) {

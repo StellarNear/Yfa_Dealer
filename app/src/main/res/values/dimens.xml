@@ -11,8 +11,7 @@
     <dimen name="icon_dice_NLS">60dp</dimen>
     <dimen name="margin_customDialog_text">5dp</dimen>
     <dimen name="sizeTextCustomDialogResult">50sp</dimen>
-    <dimen name="icon_main_dices_combat_launcher_size_double_dice_sub">35dp</dimen>
-    <dimen name="icon_main_dices_combat_launcher_size_double_dice_split">15dp</dimen>
+
     <dimen name="target_list">30dp</dimen>
     <dimen name="bordure_spell_background">2dp</dimen>
     <dimen name="radius_corner_spell">5dp</dimen>
@@ -48,4 +47,7 @@
     <dimen name="icon_buff_perma">30dp</dimen>
     <dimen name="size_text_buff">12sp</dimen>
     <dimen name="buff_hour_button">100dp</dimen>
+
+    <dimen name="icon_main_dices_combat_launcher_size">50dp</dimen>
+    <dimen name="icon_main_dices_combat_launcher_size_double_dice_sub">35dp</dimen>
 </resources>

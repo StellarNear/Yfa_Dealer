@@ -37,16 +37,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
-import stellarnear.yfa_companion.PostData;
-import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.EchoList;

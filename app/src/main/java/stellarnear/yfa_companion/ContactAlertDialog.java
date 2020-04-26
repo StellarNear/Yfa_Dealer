@@ -23,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Rolls.Dice;
+import stellarnear.yfa_companion.Rolls.Dice20;
 import stellarnear.yfa_companion.Rolls.WheelDicePicker;
 import stellarnear.yfa_companion.Spells.Spell;
 
@@ -39,7 +40,7 @@ public class ContactAlertDialog {
     private Calculation calculation=new Calculation();
     private int sumScore;
     private Spell spell;
-    private Dice dice;
+    private Dice20 dice;
 
     private Perso yfa = MainActivity.yfa;
 
@@ -144,7 +145,7 @@ public class ContactAlertDialog {
 
     private void startRoll() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        dice = new Dice(mA,mC,20);
+        dice = new Dice20(mA,mC);
         if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_def))){
             dice.rand(true);
             dice.setRefreshEventListener(new Dice.OnRefreshEventListener() {
@@ -183,7 +184,7 @@ public class ContactAlertDialog {
         alertDialog.getWindow().setLayout((int) (factor*size.x), (int)(factor*size.y));
     }
 
-    private void endSkillCalculation(final Dice dice) {
+    private void endSkillCalculation(final Dice20 dice) {
         FrameLayout resultDice= dialogView.findViewById(R.id.customDialogTestResultDice);
         resultDice.removeAllViews();
         resultDice.addView(dice.getImg());
@@ -200,7 +201,7 @@ public class ContactAlertDialog {
         final TextView result = dialogView.findViewById(R.id.customDialogTestResult);
         result.setText(String.valueOf(sumResult));
 
-        dice.setMythicEventListener(new Dice.OnMythicEventListener() {
+        dice.setMythicEventListener(new Dice20.OnMythicEventListener() {
             @Override
             public void onEvent() {
                 int sumResult=dice.getRandValue()+ sumScore;
@@ -212,7 +213,7 @@ public class ContactAlertDialog {
         if(!prophecyAlreadyUsed && yfa.getAllResources().getResource("resource_prophecy").getCurrent()>0){
             callToAction.setText("Tu peux relancer une fois le test");
             callToAction.setTextColor(Color.BLACK);  callToAction.setTextSize(18); callToAction.setGravity(Gravity.CENTER);
-            callToAction.setCompoundDrawablesWithIntrinsicBounds(tools.resize(mC,mC.getDrawable(R.drawable.resource_prophecy),100),null,null,null);
+            callToAction.setCompoundDrawablesWithIntrinsicBounds(mC.getDrawable(R.drawable.resource_prophecy),null,null,null);
             callToAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

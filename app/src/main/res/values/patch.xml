@@ -5,6 +5,10 @@
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."</string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V3.2
+-migration rescale android X
+-fix test RM dice img
+----------------------------------------------------------------------------------
 Patch note V3.1
 -Nouveau menu de rechargement des rangs de sort à partir de gemmes
     -Visibilité des rangs actuellement disponibles

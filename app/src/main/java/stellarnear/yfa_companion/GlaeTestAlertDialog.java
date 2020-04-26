@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Rolls.Dice;
+import stellarnear.yfa_companion.Rolls.Dice20;
 import stellarnear.yfa_companion.Spells.Spell;
 
 public class GlaeTestAlertDialog {
@@ -29,7 +30,7 @@ public class GlaeTestAlertDialog {
     private AlertDialog alertDialog;
     private View dialogView;
     private Spell spell;
-    private Dice dice;
+    private Dice20 dice;
 
     private Boolean boost=false;
     private Boolean fail=false;
@@ -99,7 +100,7 @@ public class GlaeTestAlertDialog {
 
     private void startRoll() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        dice = new Dice(mA,mC,20);
+        dice = new Dice20(mA,mC);
         if (settings.getBoolean("switch_manual_diceroll",mC.getResources().getBoolean(R.bool.switch_manual_diceroll_def))){
             dice.rand(true);
             dice.setRefreshEventListener(new Dice.OnRefreshEventListener() {
@@ -132,11 +133,11 @@ public class GlaeTestAlertDialog {
         alertDialog.getWindow().setLayout((int) (factor*size.x), (int)(factor*size.y));
     }
 
-    private void endSkillCalculation(final Dice dice) {
+    private void endSkillCalculation(final Dice20 dice) {
         FrameLayout resultDice= dialogView.findViewById(R.id.customDialogTestResultDice);
         resultDice.removeAllViews();
         resultDice.addView(dice.getImg());
-        dice.delt();
+        dice.getImg().setOnClickListener(null);
 
         TextView resultTitle = dialogView.findViewById(R.id.customDialogTitleResult);
         TextView callToAction = dialogView.findViewById(R.id.customDialogTestCallToAction);
