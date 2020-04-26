@@ -27,7 +27,11 @@ public class ImgFactoryForDice {
         }
         imgDice  = new ImageView(mC);
 
-        imgDice.setImageDrawable(mC.getDrawable(drawableId));
+        if(drawableId!=0) {
+            imgDice.setImageDrawable(mC.getDrawable(drawableId));
+        } else {
+            imgDice.setImageDrawable(mC.getDrawable(R.drawable.mire_test));
+        }
         tools.resize(imgDice, mC.getResources().getDimensionPixelSize(R.dimen.icon_main_dices_wheel_size));
         return imgDice;
     }
