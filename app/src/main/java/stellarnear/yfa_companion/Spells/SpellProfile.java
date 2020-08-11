@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +32,7 @@ public class SpellProfile {
     private OnRefreshEventListener mListener;
     private Perso yfa = MainActivity.yfa;
     private Tools tools=Tools.getTools();
+    private int nInfos;
 
     public SpellProfile(Spell spell){
         this.spell=spell;
@@ -121,34 +125,37 @@ public class SpellProfile {
     }
 
     private void printInfo() {
-        GridLayout grid = ((GridLayout)profile.findViewById(R.id.infos));
-        grid.removeAllViews();
+        ((LinearLayout)profile.findViewById(R.id.infos_col1)).removeAllViews();
+        ((LinearLayout)profile.findViewById(R.id.infos_col2)).removeAllViews();
+        ((LinearLayout)profile.findViewById(R.id.infos_col3)).removeAllViews();
+
+        nInfos=0;
         if (calculation.nDice(spell)>0) {
             if(spell.getDmg_type().equalsIgnoreCase("heal")){
-                grid.addView(infoElement("Soins:" + displayText.damageTxt(spell)));
-            } else { grid.addView(infoElement("Dégats:" + displayText.damageTxt(spell))); }
+                addInfoToGrid(infoElement("Soins:" + displayText.damageTxt(spell)));
+            } else { addInfoToGrid(infoElement("Dégats:" + displayText.damageTxt(spell))); }
         }
         if (!spell.getDmg_type().equals("")) {
-            grid.addView(infoElement("Type:" + spell.getDmg_type()));
+            addInfoToGrid(infoElement("Type:" + spell.getDmg_type()));
         }
         if (!spell.getRange().equals("")) {
-            grid.addView(infoElement("Portée:" + displayText.rangeTxt(spell)));
+            addInfoToGrid(infoElement("Portée:" + displayText.rangeTxt(spell)));
         }
         if (!spell.getArea().equals("")) {
-            grid.addView(infoElement("Zone:" + spell.getArea()));
+            addInfoToGrid(infoElement("Zone:" + spell.getArea()));
         }
         if (!displayText.compoTxt(mC,spell).equalsIgnoreCase("")) {
-            TextView compos = infoElement("Compos:" + displayText.compoTxt(mC,spell));
-            grid.addView(compos);
+            View compos = infoElement("Compos:" + displayText.compoTxt(mC,spell));
+            addInfoToGrid(compos);
         }
         if (!spell.getCast_time().equals("")) {
-            grid.addView(infoElement("Cast:" + calculation.getCastTimeTxt(spell)));
+            addInfoToGrid(infoElement("Cast:" + calculation.getCastTimeTxt(spell)));
         }
         if (!spell.getDuration().equals("") && !spell.getDuration().equalsIgnoreCase("instant")) {
-            grid.addView(infoElement("Durée:" + displayText.durationTxt(spell)));
+            addInfoToGrid(infoElement("Durée:" + displayText.durationTxt(spell)));
         }
         if (!spell.hasRM()||spell.hasRM()) {
-            grid.addView(infoElement("RM:" + (spell.hasRM() ? "oui":"non")));
+            addInfoToGrid(infoElement("RM:" + (spell.hasRM() ? "oui":"non")));
         }
         String resistance;
         if (spell.getSave_type().equals("none") || spell.getSave_type().equals("")) {
@@ -157,18 +164,31 @@ public class SpellProfile {
             resistance = spell.getSave_type() + "(" + calculation.saveVal(spell) + ")";
         }
         if (!resistance.equals("")) {
-            grid.addView(infoElement("Sauv:" + resistance ));
+            addInfoToGrid(infoElement("Sauvvvvvvv:" + resistance ));
         }
+    }
+
+    private void addInfoToGrid(View infoElement) {
+        LinearLayout line=null;
+        nInfos++;
+        if((nInfos % 3 )== 0){
+            line = ((LinearLayout)profile.findViewById(R.id.infos_col3));
+        } else if ((nInfos % 2 )== 0) {
+            line = ((LinearLayout)profile.findViewById(R.id.infos_col2));
+        }else {
+            line = ((LinearLayout)profile.findViewById(R.id.infos_col1));
+        }
+        line.addView(infoElement);
     }
 
     private TextView infoElement(String txt){
         TextView textview = new TextView(mC);
         textview.setText(txt);
         textview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        GridLayout.LayoutParams para = new GridLayout.LayoutParams();
-        para.columnSpec=GridLayout.spec(GridLayout.UNDEFINED, 1f);
-        para.rowSpec=GridLayout.spec(GridLayout.UNDEFINED, 1f);
-        textview.setLayoutParams(para);
+        textview.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        textview.setMarqueeRepeatLimit(-1);
+        textview.setSingleLine(true);
+        textview.setSelected(true);
         return textview;
     }
 

@@ -291,7 +291,6 @@ public class Perso {
                 }
             }
 
-
             if (abiId.equalsIgnoreCase("ability_equipment")) {
                 abiScore= inventory.getAllItemsCount();
             }
@@ -319,8 +318,7 @@ public class Perso {
                 if (settings.getBoolean("ioun_stone_luck",true)) {
                     abiScore+=1;
                 }
-
-                    if(allBuffs.buffByIDIsActive("resistance")){
+                    if((inventory.getAllEquipments().getAbiBonus(abiId) == 0)  && allBuffs.buffByIDIsActive("resistance")){
                         abiScore +=1;
                     }
                 if (abiId.equalsIgnoreCase("ability_ref")){
