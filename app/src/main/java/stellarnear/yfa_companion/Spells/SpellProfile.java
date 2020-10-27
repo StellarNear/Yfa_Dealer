@@ -164,7 +164,7 @@ public class SpellProfile {
             resistance = spell.getSave_type() + "(" + calculation.saveVal(spell) + ")";
         }
         if (!resistance.equals("")) {
-            addInfoToGrid(infoElement("Sauvvvvvvv:" + resistance ));
+            addInfoToGrid(infoElement("Sauv:" + resistance ));
         }
     }
 

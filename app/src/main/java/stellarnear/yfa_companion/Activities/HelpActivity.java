@@ -39,6 +39,7 @@ import java.util.Map;
 
 import stellarnear.yfa_companion.AllGeneralHelpInfos;
 import stellarnear.yfa_companion.GeneralHelpInfo;
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.Perso.Ability;
 import stellarnear.yfa_companion.Perso.Capacity;
 import stellarnear.yfa_companion.Perso.Feat;

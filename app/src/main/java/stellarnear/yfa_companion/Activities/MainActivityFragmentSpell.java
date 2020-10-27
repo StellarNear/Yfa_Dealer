@@ -39,8 +39,10 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
 
 import stellarnear.yfa_companion.CustomAlertDialog;
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
@@ -90,15 +92,12 @@ public class MainActivityFragmentSpell extends Fragment {
             }
         });
 
-        /*  Todo accepter ce click quand tout est bon
         returnFragView.findViewById(R.id.Titre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToFreeList();
             }
         });
-
-         */
 
         ((FrameLayout) returnFragView.findViewById(R.id.back_main_from_spell)).setOnClickListener(new View.OnClickListener() {
             @Override

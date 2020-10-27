@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.Tools;
 
 
@@ -34,6 +35,7 @@ public class AllAbilities {
     private Context mC;
     private Tools tools=Tools.getTools();
     private Inventory inventory;
+    private CustomLog log = new CustomLog(AllAbilities.class);
 
     public AllAbilities(Context mC,Inventory inventory) {
         this.mC = mC;
@@ -76,7 +78,7 @@ public class AllAbilities {
             }
             is.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.err("Error while parsing abilities.xml",e);
         }
     }
 
@@ -97,7 +99,7 @@ public class AllAbilities {
         try {
             val=tools.toInt(settings.getString( key.toLowerCase(), String.valueOf(mC.getResources().getInteger(resId))));
         } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
+            log.warn("Def value of Ability ID : "+key+ " not found",e);
         }
         return val;
     }
@@ -150,7 +152,10 @@ public class AllAbilities {
         Ability selecteAbi;
         try {
             selecteAbi=mapIDAbi.get(abiId.toLowerCase());
-        } catch (Exception e){  selecteAbi=null;  }
+        } catch (Exception e){
+            selecteAbi=null;
+            log.warn("Call on getAbi for ability : "+abiId+ " not found",e);
+        }
         return selecteAbi;
     }
 

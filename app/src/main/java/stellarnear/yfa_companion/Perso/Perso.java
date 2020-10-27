@@ -3,12 +3,14 @@ package stellarnear.yfa_companion.Perso;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_companion.Calculation;
 import stellarnear.yfa_companion.HallOfFame;
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
@@ -43,6 +45,7 @@ public class Perso {
 
     public Perso(Context mC) {
         this.mC=mC;
+
         this.prefs= PreferenceManager.getDefaultSharedPreferences(mC);
         inventory = new Inventory(mC);
         stats = new Stats(mC);
@@ -169,9 +172,33 @@ public class Perso {
             spell.cast();
 
             int currentRankSpell = new Calculation().currentRank(spell);
-            if(currentRankSpell>0) {
+            //Check de toutes les dépenses relative à un sort
+            if(currentRankSpell>0 && !spell.isFree()) {
                 allResources.castSpell(currentRankSpell);
+            } else if (spell.isFree()){
+                new PostData(mC,new PostDataElement("Lancement sort arcane libre","-1pt mythique"));
+                allResources.getResource("resource_mythic_points").spend(1);
+                tools.customToast(mC, "Sort Arcane libre\nIl te reste " + getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
+            if (!spell.getConversion().getArcaneId().equalsIgnoreCase("")) {
+                castConvSpell(spell.getConversion().getRank());
+            }
+            if (spell.isMyth()) {
+                allResources.getResource("resource_mythic_points").spend(1);
+                new PostData(mC,new PostDataElement("Lancement sort mythique","-1pt mythique"));
+                tools.customToast(mC, "Sort Mythique\nIl te reste " + getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
+            }
+            if (spell.elementIsConverted()) {
+                allResources.getResource("resource_mythic_points").spend(1);
+                new PostData(mC,new PostDataElement("Conversiont d'élément mythique","-1pt mythique"));
+                tools.customToast(mC, "Conversion d'élément\nIl te reste " + getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
+            }
+            if(allBuffs.buffByIDIsActive("true_strike") && !spell.getContact().equalsIgnoreCase("")){
+                allBuffs.getBuffByID("true_strike").cancel();
+            }
+
+            new PostData(mC,new PostDataElement(spell));
+
             if(spell.getRange().equalsIgnoreCase("personnelle")){
                 Buff matchingBuff = allBuffs.getBuffByID(spell.getID());
                 if(matchingBuff!=null){
@@ -191,7 +218,6 @@ public class Perso {
                     }
                 }
             }
-            new PostData(mC,new PostDataElement(spell));
 
             if(spell.getMetaList().metaIdIsActive("meta_echo")){
                 EchoList.getInstance(mC).addEcho(spell);
@@ -318,9 +344,9 @@ public class Perso {
                 if (settings.getBoolean("ioun_stone_luck",true)) {
                     abiScore+=1;
                 }
-                    if((inventory.getAllEquipments().getAbiBonus(abiId) == 0)  && allBuffs.buffByIDIsActive("resistance")){
-                        abiScore +=1;
-                    }
+                if((inventory.getAllEquipments().getAbiBonus(abiId) == 0)  && allBuffs.buffByIDIsActive("resistance")){
+                    abiScore +=1;
+                }
                 if (abiId.equalsIgnoreCase("ability_ref")){
                     abiScore+=getAbilityMod("ability_dexterite");
                     if(allBuffs.buffByIDIsActive("premonition")){

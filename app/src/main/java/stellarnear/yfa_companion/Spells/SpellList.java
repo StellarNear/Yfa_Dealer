@@ -165,4 +165,14 @@ public class SpellList extends AppCompatActivity {
         }
         return sum;
     }
+
+    public int getHighestTier() {
+        int max=0;
+        for(Spell spell: listSpells){
+            if(spell.getRank()>max){
+                max=spell.getRank();
+            }
+        }
+        return  max;
+    }
 }

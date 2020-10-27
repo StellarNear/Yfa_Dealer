@@ -34,6 +34,7 @@ import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.Spells.BuildFreeSpellList;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
@@ -49,8 +50,6 @@ public class MainActivityFragmentSpellFree extends Fragment {
     private Tools tools=Tools.getTools();
 
     public MainActivityFragmentSpellFree() {
-        //todo les spend cast de sort libre sont que ne point myth
-        //todo les calcul de meta max pour les sort libre sont different ?
     }
 
     @Override
@@ -117,9 +116,9 @@ public class MainActivityFragmentSpellFree extends Fragment {
 
     private void buildPage1() {
 
-        listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList(); //todo free list
+        listAllSpell= BuildFreeSpellList.getInstance(getContext()).getSpellList();
 
-        int max_tier=yfa.getAllResources().getRankManager().getHighestTier(); //todo max rank free list
+        int max_tier=listAllSpell.getHighestTier();
         for(int i=0;i<=max_tier;i++){
             LinearLayout tiers=(LinearLayout) returnFragView.findViewById(R.id.linear1);
             final TextView tierTxt= new TextView(getContext());

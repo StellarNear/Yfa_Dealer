@@ -23,6 +23,7 @@ public class Spell {
     private String id;
     private Boolean mythic;
     private String normalSpellId; // pour les sorts mythic
+    private boolean free=false;
 
     private String  descr;
     private String  dice_type;
@@ -90,6 +91,7 @@ public class Spell {
         this.metaList=new MetaList(spell.metaList);
         this.cast =new Cast();
         this.glaeManager=new GlaeManager(spell.glaeManager);
+        this.free=spell.free;
     }
 
     public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type,int flat_dmg, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
@@ -399,9 +401,17 @@ public class Spell {
         return this.crit;
     }
 
+    public boolean isFree() {
+        return free;
+    }
+
     public void makeGlaeBoost() {
         this.glaeManager.setBoosted();
         setRmPassed(); //awakening 3rd make the spell pass any resistance
+    }
+
+    public void setArcaneFree() {
+        this.free=true;
     }
 
     public void refreshProfile() {
@@ -442,4 +452,6 @@ public class Spell {
     public void resetMetas() {
         this.metaList= BuildMetaList.getInstance().getMetaList();
     }
+
+
 }

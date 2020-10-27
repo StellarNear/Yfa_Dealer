@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import stellarnear.yfa_companion.Calculation;
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Spells.Spell;

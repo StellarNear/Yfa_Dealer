@@ -1,0 +1,1518 @@
+<?xml version="1.0"?>
+<records>
+
+    <spell>
+        <name>Aspect de fée hantée</name>
+        <shortdescr>RD 1/fer froid contre un unique adversaire sur une attaque.</shortdescr>
+        <descr>Le personnage s’entoure d’illusions inquiétantes qui lui donnent l’air d’une étrange fée démente. Il gagne une RD 1/fer froid contre un unique adversaire jusqu’à la fin du sort ou jusqu’à ce qu’il subisse des dégâts.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>G</compo>
+        <rank>0</rank>
+    </spell>
+   
+	<spell>
+        <name>Anticipation du danger</name>
+        <shortdescr>La cible gagne un bonus à un test d'initiative.</shortdescr>
+        <descr>Pendant la durée du sort, la première fois que la cible du sort doit faire un test d’initiative, elle ajoute un bonus d’intuition égal au niveau du lanceur de sorts (+5 au maximum) à ce test. Le sort se termine une fois le bonus appliqué.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Arme infaillible</name>
+        <shortdescr>Bonus de +2 qui augmente de +1 tous les quatre niveaux de lanceur de sorts aux jets d’attaque pour confirmer un coup critique.</shortdescr>
+        <descr>La transmutation donne un bonus de +2 aux jets d’attaque pour confirmer un coup critique et 1 point de plus par tranche de quatre niveaux de lanceur de sorts (bonus total de +7 au maximum). Si le personnage lance le sort sur des projectiles, l’effet se termine pour un projectile donné quand il le tire, qu’il touche ou non. Les shuriken sont considérés comme des projectiles vis-à-vis de ce sort.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <rank>1</rank>
+    </spell>
+   
+    <spell>
+        <name>Combattant pris au dépourvu</name>
+        <shortdescr>La cible reçoit un malus de -4 aux tests d’initiative et aux jets de Réflexes.</shortdescr>
+        <descr>La cible reçoit un malus de -4 aux tests d’initiative et aux jets de Réflexes.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Conscience accrue</name>
+        <shortdescr>La mémoire et la capacité du personnage à traiter les informations sont améliorées.</shortdescr>
+        <descr>Le personnage bénéficie d’un bonus de compétence de +2 aux tests de Perception et à tous les tests de Connaissances auxquelles il est formé. Si ce sort est actif alors que le personnage doit faire un test d’initiative, il peut instantanément dissiper le sort pour bénéficier d’un bonus de +4 sur ce test.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Déjà vu</name>
+        <shortdescr>Force la cible à répéter la même action.</shortdescr>
+        <descr>Le personnage plonge dans l’esprit de la cible et piège ses processus mentaux dans une boucle temporelle. Quelles que soient les actions complexes, simples ou de mouvement que la cible effectue au premier de ses tours suivant l’incantation de ce sort, elle doit les répéter au tour suivant.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>2 rounds</duration>
+		<rm>true</rm>
+        <compo>V</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Détection des passages secrets</name>
+        <shortdescr>Révèle les passages secrets à 18 m ou moins.</shortdescr>
+        <descr>Grâce à détection des passages secrets, le lanceur de sorts peut repérer les passages secrets, les caches et les compartiments secrets. Seuls les passages, les portes ou les ouvertures spécialement conçus pour ne pas être remarqués sont révélés par ce sort. Les informations obtenues dépendent du temps passé à étudier la zone observée.</descr>
+        <range>18m</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Disque flottant</name>
+        <shortdescr>Crée un plan de force concave qui suit le personnage et peut porter des charges pour lui.</shortdescr>
+        <descr>Ce sort crée un plan de force légèrement concave qui suit le personnage et peut porter des charges pour lui. Le disque a un diamètre de 90 cm et s’enfonce de 2,5 cm en son centre. Il peut accepter jusqu’à 50 kg par niveau de lanceur de sorts. Il flotte à un mètre du sol et reste toujours horizontal. Il se meut en flottant lorsqu’il est dans la portée du sort et suit le lanceur de sorts en se déplaçant chaque round d’une distance inférieure ou égale à la vitesse de déplacement normale du lanceur de sort.</descr>
+        <range>Courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Instant de gloire</name>
+        <shortdescr>Double un bonus de moral.</shortdescr>
+        <descr>Toutes les créatures affectées par le sort sont susceptibles de rencontrer d’immenses succès et de se couvrir de gloire. Si la créature affectée bénéficie d’un bonus de moral de n’importe quel type, il peut le doubler pour un jet de dé ou un test, avant de lancer le dé. Une fois que la créature a utilisé le sort, il ne l’affecte plus.</descr>
+        <range>15m</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G,F</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Lien mental</name>
+        <shortdescr>Communique une grande quantité d’informations en un instant.</shortdescr>
+        <descr>Le personnage lie son esprit à celui de la créature qu’il touche pour lui transmettre rapidement une grande quantité d’informations complexes. C’est lui qui décide de ce que la cible apprend, sans dépasser la quantité d’informations transmissible normalement en 10 minutes. Ces informations viennent par séries d’images visuelles et de sensations émotionnelles et ne dépendent pas du langage.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Limite infranchissable</name>
+        <shortdescr>Le personnage peut tenter un nombre d’attaques d’opportunité supplémentaires.</shortdescr>
+        <descr>Le personnage crée une ligne écarlate brillante autour de la zone. Contre les créatures situées dans la zone, le personnage peut tenter un nombre d’attaques d’opportunité supplémentaires par round égal au modificateur de sa caractéristique de lancement de sorts (Intelligence pour les magi et les magiciens, Charisme pour les sanguins et les ensorceleurs), même si cela ne lui permet pas de faire plus d’une attaque contre une créature par action provoquant une attaque d’opportunité.</descr>
+        <area>Cercle de 1.5m de rayon</area>
+		<range>1.5m</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Paix forcée</name>
+        <shortdescr>Le personnage scelle une arme sur le corps de son propriétaire.</shortdescr>
+        <descr>Le personnage scelle une arme sur le corps de son propriétaire, dans son fourreau ou dans un étui. Si la cible essaie de dégainer cette arme, elle doit dépenser une action simple et réussir un test de Force (DD égal au DD du jet de sauvegarde), ce qui provoque une attaque d’opportunité, qu’elle réussisse ou non.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <compo>G</compo>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Perception des proches</name>
+        <shortdescr>Le personnage examine les pensées d’un individu pour en apprendre plus sur sa famille.</shortdescr>
+        <descr>Le personnage peut examiner les pensées d’un individu et apprendre le nom et la position des proches parents vivants de la cible, ainsi que l’attitude de la cible à l’égard de ces parents (et inversement). Il des informations sur un parent par round où il se concentre sur la cible. Par exemple, il pourrait apprendre que le père de la cible s’appelle Jarn, qu’il vit dans une ferme du coin et que son enfant et lui ne s’entendent pas très bien. Étant donné que ce sort permet de lire l’esprit de la cible, le personnage ne peut apprendre que ce que la cible sait ou croit savoir.</descr>    
+		<range>18m</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <compo>V,G,F</compo>
+        <rank>1</rank>
+    </spell>
+	
+	<spell>
+        <name>Sabot du tonnerre</name>
+        <shortdescr>Fait un croc-en-jambe à une créature à portée.</shortdescr>
+        <descr>Le personnage tape du pied ou frappe son arme contre la terre ou le sol, créant une onde de puissance dont il peut se servir pour faire un croc-en-jambe à une créature. Il fait un test de manœuvre offensive de croc-en-jambe contre la cible mais, plutôt que d’utiliser son bba il utilise son nls et, plutôt que son modificateur de Force, il peut utiliser le modificateur de sa valeur de caractéristique de lancement de sorts. Ceci ne provoque pas d’attaque d’opportunité. Ce sort n’a aucun effet si le personnage ne peut toucher la terre ou le sol ou si sa cible n’est pas en contact avec la terre ou le sol.</descr>
+		<range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>1</rank>
+    </spell>
+	
+    <spell>
+        <name>Ventriloquie</name>
+        <shortdescr>Le personnage peut donner l’impression que sa voix (ou tout autre son) semble surgir d’un endroit au choix.</shortdescr>
+        <descr>Il peut s’exprimer par ventriloquie dans une langue qu’il connaît. Quiconque réussit son jet de sauvegarde prend conscience que les bruits sont illusoires (ce qui n’empêche pas de les entendre tout de même).</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+		<save_type>vol[annule]</save_type>
+        <compo>V,F</compo>
+        <rank>1</rank>
+    </spell>
+
+    <spell>
+        <name>Anticipation des pensées</name>
+        <shortdescr>Ce sort puise dans l’esprit de la cible afin de donner au personnage une idée des actions qu’elle va entreprendre.</shortdescr>
+        <descr>Le personnage gagne un bonus d’intuition de +2 à la CA contre les attaques de la cible. Si la cible rate son jet de Volonté, il sait aussi comment elle va réagir à ses attaques et applique le même bonus à ses jets d’attaque et de dégâts à son encontre. Ces bonus s’appliquent uniquement tant que la cible est à portée du sort, mais si elle passe hors de portée, les bonus reviennent dès qu’elle pénètre de nouveau dans le rayon d’action du sort. À chaque fois que la cible rate le personnage alors qu’elle l’attaque, les bonus du sort augmentent de 1 jusqu’à la fin du sort (pour un maximum de +5).</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V</compo>
+		<save_type>vol[partiel]</save_type>
+        <rm>true</rm>
+        <rank>2</rank>
+    </spell>
+
+    <spell>
+        <name>Caresse élémentaire</name>
+        <shortdescr>Les mains du personnage s'imprègnent d'énergie élémentaire.</shortdescr>
+        <descr>Quand le personnage finit l'incantation du sort, ses mains s'imprègnent d'énergie élémentaire. Choisissez un type d'énergie : acide, froid, électricité ou feu. Le personnage gagne une attaque de contact au corps à corps qui inflige 1d6 points de dégâts de ce type d'énergie et s'accompagnent d'un effet spécial.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>2</rank>
+    </spell>
+
+    <spell>
+        <name>Désir anormal</name>
+        <shortdescr>Le personnage suscite chez sa cible un désir pour une créature ou un objet qu’il désigne au moment de l’incantation.</shortdescr>
+        <descr>Le personnage suscite chez sa cible un désir pour une créature ou un objet qu’il désigne au moment de l’incantation. Cette dernière est alors envahie d’une irrésistible envie de se ruer sur l’objet de son désir et de l’embrasser ou de le caresser passionnément à son prochain tour, sans faire d’autre action.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round</duration>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>2</rank>
+    </spell>
+	
+	<spell>
+        <name>Ennui oppressant</name>
+        <shortdescr>La cible perd sa prochaine action.</shortdescr>
+        <descr>Le personnage emplit sa cible d'ennui. Elle perd tout intérêt pour la tache en cours et doit réussir un jet de volonté contre l'effet du sort si elle veut faire une action. Si elle échoue, elle ne peut pas agir pendant le round. L'ennui dure jusqu'à ce que sa durée expire ou que la cible brise l'effet du sort en réussissant un jet de sauvegarde.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round</duration>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>2</rank>
+    </spell>
+	
+	<spell>
+        <name>Modification d'apparence</name>
+        <shortdescr>Quand le mage lance ce sort, il peut prendre la forme de n’importe quelle créature humanoïde de taille P ou M.</shortdescr>
+        <descr>Quand le mage lance ce sort, il peut prendre la forme de n’importe quelle créature humanoïde de taille P ou M. Si cette créature possède l’une des aptitudes suivantes : vision dans le noir à 18 m (12 c), vision nocturne, odorat et nage 9 m (6 c), le personnage en dispose aussi.
+
+			Créature P : Sous cette forme, le personnage gagne un bonus de taille de +2 à la Dextérité.
+
+			Créature M : Sous cette forme, le personnage gagne un bonus de taille de +2 à la Force.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>Un morceau de la créature dont le mage veut prendre l’apparence</compo_m>
+        <rank>2</rank>
+    </spell>
+	
+	<spell>
+        <name>Offrande exigée</name>
+        <shortdescr>Force une créature à remettre au personnage l’objet qu’elle tient actuellement en main.</shortdescr>
+        <descr>Une créature qui rate son jet de sauvegarde dépense une action immédiate (ou une action de mouvement à son prochain tour) pour remettre au personnage l’objet qu’elle tient actuellement en main.</descr>
+        <range>1.50m</range>
+        <cast_time>simple</cast_time>
+        <duration>1round</duration>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>2</rank>
+    </spell>
+	
+	<spell>
+        <name>Partage des souvenirs</name>
+        <shortdescr>Partage les souvenirs du personnage avec une cible.</shortdescr>
+        <descr>Le personnage lie momentanément son esprit à celui de sa cible et ils partagent un unique souvenir d’une minute au maximum. Le personnage peut montrer un de ses souvenirs à la cible, lui en faire revivre un ou en voir un.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+		<rm>true</rm>
+        <rank>2</rank>
+    </spell>
+	
+	<spell>
+        <name>Réparation intégrale</name>
+        <shortdescr>Ce sort permet de réparer les dommages superficiels causés aux objets.</shortdescr>
+        <descr>Ce sort permet de réparer les dommages superficiels causés aux objets et leur rend 1d6 points de vie par niveau de lanceur de sort (Maximum 5d6). Dans le cas d’un objet cassé, l’objet n’est plus affecté par cette condition préjudiciable si l’objet se retrouve à 50% de ses points de vie ou moins. Pour que ce sort fonctionne, le personnage doit disposer de tous les morceaux de l’objet.
+
+			Le personnage peut utiliser ce sort pour réparer un objet magique cassé à condition que son niveau de lanceur de sorts soit égal ou supérieur à celui de l’objet. Il peut aussi réparer un objet magique détruit (à 0 point de vie ou moins) mais le sort ne lui rend pas ses aptitudes magiques que si le niveau de lanceur de sorts du personnage est au moins le double de celui de l’objet.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>5</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>  
+        <dmg_type>heal</dmg_type>
+        <range>courte</range>
+        <cast_time>10min</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rank>2</rank>
+    </spell>
+
+    <spell>
+        <name>Simulacre de vie</name>
+        <descr>Tant que ce sort fait effet, le personnage gagne un nombre de points de vie temporaires égal à 1d10 +1 par niveau de lanceur de sorts (+10 maximum).</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
+        <rank>2</rank>
+    </spell>
+	
+	<spell>
+        <name>Affutage</name>
+        <shortdescr>Ce sort augmente le tranchant d’une arme, donc les chances qu’elle a de porter des coups plus importants. </shortdescr>
+        <descr>La zone de critique possible de l’arme affectée est doublée. Une zone de critique possible normale devient 19–20. Une zone de 19–20 passe à 17–20. Une zone de 18–20 devient 15–20. Le sort ne fonctionne que sur les armes tranchantes et perforantes. Les effets augmentant la zone de critique possible d’une arme ne sont pas cumulatifs.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+	
+	<spell>
+        <name>Appel du néant</name>
+        <shortdescr>Plonge les cibles adjacentes dans une prison de néant.</shortdescr>
+        <descr>Les créatures adjacentes au moment du lancer du sort et au début de chaque tour subissent 2d6 points de dégâts. De plus, elles sont fatiguées, ne peuvent respirer, parler, ou lancer de sorts à composante verbale tant qu'ils restent adjacents. Un jet de Réflexes réussi annule la fatigue et réduit les dommages de moitié, mais n'annule pas les autres effets du sort.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>2</cap_dice>
+		<range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+		<save_type>ref[1/2]</save_type>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+	
+	<spell>
+        <name>Coursier fantôme</name>
+        <shortdescr>Fait apparaître une créature quasi-réelle ayant la forme d’un cheval de taille G</shortdescr>
+        <descr>Cette invocation fait apparaître une créature quasi-réelle ayant la forme d’un cheval de taille G. Seul le personnage (ou celui pour qui il a lancé le sort) peut la chevaucher (vitesse de vol = 30m).</descr>
+        <range>0m</range>
+        <cast_time>10min</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+	
+	<spell>
+        <name>Rapidité</name>
+        <shortdescr>Le sujet et ses alliés (1 par niveau, situés à moins de 9m) se déplacent et agissent plus rapidement que d’habitude, ce qui a plusieurs effets distincts.</shortdescr>
+        <descr>Quand le sujet entame une attaque à outrance, il peut porter une attaque supplémentaire à l’aide d'une arme manufacturée ou naturelle. Il utilise alors son bonus de base à l’attaque maximal de la créature, auquel il ajoute tous les modificateurs adéquats. Cet effet ne se cumule pas avec un autre de même type, comme une arme rapide. De plus, le sort n’offre pas une action supplémentaire à proprement parler. Il ne permet donc pas de lancer un second sort ou d’entreprendre une action supplémentaire au cours du même round.
+
+			La créature bénéficie d’un bonus de +1 aux jets d’attaque, mais également d’un bonus d’esquive de +1 à la CA et aux jets de Réflexes. Elle perd ce bonus d’esquive si elle perd son bonus de Dextérité à la CA.
+
+			Les modes de déplacement de la créature (dont déplacement terrestre, creusement, escalade, vol et nage) augmentent de 9 m, jusqu’à un maximum de deux fois la vitesse de déplacement normale du sujet. Il s’agit d’un bonus d’altération qui affecte la distance de saut de la créature. On ne peut pas cumuler plusieurs effets de rapidité. Rapidité contre et dissipe lenteur.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un copeau de racine de réglisse</compo_m>
+        <rank>3</rank>
+    </spell>
+	
+	<spell>
+        <name>Réduction d'objet</name>
+        <shortdescr>Ce sort permet de rétrécir un objet non-magique.</shortdescr>
+        <descr>Ce sort permet de rétrécir un objet non-magique jusqu’à ce qu’il ne fasse plus qu’un seizième de sa taille habituelle (ce qui correspond à peine à 1/4 000e de son volume et de sa masse initiaux). Ce changement réduit donc l’objet de quatre catégories de taille.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1day/lvl</duration>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+
+    <spell>
+        <name>Sable du temps</name>
+        <shortdescr>Le personnage fait vieillir la cible temporairement, ce qui la fait passer à la catégorie d’âge supérieure.</shortdescr>
+        <descr>Le personnage fait vieillir la cible temporairement, ce qui la fait passer à la catégorie d’âge supérieure. Elle subit immédiatement les malus de Force, de Dextérité et de Constitution de sa nouvelle catégorie d’âge mais ne gagne pas les bonus associés. Si la créature est d’âge inconnu, on considère que le sort la fait passer à l’âge mûr. Les créatures immortelles ou sans âge ne sont pas affectées par ce sort.
+
+			Si le personnage lance ce sort sur un objet, une créature artificielle ou un mort-vivant, il subit 3d6 points de dégâts +1 par niveau de lanceur de sorts (+15 au maximum), tandis que le temps l’use et le corrode. Cette version du sort a une durée instantanée</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>3</cap_dice>
+		<flat_dmg>1/lvl</flat_dmg>
+        <flat_cap>15</flat_cap>
+		<range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+	
+	<spell>
+        <name>Sabot du tonnerre suprême</name>
+        <shortdescr>Fait un croc-en-jambe à plusieurs créatures à portée.</shortdescr>
+        <descr>Ce sort fonctionne comme sabot du tonnerre, aux seules différences indiquées ci-dessus. Il permet au personnage de cibler plusieurs créatures, y compris celles qui sont plus grandes que lui d’une catégorie de taille. Quand le personnage fait son test de manœuvre offensive, il applique le résultat à chacune des créatures présentes dans la zone.</descr>
+		<range>18m</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+		<area>ligne de 18m</area>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>3</rank>
+    </spell>
+
+	<spell>
+        <name>Vol</name>
+        <shortdescr>La cible du sort acquiert la capacité de voler avec une vitesse de 18 m.</shortdescr>
+        <descr>La cible du sort acquiert la capacité de voler avec une vitesse de 18 m (12 m s’il porte une armure lourde ou intermédiaire, ou encore une charge lourde ou intermédiaire). S’il monte, sa vitesse diminue de moitié, mais elle double dès qu’il descend. Il peut charger mais pas courir, et gagne un bonus égal à la moitié du niveau de lanceur de sorts du personnage aux tests de compétence de Vol.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G,F</compo>
+        <rank>3</rank>
+    </spell>
+	
+	<spell>
+        <name>Ancre dimensionnelle</name>
+        <shortdescr>Empêche tout déplacement extradimensionnel.</shortdescr>
+        <descr>Un rayon vert jaillit de la main tendue du personnage, qui doit réussir une attaque de contact à distance pour atteindre sa cible (créature ou objet). En cas de succès, la cible se retrouve entourée d’une aura vert émeraude lui interdisant toute forme de déplacement extradimensionnel.
+		Les sorts affectés sont changement de plan, clignotement, dédale, forme éthérée, passage dans l’éther, portail, porte dimensionnelle, projection astrale, téléportation et traversée des ombres ainsi que les pouvoirs magiques correspondants. La victime ne peut pas non plus utiliser un portail ou un cercle de téléportation.</descr>
+		<range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <rm>true</rm>
+        <compo>V,G</compo>
+        <rank>4</rank>
+    </spell>
+	
+	<spell>
+        <name>Boule de foudre</name>
+        <descr>Le personnage crée cinq boules de foudre qui volent dans la direction qu'il indique, infligeant 3d6 points de dégâts d'électricité chacune.</descr>
+        <n_sub_spell>5</n_sub_spell>
+        <dmg_type>shock</dmg_type>
+        <rank>4</rank>
+    </spell>
+    <spell>
+        <id>Boule de foudre_sub</id>
+        <name>Boule de foudre</name>
+        <descr>Cette boule inflige 3d6 points de dégâts d'électricité par round dans la case où elle se situe. Cette boule vole à une vitesse de 6m et nécessite une action de mouvement pour la déplacer. Les créatures qui portent une armure métallique subissent un malus de -4 au jet de sauvegarde.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>3</cap_dice>
+        <dmg_type>shock</dmg_type>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un petit anneau de fer</compo_m>
+        <rm>true</rm>
+        <save_type>ref[annule]</save_type>
+        <rank>4</rank>
+    </spell>
+	
+	<spell>
+        <name>Char fantôme</name>
+		<shortdescr>Invoque un carrosse quasi-réel tiré par quatre chevaux.</shortdescr>
+        <descr>Le personnage invoque un grand char quasi-réel tiré par quatre chevaux. (Vous pouvez modifier la description précise comme bon vous semble.) Le char a toutes les propriétés du sort coursier fantôme. Il faut une personne pour le diriger, soit le personnage soit une autre créature qu’il désigne au moment de l’incantation, et il peut transporter six passagers (y compris le meneur). Ni les chevaux ni le char ne font aucun bruit et les animaux ne se battent jamais.</descr>
+        <range>0m</range>
+        <cast_time>10min</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
+        <rank>4</rank>
+    </spell>
+	
+	<spell>
+        <name>Chasser les esprits</name>
+		<shortdescr>Inflige 1d6 points de dégâts par niveau à une apparition ou un esprit et la ou le rend chancelant.</shortdescr>
+        <descr>Ce sort déchire la substance spirituelle de la cible et l’éparpille dans une large zone, gênant le processus de reconstruction. La cible subit 1d6 points de dégâts par niveau de lanceur de sorts (10d6 au maximum) et se trouve chancelante pendant 1 round. Sur un jet de sauvegarde réussi, la cible reçoit seulement la moitié des dégâts et n’est pas chancelante. Ce sort affecte les créatures sujettes à une projection astrale, les apparitions, les créatures intangibles, les médium|médiums canalisant un esprit et les fantômes. Si le MJ le désire, il peut aussi fonctionner sur d’autres esprits et créatures faites d’ectoplasme. Les créatures intangibles subissent la totalité des dégâts du sort.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>10</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>none</dmg_type>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>vol[1/2]</save_type>
+        <rank>4</rank>
+    </spell>
+	
+	<spell>
+        <name>Terreur</name>
+		<shortdescr>Les sujets fuient pendant 1 round/niveau.</shortdescr>
+        <descr>Ce cône invisible provoque une violente panique chez les créatures vivantes prises dans la zone d’effet, à moins qu’elles ne réussissent un jet de Volonté. Si elles sont acculées, elles se recroquevillent sur elles-mêmes. Si elles réussissent leur jet de Volonté, elles sont secouées pendant 1 round.</descr>
+        <range>9m</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un cœur de poule ou une plume blanche</compo_m>
+        <rm>true</rm>
+        <save_type>vol[partiel]</save_type>
+        <rank>4</rank>
+    </spell>
+	
+	<spell>
+        <name>Violent nuage d'orage suprême</name>
+		<shortdescr>Nuage d’orage volant qui inflige 6d6 points de dégâts d’électricité.</shortdescr>
+        <descr>Un nuage de tempête sphérique et crépitant vole dans la direction indiquée par le personnage et inflige des dégâts d’électricité à ceux qui le touchent. Il a une vitesse de vol de 6 m avec une manœuvrabilité parfaite. Si l’orage entre dans un espace qui accueille une créature, il arrête de se déplacer pour le round et inflige 6d6 points de dégâts d’électricité à cette créature, mais un jet de Réflexes réussi annule ces dégâts. La première créature blessée par le nuage est également étourdie pendant 1 round (Vigueur annule). Il s’agit d’un effet de son.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>6</cap_dice>
+        <dmg_type>shock</dmg_type>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un morceau d’arbre frappé par la foudre</compo_m>
+        <rm>true</rm>
+        <save_type>ref[annule]</save_type>
+        <rank>4</rank>
+    </spell>
+	
+	<spell>
+        <name>Adaptation planaire</name>
+        <shortdescr>Résiste aux effets néfastes d'un plan.</shortdescr>
+        <descr>Adaptation planaire immunise le personnage contre les effets néfastes dus à l'environnement d'un plan particulier, y compris contre la toxicité, les températures extrêmes et le manque d'air. De plus, le personnage gagne une résistance à l'énergie de 20 contre le type d'énergie qui prévaut sur ce plan (en choisir un si le plan est dominé par plusieurs types d'énergie).</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V</compo>
+		<rank>5</rank>
+    </spell>
+	
+    <spell>
+        <name>Arc électrique</name>
+		<shortdescr>Le personnage génère un arc électrique entre deux cibles.</shortdescr>
+        <descr>Le personnage génère un arc électrique entre deux cibles distantes de moins de 18m. Cet arc inflige 1d6 points de dégâts d’électricité par niveau de lanceur de sorts (15d6 au maximum) aux deux cibles et à toute créature qui se trouve entre. Le sort échoue s’il n’y a pas de ligne d’effet entre les deux cibles.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>15</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>shock</dmg_type>
+        <range>longue</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+		<compo_m>fourrure et deux figurines de verre</compo_m>
+        <save_type>ref[1/2]</save_type>
+		<rm>true</rm>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Broderie</name>
+        <shortdescr>Le personnage transforme tous les objets placés sur un tissu en une version bidimensionnelle brodée.</shortdescr>
+        <descr>Le personnage transforme tous les objets placés sur un tissu en une version bidimensionnelle brodée, ce qui lui permet de les transporter et de les ranger facilement. Il peut accumuler n'importe quel poids en objets tant qu'ils ne sortent pas des limites du tissu.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1day/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un morceau de tissu brodé de moins de 3 m de côté d'une valeur de 100 po</compo_m>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Bulle de vie</name>
+        <shortdescr>Protège les créatures contre l'environnement.</shortdescr>
+        <descr>Le personnage entoure les créatures touchées d'une enveloppe constante et déplaçable de 3 cm d'épaisseur. Elle permet au sujet de respirer librement, même sous l'eau ou dans le vide. Elle les immunise également contre les gaz et les vapeurs nocives, y compris les maladies et les poisons inhalés ainsi que les sorts comme brume mortelle ou nuage nauséabond. De plus, l'enveloppe protège les sujets contre les températures extrêmes (comme endurance aux énergies destructives) et aux fortes pressions.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>2hours/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un morceau de coquille d'œuf</compo_m>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Communication à distance</name>
+        <shortdescr>Permet au personnage d'envoyer une message court à quelqu'un qu'il connait.</shortdescr>
+        <descr>Grâce à ce sort le personnage peut, à n’importe quelle distance, entrer en contact avec une créature qu’il connait pour lui envoyer un message n’excédant pas vingt-cinq mots. Le sujet reconnaît automatiquement le personnage s’il l’a déjà rencontré et peut répondre immédiatement au message transmis.</descr>
+        <range>illimitée</range>
+        <cast_time>10min</cast_time>
+        <duration>1round</duration>
+        <compo>V,G,M</compo>
+		<compo_m>mince de fil de cuivre</compo_m>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Contact avec les plans</name>
+        <shortdescr>Le personnage peut se projeter mentalement dans un autre plan d’existence pour y trouver des informations.</shortdescr>
+        <descr>Grâce à ce sort le personnage peut se projeter mentalement dans un autre plan d’existence pour y trouver des informations (un plan Élémentaire ou un autre encore plus éloigné). Le mage comprend le langage des divinités de ces plans mais ces dernières n’apprécient guère d’être importunées et leur réponses sont toujours extrêmement brèves.</descr>
+        <range>personnelle</range>
+        <cast_time>10min</cast_time>
+        <duration>1round/2lvl</duration>
+        <compo>V</compo>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Couronne de lames</name>
+        <shortdescr>4 lames entourent le personnage et inflige des dégâts.</shortdescr>
+        <descr>Les lames occupent un rayon de 1,50 m autour de celui-ci et se déplacent avec lui. Si une créature commence son tour dans la zone d’effet des lames, elle subit 1d4 points de dégâts par tranche de deux niveaux de lanceur de sorts (10d4 max). Ces dégâts ignorent la RD/argent. Les dagues protègent de certaines attaques, comme le sort arme protectrice.</descr>
+        <dice_type>4</dice_type>
+        <cap_dice>10</cap_dice>
+		<n_dice_per_lvl>0.5</n_dice_per_lvl>
+		<range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <save_type>ref[1/2]</save_type>
+        <rm>false</rm>
+        <compo>V,G,F</compo>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Débilité</name>
+		<shortdescr>Les valeurs d’Intelligence et de Charisme de la cible sont réduites à 1.</shortdescr>
+        <descr>Si le jet de Volonté de la cible échoue, ses valeurs d’Intelligence et de Charisme sont réduites à 1. Elle n’est plus capable de lancer des sorts, d’utiliser les compétences dépendant de l’Intelligence ou du Charisme, de comprendre ce qu’on lui dit ni même de s’exprimer de manière cohérente. Toutefois, elle parvient encore à reconnaître ses amis et elle peut les suivre ou même les protéger. L’effet persiste jusqu’à ce que la créature soit soignée grâce à l’un des sorts suivants : guérison suprême, souhait limité, miracle ou souhait. Si la cible est capable de lancer des sorts profanes, elle se voit infligée un malus de -4 au jet de sauvegarde contre ce sort.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une poignée de sphères en argile, verre, cristal ou en argile</compo_m>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Domination</name>
+        <shortdescr>Le personnage peut contrôler les actions d’une créature humanoïde via le lien télépathique qui s’établit entre eux.</shortdescr>
+        <descr>Le personnage force une créature humanoïde à agir selon ses désirs (en restant dans les limites des possibilités de la créature). Si ce n’est pas le cas, il ne peut lui donner que des instructions simples telles que « Viens ici », « Va là-bas », « Combats » ou « Ne bouge pas ». En se concentrant pleinement sur le sort (action simple), le personnage reçoit toutes les informations sensorielles qu’interprète l’esprit du sujet (mais il ne peut pas davantage communiquer avec lui).</descr>
+        <range>courte</range>
+        <cast_time>1round</cast_time>
+        <duration>1day/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Horreur onirique suprême</name>
+        <shortdescr>Une créature issue des cauchemars de la cible la distrait et la fatigue.</shortdescr>
+        <descr>La cible se croit assaillie par une créature tout droit sortie de ses cauchemars. À chaque round, elle effectue une attaque à outrance contre elle. À chaque round, la cible peut, à son tour et après son attaque à outrance contre la créature imaginaire, tenter un nouveau jet de sauvegarde pour mettre fin au sort.A chaque échec elle subit un affaiblissement temporaire de 1 point de Force. Une fois le sort terminé, la cible doit réussir un jet de Vigueur sinon elle est fatiguée pendant un nombre de minutes égal au nombre de rounds passés sous l’effet du sort (1 min minimum).</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Immobilisation de monstre</name>
+        <shortdescr>La cible du sort se fige et se retrouve paralysée.</shortdescr>
+        <descr>La cible du sort se fige et se retrouve paralysée. Elle reste consciente de ce qui se passe autour d’elle et peut respirer normalement mais ne peut entreprendre aucune action, pas même parler. Chaque round, lors de son tour, elle peut effectuer un nouveau jet de sauvegarde pour tenter de mettre fin à l’effet.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un bâtonnet ou une barre de métal résistant, à peine aussi long qu’un clou</compo_m>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Juxtaposition hostile</name>
+        <shortdescr>Le personnage crée un lien dimensionnel entre la créature visée et sa personne. Ils échangent de place.</shortdescr>
+        <descr>Le personnage crée un lien dimensionnel avec sa cible. Quand il est victime d’une attaque ou d’un sort qui inflige des dégâts, il peut dépenser une action immédiate pour changer de place avec la cible du sort, par téléportation. La cible du sort devient alors la cible de l’attaque ou du sort offensif initialement destiné au personnage.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,F</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Œil indiscret</name>
+        <shortdescr>Ce sort fait apparaître des orbes magiques pour aller abserver aux alentours du personnage.</shortdescr>
+        <descr>Ce sort fait apparaître des orbes magiques, semi-tangibles et visibles (appelés « yeux ») en nombre égal à 1d4 + niveau de lanceur de sorts. Ces orbes s’éloignent en tous sens et reviennent en fonction des instructions reçues au cours de l’incantation. Chaque œil voit à 36 m dans toutes les directions (vision normale seulement).</descr>
+        <dice_type>4</dice_type>
+        <flat_dmg>lvl</flat_dmg>
+        <cap_dice>1</cap_dice>  
+ 	    <range>1.5km</range>
+        <cast_time>1min</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>Une poignée de billes de cristal</compo_m>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Renvoi</name>
+        <shortdescr>Force une créature à repartir dans son plan d’origine.</shortdescr>
+        <descr>Ce sort force la créature extraplanaire ciblée à retourner dans son plan d’origine si elle rate son jet de Volonté. Dans ce cas, elle disparaît aussitôt mais elle a 20 % de chances de se retrouver dans un plan autre que le sien.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+		<rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Serpent de feu</name>
+		<shortdescr>Le personnage crée une ligne de flammes sinueuse qu'il peut façonner comme bon lui semble.</shortdescr>
+        <descr>Le serpent de feu affecte une case de 1,50 mètre de côté par niveau de lanceur de sorts et chaque case doit être adjacente à la précédente, en commençant au niveau du personnage. Le serpent de feu ne peut pas s'étendre au-delà de la portée maximale du sort. Toute créature qui se trouve sur le chemin du serpent subit 1d6 points de dégâts de feu par niveau de lanceur de sorts (15d6 au maximum).</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>15</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>fire</dmg_type>
+        <range>18m</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une écaille de serpent</compo_m>
+        <save_type>ref[1/2]</save_type>
+		<rm>true</rm>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Sonde mentale</name>
+        <shortdescr>Le personnage accède aux souvenirs et connaissances de la cible.</shortdescr>
+        <descr>Le personnage accède aux souvenirs et connaissances de la cible. Il peut tenter de découvrir la réponse à une question par round. Un jet de Volonté réussi met fin au sort, sinon, la créature peut tenter un test de Bluff DD 11 + modificateur de Psychologie du personnage.
+		
+			Si elle rate le test, le personnage obtient l’information désirée, si elle le réussit, il n’obtient aucune information. Si elle le réussit de 5 ou plus, elle donne la réponse qu’elle veut et le personnage est persuadé d’avoir obtenu le bon renseignement.
+			
+			Les questions du personnage se posent entièrement par télépathie et les réponses arrivent directement dans son esprit, le personnage et la cible n’ont donc pas besoin de partager un même langage, bien que les créatures à l’intelligence limitée puissent n’offrir que des images sensorielles en réponse aux questions posées.</descr>
+        <range>courte</range>
+        <cast_time>1min</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Songe</name>
+        <shortdescr>Envoie un message à un dormeur.</shortdescr>
+        <descr>Le personnage, ou un messager qu’il touche lors de l’incantation, transmet un message onirique à un autre individu. Au début de l’incantation, le lanceur de sorts doit nommer le destinataire du message ou l’identifier afin qu’il soit impossible de se tromper sur son identité.</descr>
+        <range>illimitée</range>
+        <cast_time>1min</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+		<rank>5</rank>
+    </spell>
+
+    <spell>
+        <name>Suffocation</name>
+        <shortdescr>Ce sort extrait l'air contenu dans les poumons de la cible et la fait rapidement suffoquer.</shortdescr>
+        <descr>Ce sort extrait l'air contenu dans les poumons de la cible et la fait rapidement suffoquer. La cible peut tenter un jet de Vigueur pour résister aux effets du sort. Si elle réussit, elle est juste chancelante pendant 1 round alors qu'elle reprend son souffle. Si elle échoue elle se met immédiatement à suffoquer. Au prochain tour de la cible, elle est réduite à 0 point de vie et tombe inconsciente. Un round après, elle passe à -1 point de vie et agonise. Elle meurt au round suivant. À chaque round, la cible peut retarder les effets du sort si elle réussit un jet de Vigueur, mais le sort l'affecte tout de même pour 3 rounds et, à chaque fois qu'elle rate un jet de sauvegarde, la cible se rapproche un peu plus de la suffocation. Ce sort affecte seulement les créatures qui doivent respirer. Il est impossible de vaincre les effets de ce sort en retenant sa respiration : si la victime rate le premier jet de sauvegarde, l'air s'échappe de ses poumons.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>3rounds</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une fiole contenant une bouffée de souffle du lanceur de sort</compo_m>
+		<save_type>vig[partiel]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+	
+    <spell>
+        <name>Vol de pouvoir</name>
+        <shortdescr>Le personnage draine le pouvoir d’une créature mythique et l’utilise pour restaurer le sien.</shortdescr>
+        <descr>La cible perd 1d4 utilisations de pouvoir mythique. Si le personnage possède une aptitude qui lui permet de dépenser du pouvoir mythique, il récupère autant d’utilisations que celles perdues par la cible.</descr>
+		<dice_type>4</dice_type>
+        <cap_dice>1</cap_dice>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>5</rank>
+    </spell>
+	
+	<spell>
+        <name>Vol supérieur</name>
+        <shortdescr>Le PJ vole à 12 m/round et fait du footing sur de longues distances.</shortdescr>
+        <descr>La cible du sort acquiert la capacité de voler à la vitesse de 12 m par round (9 m s’il porte une armure lourde ou intermédiaire, ou encore une charge lourde ou intermédiaire). Sa manœuvrabilité est bonne. Il bénéficie d’un bonus à sa compétence de Vol égal à la moitié du niveau de lanceur de sorts du personnage. Quand le personnage utilise ce sort pour un déplacement longue distance, il peut exécuter l’équivalent d’un « footing » sans subir de dégâts non-létaux.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
+        <rank>5</rank>
+	</spell>
+	
+	<spell>
+        <name>Analyse d'enchantement</name>
+        <shortdescr>Révèle les propriétés magiques.</shortdescr>
+        <descr>Ce sort permet par une action libre d’identifier la magie affectant la cible, laquelle peut être une créature ou un objet. Le personnage ne peut examiner qu’un objet ou une créature par round. S’agissant d’un objet magique, le personnage identifie ses fonctions (et toute malédiction éventuelle), la façon de l’activer (si besoin) et le cas échéant le nombre de charges dont celui-ci dispose.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,F</compo>
+        <rank>6</rank>
+	</spell>
+	
+	<spell>
+        <name>Asile psychique</name>
+        <shortdescr>Accomplit une tâche mentale de longue haleine dans un paysage mental privé.</shortdescr>
+        <descr>Son paysage mental lui apporte du calme et de l’aide, par exemple sous la forme d’une bibliothèque, d’un salon, d’un jardin ou de la cabane dans l’arbre de son enfance. Il peut passer jusqu’à 15 minutes dans cet asile psychique. Tant qu’il s’y trouve, le temps ne s’écoule pas pour son corps et, quand il en sort, il continue son tour. Le paysage mental est évident, fini et doté d’un passage du temps rapide.
+			
+			Tant que le personnage se trouve dans son asile, il peut consulter n’importe quel texte et se souvenir de n’importe quelle conversation ou de n’importe quelle image issue de son passé avec une précision parfaite, comme s’il possédait une mémoire eidétique. Il doit avoir vu ou entendu l’objet de son souvenir depuis une semaine ou moins par niveau.</descr>
+        <range>personnelle</range>
+        <cast_time>rapide</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <rank>6</rank>
+	</spell>
+
+	<spell>
+        <name>Bouclier involontaire</name>
+        <shortdescr>Crée un lien mystique entre le personnage et sa cible, qui partage les blessures du personnage.</shortdescr>
+        <descr>Comme protection d'autrui, le bouclier involontaire crée un lien mystique entre le personnage et sa cible mais, contrairement à la protection, la cible partage les blessures du personnage. De plus, le lien puise dans les forces vitales de la cible pour renforcer les défenses du lanceur de sorts. Il gagne un bonus de chance de +1 à la CA et aux jets de sauvegarde. Il ne subit que la moitié des dégâts causés par les blessures et les attaques qui infligent une perte de points de vie (y compris à cause de pouvoirs spéciaux).</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>250 po de poussière de rubis</compo_m>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Emprunt temporel</name>
+        <shortdescr>Ce sort permet au personnage de se projeter dans le futur et d’en retirer une certaine alacrité aux dépends de sa propre santé.</shortdescr>
+        <descr>Pour toute la durée du sort, le personnage gagne une action rapide supplémentaire qu’il ne peut utiliser que lors de son tour. Il ne peut pas utiliser cette action rapide pour entreprendre une deuxième action immédiate entre deux tours mais il peut l’utiliser pour entreprendre une action rapide le tour suivant celui au cours duquel il a entrepris une action immédiate. Chaque fois que le personnage entreprend une action rapide supplémentaire de cette façon, il subit un affaiblissement temporaire de 1 point de Constitution. S’il est immunisé aux affaiblissements temporaires de caractéristiques, il subit 5 points de dégâts à la place. Quand le sort se termine, il est chancelant pendant 1d4+1 rounds à cause du contrecoup temporel.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+        <rank>6</rank>
+	</spell>
+
+    <spell>
+        <name>Forme sonique</name>
+        <shortdescr>Le personnage conserve sa silhouette globale mais lui et son équipement sont transformés en son semi-solide.</shortdescr>
+        <descr>Quand il lance ce sort, le personnage conserve sa silhouette globale mais lui et son équipement sont transformés en son semi-solide. Lorsqu’il est sous forme sonique, le personnage ne reçoit aucun malus pour se faufiler et peut traverser les cases sans malus comme s’il était plus petit de trois catégories de taille. Le personnage est considéré comme intangible.Toute attaque non-magique qu’il effectue n’inflige que la moitié des dégâts.</descr>
+		<range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une pincée de poussière récupérée sur une pierre tombale ou dans un sanctuaire sacré</compo_m>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Lien des esprits combatifs</name>
+        <shortdescr>Le personnage fusionne ses pensées avec celles d'un allié, ce qui leur permet de se battre en tandem, de façon parfaitement coordonnée.</shortdescr>
+        <descr>Le personnage fusionne ses pensées avec celles d'un allié, ce qui leur permet de se battre en tandem, de façon parfaitement coordonnée. Le personnage et son allié font tous deux leur jet d'initiative et utilisent le meilleur jet avant d'y ajouter leur modificateur. Si le personnage et son allié lancent tous deux un sort et visent la même zone ou la même créature, les créatures affectées subissent un malus de -2 au jet de sauvegarde contre les sorts.</descr>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>6</rank>
+    </spell>
+	
+	<spell>
+        <name>Manteau de rêves</name>
+        <shortdescr>Les créatures vivantes situées dans un rayon de 1,50 m s'endorment.</shortdescr>
+        <descr>Le personnage est entouré par un arôme soporifique qui endort toute créature vivante qui commence son tour ou termine son déplacement à moins de 1,50 mètre (1 c) de lui. Les créatures doivent faire un jet de sauvegarde à chaque fois qu'elles commencent leur tour ou terminent leur déplacement au sein du manteau de rêves, même si elles ont déjà réussi un jet de sauvegarde contre cet effet. Les créatures endormies sont sans défense mais on peut les réveiller par une action simple ou en les blessant. Les créatures qui possèdent le pouvoir odorat reçoivent un malus de -4 au jet de sauvegarde.</descr>
+        <range>1,5m</range>
+        <cast_time>1round</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un pétale de rose et une goutte de parfum</compo_m>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>6</rank>
+    </spell>
+	
+	<spell>
+        <name>Menottes scellées</name>
+        <shortdescr>Le personnage crée des menottes de force qui entravent les membres d'une créature.</shortdescr>
+        <descr>Le personnage crée des menottes de force qui entravent les membres d'une créature. Il désigne un objet ou une zone dans les 9 m et les menottes viennent s'y fixer. Il doit s'agir d'un sol, d'un mur ou d'une structure solide pour qu'elles puissent se fixer. La cible est Enchevêtrée et ne peut pas s'éloigner de plus de 9 mètres du point d'ancrage du sort. Il est impossible d'attaquer les menottes mais on peut les dissiper, en revanche, si l'on détruit l'objet ou la zone où elles sont fixées. La cible est alors libre de s'éloigner, même si elle est toujours enchevêtrée.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>ref[annule]</save_type>
+        <rm>true</rm>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Prévoyance</name>
+        <shortdescr>Ce sort permet d’en lancer un autre automatiquement lorsque la condition prédéfinie se réalise.</shortdescr>
+        <descr>Ce sort permet d’en lancer un autre, qui prend effet au moment où la condition déterminée lors de l’incantation de prévoyance se réalise. Les deux sorts sont jetés à la suite l’un de l’autre. Le sort déclenché à retardement par prévoyance doit affecter le personnage et il ne peut pas dépasser le 6e niveau.</descr>
+        <range>personnelle</range>
+        <cast_time>10min</cast_time>
+        <duration>1day/lvl</duration>
+        <compo>V,G,M,F</compo>
+		<compo_m>vif-argent et un cil venant d’une créature capable de lancer des sorts</compo_m>
+        <rank>6</rank>
+	</spell>
+	
+	<spell>
+        <name>Sphère glaciale</name>
+        <shortdescr>Gèle l’eau ou inflige des dégâts de froid.</shortdescr>
+		<descr>Sphère glaciale crée un globe d’énergie glacée qui jaillit des mains du personnage et explose dans un rayonnement de 12 m de diamètre, infligeant 1d6 points de dégâts de froid par niveau de lanceur de sorts aux créatures situées dans la zone. Les créatures élémentaires de l’Eau subissent 1d8 points de dégâts par niveau de lanceur de sorts et sont ralenties pendant 1d4 rounds.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>15</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>frost</dmg_type>
+        <range>longue</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+        <rm>true</rm>
+        <save_type>ref[1/2]</save_type>
+        <rank>6</rank>
+    </spell>
+	
+	<spell>
+        <name>Tête explosive</name>
+        <shortdescr>Le sort créez une pression incroyable dans la tête de la cible.</shortdescr>
+        <descr>Ce sort ne fonctionne que sur une créature qui a une tête et qui mourra de la perte de celle-ci. Le sortilège tue instantanément une cible qui a 20 points de vie ou moins, en explosant sa tête et projetant des débris dans un rayon de 3m.
+
+			Chaque créature dans la zone doit réussir un jet de Réflexes ou prendre 2d6 points de dégâts causés par les débris volants.
+
+			Une cible avec plus de 20 points de vie prend 1d6 points de dégât par niveau de lanceur de sorts (maximum 20d6), mais peut tenter un jet de Vigueur pour ne prendre que la moitié des dégâts. Si ces dégâts entraînent la mort de la cible ou la rendent mourante, la cible disparaît et sa tête explose comme décrit ci-dessus.</descr>
+		<dice_type>6</dice_type>
+        <cap_dice>20</cap_dice>
+		<n_dice_per_lvl>1</n_dice_per_lvl>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>vig[1/2]</save_type>
+        <rm>true</rm>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Transformation martiale</name>
+        <shortdescr>Cette incantation transforme le mage en machine à tuer : grâce à elle, il devient plus fort, plus rapide et plus efficace au combat.</shortdescr>
+        <descr>Le personnage bénéficie d’un bonus d’armure naturelle de +4 à la CA, d’un bonus d’altération de +4 en Force, en Dextérité et en Constitution et d’un bonus d’aptitude de +5 aux jets de Vigueur. Il est instinctivement formé au maniement de toutes les armes courantes et de guerre. Son bonus de base à l’attaque est égal à son niveau de personnage (ce qui peut lui conférer une ou plusieurs attaques supplémentaires).
+
+Le personnage perd sa faculté de lancer des sorts, ce qui inclut l’utilisation des objets magiques à potentiel magique ou à fin d’incantation, comme si les sorts ne figuraient plus dans sa liste de classe.</descr>
+		<range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une potion de force de taureau que le personnage doit boire et dont les effets sont inclus dans le sort</compo_m>
+        <rank>6</rank>
+    </spell>
+	
+	<spell>
+        <name>Vengeance pour outrage</name>
+        <shortdescr>La cible est obligée de détruire un ennemi.</shortdescr>
+        <descr>Le personnage donne un ordre magique à une créature et lui ordonne de chercher et de détruire un unique ennemi qui lui a fait du mal (que ce soit réel ou non). Le personnage désigne l’ennemi au moment de l’incantation. La cible doit le connaître ou pouvoir l’identifier facilement.
+		
+			La cible se retrouve sous l’effet d’un sort de quête, elle doit trouver et capturer ou tuer l’ennemi et elle subit les malus du sort tant qu’elle ne s’attèle pas activement à sa tâche. Quand la cible se bat contre son ennemi, elle gagne un bonus de moral de +6 à la Force et la Constitution, de +3 aux jets de Volonté et elle est immunisée contre les conditions effrayé et secoué.
+			
+			Si le personnage désigne un ami de la cible ou un être cher comme ennemi, la cible a droit à un jet de sauvegarde supplémentaire pour vaincre l’effet du sort dès qu’elle entame le combat contre son ennemi.</descr>
+        <range>courte</range>
+        <cast_time>1round</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Zone d'antimagie</name>
+        <shortdescr>Ce sort d’abjuration génère une barrière invisible se déplaçant avec le lanceur de sorts.</shortdescr>
+        <descr>Ce sort d’abjuration génère une barrière invisible se déplaçant avec le lanceur de sorts. Tout ce qui se trouve dans cette sphère est immunisé contre la plupart des effets magiques (sorts, pouvoirs magiques et pouvoirs surnaturels). De même, aucun sort ni objet magique ne peut fonctionner à l’intérieur.</descr>
+        <range>3m</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+		<area>3m</area>
+        <compo>V,G,M</compo>
+		<compo_m>une pincée de poudre de fer ou quelques copeaux du même métal</compo_m>
+        <rank>6</rank>
+    </spell>
+
+    <spell>
+        <name>Aliénation mentale</name>
+        <shortdescr>La créature affectée souffre en permanence de l’effet du sort confusion.</shortdescr>
+        <descr>La créature affectée souffre en permanence de l’effet du sort confusion. Délivrance des malédictions est insuffisant pour soigner un individu frappé d’aliénation mentale. Un sort tel que guérison suprême, miracle, restauration suprême, souhait ou souhait limité est nécessaire pour lui permettre de recouvrer ses facultés.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Bannissement</name>
+        <shortdescr>Permet de chasser les créatures extraplanaires du plan d’origine du personnage.</shortdescr>
+        <descr> Ce sort permet de chasser les créatures extraplanaires du plan d’origine du personnage. Il est possible de bannir jusqu’à 2 DV de créatures par niveau de lanceur de sorts. Pour augmenter ses chances de renvoyer une créature, le lanceur de sorts doit lui montrer un objet ou une substance qu’elle craint ou déteste. Chacun de ces objets confère un bonus de +1 au test de niveau de lanceur de sorts visant à vaincre la résistance à la magie de la créature (si besoin) et augmente de +2 le DD du jet de sauvegarde.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,F</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Cri ki</name>
+        <shortdescr>Inflige 1d6 de dégâts de son par niveau (max 20d6) à une créature et l'étourdit.</shortdescr>
+        <descr>Le personnage pousse un aboiement guttural et envoie une décharge d’énergie sonore soudaine qui frappe son adversaire. Ce dernier subit 1d6 points de dégâts de son par niveau (20d6 au maximum) et se retrouve étourdi pendant 1 round. Un jet de sauvegarde permet de réduire les dégâts de moitié et d’annuler l’étourdissement.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>20</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>sound</dmg_type>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+		<compo>V,G</compo>
+        <save_type>vig[partiel]</save_type>
+        <rm>true</rm>
+		<rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Éruption caustique</name>
+        <shortdescr>Inflige 1d6 points de dégâts par niveau de lanceur de sorts (20d6 max) d'acide puis la moitié pendant 2 rounds</shortdescr>
+        <descr>De l'acide jaillit de la case du personnage et se projette dans toute les directions, infligeant 1d6 points de dégâts par niveau de lanceur de sorts (20d6 max) aux créatures et aux objets abandonnés dans la zone. Au cours des deux prochains rounds, au tour du personnage, les créatures et les objets qui ratent leur jet de sauvegarde contre l'explosion initiale reçoivent 10d6 supplémentaire, à moins que l'acide ne soit dissipé, neutralisé ou lavé.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>20</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>acid</dmg_type>
+		<range>9m</range>
+        <cast_time>simple</cast_time>
+        <duration>3rounds</duration>
+		<area>9m</area>
+        <compo>V,G</compo>
+		<save_type>ref[1/2]</save_type>
+        <rank>7</rank>
+    </spell>
+	
+	<spell>
+        <name>Inversion de la gravité</name>
+        <shortdescr>Objets et créatures tombent vers le haut.</shortdescr>
+        <descr>Ce sort inverse la gravité dans une zone. Les créatures et objets non attachés tombent vers le haut et atteignent le sommet du volume affecté en 1 round. S’ils rencontrent un obstacle solide au cours de cette « chute » (le plafond, par exemple), les conséquences de l’impact qui en résulte sont déterminées comme s’ils étaient tombés dans le sens normal.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+		<area>1 cube de 3m d’arête/2 niveaux</area>
+		<compo>V,G,M</compo>
+		<compo_m>de la magnétite et quelques copeaux de fer</compo_m>
+        <save_type>none</save_type>
+        <rm>false</rm>
+		<rank>7</rank>
+    </spell>
+	
+    <spell>
+        <name>Juxtaposition hostile supérieure</name>
+        <shortdescr>Le personnage crée un lien dimensionnel avec sa cible et peut échanger sa place avec la sienne.</shortdescr>
+        <descr>Quand il est victime d’une attaque ou d’un sort qui inflige des dégâts, il peut dépenser une action immédiate pour changer de place avec la cible du sort, par téléportation. La cible du sort devient alors la cible de l’attaque ou du sort offensif initialement destiné au personnage.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+		<compo>V,G,F</compo>
+        <save_type>vol[annule]</save_type>
+        <rm>true</rm>
+		<rank>7</rank>
+    </spell>
+
+	<spell>
+        <name>Métamorphose suprême</name>
+        <shortdescr>Ce sort transforme une créature consentante en animal, humanoïde, élémentaire, dragon ou créature végétale au choix du personnage.</shortdescr>
+		<descr>Ce sort transforme une créature consentante en animal, humanoïde, élémentaire, dragon ou créature végétale au choix du personnage. Ce sort n’a aucun effet sur les créatures non-consentantes et la cible du sort ne peut pas influer sur la forme donnée par le sort.</descr>
+        <range>contact</range>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+		<compo>V,G,M</compo>
+        <compo_m>un morceau de la créature dont le personnage souhaite prendre l’apparence</compo_m>
+		<rank>7</rank>
+    </spell>
+	
+	<spell>
+        <name>Parole résonnante</name>
+        <shortdescr>La cible est blessée, chancelante et étourdie.</shortdescr>
+        <descr>La cible doit réussir un jet de sauvegarde par round, à son tour, et l’effet se renforce à chaque échec. Au 1er round, la cible subit 5d6 points de dégâts sonores et elle est chancelante pendant 1 round. Jds 1/2 dégâts, annule le chancellement. Au 2nd round, la cible reçoit 5d6 points de dégâts sonores et elle est étourdie pour 1 round. Jds 1/2 dégâts, annule l’étourdissement. Au 3ème round, la cible subit 10d6 points de dégâts sonores et elle est étourdie pendant 1d4+1 rounds. Jds 1/2 dégâts, annule l’étourdissement.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>5</cap_dice>
+        <dmg_type>sound</dmg_type>
+		<range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>3rounds</duration>
+        <compo>V</compo>
+		<save_type>vig[partiel]</save_type>
+		<rm>true</rm>
+        <rank>7</rank>
+    </spell>
+	
+    <spell>
+        <name>Rétrocognition</name>
+		<shortdescr>Permet au personnage d’obtenir des impressions psychiques issues des événements qui se sont déroulés là où il se trouve.</shortdescr>
+        <descr>Ce sort permet au personnage d’obtenir des impressions psychiques issues des événements qui se sont déroulés là où il se trouve. Pendant la première minute de concentration, le sort révèle les impressions psychiques laissées par les événements s’étant déroulés dans une unité de temps en fonction du NLS du personnnage.</descr>
+        <range>personnelle</range>
+        <cast_time>1min</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Scrutation suprême</name>
+        <shortdescr>Ce sort permet d’espionner une créature qui peut se trouver à n’importe quelle distance.</shortdescr>
+        <descr>Ce sort permet d’espionner une créature qui peut se trouver à n’importe quelle distance. Si la cible réussit un jet de Volonté, le sort échoue. La difficulté dépend de la connaissance que le lanceur de sorts a du sujet et des liens qui les unissent. Si la cible se trouve dans un autre plan d’existence, le jet de Volonté s’accompagne d’un malus de +5.</descr>
+        <range>illimitée</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Traverser l’espace</name>
+        <shortdescr>Le personnage peut se téléporter sur 9 m par une action de mouvement.</shortdescr>
+        <descr>Quand le personnage se trouve sous l’effet de ce sort, il peut se téléporter sur 9 m par une action de mouvement. Il doit terminer ce déplacement dans une case inoccupée située dans sa ligne de mire. Sinon, il peut dépenser une action de mouvement pour passer d’une position allongée à debout sans provoquer d’attaque d’opportunité.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,F</compo>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Vagues d'extase</name>
+        <shortdescr>Les créatures affectées sont étourdies pendant 1 round et chancelantes pendant le reste de la durée du sort.</shortdescr>
+        <descr>Des vagues de plaisir intense émanent du personnage et font vaciller toutes les cibles à portée. Les créatures affectées sont étourdies pendant 1 round et chancelantes pendant le reste de la durée du sort. Une créature qui réussit son jet de sauvegarde est chancelante pendant le premier round et peut agir ensuite normalement.</descr>
+        <range>9m</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vig[partiel]</save_type>
+        <rm>true</rm>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Vision magique suprême</name>
+        <shortdescr>Fonctionne comme vision magique, sauf que le mage découvre les sorts et effets magiques actifs sur un individu ou objet qu’il observe.</shortdescr>
+        <descr>Une fois le sort lancé, les yeux du personnage brillent d’une lumière bleutée. Il est désormais capable de voir les auras magiques dans un rayon de trente-six mètres. L’effet est identique à celui de détection de la magie, mais ne nécessite pas de concentration. Il permet ainsi de distinguer les auras et leur intensité plus rapidement. Le mage décèle donc tous les sorts et effets magiques actifs sur un individu ou objet qu’il observe.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+        <compo>V,G</compo>
+        <rank>7</rank>
+    </spell>
+
+    <spell>
+        <name>Vision mystique</name>
+        <shortdescr>Semblable à Mythes et légendes, mais en plus rapide.</shortdescr>
+        <descr>Ce sort permet de prendre connaissance des légendes liées à une personne, un lieu ou un objet important.Si l’objet ou la personne se trouvent à proximité ou si le mage se situe à l’endroit qui l’intéresse, il reçoit une vision mystique en réussissant un test de niveau de lanceur de sorts (1d20 +1 par niveau de lanceur de sorts ; maximum +25) contre un DD de 20.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+		<duration>instant</duration>
+        <compo>V,G,M,F</compo>
+		<compo_m>encens pour 250 po</compo_m>
+        <rank>7</rank>
+    </spell>
+	
+	<spell>
+        <name>Aspect terrifiant</name>
+        <shortdescr>Le personnage se transforme en une horrible version agrandie de sa personne.</shortdescr>
+        <descr>Le personnage devient G et revêt des traits qui terrifient ses ennemis. Il gagne les pouvoirs suivants : bonus de taille +6 Force, bonus de taille +4 Constitution, bonus d’armure naturelle +6, RD 10/magie et résistance à la magie 10 + 1/2 niveau de lanceur de sorts. Le personnage émet aussi une aura de 9 m (6 c) de rayon qui secoue ses ennemis. À chaque fois qu’une créature secouée par l’aura touche le personnage avec une attaque de corps à corps, elle devient effrayée pendant 1d4 rounds mais, ensuite, l’aura ne l’affecte plus. L’aura est un effet mental de peur.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+		<duration>1min/lvl</duration>
+        <compo>V,G,F</compo>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Danse irrésistible</name>
+        <shortdescr>Force le sujet à danser.</shortdescr>
+        <descr>Une irrésistible envie de danser en bougeant les pieds et en tapant des mains assaille le sujet. Il reçoit un malus de -4 à la classe d’armure, un malus de -10 aux jets de Réflexes et il ne peut plus utiliser son bouclier pour se protéger. De plus, il provoque des attaques d’opportunité chaque round lors de son tour de jeu. Un jet de Volonté réussi réduit la durée à 1 round seulement.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>1d4+1rounds</duration>
+        <compo>V</compo>
+		<save_type>vol[partiel]</save_type>
+        <rm>true</rm>
+        <rank>8</rank>
+    </spell>
+	
+    <spell>
+        <name>Echec annoncé</name>
+        <shortdescr>Le personnage inflige les états secouée et fiévreuse à la cible.</shortdescr>
+        <descr>Le personnage flagelle le corps et l'esprit de sa cible en lui faisant ressentir l'angoisse de l'échec et les souffrances de toutes les défaites à venir, ce qui la rend définitivement secouée et fiévreuse. Un jet de volonté réussi réduit la durée à 1 round par niveau. Si la cible est un lanceur de sort, il reçoit une plaie mineure en cas de jet raté.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>permanente</duration>
+        <compo>V,G</compo>
+		<save_type>vol[partiel]</save_type>
+        <rm>true</rm>
+        <rank>8</rank>
+    </spell>	
+
+    <spell>
+        <name>Explosion de lumière</name>
+        <shortdescr>Ce sort crée une explosion silencieuse de chaleur éblouissante qui émane d’un point que le personnage désigne.</shortdescr>
+        <descr>Ce sort crée une explosion silencieuse de chaleur éblouissante qui émane d’un point que le personnage désigne. Toutes les créatures prises dans la zone d’effet sont aveuglées et subissent 6d6 points de dégâts. Ces dégâts sont doublés pour les créatures que la lumière du jour dérange ou affaiblit. Un jet de Réflexes réussi annule la cécité et réduit les dégâts de moitié.
+
+			Les morts-vivants affectés par le sort subissent 1d6 points de dégâts par niveau de lanceur de sorts (jusqu’à un maximum de 25d6) ou la moitié seulement s’ils réussissent un jet de Réflexes. Les morts-vivants que la lumière du jour blesse, eux, sont détruits par le sort si leur jet de sauvegarde échoue.
+
+			Les rayons ultraviolets engendrés par l’explosion de lumière sont nocifs pour les vases, limons, moisissures, thallophytes et créatures apparentées. Tous ces monstres subissent les mêmes effets que les morts-vivants.
+
+			Explosion de lumière dissipe les sorts d’obscurité du 8e niveau ou moins actifs dans sa zone d’effet.</descr>
+		<dice_type>6</dice_type>
+        <cap_dice>25</cap_dice>
+		<n_dice_per_lvl>1</n_dice_per_lvl>
+		<dmg_type>none</dmg_type>
+        <range>longue</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+		<area>24m</area>
+        <compo>V,G,M</compo>
+		<compo_m>une pierre de soleil et une source de feu</compo_m>
+		<save_type>ref[1/2]</save_type>
+		<rm>true</rm>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Flétrissure</name>
+		<shortdescr>Ce sort assèche le corps de chaque créature vivante affectée en faisant s’évaporer les fluides qu’il contient.</shortdescr>
+        <descr>La chair se flétrit et se brise avant d’être réduite en poussières. L’effet inflige 1d6 points de dégâts par niveau de lanceur de sorts (jusqu’à un maximum de 20d6). Ce sort est tout particulièrement dévastateur lorsqu’il touche un élémentaire de l’Eau ou une créature végétale : celle-ci subit alors 1d8 points de dégâts par niveau de lanceur de sorts (jusqu’à un maximum de 20d8).</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>20</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <range>longue</range>
+		<area>18m</area>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un morceau d’éponge</compo_m>
+		<save_type>vig[1/2]</save_type>
+        <rm>true</rm>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Manteau marin</name>
+        <shortdescr>Enveloppe la créature d'une couche d'eau protectrice.</shortdescr>
+		<descr>Le personnage s'enveloppe d'une colonne tournoyante d'eau élémentaire à l'état pur qui occupe sa case et s'élève à 9 mètres. Il gagne une vitesse de nage égale à sa vitesse de déplacement de base et il est capable de voir, d'entendre et de respirer librement dans le manteau marin. En revanche, les attaques portées contre lui sont considérées comme ayant lieu sous l'eau. Le personnage bénéficie d'un abri amélioré (bonus d'abri de +8 à la CA, +4 aux jets de Réflexes) contre les adversaires qui ne disposent pas de la liberté de mouvement.</descr>
+        <range>personnelle</range>
+        <cast_time>simple</cast_time>
+        <duration>1min/lvl</duration>
+		<compo>V,G,M</compo>
+        <compo_m>un verre d'eau</compo_m>
+		<rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Métamorphose universelle</name>
+        <shortdescr>Transforme n’importe quoi en n’importe quoi d’autre.</shortdescr>
+		<descr>Ce sort est semblable à métamorphose suprême, si ce n’est qu’il permet de transformer un objet ou une créature. Ce sort permet d’effectuer toutes sortes de transformations, le personnage ne se limite pas à transformer des êtres vivants en autres êtres vivants. La durée du sort dépend de l’importance du changement séparant la forme résultante de la forme d’origine.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>variable</duration>
+		<compo>V,G,M</compo>
+        <compo_m>mercure, gomme arabique et fumée</compo_m>
+		<rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Mur de lave</name>
+        <shortdescr>Un mur blesse les ennemis qui tentent de le franchir et envoie régulièrement de la lave sur les cibles voisines.</shortdescr>
+        <descr>Ce sort crée un mur de lave vertical de 2,50 centimètres d'épaisseur par tranche de 4 niveaux de lanceur de sorts et se compose au maximum d'une case de 1,50 mètre par niveau de lanceur de sorts. La hauteur maximale du mur ne peut pas dépasser la moitié de sa largeur.
+			
+			Une créature peut traverser un mur de lave par une action complexe si elle réussit un test de Force DD 25. En cas d'échec, elle est repoussée hors du mur jusqu'à son point de départ. Une créature qui possède une vitesse de creusement peut s'en servir pour traverser le mur. En revanche, toute tentative pour franchir le mur inflige 20d6 points de dégâts de feu.
+			
+			Une fois par round, par une action de mouvement, le personnage peut faire entrer le mur de lave en éruption. Un jet de lave jaillit alors en direction de toute cible qui se trouve dans les 18 mètres (12 c) de chaque côté du mur mais réduit sa taille totale de 1d4 case de 1,50 mètre.
+			Le personnage doit faire une attaque de contact à distance pour toucher la cible qui reçoit alors 10d6 points de dégâts de feu. Les trous ainsi créés dans le mur se rebouchent instantanément et réduisent la taille totale du mur.
+			
+			Tous les dégâts infligés par un contact physique avec le mur de lave se poursuivent sur 1d3 rounds après la fin de ce contact, mais ces dégâts supplémentaires ne font que la moitié de ceux infligés au départ (c'est-à-dire 1d6 ou 5d6 ou 10d6).</descr>
+ 	    <dice_type>6</dice_type>
+        <cap_dice>20</cap_dice>
+		<range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+		<rm>false</rm>
+        <rank>8</rank>
+    </spell>
+	
+    <spell>
+        <name>Œil indiscret suprême</name>
+        <shortdescr>Ce sort fait apparaître des orbes magiques pour aller abserver aux alentours du personnage.</shortdescr>
+        <descr>Ce sort fait apparaître des orbes magiques, semi-tangibles et visibles (appelés « yeux ») en nombre égal à 1d4 + niveau de lanceur de sorts. Ces orbes s’éloignent en tous sens et reviennent en fonction des instructions reçues au cours de l’incantation. Chaque œil voit à 36 m dans toutes les directions (vision lucide).</descr>
+        <dice_type>4</dice_type>
+        <flat_dmg>lvl</flat_dmg>
+        <cap_dice>1</cap_dice>  
+ 	    <range>1.5km</range>
+        <cast_time>1min</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>Une poignée de billes de cristal</compo_m>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Possession spirituelle suprême</name>
+        <shortdescr>Le personnage prend possession du corps de son hôte.</shortdescr>
+        <descr>Ce sort fonctionne comme possession spirituelle mais, quand le personnage prend possession du corps de son hôte, il entre dans ce dernier tandis que son propre corps disparaît. Quand le sort se termine ou que le corps de l’hôte meurt, le personnage est propulsé dans l’espace libre le plus proche.</descr>
+ 	    <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1h/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+		<rm>true</rm>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Protection contre les sorts</name>
+        <shortdescr>Confère un bonus de résistance de +8.</shortdescr>
+		<descr>Les bénéficiaires du sort (1 créature touchée/4 niveaux) gagnent un bonus de résistance de +8 aux jets de sauvegarde contre les sorts et les pouvoirs magiques (mais pas contre les pouvoirs surnaturels ou extraordinaires).</descr>
+		<range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>10min/lvl</duration>
+		<compo>V,G,M</compo>
+        <compo_m>poussière de diamant (500 po)), F (un diamant (1 000 po) par cible. Chacune doit porter cette gemme pendant la durée du sort ; si elle la perd, le sort ne la protège plus</compo_m>
+		<rank>8</rank>
+    </spell>
+
+    <spell>
+        <name>Rayon polaire</name>
+		<shortdescr>Rayon infligeant 1d6 de dégâts de glace par niveau (25d6 max)à la cible après une attaque de contact à distance réussie.</shortdescr>
+        <descr>Un rayon bleuté et glacé part de la main du personnage qui doit réussir une attaque de contact à distance pour infliger les dégâts à la cible. Le rayon inflige 1d6 points de dégâts de froid par niveau de lanceur de sorts (jusqu’à un maximum de 25d6) et 1d4 points de diminution permanente de Dextérité.</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>25</cap_dice>
+        <n_dice_per_lvl>1</n_dice_per_lvl>
+        <dmg_type>frost</dmg_type>
+		<contact>distance</contact>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G,F</compo>
+        <rm>true</rm>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Séquestration</name>
+        <shortdescr>Emprisonne la cible dans une gemme.</shortdescr>
+        <descr>Séquestration permet d’enfermer l’énergie vitale de la cible (et son corps) dans une pierre précieuse. La gemme retient son prisonnier indéfiniment, à moins qu’elle soit brisée, auquel cas la victime se matérialise à nouveau. Si la créature enfermée est une puissante entité issue d’un autre plan, l’individu qui la libère en détruisant la gemme peut la forcer à lui rendre un service mais s’il ne le fait pas immédiatement, l’ancien détenu est libre d’agir comme il l’entend.
+			
+			On peut déclencher ce sort de deux manières : Incantation (Si le lanceur de sorts prononce le nom de la créature lors de l’incantation, sa résistance à la magie ne la protège plus et le DD du jet de sauvegarde augmente de +2), ou déclenchement différé (sans jet de sauvegarde ni résistance à la magie si conditions réunies).</descr>
+    	<range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>permanente</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une gemme d’une valeur de 1 000 po par DV de la créature piégée</compo_m>
+		<save_type>vol[annule]</save_type>
+		<rm>true</rm>
+        <rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Verrou dimensionnel</name>
+        <shortdescr>Téléportation et voyages interplanaires bloqués pendant 1 jour/niveau.</shortdescr>
+		<descr>Le personnage produit une barrière vert émeraude qui interdit toute forme de déplacement extradimensionnel. Les sorts affectés incluent changement de plan, clignotement, dédale, forme éthérée, passage dans l’éther, portail, porte dimensionnelle, projection astrale, téléportation et traversée des ombres ainsi que les pouvoirs magiques correspondants.</descr>
+        <range>moyenne</range>
+        <cast_time>simple</cast_time>
+        <duration>1day/lvl</duration>
+		<area>6m</area>
+		<compo>V,G</compo>
+		<rm>true</rm>
+		<rank>8</rank>
+    </spell>
+	
+	<spell>
+        <name>Capture d'âme</name>
+        <shortdescr>Retient l’âme d’un défunt pour empêcher sa résurrection.</shortdescr>
+        <descr>Ce puissant sort permet de s’emparer de l’âme d’un individu venant de mourir et de l’emprisonner dans un saphir noir. Le sujet doit être décédé depuis moins de 1 round par niveau de lanceur de sorts. Une fois enfermée dans la gemme, l’âme ne peut plus être libérée par des sorts tels que clone, rappel à la vie, réincarnation, résurrection ou résurrection suprême, ni même miracle ou souhait. C’est uniquement en détruisant la pierre ou en dissipant le sort que l’on peut la délivrer (à noter que cela ne ramène nullement le mort à la vie).</descr>
+    	<range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>permanente</duration>
+        <compo>V,G,F</compo>
+		<compo_m>un saphir noir coûtant au moins 1 000 po par dé de vie de la créature que l’on cherche à capturer</compo_m>
+		<save_type>vol[annule]</save_type>
+		<rm>true</rm>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Chevaucher la foudre</name>
+        <shortdescr>Le personnage se change en éclair de foudre et se déplace instantanément en ligne droite sur une distance maximale de 36 mètres, causant des dégâts sur son passage.</shortdescr>
+        <descr>Par une action simple, le personnage peut se changer en éclair de foudre et se déplacer instantanément en ligne droite sur une distance maximale de 36 mètres. Il se matérialise à nouveau à son point d’arrivée par une action libre. Ce déplacement ne provoque pas d’attaque d’opportunité. Les créatures qui se trouvent sur son chemin reçoivent 10d6 points de dégâts électriques et sont chancelantes pendant 1 round</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>10</cap_dice>
+		<dmg_type>shock</dmg_type>
+		<range>personnelle</range>
+        <cast_time>rapide</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>ref[1/2]</save_type>
+		<rm>true</rm>
+        <rank>9</rank>
+    </spell>
+	
+	<spell>
+        <name>Création de demi-plan supérieure</name>
+		<shortdescr>Permet de créer un demi-plan de 20 cubes de 3m/niveau.</shortdescr>
+        <descr>Ce sort fonctionne comme création de demi-plan mais englobe une zone plus large et permet d’ajouter de nouvelles caractéristiques au demi-plan.</descr>
+        <cast_time>6h</cast_time>
+        <duration>1day/lvl</duration>
+        <compo>V,G,F</compo>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Domination universelle</name>
+        <shortdescr>Le personnage peut contrôler les actions d’une créature via le lien télépathique qui s’établit entre eux.</shortdescr>
+        <descr>Le personnage force une créature à agir selon ses désirs (en restant dans les limites des possibilités de la créature). Si ce n’est pas le cas, il ne peut lui donner que des instructions simples telles que « Viens ici », « Va là-bas », « Combats » ou « Ne bouge pas ». En se concentrant pleinement sur le sort (action simple), le personnage reçoit toutes les informations sensorielles qu’interprète l’esprit du sujet (mais il ne peut pas davantage communiquer avec lui).</descr>
+        <range>courte</range>
+        <cast_time>1round</cast_time>
+        <duration>1day/lvl</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Emprisonnement</name>
+        <shortdescr>Emprisonne la cible au centre de la terre.</shortdescr>
+        <descr>Lorsque le lanceur de sort touche une créature à la fin de l’incantation, la cible se retrouve emprisonnée dans une petite sphère loin sous la surface du sol et maintenue dans un état d’animation suspendue similaire à celui engendré par le sort du même nom. Elle y reste jusqu’à ce qu’un sort de délivrance soit lancé à l’endroit où elle a été emprisonnée. Des recherches effectuées à l’aide d’une boule de cristal ou d’un sort de localisation d’objet ne révèlent pas qu’une créature a été emprisonnée, mais localisation suprême l’indique. Un souhait ou un miracle ne suffit pas à libérer l’individu emprisonné mais permet de connaître l’endroit où l’emprisonnement a eu lieu. Si le lanceur du sort connaît le nom de sa victime et certains détails de sa vie, elle subit un malus de -4 au jet de sauvegarde.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Heurt de pierres</name>
+        <shortdescr>Ecrase la cible entre 2 rochers colossaux.</shortdescr>
+        <descr>Le personnage crée deux masses de taille C de roche, de terre et de pierre et les fait se heurter alors qu'une unique créature se trouve entre elles. Les rochers apparaissent à 9 mètres de part et d'autre de la cible, et se ruent vers elles avant de se heurter dans un puissant fracas. Le personnage doit réussir une attaque de contact à distance pour toucher la cible avec les rochers. Le heurt de pierres ignore le camouflage et les abris. Si une barrière solide s'interpose entre la cible et l'une des masses de roche, le sort bénéficie d'un bonus de +28 en Force pour la fracasser et continuer sa route vers la cible. Toute créature frappée par le heurt de pierres reçoit 20d6 points de dégâts contondants et tombe au sol. Si la cible rate un jet de Réflexes, elle est également ensevelie sous les décombres, comme lors d'un effondrement.
+
+			Si les pierres ratent leur cible, cette dernière subit tout de même 10d6 points de dégâts contondants à cause de la pluie de rochers qui suit le heurt et elle tombe à terre. Un jet de Réflexes réussi permet de réduire ces dégâts de moitié et de rester debout. Les créatures autres que la cible qui se trouvent dans les cases où apparaissent les pierres ou sur leur chemin (9 mètres (6 c) de large, 9 mètres (6 c) de haut et jusqu'à 18 mètres (12 c) de long) doivent également faire un jet de Réflexes ou subir 10d6 points de dégâts contondants et tomber à terre (jet de sauvegarde pour réduire les dégâts de moitié et rester debout). Le heurt de pierres n'inflige de dégâts à la créature qu'à une seule reprise, quel que soit le nombre de fois où les pierres la survolent</descr>
+        <dice_type>6</dice_type>
+        <cap_dice>20</cap_dice>
+		<contact>distance</contact>
+		<range>longue</range>
+		<area>9m</area>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V,G</compo>
+		<save_type>ref[1/2]</save_type>
+        <rank>9</rank>
+    </spell>
+
+	<spell>
+        <name>Immobilisation de monstre de groupe</name>
+        <shortdescr>Immobilise toutes les créatures dans un rayon de 9m.</shortdescr>
+        <descr>Les cibles du sort se figent et se retrouvent paralysées. Chaque round, lors de leur tour, elles peuvent effectuer un nouveau jet de sauvegarde pour tenter de mettre fin à l’effet.</descr>
+        <range>moyenne</range>
+		<area>9m</area>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>un bâtonnet ou une barre de métal résistant, à peine aussi long qu’un clou</compo_m>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Plainte d'outre-tombe</name>
+        <shortdescr>Inflige 10 points de dégâts par niveau de lanceur de sort à toutes les créatures présentes dans la zone d'effet.</shortdescr>
+        <descr>Ce sort émet des vibrations sonores meurtrières capables de tuer tous ceux qui les entendent (sauf le lanceur de sort). Il affecte une créature par niveau de lanceur de sorts à raison de 10 points de dégâts par niveau de lanceur de sorts, en commençant par celles qui se tiennent le plus près du centre de la zone d’effet.</descr>
+        <dice_type>lvl</dice_type>
+        <n_dice_per_lvl>10</n_dice_per_lvl>
+        <dmg_type>none</dmg_type>
+		<range>courte</range>
+        <area>l2m</area>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V</compo>
+		<save_type>vol[annule]</save_type>
+        <rm>true</rm>
+        <rank>9</rank>
+    </spell>
+	
+	<spell>
+        <name>Projection astrale</name>
+        <shortdescr>Ce sort libère l’esprit du personnage de son enveloppe charnelle et lui permet de se rendre dans un autre plan.</shortdescr>
+        <descr>Ce sort libère l’esprit du personnage de son enveloppe charnelle et lui permet de se rendre dans un autre plan. Le personnage peut emmener d’autres individus avec lui, à condition qu’ils forment un cercle et se tiennent par la main au moment de l’incantation. Les autres voyageurs dépendent entièrement du lanceur de sorts, qu’ils ne doivent pas quitter un seul instant. En effet, s’il lui arrivait quoi que ce soit, ses compagnons devraient se débrouiller seuls pour revenir dans le plan Matériel.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>30min</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une hyacinthe de 1 000 po</compo_m>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Suffocation de groupe</name>
+        <shortdescr>Ce sort extrait l'air contenu dans les poumons des cibles et les font rapidement suffoquer.</shortdescr>
+        <descr>Ce sort extrait l'air contenu dans les poumons des cibles et les font rapidement suffoquer. La cible peut tenter un jet de Vigueur pour résister aux effets du sort. Si elle réussit, elle est juste chancelante pendant 1 round alors qu'elle reprend son souffle. Si elle échoue elle se met immédiatement à suffoquer. Au prochain tour de la cible, elle est réduite à 0 point de vie et tombe inconsciente. Un round après, elle passe à -1 point de vie et agonise. Elle meurt au round suivant. À chaque round, la cible peut retarder les effets du sort si elle réussit un jet de Vigueur, mais le sort l'affecte tout de même pour 3 rounds et, à chaque fois qu'elle rate un jet de sauvegarde, la cible se rapproche un peu plus de la suffocation. Ce sort affecte seulement les créatures qui doivent respirer. Il est impossible de vaincre les effets de ce sort en retenant sa respiration : si la victime rate le premier jet de sauvegarde, l'air s'échappe de ses poumons.</descr>
+        <range>courte</range>
+        <cast_time>simple</cast_time>
+        <duration>1round/lvl</duration>
+        <compo>V,G,M</compo>
+		<compo_m>une fiole contenant une bouffée de souffle du lanceur de sort</compo_m>
+		<save_type>vig[partiel]</save_type>
+        <rm>true</rm>
+        <rank>9</rank>
+    </spell>
+
+    <spell>
+        <name>Téléportation interplanétaire</name>
+		<shortdescr>Ce sort transporte instantanément le personnage et ses alliés sur les lieux de son choix, sans limite de portée.</shortdescr>
+        <descr>Ce sort transporte instantanément le personnage sur les lieux de son choix. Le personnage ne peut pas se rendre dans un autre plan d’existence. Il peut emporter des objets à concurrence de sa charge maximale et peut aussi emmener une créature consentante de taille M ou inférieure par tranche de 3 niveaux de lanceur de sorts.</descr>
+        <range>contact</range>
+        <cast_time>simple</cast_time>
+        <duration>instant</duration>
+        <compo>V</compo>
+        <rank>9</rank>
+    </spell>
+
+</records>
