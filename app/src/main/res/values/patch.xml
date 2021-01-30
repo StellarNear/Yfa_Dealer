@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="time_spend">273h</string>
+    <string name="time_spend">275h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."</string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V3.4
+-téléchargement automatique des mises à jour ultérieures ET installation automatique
+----------------------------------------------------------------------------------
 Patch note V3.3
 -ajout des sorts arcane libre (accessible en cliquant sur "Liste des sorts" dans le menu Sortilège)
 -maj niveau 28 !

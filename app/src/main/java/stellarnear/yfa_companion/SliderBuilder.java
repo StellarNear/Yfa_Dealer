@@ -40,14 +40,14 @@ public class SliderBuilder {
                 if (seekBar.getProgress() > 75) {
                     seekBar.setProgress(100);
                     if(spell.isFree()) {
-                        boolean hasRankAboveAvailable=false;
-                        for(int i = calculation.currentRank(spell);i < yfa.getAllResources().getRankManager().getHighestTier();i++){
+                        boolean hasRankAvailable=false;
+                        for(int i = calculation.currentRank(spell);i <= yfa.getAllResources().getRankManager().getHighestTier();i++){
                             if( yfa.getResourceValue("spell_rank_" + i) > 0){
-                                hasRankAboveAvailable=true;
+                                hasRankAvailable=true;
                                 break;
                             }
                         }
-                        if (!spell.isCast() && !hasRankAboveAvailable) {
+                        if (!spell.isCast() && !hasRankAvailable) {
                             seekBar.setProgress(1);
                             tools.customToast(mC, "Le rang du sort Arcane libre ne peut dépasser ton rang maximal disponible", "center");
                         } else if (!spell.isCast() &&  yfa.getResourceValue("resource_mythic_points") < 1) {
