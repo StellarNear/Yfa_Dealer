@@ -1,19 +1,11 @@
 package stellarnear.yfa_companion;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.SeekBar;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import stellarnear.yfa_companion.Activities.MainActivity;
-import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Spells.Spell;
 

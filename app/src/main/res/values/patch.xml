@@ -5,6 +5,10 @@
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."</string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V3.4.1
+-correction de quelques typos dans le patchnote
+-optimisation de l'importation des librairies
+----------------------------------------------------------------------------------
 Patch note V3.4
 -téléchargement automatique des mises à jour ultérieures ET installation automatique
 ----------------------------------------------------------------------------------
@@ -22,14 +26,14 @@ Patch note V3.2.1
 Patch note V3.2
 -migration rescale android X
 -fix test RM dice img
--ajout d'un bouton pour copier le lien de telechargemetn dans le presse papier
+-ajout d'un bouton pour copier le lien de telechargement dans le presse papier
 ----------------------------------------------------------------------------------
 Patch note V3.1
 -Nouveau menu de rechargement des rangs de sort à partir de gemmes
-    -Visibilité des rangs actuellement disponibles
-    -Plus de possibilité de perdre des rangs en dépassant le maximum
-    -Aide au calcul des rangs restants à dépenser
-    -Enlever un rang selectionné en maintenant le click
+-Visibilité des rangs actuellement disponibles
+-Plus de possibilité de perdre des rangs en dépassant le maximum
+-Aide au calcul des rangs restants à dépenser
+-Enlever un rang selectionné en maintenant le click
 ----------------------------------------------------------------------------------
 Patch note V3.0
 -Maj automatique de l'application

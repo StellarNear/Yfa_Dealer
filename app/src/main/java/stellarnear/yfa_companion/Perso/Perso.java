@@ -3,14 +3,12 @@ package stellarnear.yfa_companion.Perso;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_companion.Calculation;
 import stellarnear.yfa_companion.HallOfFame;
-import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;

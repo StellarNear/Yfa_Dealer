@@ -2,7 +2,6 @@ package stellarnear.yfa_companion.Activities;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;

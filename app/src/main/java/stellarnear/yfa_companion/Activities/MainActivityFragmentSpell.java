@@ -39,10 +39,8 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
 
 import stellarnear.yfa_companion.CustomAlertDialog;
-import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
