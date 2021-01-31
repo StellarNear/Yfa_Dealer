@@ -3,7 +3,6 @@ package stellarnear.yfa_companion.VersionCheck;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -16,15 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_companion.BuildConfig;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 
 
-public class GetVersionData {
+public class GetVersionData extends SelfCustomLog {
     private ProgressDialog dialog;
     private Activity mA;
     private List<VersionData> versionDataList;
@@ -88,16 +87,12 @@ public class GetVersionData {
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
                 }
 
                 return buffer.toString();
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                log.err("Error during background new version checking",e);
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -107,7 +102,7 @@ public class GetVersionData {
                         reader.close();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.err("Error during connection",e);
                 }
             }
             return null;
@@ -134,7 +129,7 @@ public class GetVersionData {
                     mListener.onEvent();
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                log.err("Error during JSON parsing",e);
                 if (mListenerFail != null) {
                     mListenerFail.onEvent();
                 }

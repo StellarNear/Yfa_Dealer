@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
-import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +16,23 @@ import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
-public class PrefSleepScreenFragment extends Preference {
+public class PrefSleepScreenFragment extends CustomPreference {
     private Perso yfa= MainActivity.yfa;
     private Context mC;
     private View mainView;
 
     public PrefSleepScreenFragment(Context context, AttributeSet attrs) {
         super(context, attrs);
-
     }
 
     public PrefSleepScreenFragment(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
     }
+
     public PrefSleepScreenFragment(Context context) {
         super(context);
     }
+
 
     @Override
     protected View onCreateView(ViewGroup parent)
@@ -83,7 +82,11 @@ public class PrefSleepScreenFragment extends Preference {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                yfa.sleep();
+                try {
+                    yfa.sleep();
+                } catch (Exception e) {
+                    log.err(mC,"Erreur pendant le sommeil",e);
+                }
                 tools.customToast(mC, "Une nouvelle journée pleine de sortilèges t'attends.", "center");
                 new PostData(mC,new PostDataElement("Nuit de repos","Recharge des ressources journalières et sorts"));
                 Intent intent = new Intent(mC, MainActivity.class);
@@ -101,7 +104,11 @@ public class PrefSleepScreenFragment extends Preference {
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                yfa.halfSleep();
+                try {
+                    yfa.halfSleep();
+                } catch (Exception e) {
+                    log.err(mC,"Erreur pendant le sommeil",e);
+                }
                 tools.customToast(mC, "Une journée sans sortilèges t'attends...", "center");
                 new PostData(mC,new PostDataElement("Nuit de repos (sans sorts)","Recharge des ressources journalières"));
                 Intent intent = new Intent(mC,  MainActivity.class);

@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
 
-public class Targets {
+public class Targets extends SelfCustomLog {
     private static Targets instance = new Targets();
     private List<String> allTargets;
     private Map<String,SpellList> mapTargetListSpell;
@@ -36,10 +37,9 @@ public class Targets {
                     mapTargetListSpell.get(tar).remove(spell);
                 }
             }
-
             mapTargetListSpell.get(target).add(spell);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.err("Error during add spell to target",e);
         }
     }
 
@@ -48,7 +48,7 @@ public class Targets {
         try {
             listReturn=mapTargetListSpell.get(target);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.err("Error during get spell for target",e);
         }
         return listReturn;
     }

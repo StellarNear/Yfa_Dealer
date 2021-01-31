@@ -53,12 +53,12 @@ public class TinyDB {
     private SharedPreferences preferences;
     private String DEFAULT_APP_IMAGEDATA_DIRECTORY;
     private String lastImagePath = "";
+    private Gson gson;
 
     public TinyDB(Context appContext) {
         preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
+        gson = new Gson();
     }
-
-
 
 
     /*
@@ -326,20 +326,6 @@ public class TinyDB {
     }
 
 
-    public ArrayList<Equipment> getListEquipments(String key) {
-        Gson gson = new Gson();
-
-        ArrayList<String> objStrings = getListString(key);
-        ArrayList<Equipment> objects = new ArrayList<Equipment>();
-
-        for (String jObjString : objStrings) {
-            Equipment value = gson.fromJson(jObjString, Equipment.class);
-            objects.add(value);
-        }
-        return objects;
-    }
-
-
     public <T> T getObject(String key, Class<T> classOfT) {
 
         String json = getString(key);
@@ -500,15 +486,7 @@ public class TinyDB {
         putString(key, gson.toJson(obj));
     }
 
-    public void putListEquipments(String key, List<Equipment> objArray) {
-        checkForNullKey(key);
-        Gson gson = new Gson();
-        ArrayList<String> objStrings = new ArrayList<String>();
-        for (Equipment obj : objArray) {
-            objStrings.add(gson.toJson(obj));
-        }
-        putListString(key, objStrings);
-    }
+
 
     /*
      * Remove SharedPreferences item with 'key'
@@ -613,10 +591,28 @@ public class TinyDB {
         }
     }
 
+    public ArrayList<Equipment> getListEquipments(String key) {
+        ArrayList<String> objStrings = getListString(key);
+        ArrayList<Equipment> objects = new ArrayList<Equipment>();
+
+        for (String jObjString : objStrings) {
+            Equipment value = gson.fromJson(jObjString, Equipment.class);
+            objects.add(value);
+        }
+        return objects;
+    }
+
+    public void putListEquipments(String key, List<Equipment> objArray) {
+        checkForNullKey(key);
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for (Equipment obj : objArray) {
+            objStrings.add(gson.toJson(obj));
+        }
+        putListString(key, objStrings);
+    }
+
 
     public StatsList getStats(String key) {
-        Gson gson = new Gson();
-
         ArrayList<String> objStrings = getListString(key);
         StatsList objects = new StatsList();
 
@@ -629,7 +625,6 @@ public class TinyDB {
 
     public void putStats(String key, StatsList objArray) {
         checkForNullKey(key);
-        Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();
         for (Stat obj : objArray.asList()) {
             objStrings.add(gson.toJson(obj));
@@ -638,8 +633,6 @@ public class TinyDB {
     }
 
     public List<FameEntry> getHallOfFame(String key) {
-        Gson gson = new Gson();
-
         ArrayList<String> objStrings = getListString(key);
         List<FameEntry> objects = new ArrayList<>();
 
@@ -652,7 +645,6 @@ public class TinyDB {
 
     public void putHallOfFame(String key, List<FameEntry> objArray) {
         checkForNullKey(key);
-        Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();
         for (FameEntry obj : objArray) {
             objStrings.add(gson.toJson(obj));
@@ -662,17 +654,15 @@ public class TinyDB {
 
 
     public void putListBuffs(String key, ArrayList<Buff> listBuffs) {
-            checkForNullKey(key);
-            Gson gson = new Gson();
-            ArrayList<String> objStrings = new ArrayList<String>();
-            for (Buff obj : listBuffs) {
-                objStrings.add(gson.toJson(obj));
-            }
-            putListString(key, objStrings);
+        checkForNullKey(key);
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for (Buff obj : listBuffs) {
+            objStrings.add(gson.toJson(obj));
+        }
+        putListString(key, objStrings);
     }
 
     public ArrayList<Buff> getListBuffs(String key) {
-        Gson gson = new Gson();
         ArrayList<String> objStrings = getListString(key);
         ArrayList<Buff> objects = new ArrayList<Buff>();
         for (String jObjString : objStrings) {
@@ -685,7 +675,6 @@ public class TinyDB {
 
     public void putSpellList(String key, SpellList echoList) {
         checkForNullKey(key);
-        Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();
         for (Spell obj : echoList.asList()) {
             objStrings.add(gson.toJson(obj));
@@ -694,7 +683,6 @@ public class TinyDB {
     }
 
     public SpellList getSpellList(String key) {
-        Gson gson = new Gson();
         ArrayList<String> objStrings = getListString(key);
         SpellList objects = new SpellList();
         for (String jObjString : objStrings) {

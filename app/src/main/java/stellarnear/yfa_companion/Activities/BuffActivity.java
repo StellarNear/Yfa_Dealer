@@ -3,26 +3,21 @@ package stellarnear.yfa_companion.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -34,13 +29,14 @@ import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;
+import stellarnear.yfa_companion.TinyDB;
 import stellarnear.yfa_companion.Tools;
 
 /**
  * Created by jchatron on 26/12/2017.
  */
 
-public class BuffActivity extends AppCompatActivity {
+public class BuffActivity extends CustomActivity {
     private Context mC;
     private String currentMode="temp";
     private LinearLayout permaLin;
@@ -49,16 +45,15 @@ public class BuffActivity extends AppCompatActivity {
     private Perso yfa=MainActivity.yfa;
     private Activity mA;
     private Tools tools=Tools.getTools();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (settings.getBoolean("switch_fullscreen_mode",getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        super.onCreate(savedInstanceState);
+    protected void doActivity() {
         this.mA=BuffActivity.this;
         this.mC=getApplicationContext();
+
+        TinyDB tinyDB = new TinyDB(mC);
+        int a=4;
+
         setContentView(R.layout.buff_activity);
         String title=getString(R.string.buff_activity);
         SpannableString titleSpan = new SpannableString(title);
@@ -67,6 +62,7 @@ public class BuffActivity extends AppCompatActivity {
         Toolbar mActionBarToolbarhelp = (Toolbar) findViewById(R.id.toolbarBuff);
         setSupportActionBar(mActionBarToolbarhelp);
         getSupportActionBar().setTitle(titleSpan);
+
         tempLin=findViewById(R.id.buff_temp);
         permaLin=findViewById(R.id.buff_perma);
         findViewById(R.id.temp).setOnClickListener(new View.OnClickListener() {
@@ -240,23 +236,30 @@ public class BuffActivity extends AppCompatActivity {
      */
 
     @Override
-    protected void onResume(){
-        super.onResume();
+    protected void onResumeActivity() {
         checkOrientStart(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onBackPressedActivity() {
+        //do nothing
+    }
+
+    @Override
+    protected void onDestroyActivity() {
         System.runFinalization();
         Runtime.getRuntime().gc();
         System.gc();
         finish();
-        super.onDestroy();
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    protected boolean onOptionsItemSelectedActivity(MenuItem item) {
+        return false;
+    }
+
+    @Override
+    protected void onConfigurationChangedActivity() {
         final Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
         if (display.getRotation()==Surface.ROTATION_0) {

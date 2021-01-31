@@ -1,12 +1,12 @@
 package stellarnear.yfa_companion.Stats;
 
 import android.content.Context;
-import android.util.Log;
 
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.TinyDB;
 
-public class Stats {
+public class Stats extends SelfCustomLog {
     private StatsList statsList = new StatsList();
     private TinyDB tinyDB;
 
@@ -15,8 +15,7 @@ public class Stats {
         try {
             refreshStats();
         } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("Load_STATS","Error loading stats"+e.getMessage());
+            log.err("Could not refreshStats",e);
             reset();
         }
     }

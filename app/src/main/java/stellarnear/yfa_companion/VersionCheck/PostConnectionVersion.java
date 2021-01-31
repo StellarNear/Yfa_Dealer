@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -29,9 +28,10 @@ import java.util.Locale;
 import javax.net.ssl.HttpsURLConnection;
 
 import stellarnear.yfa_companion.BuildConfig;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 
-public class PostConnectionVersion {
+public class PostConnectionVersion extends SelfCustomLog {
     private Context mC;
     public PostConnectionVersion(Context mC) {
         this.mC=mC;
@@ -89,7 +89,6 @@ public class PostConnectionVersion {
 
                 postDataParams.put("version_name", String.valueOf(BuildConfig.VERSION_NAME));
                 postDataParams.put("version_code",  String.valueOf(BuildConfig.VERSION_CODE));
-                Log.i("params", postDataParams.toString());
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds */);
@@ -110,17 +109,12 @@ public class PostConnectionVersion {
                 int responseCode = conn.getResponseCode();
 
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
-                    Log.i("CONNECT_STATUS","Connection "+responseCode);
                     return stringFromStream(conn.getInputStream());
                 } else {
-                    //todo log post
-                    Log.e("CONNECT_STATUS","Connection error"+responseCode);
-                    Log.e("CONNECT_ERROR",stringFromStream(conn.getErrorStream()));
                     return "false : " + responseCode;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("PostData error", e.getMessage());
+                log.err("PostData error", e);
                 return "Exception: " + e.getMessage();
             }
         }

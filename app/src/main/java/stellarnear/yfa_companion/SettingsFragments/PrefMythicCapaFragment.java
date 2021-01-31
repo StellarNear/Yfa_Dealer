@@ -22,7 +22,7 @@ public class PrefMythicCapaFragment {
     public void addMythicCapaList(PreferenceCategory common, PreferenceCategory mage ,PreferenceCategory all) {
            for (MythicCapacity capacity : yfa.getAllMythicCapacities().getAllMythicCapacitiesList()) {
             SwitchPreference switch_feat = new SwitchPreference(mC);
-            switch_feat.setKey("switch_"+capacity.getId());
+            switch_feat.setKey("switch_"+ (capacity.getId().equalsIgnoreCase("")?capacity.getName():capacity.getId()));
             switch_feat.setTitle(capacity.getName());
             switch_feat.setSummary(capacity.getDescr());
             switch_feat.setDefaultValue(true);

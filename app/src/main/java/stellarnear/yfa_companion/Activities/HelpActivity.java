@@ -3,22 +3,18 @@ package stellarnear.yfa_companion.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Arrays;
@@ -55,7 +50,7 @@ import stellarnear.yfa_companion.Spells.SpellList;
  * Created by jchatron on 26/12/2017.
  */
 
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends CustomActivity {
     private Perso yfa = MainActivity.yfa;
     private Context mC;
     private Map<Button,String> mapButtonCat=new HashMap<>();
@@ -66,14 +61,9 @@ public class HelpActivity extends AppCompatActivity {
     private ImageView infoImg;
     private GestureDetector mGestureDetector;
     private Activity mA;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (settings.getBoolean("switch_fullscreen_mode",getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        super.onCreate(savedInstanceState);
+    protected void doActivity() {
         this.mA=this;
         this.mC=getApplicationContext();
         setContentView(R.layout.help_activity);
@@ -143,7 +133,11 @@ public class HelpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 button.setBackground(getDrawable(R.drawable.button_ok_gradient));
                 unselectOthers(button);
-                fillFlipper(button);
+                try {
+                    fillFlipper(button);
+                } catch (Exception e) {
+                    log.err(mC,"Erreur lors du remplissage du flipper",e);
+                }
                 titleCatText.setText(mapButtonCat.get(button));
                 switchMenu(menuCategories,titleLayout);
             }
@@ -179,7 +173,7 @@ public class HelpActivity extends AppCompatActivity {
         }
     }
 
-    private void fillFlipper(Button button) {
+    private void fillFlipper(Button button) throws Exception {
         flipper.removeAllViews();
         ViewGroup vg= findViewById(R.id.help_info_RelativeLayout);
         if(mapButtonCat.get(button).equalsIgnoreCase("Général")){
@@ -252,8 +246,8 @@ public class HelpActivity extends AppCompatActivity {
         try {
             img.setImageDrawable(mC.getDrawable(imgId));
         } catch (Exception e) {
+            log.warn("No image for : "+id);
             img.setVisibility(View.GONE);
-            e.printStackTrace();
         }
         TextView title = view.findViewById(R.id.help_info_textName);
         title.setText(titleTxt);
@@ -301,23 +295,30 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
+    protected void onResumeActivity() {
         checkOrientStart(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onBackPressedActivity() {
+        //do nothing
+    }
+
+    @Override
+    protected void onDestroyActivity() {
         System.runFinalization();
         Runtime.getRuntime().gc();
         System.gc();
         finish();
-        super.onDestroy();
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    protected boolean onOptionsItemSelectedActivity(MenuItem item) {
+        return false;
+    }
+
+    @Override
+    protected void onConfigurationChangedActivity() {
         final Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
         if (display.getRotation()==Surface.ROTATION_0) {

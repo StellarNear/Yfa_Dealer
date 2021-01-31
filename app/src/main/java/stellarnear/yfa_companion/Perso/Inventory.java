@@ -15,7 +15,7 @@ import stellarnear.yfa_companion.R;
  * Created by jchatron on 05/01/2018.
  */
 
-public class Inventory {
+public class Inventory extends SelfCustomLog {
 
     private AllEquipments allEquipments;
     private Bag bag;
@@ -23,22 +23,26 @@ public class Inventory {
     private boolean editable;
 
     public Inventory(Context mC) {
-        this.bag = new Bag(mC);
-        this.allEquipments = new AllEquipments(mC);
+        try {
+            this.bag = new Bag(mC);
+            this.allEquipments = new AllEquipments(mC);
+        } catch (Exception e) {
+            log.err("Error on Inventory creation", e);
+        }
     }
 
-    public void showEquipment(Activity mA,Context mC, Boolean... canDelete) {
+    public void showEquipment(Activity mA, Context mC, Boolean... canDelete) {
         editable = canDelete.length > 0 ? canDelete[0] : false;  //parametre optionnel pour editer le contenu de l'invertaire
         LayoutInflater inflater = mA.getLayoutInflater();
         View inventoryView = inflater.inflate(R.layout.equipment_dialog, null);
         equipWindow = new CustomAlertDialog(mA, mC, inventoryView);
         equipWindow.setPermanent(true);
         equipWindow.clickToHide(inventoryView.findViewById(R.id.equipment_dialog_main_title_frame));
-        setImageOnDialog(mA,mC,inventoryView);
+        setImageOnDialog(mA, mC, inventoryView);
         equipWindow.showAlert();
     }
 
-    private void setImageOnDialog(final Activity mA,final Context mC, View inventoryView) {
+    private void setImageOnDialog(final Activity mA, final Context mC, View inventoryView) {
 
         float[] mat = new float[]
                 {
@@ -65,7 +69,11 @@ public class Inventory {
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    bag.showBag(mA, editable);
+                    try {
+                        bag.showBag(mA, editable);
+                    } catch (Exception e) {
+                        log.err(mC,"Erreur durant l'affichage du sac",e);
+                    }
                 }
             });
         }
@@ -91,7 +99,7 @@ public class Inventory {
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error while setting image dialog",e);
             }
         }
 
@@ -105,12 +113,12 @@ public class Inventory {
                         img.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                allEquipments.getDisplayManager().showSpareList(mA,allEquipments.getDisplayManager().getSpareEquipment(equi.getSlotId()),editable);
+                                allEquipments.getDisplayManager().showSpareList(mA, allEquipments.getDisplayManager().getSpareEquipment(equi.getSlotId()), editable);
                                 allEquipments.getDisplayManager().setRefreshEventListener(new DisplayEquipmentManager.OnRefreshEventListener() {
                                     @Override
                                     public void onEvent() {
                                         equipWindow.dismissAlert();
-                                        showEquipment(mA,mC, editable);
+                                        showEquipment(mA, mC, editable);
                                     }
                                 });
 
@@ -119,7 +127,7 @@ public class Inventory {
 
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.warn("Error while setting image dialog on editable",e);
                 }
             }
         }
@@ -137,12 +145,12 @@ public class Inventory {
         return bag.getBagSize() + allEquipments.getAllEquipmentsSize();
     }
 
-    public void reset() {
+    public void reset() throws Exception {
         bag.reset();
         allEquipments.reset();
     }
 
-    public void loadFromSave() {
+    public void loadFromSave() throws Exception {
         bag.loadFromSave();
         allEquipments.loadFromSave();
     }

@@ -21,7 +21,7 @@ public class PrefFeatFragment {
     public void addFeatsList(PreferenceCategory magic, PreferenceCategory def, PreferenceCategory other) {
         for (Feat feat : yfa.getAllFeats().getFeatsList()) {
             SwitchPreference switch_feat = new SwitchPreference(mC);
-            switch_feat.setKey("switch_"+feat.getId());
+            switch_feat.setKey("switch_"+(feat.getId().equalsIgnoreCase("")?feat.getName():feat.getId()));
             switch_feat.setTitle(feat.getName());
             switch_feat.setSummary(feat.getDescr());
             switch_feat.setDefaultValue(feat.isActive());

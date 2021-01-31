@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
  * Created by jchatron on 26/12/2017.
  */
 
-public class MythicCapacity {
+public class MythicCapacity extends SelfCustomLog {
     private Context mC;
     private String name;
     private String descr;
@@ -45,7 +45,7 @@ public class MythicCapacity {
                 active = true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Could not find swtich for "+this.id);
         }
         return active;
     }

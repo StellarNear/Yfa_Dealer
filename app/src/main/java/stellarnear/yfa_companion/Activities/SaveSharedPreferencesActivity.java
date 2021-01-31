@@ -21,12 +21,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import stellarnear.yfa_companion.BuildConfig;
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.Tools;
 
 public class SaveSharedPreferencesActivity extends Activity {
 
     private Tools tools = Tools.getTools();
-
+    private CustomLog log = new CustomLog(SaveSharedPreferencesActivity.class);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +92,7 @@ public class SaveSharedPreferencesActivity extends Activity {
 
             tools.customToast(getApplicationContext(), "Sauvegarde crée");
         } catch (Exception e) {
-            Log.e("SAVE_ERR", e.getMessage());
-            tools.customToast(getApplicationContext(), "Erreur:" + e.getStackTrace()[0]);
+            log.err(getApplicationContext(),"Erreur durant l'ecriture de la sauvegarde",e);
             DocumentFile previousSave = pickedDir.findFile(BuildConfig.APPLICATION_ID+ ".sav");
             if (previousSave != null) {
                 previousSave.delete();
@@ -127,8 +127,7 @@ public class SaveSharedPreferencesActivity extends Activity {
             MainActivity.yfa.loadFromSave();
             tools.customToast(getApplicationContext(), "Sauvegarde chargée");
         } catch (Exception e) {
-            Log.e("LOAD_ERR", e.getMessage());
-            tools.customToast(getApplicationContext(), "Erreur:" + e.getStackTrace()[0]);
+            log.err(getApplicationContext(),"Erreur durant le chargement de la sauvegarde",e);
         }
     }
 
@@ -136,6 +135,4 @@ public class SaveSharedPreferencesActivity extends Activity {
     public void onBackPressed() {
         //ne rien faire il faut finir cette activité !
     }
-
-
 }

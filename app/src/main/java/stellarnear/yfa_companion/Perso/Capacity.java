@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
  * Created by jchatron on 26/12/2017.
  */
 
-public class Capacity {
+public class Capacity extends SelfCustomLog{
     private String name;
     private String shortname;
     private String type;
@@ -86,7 +86,9 @@ public class Capacity {
         try {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
             active = settings.getBoolean("switch_"+this.id, true);
-        } catch ( Exception e) {}
+        } catch ( Exception e) {
+            log.warn("Could not find switch for "+this.id);
+        }
         return active;
     }
 

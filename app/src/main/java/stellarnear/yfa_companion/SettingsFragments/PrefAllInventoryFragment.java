@@ -23,10 +23,11 @@ import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.Perso.Equipment;
 import stellarnear.yfa_companion.Perso.Inventory;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
-public class PrefAllInventoryFragment {
+public class PrefAllInventoryFragment extends SelfCustomLog {
 
     private Inventory inventory;
     private Activity mA;
@@ -70,7 +71,7 @@ public class PrefAllInventoryFragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     inventory.getAllEquipments().getDisplayManager().remove(equi);
-                                    mListener.onEvent();
+                                    if(mListener!=null){mListener.onEvent();}
                                 }
                             })
                             .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -141,7 +142,9 @@ public class PrefAllInventoryFragment {
             try {
                 String nameUp = entry.getKey().contains("skill_")? yfa.getAllSkills().getSkill(entry.getKey()).getName(): yfa.getAllAbilities().getAbi(entry.getKey()).getName();
                 line+="\n+"+entry.getValue()+" "+nameUp;
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                log.warn("Could not make string for "+entry.getKey());
+            }
         }
         return line;
     }

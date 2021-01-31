@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
@@ -20,7 +19,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
@@ -41,6 +39,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 
 import stellarnear.yfa_companion.CustomAlertDialog;
+import stellarnear.yfa_companion.Errors.SpellError;
 import stellarnear.yfa_companion.MyDragAndDrop;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
@@ -51,7 +50,7 @@ import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.Targets;
 import stellarnear.yfa_companion.Tools;
 
-public class MainActivityFragmentSpell extends Fragment {
+public class MainActivityFragmentSpell extends CustomFragment {
     private SpellList selectedSpells=new SpellList();
     private Targets targets;
     private Perso yfa=MainActivity.yfa;
@@ -59,17 +58,8 @@ public class MainActivityFragmentSpell extends Fragment {
     private SpellList listAllSpell=null;
     private Tools tools=Tools.getTools();
 
-    public MainActivityFragmentSpell() {
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (container != null) {
-            container.removeAllViews();
-        }
-
+    public View returnFragView() throws Exception {
         returnFragView= inflater.inflate(R.layout.fragment_main_cast, container, false);
         targets = Targets.getInstance();
 
@@ -136,7 +126,7 @@ public class MainActivityFragmentSpell extends Fragment {
     }
 
 
-    private void buildPage1() {
+    private void buildPage1() throws SpellError {
         testEchosAndGuardians();
 
         listAllSpell=BuildSpellList.getInstance(getContext()).getSpellList();

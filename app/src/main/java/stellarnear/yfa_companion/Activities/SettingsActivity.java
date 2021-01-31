@@ -1,15 +1,8 @@
 package stellarnear.yfa_companion.Activities;
 
-import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.SettingsFragments.SettingsFragment;
 
 
@@ -24,19 +17,11 @@ import stellarnear.yfa_companion.SettingsFragments.SettingsFragment;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatActivity
-{
+public class SettingsActivity extends CustomActivity {
     SettingsFragment settingsFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("switch_fullscreen_mode", getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-
+    protected void doActivity() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         settingsFragment = new SettingsFragment();
@@ -47,14 +32,18 @@ public class SettingsActivity extends AppCompatActivity
                 .commit();
     }
 
+    @Override
+    protected void onResumeActivity() {
+        //do nothing
+    }
+
     //
     // Handle what happens on up button
     //
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    protected boolean onOptionsItemSelectedActivity(MenuItem item) throws Exception {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 settingsFragment.onUpButton();
                 return true;
@@ -63,16 +52,20 @@ public class SettingsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onConfigurationChangedActivity() {
+        //do nothing
+    }
+
+    @Override
+    protected void onBackPressedActivity() throws Exception {
         settingsFragment.onUpButton();
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroyActivity() {
         System.runFinalization();
         Runtime.getRuntime().gc();
         System.gc();
         finish();
-        super.onDestroy();
     }
 }

@@ -6,11 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -24,19 +21,11 @@ import stellarnear.yfa_companion.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
-    View returnFragView;
-    public MainActivityFragment() {
-    }
+public class MainActivityFragment extends CustomFragment {
+    private View returnFragView;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater,final ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (container != null) {
-            container.removeAllViews();
-        }
-
+    public View returnFragView() {
         returnFragView= inflater.inflate(R.layout.fragment_main, container, false);
 
         ImageButton fabSkill = (ImageButton) returnFragView.findViewById(R.id.button_frag_to_skill);

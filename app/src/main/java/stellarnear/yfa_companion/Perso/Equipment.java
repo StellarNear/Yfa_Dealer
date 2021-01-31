@@ -19,7 +19,7 @@ import stellarnear.yfa_companion.Tools;
  */
 
 
-public class Equipment {
+public class Equipment extends SelfCustomLog {
     private String name;
     private String descr;
     private String value;
@@ -80,7 +80,7 @@ public class Equipment {
             int imgId = mC.getResources().getIdentifier(this.img_path, "drawable", mC.getPackageName());
             draw = mC.getDrawable(imgId);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("No image found for "+this.img_path);
         }
         return draw;
     }
@@ -140,12 +140,12 @@ public class Equipment {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("No ability up found for "+this.name);
         }
     }
 
     public void setSkillUp(Element element) {
-        try { //try car il peut ne pas y avoir de skillUp
+        try {
             NodeList skillUp = element.getElementsByTagName("skillUp").item(0).getChildNodes();
             Tools tools =Tools.getTools();
             for (int i = 0; i < skillUp.getLength(); i++) {
@@ -162,7 +162,7 @@ public class Equipment {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //try car il peut ne pas y avoir de skillUp
         }
     }
 

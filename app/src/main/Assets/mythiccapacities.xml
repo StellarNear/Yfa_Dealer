@@ -13,6 +13,7 @@
         <descr>À chaque fois que le total de points de vie du personnage tombe au-dessous de 0, il parvient à se stabiliser automatiquement sans avoir besoin d’effectuer un test de Constitution.</descr>
         <type>Commun</type>
     </mythiccapacity>
+
     <mythiccapacity>
         <name>Montée en puissance</name>
         <descr>Le personnage peut utiliser du pouvoir mythique pour accomplir des actions particulièrement difficiles. Il peut dépenser une utilisation de pouvoir mythique pour lancer 1d6 et pour ajouter le résultat obtenu à celui d’un d20 que vous venez de lancer.</descr>

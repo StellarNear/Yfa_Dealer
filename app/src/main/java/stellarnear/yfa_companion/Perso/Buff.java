@@ -17,52 +17,56 @@ import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Tools;
 
 
-public class Buff {
-    private float currentDuration=0; //duration are in seconds
-    private float maxDuration=0;
+public class Buff extends SelfCustomLog {
+    private float currentDuration = 0; //duration are in seconds
+    private float maxDuration = 0;
     private String spellDuration;
     private String name;
     private String id;
     private String descr;
     private int spellRank;
     private boolean perma;
-    private String tempFeat="";
-    private boolean fromSpell=false;
-    private boolean bloodLine=false;
+    private String tempFeat = "";
+    private boolean fromSpell = false;
+    private boolean bloodLine = false;
     private OnAddFeatEventListener mListener;
 
-    public Buff(Spell spell, Boolean perma){
-        this.name=spell.getName();
-        this.descr=spell.getDescr();
-        this.id=spell.getID();
-        this.spellDuration =spell.getDuration();
-        this.spellRank=spell.getRank();
-        this.perma=perma;
-        this.fromSpell=true;
+    public Buff(Spell spell, Boolean perma) {
+        try {
+            this.name = spell.getName();
+            this.descr = spell.getDescr();
+            this.id = spell.getID();
+            this.spellDuration = spell.getDuration();
+            this.spellRank = spell.getRank();
+            this.perma = perma;
+            this.fromSpell = true;
+        } catch (Exception e) {
+            log.err("Error on Buff init : " + this.name, e);
+        }
     }
 
-    public Buff(Capacity capacity, Boolean perma){
-        this.name=capacity.getName();
-        this.descr=capacity.getDescr();
-        this.id=capacity.getId();
-        this.spellDuration =capacity.getDuration();
-        this.perma=perma;
-        this.bloodLine=capacity.isFromBloodLine();
+    public Buff(Capacity capacity, Boolean perma) {
+        this.name = capacity.getName();
+        this.descr = capacity.getDescr();
+        this.id = capacity.getId();
+        this.spellDuration = capacity.getDuration();
+        this.perma = perma;
+        this.bloodLine = capacity.isFromBloodLine();
     }
 
-    public String getDurationText(){
-        String durationTxt ="";
-        if(perma) {
-            durationTxt= DecimalFormatSymbols.getInstance().getInfinity();
-        }else  if(currentDuration>=3600){
-            int roundH=(int) currentDuration/3600;
-            durationTxt="["+roundH+"h]";
-        } else if(currentDuration>=60) {
-            int roundM=(int) currentDuration/60;
-            durationTxt="["+roundM+"min]";
-        } else if(currentDuration>0) {
-            int roundS=(int) currentDuration;
-            durationTxt="["+roundS+"sec]";
+    public String getDurationText() {
+        String durationTxt = "";
+        if (perma) {
+            durationTxt = DecimalFormatSymbols.getInstance().getInfinity();
+        } else if (currentDuration >= 3600) {
+            int roundH = (int) currentDuration / 3600;
+            durationTxt = "[" + roundH + "h]";
+        } else if (currentDuration >= 60) {
+            int roundM = (int) currentDuration / 60;
+            durationTxt = "[" + roundM + "min]";
+        } else if (currentDuration > 0) {
+            int roundS = (int) currentDuration;
+            durationTxt = "[" + roundS + "sec]";
         }
         return durationTxt;
     }
@@ -71,8 +75,8 @@ public class Buff {
         return spellDuration;
     }
 
-    public boolean isActive(){
-        return perma || currentDuration>0;
+    public boolean isActive() {
+        return perma || currentDuration > 0;
     }
 
     public boolean isPerma() {
@@ -92,19 +96,19 @@ public class Buff {
     }
 
     public void cancel() {
-        this.currentDuration=0;
+        this.currentDuration = 0;
     }
 
-    public void extendCast(Context mC,int casterLvl, int nCastDuration){
-        this.maxDuration=calculateSeconds(casterLvl)*(1+nCastDuration); //in sec
-        this.currentDuration=maxDuration;
+    public void extendCast(Context mC, int casterLvl, int nCastDuration) {
+        this.maxDuration = calculateSeconds(casterLvl) * (1 + nCastDuration); //in sec
+        this.currentDuration = maxDuration;
         postData(mC);
         testForAddFeat(mC);
     }
 
     public void normalCast(Context mC, int casterLvl) {
-        this.maxDuration=calculateSeconds(casterLvl); //in sec
-        this.currentDuration=maxDuration;
+        this.maxDuration = calculateSeconds(casterLvl); //in sec
+        this.currentDuration = maxDuration;
         postData(mC);
         testForAddFeat(mC);
     }
@@ -112,18 +116,18 @@ public class Buff {
     /* partie paragon soudain */
 
     private void testForAddFeat(final Context mC) {
-        if(this.id.equalsIgnoreCase("parangon_tempfeat")){
+        if (this.id.equalsIgnoreCase("parangon_tempfeat")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mC);
             builder.setTitle("Choix du dons temporaire");
             // add a radio button list
 
-            final ArrayList<String> featsNames=new ArrayList<>();
+            final ArrayList<String> featsNames = new ArrayList<>();
 
-            final LinkedHashMap<String,String> mapFeatID=new LinkedHashMap<>();
-            mapFeatID.put("Echo magique","tempfeat_magic_echo"); //on ajoute les dons temps à la main
-            mapFeatID.put("Futur dons ;)","tempfeat_dummy"); //on ajoute les dons temps à la main
+            final LinkedHashMap<String, String> mapFeatID = new LinkedHashMap<>();
+            mapFeatID.put("Echo magique", "tempfeat_magic_echo"); //on ajoute les dons temps à la main
+            mapFeatID.put("Futur dons ;)", "tempfeat_dummy"); //on ajoute les dons temps à la main
 
-            for(Map.Entry<String,String> entry : mapFeatID.entrySet()){
+            for (Map.Entry<String, String> entry : mapFeatID.entrySet()) {
                 featsNames.add(entry.getKey());
             }
 
@@ -131,10 +135,12 @@ public class Buff {
             String[] featsArray = featsNames.toArray(new String[featsNames.size()]);
             builder.setSingleChoiceItems(featsArray, checkedItem, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog,int which) {
-                    tempFeat =mapFeatID.get(featsNames.get(which));
+                public void onClick(DialogInterface dialog, int which) {
+                    tempFeat = mapFeatID.get(featsNames.get(which));
                     BuildSpellList.resetMetas();
-                    if(mListener!=null){mListener.onEvent();}
+                    if (mListener != null) {
+                        mListener.onEvent();
+                    }
                 }
             });
             builder.setPositiveButton("Ok", null);
@@ -168,16 +174,16 @@ public class Buff {
 
 
     private void postData(Context mC) {
-        new PostData(mC,new PostDataElement("Lancement du buff "+name,"Durée:"+getDurationText()));
+        new PostData(mC, new PostDataElement("Lancement du buff " + name, "Durée:" + getDurationText()));
     }
 
-    public void spendTime(Context mC,int i) {
-        currentDuration-=1f*i;
-        if(currentDuration<=0){
-            currentDuration=0;
-            new PostData(mC,new PostDataElement("Expiration d'un buff",name+" a expiré"));
+    public void spendTime(Context mC, int i) {
+        currentDuration -= 1f * i;
+        if (currentDuration <= 0) {
+            currentDuration = 0;
+            new PostData(mC, new PostDataElement("Expiration d'un buff", name + " a expiré"));
         }
-        if(this.id.equalsIgnoreCase("parangon_tempfeat") && currentDuration==0){
+        if (this.id.equalsIgnoreCase("parangon_tempfeat") && currentDuration == 0) {
             EchoList.resetEcho();
             BuildSpellList.resetMetas();
         }
@@ -199,21 +205,21 @@ public class Buff {
     private float calculateSeconds(int casterLvl) {
         String duration = this.spellDuration;
         Tools tools = Tools.getTools();
-        float floatSeconds=0f;
-        if(!duration.equalsIgnoreCase("permanente")){
-            Integer result= tools.toInt(duration.replaceAll("[^0-9?!]",""));
-            String duration_unit = duration.replaceAll("[0-9?!]","");
-            if(duration.contains("/lvl")){
+        float floatSeconds = 0f;
+        if (!duration.equalsIgnoreCase("permanente")) {
+            Integer result = tools.toInt(duration.replaceAll("[^0-9?!]", ""));
+            String duration_unit = duration.replaceAll("[0-9?!]", "");
+            if (duration.contains("/lvl")) {
                 result = result * casterLvl;
-                duration_unit = duration.replaceAll("/lvl","").replaceAll("[0-9?!]","");
+                duration_unit = duration.replaceAll("/lvl", "").replaceAll("[0-9?!]", "");
             }
 
-            if(duration_unit.equalsIgnoreCase("h")){
-                floatSeconds=result*3600f;
-            } else if(duration_unit.equalsIgnoreCase("min")){
-                floatSeconds=result*60f;
-            } else if(duration_unit.equalsIgnoreCase("round")){
-                floatSeconds=result*6f;
+            if (duration_unit.equalsIgnoreCase("h")) {
+                floatSeconds = result * 3600f;
+            } else if (duration_unit.equalsIgnoreCase("min")) {
+                floatSeconds = result * 60f;
+            } else if (duration_unit.equalsIgnoreCase("round")) {
+                floatSeconds = result * 6f;
             }
         }
         return floatSeconds;

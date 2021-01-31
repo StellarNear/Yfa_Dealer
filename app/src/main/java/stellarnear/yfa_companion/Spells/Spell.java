@@ -94,7 +94,7 @@ public class Spell {
         this.free=spell.free;
     }
 
-    public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type,int flat_dmg, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC){
+    public Spell(String id,String mythic,String normalSpellId, String name, String descr,Integer n_sub_spell, String dice_type, Double n_dice_per_lvl, int cap_dice, String dmg_type,int flat_dmg, String range,String contact,String area, String cast_time, String duration, String compo, String rm, String save_type, int rank,Context mC) throws Exception {
         if(id.equalsIgnoreCase("")){
             this.id=name;
         } else {

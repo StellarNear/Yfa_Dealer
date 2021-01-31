@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Perso.Resource;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
-public class SpellsRanksManager {
+public class SpellsRanksManager extends SelfCustomLog {
     private Tools tools= Tools.getTools();
     private SharedPreferences settings;
     private int highestSpellRank=0;
@@ -23,13 +24,13 @@ public class SpellsRanksManager {
     private Perso yfa= MainActivity.yfa;
     private OnHighTierChange mListner;
     private Context mC;
-    public SpellsRanksManager(Context mC){
+    public SpellsRanksManager(Context mC) throws Exception {
         this.mC=mC;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         refreshRanks();
     }
 
-    public void refreshRanks() {
+    public void refreshRanks() throws Exception {
         int newHighTier=tools.toInt(settings.getString("highest_tier_spell",String.valueOf(mC.getResources().getInteger(R.integer.highest_tier_spell_def))));
         int newHighConvTier=tools.toInt(settings.getString("highest_tier_spell_conv",String.valueOf(mC.getResources().getInteger(R.integer.highest_tier_spell_conv_def))));
         if(highestSpellRank!=newHighTier || highestSpellConvank!=newHighConvTier){
@@ -66,7 +67,7 @@ public class SpellsRanksManager {
         try {
             val=settings.getInt(id + "_current",  0);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Could not find resource current for "+id);
         }
         return val;
     }
@@ -77,7 +78,7 @@ public class SpellsRanksManager {
         try {
             defId = mC.getResources().getIdentifier(key.toLowerCase() + "_def", "integer", mC.getPackageName());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Could not find def value for "+key);
         }
         try {  //deux trycatch different car on peut ne pas avoir de valeur def defini mais une valeur manuelle dans les settings
             if(defId!=0){
@@ -86,7 +87,7 @@ public class SpellsRanksManager {
                 val=tools.toInt(settings.getString(key.toLowerCase(), "0"));
             }
         } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
+            log.warn("Could not read resource max for "+key);
         }
         return val;
     }
@@ -135,7 +136,7 @@ public class SpellsRanksManager {
     }
 
     public interface OnHighTierChange {
-        void onEvent();
+        void onEvent() throws Exception;
     }
 
     public void setRefreshEventListener(OnHighTierChange eventListener) {

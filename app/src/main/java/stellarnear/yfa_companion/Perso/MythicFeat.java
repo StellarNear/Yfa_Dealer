@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
  * Created by jchatron on 04/01/2018.
  */
 
-public class MythicFeat {
+public class MythicFeat extends SelfCustomLog {
     private String name;
     private String type;
     private String descr;
@@ -47,7 +47,7 @@ public class MythicFeat {
             boolean switchDef = mC.getResources().getBoolean(switchDefId);
             active = settings.getBoolean("switch_"+this.id, switchDef);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Could not find switch for "+this.id);
         }
         return active;
     }

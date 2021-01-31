@@ -4,8 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -24,7 +22,7 @@ import stellarnear.yfa_companion.Targets;
 import stellarnear.yfa_companion.Tools;
 
 
-public class MainActivityFragmentSpellCast extends Fragment {
+public class MainActivityFragmentSpellCast extends CustomFragment {
 
     private SpellList selectedSpells;
     private Perso yfa = MainActivity.yfa;
@@ -33,21 +31,10 @@ public class MainActivityFragmentSpellCast extends Fragment {
     private Calculation calculation=new Calculation();
     private TextView round;
     private LinearLayout mainLin;
-    private View returnFragView;
-
-    public MainActivityFragmentSpellCast() {
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (container != null) {
-            container.removeAllViews();
-        }
-        super.onCreate(savedInstanceState);
-
-        returnFragView= inflater.inflate(R.layout.spell_cast, container, false);
+    public View returnFragView() {
+        View returnFragView= inflater.inflate(R.layout.spell_cast, container, false);
         selectedSpells = targets.getAllSpellList();
 
         mainLin = (LinearLayout) returnFragView.findViewById(R.id.linear2);
@@ -59,7 +46,6 @@ public class MainActivityFragmentSpellCast extends Fragment {
                 backToSpell();
             }
         });
-
 
         for(String tar : targets.getTargetList()){
             TextView textTar = new TextView(getContext());
@@ -77,8 +63,6 @@ public class MainActivityFragmentSpellCast extends Fragment {
             addSpellsForTarget(targets.getSpellListForTarget(tar).asList());
 
         }
-
-
 
         refreshRound();
         return returnFragView;

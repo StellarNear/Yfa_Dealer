@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,7 +15,7 @@ import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
-public class PrefResetScreenFragment extends Preference {
+public class PrefResetScreenFragment extends CustomPreference {
     private Context mC;
     private Perso yfa=MainActivity.yfa;
     private View mainView;
@@ -78,7 +77,11 @@ public class PrefResetScreenFragment extends Preference {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
                 editor.commit();
-                yfa.reset();
+                try {
+                    yfa.reset();
+                } catch (Exception e) {
+                    log.err(mC,"Erreur lors du refresh de personnage",e);
+                }
                 tools.customToast(mC, "Remise à zero de l'application", "center");
                 Intent intent = new Intent(mC,  MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

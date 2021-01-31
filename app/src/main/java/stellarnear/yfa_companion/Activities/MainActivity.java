@@ -5,13 +5,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Timer;
@@ -38,24 +33,16 @@ import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.EchoList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends CustomActivity {
     public static Perso yfa;
     private boolean loading = false;
-    private boolean changescreen=false;
+    private boolean changescreen = false;
     private boolean touched = false;
     private static boolean campaignShow = true;
     private LinearLayout mainFrameFrag;
-    private SharedPreferences settings;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (settings.getBoolean("switch_fullscreen_mode", getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        super.onCreate(savedInstanceState);
-
+    protected void doActivity() {
         if (yfa == null) {
             Window window = getWindow();
             window.setStatusBarColor(getColor(R.color.start_back_color));
@@ -63,16 +50,20 @@ public class MainActivity extends AppCompatActivity {
 
             Thread persoCreation = new Thread(new Runnable() {
                 public void run() {
-                    MainActivity.this.runOnUiThread(new Runnable()
-                    {
+                    MainActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            yfa = new Perso(getApplicationContext());
-                            BuildSpellList.getInstance(getApplicationContext()); //s'assure qu'une instance est présente
-                            EchoList.getInstance(getApplicationContext()); //s'assure qu'une instance est présente
-                            loading = true;
+                            try {
+                                yfa = new Perso(getApplicationContext());
+                                BuildSpellList.getInstance(getApplicationContext()); //s'assure qu'une instance est présente
+                                EchoList.getInstance(getApplicationContext()); //s'assure qu'une instance est présente
+                                loading = true;
+                            } catch (Exception e) {
+                                log.fatal(MainActivity.this,"Error during Perso creation",e);
+                            }
                         }
-                });
-            }});
+                    });
+                }
+            });
 
             persoCreation.start();
 
@@ -89,13 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             loadListner.start();
-
         }
     }
 
     private void setLoadCompleteListner() {
         Timer timerRefreshLoading = new Timer();
-        changescreen=false;
+        changescreen = false;
         timerRefreshLoading.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -103,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            changescreen=true;
+                            changescreen = true;
                             LayoutInflater inflater = MainActivity.this.getLayoutInflater();
                             View videoLayout = inflater.inflate(R.layout.full_screen_video_player, null);
                             setContentView(videoLayout);
 
-                            VideoView openning =videoLayout.findViewById(R.id.fullscreen_video);
+                            VideoView openning = videoLayout.findViewById(R.id.fullscreen_video);
                             openning.setBackground(getDrawable(R.drawable.splash_image));
-                            String fileName = "android.resource://"+  getPackageName() + "/raw/yfa_openning";
+                            String fileName = "android.resource://" + getPackageName() + "/raw/yfa_openning";
                             openning.setMediaController(null);
                             openning.setVideoURI(Uri.parse(fileName));
                             openning.setZOrderOnTop(true);
@@ -119,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                             openning.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View arg0, MotionEvent arg1) {
-                                    if(!touched) {
+                                    if (!touched) {
                                         unlockOrient();
                                         touched = true;
                                         buildMainPage();
@@ -146,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         if (campaignShow && switchCampaignBool) {
             campaignVideo.setVisibility(View.VISIBLE);
 
-            String fileName = "android.resource://"+  getPackageName() + "/raw/"+getString(R.string.current_campaign)+"_campaign";
+            String fileName = "android.resource://" + getPackageName() + "/raw/" + getString(R.string.current_campaign) + "_campaign";
             campaignVideo.setMediaController(null);
             campaignVideo.setVideoURI(Uri.parse(fileName));
             campaignVideo.start();
@@ -171,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().show();
             startFragment();
         }
-
-
     }
 
 
@@ -184,8 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onResumeActivity() throws Exception {
         checkOrientStart(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (yfa != null) {
             yfa.refresh();
@@ -197,33 +184,31 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = new MainActivityFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(mainFrameFrag.getId(), fragment,"frag_main");
+        fragmentTransaction.replace(mainFrameFrag.getId(), fragment, "frag_main");
         fragmentTransaction.commit();
     }
 
 
     @Override
-    public void onBackPressed() {
+    protected void onBackPressedActivity() {
         MainActivityFragmentSpellCast fragSpellCast = (MainActivityFragmentSpellCast) getFragmentManager().findFragmentByTag("frag_spell_cast");
-
         if (fragSpellCast != null && fragSpellCast.isVisible()) { // and then you define a method allowBackPressed with the logic to allow back pressed or not
-          fragSpellCast.backToSpell();
+            fragSpellCast.backToSpell();
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroyActivity() {
         System.runFinalization();
         Runtime.getRuntime().gc();
         System.gc();
         finish();
-        super.onDestroy();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelectedActivity(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -241,9 +226,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
+    public void onConfigurationChangedActivity() {
         final Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
         switch (display.getRotation()) {
@@ -285,5 +268,4 @@ public class MainActivity extends AppCompatActivity {
     private void unlockOrient() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
     }
-
 }

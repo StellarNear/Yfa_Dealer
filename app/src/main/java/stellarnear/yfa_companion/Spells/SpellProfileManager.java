@@ -29,43 +29,46 @@ import stellarnear.yfa_companion.ConvertElementView;
 import stellarnear.yfa_companion.ConvertView;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.GlaeTestAlertDialog;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.ResultBuilder;
 import stellarnear.yfa_companion.SliderBuilder;
 import stellarnear.yfa_companion.TestRMAlertDialog;
 import stellarnear.yfa_companion.Tools;
 
-public class SpellProfileManager {
+public class SpellProfileManager extends SelfCustomLog {
     private Activity mA;
     private Context mC;
     private Spell spell;
     private View profile;
     private ViewFlipper panel;
-    private Boolean resultDisplayed =false; //pour aps revenir au panneau central si le sort a ses dégats affiché
+    private Boolean resultDisplayed = false; //pour aps revenir au panneau central si le sort a ses dégats affiché
     private CustomAlertDialog metaPopup;
-    private Tools tools=Tools.getTools();
+    private Tools tools = Tools.getTools();
     private SliderBuilder sliderBuild;
     private OnRefreshEventListener mListener;
-    private String position="info";
+    private String position = "info";
 
-    public SpellProfileManager(Activity mA, Context mC, Spell spell,View profileView){
-        this.mA=mA;
-        this.mC=mC;
-        this.spell=spell;
+    public SpellProfileManager(Activity mA, Context mC, Spell spell, View profileView) {
+        this.mA = mA;
+        this.mC = mC;
+        this.spell = spell;
         profile = profileView;
-        panel = ((ViewFlipper)profile.findViewById(R.id.view_flipper));
+        panel = ((ViewFlipper) profile.findViewById(R.id.view_flipper));
         buildProfileMechanisms();
         panel.setDisplayedChild(1);
     }
 
-    private void buildProfileMechanisms(){
-        if(spell.isFailed() || spell.contactFailed()){
+    private void buildProfileMechanisms() {
+        if (spell.isFailed() || spell.contactFailed()) {
             triggerFail("fail");
-        } else if(spell.getGlaeManager().isFailed()){
+        } else if (spell.getGlaeManager().isFailed()) {
             triggerFail("glae");
-        } else if(!this.position.equalsIgnoreCase("info") && !resultDisplayed){movePanelTo("info");}
+        } else if (!this.position.equalsIgnoreCase("info") && !resultDisplayed) {
+            movePanelTo("info");
+        }
 
-        if(spell.hasPassedRM() || !spell.hasRM()){
+        if (spell.hasPassedRM() || !spell.hasRM()) {
             profile.findViewById(R.id.sr_test_img).setVisibility(View.GONE);
             profile.findViewById(R.id.sr_test_sepa).setVisibility(View.GONE);
         } else {
@@ -77,7 +80,9 @@ public class SpellProfileManager {
                         @Override
                         public void onEvent() {
                             buildProfileMechanisms();
-                            if (mListener != null) { mListener.onEvent();  }
+                            if (mListener != null) {
+                                mListener.onEvent();
+                            }
                         }
                     });
                     testAlert.showAlertDialog();
@@ -86,21 +91,23 @@ public class SpellProfileManager {
         }
 
         //metamagie
-        ((LinearLayout)profile.findViewById(R.id.metamagic)).setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout) profile.findViewById(R.id.metamagic)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(metaPopup==null){makeMetaPopup(spell);}
+                if (metaPopup == null) {
+                    makeMetaPopup(spell);
+                }
                 showMetaPopup();
             }
         });
-        if(spell.isCast()){
-            ((LinearLayout)profile.findViewById(R.id.metamagic)).setEnabled(false);
-            ((TextView)profile.findViewById(R.id.text_meta)).setTextColor(Color.GRAY);
-            ((ImageView)profile.findViewById(R.id.symbol_meta)).getDrawable().mutate().setColorFilter(Color.GRAY,PorterDuff.Mode.SRC_IN);
+        if (spell.isCast()) {
+            ((LinearLayout) profile.findViewById(R.id.metamagic)).setEnabled(false);
+            ((TextView) profile.findViewById(R.id.text_meta)).setTextColor(Color.GRAY);
+            ((ImageView) profile.findViewById(R.id.symbol_meta)).getDrawable().mutate().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         }
 
         //Slider
-        if(sliderBuild==null) {
+        if (sliderBuild == null) {
             sliderBuild = new SliderBuilder(mC, spell);
             sliderBuild.setSlider((SeekBar) profile.findViewById(R.id.slider));
             sliderBuild.setCastEventListener(new SliderBuilder.OnCastEventListener() {
@@ -121,11 +128,11 @@ public class SpellProfileManager {
 
         //Glae test
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        List<String> elems = Arrays.asList("frost","fire","shock","acid");
-        if( spell.getGlaeManager().isTested() || !elems.contains(spell.getDmg_type()) || !settings.getBoolean("glae_switch_tier2", mC.getResources().getBoolean(R.bool.glae_switch_tier2_def))){
-            ((LinearLayout)profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
+        List<String> elems = Arrays.asList("frost", "fire", "shock", "acid");
+        if (spell.getGlaeManager().isTested() || !elems.contains(spell.getDmg_type()) || !settings.getBoolean("glae_switch_tier2", mC.getResources().getBoolean(R.bool.glae_switch_tier2_def))) {
+            ((LinearLayout) profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
         } else {
-            if(spell.getDmg_type().equalsIgnoreCase("shock")){
+            if (spell.getDmg_type().equalsIgnoreCase("shock")) {
                 profile.findViewById(R.id.glae_fail).setVisibility(View.GONE);
                 profile.findViewById(R.id.glae_boost).setVisibility(View.VISIBLE);
             } else {
@@ -133,17 +140,19 @@ public class SpellProfileManager {
                 profile.findViewById(R.id.glae_boost).setVisibility(View.GONE);
             }
 
-            ((LinearLayout)profile.findViewById(R.id.test_glae)).setOnClickListener(new View.OnClickListener() {
+            ((LinearLayout) profile.findViewById(R.id.test_glae)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GlaeTestAlertDialog glaeDialog = new GlaeTestAlertDialog(mA, mC,spell);
+                    GlaeTestAlertDialog glaeDialog = new GlaeTestAlertDialog(mA, mC, spell);
                     glaeDialog.showAlertDialog();
                     glaeDialog.setEndEventListener(new GlaeTestAlertDialog.OnEndEventListener() {
                         @Override
                         public void onEvent() {
                             buildProfileMechanisms();
-                            ((LinearLayout)profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
-                            if(mListener!=null){mListener.onEvent();}
+                            ((LinearLayout) profile.findViewById(R.id.test_glae)).setVisibility(View.GONE);
+                            if (mListener != null) {
+                                mListener.onEvent();
+                            }
                         }
                     });
                 }
@@ -151,20 +160,22 @@ public class SpellProfileManager {
         }
 
         //sort contact
-        if(spell.getContact().equalsIgnoreCase("")){
-            ((LinearLayout)profile.findViewById(R.id.contact)).setVisibility(View.GONE);
+        if (spell.getContact().equalsIgnoreCase("")) {
+            ((LinearLayout) profile.findViewById(R.id.contact)).setVisibility(View.GONE);
         } else {
-            ((LinearLayout)profile.findViewById(R.id.contact)).setOnClickListener(new View.OnClickListener() {
+            ((LinearLayout) profile.findViewById(R.id.contact)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ContactAlertDialog contactDialog = new ContactAlertDialog(mA, mC,spell);
+                    ContactAlertDialog contactDialog = new ContactAlertDialog(mA, mC, spell);
                     contactDialog.showAlertDialog();
                     contactDialog.setRefreshEventListener(new ContactAlertDialog.OnRefreshEventListener() {
                         @Override
                         public void onEvent() {
                             buildProfileMechanisms();
-                            ((LinearLayout)profile.findViewById(R.id.contact)).setVisibility(View.GONE);
-                            if(mListener!=null){mListener.onEvent();}
+                            ((LinearLayout) profile.findViewById(R.id.contact)).setVisibility(View.GONE);
+                            if (mListener != null) {
+                                mListener.onEvent();
+                            }
                         }
                     });
                 }
@@ -172,21 +183,27 @@ public class SpellProfileManager {
         }
 
         // conversion element
-        if(!elems.contains(spell.getDmg_type()) || spell.elementIsConverted() || spell.isCast()){
-            ((ImageView)profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
+        if (!elems.contains(spell.getDmg_type()) || spell.elementIsConverted() || spell.isCast()) {
+            ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
         } else {
             ((ImageView) profile.findViewById(R.id.button_change_element)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ConvertElementView convertElementView = new ConvertElementView(panel, spell, mC, mA);
-                    if(position.equalsIgnoreCase("info")){movePanelTo("elem");}else{movePanelTo("info");}
+                    if (position.equalsIgnoreCase("info")) {
+                        movePanelTo("elem");
+                    } else {
+                        movePanelTo("info");
+                    }
                     convertElementView.setValidationEventListener(new ConvertElementView.OnValidationEventListener() {
                         @Override
                         public void onEvent() {
                             movePanelTo("info");
                             buildProfileMechanisms();
                             ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
-                            if(mListener!=null){mListener.onEvent();}
+                            if (mListener != null) {
+                                mListener.onEvent();
+                            }
                         }
                     });
                 }
@@ -194,53 +211,64 @@ public class SpellProfileManager {
         }
 
         // conversion arcanique
-        if(!spell.getConversion().getArcaneId().equalsIgnoreCase("") || spell.isCast()){
-            ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+        if (!spell.getConversion().getArcaneId().equalsIgnoreCase("") || spell.isCast()) {
+            ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
         } else {
             ((ImageView) profile.findViewById(R.id.button_conversion)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ConvertView convertView = new ConvertView(panel, spell, mC, mA);
-                    if(position.equalsIgnoreCase("info")){movePanelTo("arcane");}else{movePanelTo("info");}
-                    convertView.setValidationEventListener(new ConvertView.OnValidationEventListener() {
-                        @Override
-                        public void onEvent() {
+                    try {
+                        ConvertView convertView = new ConvertView(panel, spell, mC, mA);
+                        if (position.equalsIgnoreCase("info")) {
+                            movePanelTo("arcane");
+                        } else {
                             movePanelTo("info");
-                            buildProfileMechanisms();
-                            ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
-                            if(mListener!=null){mListener.onEvent();}
                         }
-                    });
+                        convertView.setValidationEventListener(new ConvertView.OnValidationEventListener() {
+                            @Override
+                            public void onEvent() {
+                                movePanelTo("info");
+                                buildProfileMechanisms();
+                                ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+                                if (mListener != null) {
+                                    mListener.onEvent();
+                                }
+                            }
+                        });
+                    } catch (Exception e) {
+                        log.err(mC,"Erreur lors de la vue convertion", e);
+                    }
                 }
             });
         }
     }
 
     public void triggerFail(String mode) {
-        ((ImageView)profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
-        ((ImageView)profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
-        ((LinearLayout)profile.findViewById(R.id.fourth_panel)).removeAllViews();
+        ((ImageView) profile.findViewById(R.id.button_change_element)).setVisibility(View.GONE);
+        ((ImageView) profile.findViewById(R.id.button_conversion)).setVisibility(View.GONE);
+        ((LinearLayout) profile.findViewById(R.id.fourth_panel)).removeAllViews();
         TextView txt_view = new TextView(mC);
         txt_view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        String message = mode.equalsIgnoreCase("glae") ?  "Glaedäyes a fait échouer le sort !" : "Le sort a raté..." ;
+        String message = mode.equalsIgnoreCase("glae") ? "Glaedäyes a fait échouer le sort !" : "Le sort a raté...";
         txt_view.setText(message);
         txt_view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-        ((LinearLayout)profile.findViewById(R.id.fourth_panel)).addView(txt_view);
+        ((LinearLayout) profile.findViewById(R.id.fourth_panel)).addView(txt_view);
         sliderBuild.spendCast();
-        resultDisplayed =true;
+        resultDisplayed = true;
         movePanelTo("dmg");
     }
 
     private void movePanelTo(String toPosition) {
-        if(!this.position.equalsIgnoreCase(toPosition)) {
-            Animation in=null;Animation out=null;
-            int indexChild=1;
+        if (!this.position.equalsIgnoreCase(toPosition)) {
+            Animation in = null;
+            Animation out = null;
+            int indexChild = 1;
             switch (this.position) {
                 case "elem":
                     out = AnimationUtils.loadAnimation(mC, R.anim.outtoleft);
                     break;
                 case "info":
-                    if(toPosition.equalsIgnoreCase("elem")){
+                    if (toPosition.equalsIgnoreCase("elem")) {
                         out = AnimationUtils.loadAnimation(mC, R.anim.outtoright);
                     } else {
                         out = AnimationUtils.loadAnimation(mC, R.anim.outtoleft);
@@ -253,23 +281,23 @@ public class SpellProfileManager {
             switch (toPosition) {
                 case "elem":
                     in = AnimationUtils.loadAnimation(mC, R.anim.infromleft);
-                    indexChild=0;
+                    indexChild = 0;
                     break;
                 case "info":
-                    if(this.position.equalsIgnoreCase("elem")){
+                    if (this.position.equalsIgnoreCase("elem")) {
                         in = AnimationUtils.loadAnimation(mC, R.anim.infromright);
                     } else {
                         in = AnimationUtils.loadAnimation(mC, R.anim.infromleft);
                     }
-                    indexChild=1;
+                    indexChild = 1;
                     break;
-                case  "arcane":
+                case "arcane":
                     in = AnimationUtils.loadAnimation(mC, R.anim.infromright);
-                    indexChild=2;
+                    indexChild = 2;
                     break;
                 case "dmg":
                     in = AnimationUtils.loadAnimation(mC, R.anim.infromright);
-                    indexChild=3;
+                    indexChild = 3;
                     break;
             }
             panel.clearAnimation();
@@ -289,7 +317,7 @@ public class SpellProfileManager {
             LinearLayout metaLin = new LinearLayout(mC);
             metaLin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             metaLin.setGravity(Gravity.CENTER);
-            CheckBox check = spell.getCheckboxeForMetaId(mA,mC,meta.getId());
+            CheckBox check = spell.getCheckboxeForMetaId(mA, mC, meta.getId());
 
             check.setTextColor(mC.getColor(R.color.dark_gray));
             ViewGroup parent = (ViewGroup) check.getParent();
@@ -300,7 +328,9 @@ public class SpellProfileManager {
                 @Override
                 public void onEvent() {
                     buildProfileMechanisms();
-                    if(mListener!=null){mListener.onEvent();}
+                    if (mListener != null) {
+                        mListener.onEvent();
+                    }
                 }
             });
             metaLin.addView(check);
@@ -316,7 +346,7 @@ public class SpellProfileManager {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tools.customToast(mC,meta.getDescription(),"center");
+                    tools.customToast(mC, meta.getDescription(), "center");
                 }
             });
 
@@ -332,7 +362,7 @@ public class SpellProfileManager {
         metaPopup.clickToHide(mainView.findViewById(R.id.metamagie_back));
     }
 
-    private void showMetaPopup(){
+    private void showMetaPopup() {
         metaPopup.showAlert();
     }
 

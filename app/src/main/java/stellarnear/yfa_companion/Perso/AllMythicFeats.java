@@ -17,63 +17,68 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_companion.Errors.AllAttributeError;
+
 /**
  * Created by jchatron on 26/12/2017.
  */
-public class AllMythicFeats {
+public class AllMythicFeats extends SelfCustomLog{
     private Context mC;
     private List<MythicFeat> allMythicFeatsList = new ArrayList<>();
-    private Map<String,MythicFeat> mapIdMythicFeat =new HashMap<>();
-    public AllMythicFeats(Context mC)
-    {
-        this.mC = mC;
-        buildFeatsList();
-    }
+    private Map<String, MythicFeat> mapIdMythicFeat = new HashMap<>();
 
-    private void buildFeatsList() {
-        allMythicFeatsList = new ArrayList<>();
-        mapIdMythicFeat =new HashMap<>();
+    public AllMythicFeats(Context mC) throws AllAttributeError {
         try {
-            InputStream is = mC.getAssets().open("mythicfeats.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(is);
-
-            Element element = doc.getDocumentElement();
-            element.normalize();
-
-            NodeList nList = doc.getElementsByTagName("feat");
-
-            for (int i = 0; i < nList.getLength(); i++) {
-
-                Node node = nList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element2 = (Element) node;
-                    MythicFeat feat=new MythicFeat(
-                            readValue("name", element2),
-                            readValue("type", element2),
-                            readValue("descr", element2),
-                            readValue("id", element2),
-                            mC);
-                    allMythicFeatsList.add(feat);
-                    mapIdMythicFeat.put(feat.getId(),feat);
-                }
-            }
-            is.close();
+            this.mC = mC;
+            buildFeatsList();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new AllAttributeError("Error during AllMythicFeats creation", e);
         }
     }
 
-    public List<MythicFeat> getMythicFeatsList(){
+    private void buildFeatsList() throws Exception {
+        allMythicFeatsList = new ArrayList<>();
+        mapIdMythicFeat = new HashMap<>();
+        InputStream is = mC.getAssets().open("mythicfeats.xml");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(is);
+
+        Element element = doc.getDocumentElement();
+        element.normalize();
+
+        NodeList nList = doc.getElementsByTagName("feat");
+
+        for (int i = 0; i < nList.getLength(); i++) {
+
+            Node node = nList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element2 = (Element) node;
+                MythicFeat feat = new MythicFeat(
+                        readValue("name", element2),
+                        readValue("type", element2),
+                        readValue("descr", element2),
+                        readValue("id", element2),
+                        mC);
+                allMythicFeatsList.add(feat);
+                mapIdMythicFeat.put(feat.getId(), feat);
+            }
+        }
+        is.close();
+    }
+
+    public List<MythicFeat> getMythicFeatsList() {
         return allMythicFeatsList;
     }
 
     public MythicFeat getMythicFeat(String featId) {
         MythicFeat selectedFeat;
         try {
-            selectedFeat= mapIdMythicFeat.get(featId);
-        } catch (Exception e){  selectedFeat=null;  }
+            selectedFeat = mapIdMythicFeat.get(featId);
+        } catch (Exception e) {
+            selectedFeat = null;
+            log.warn("Could not retrieve "+featId);
+        }
         return selectedFeat;
     }
 
@@ -82,12 +87,12 @@ public class AllMythicFeats {
             NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
             Node node = nodeList.item(0);
             return node.getNodeValue();
-        } catch (Exception e){
-            return "";
+        } catch (Exception e) {
+            return ""; //some feat don't have ID (only utility feat for example)
         }
     }
 
-    public void reset() {
+    public void reset() throws Exception {
         buildFeatsList();
     }
 }

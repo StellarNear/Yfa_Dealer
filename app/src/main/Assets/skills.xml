@@ -118,6 +118,7 @@
     <skill>
         <name>Vol</name>
         <abilityDependence>ability_dexterite</abilityDependence>
-        <descr>Lorsque le personnage vole (grâce à des ailes ou par magie), il sait le faire avec agilité. Il peut réaliser des manœuvres aériennes complexes ou dangereuses. Cette compétence ne lui donne cependant pas la capacité de voler.</descr>        <id>skill_fly</id>
+        <descr>Lorsque le personnage vole (grâce à des ailes ou par magie), il sait le faire avec agilité. Il peut réaliser des manœuvres aériennes complexes ou dangereuses. Cette compétence ne lui donne cependant pas la capacité de voler.</descr>
+        <id>skill_fly</id>
     </skill>
 </records>

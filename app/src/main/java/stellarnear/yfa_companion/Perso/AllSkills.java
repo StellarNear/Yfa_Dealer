@@ -17,6 +17,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import stellarnear.yfa_companion.Errors.AllAttributeError;
+
 /**
  * Created by jchatron on 10/01/2018.
  */
@@ -24,16 +26,18 @@ public class AllSkills {
     private Context mC;
     private List<Skill> allSkillsList = new ArrayList<>();
     private Map<String,Skill> mapIdSkill=new HashMap<>();
-    public AllSkills(Context mC)
-    {
-        this.mC = mC;
-        buildSkillsList();
+    public AllSkills(Context mC) throws AllAttributeError {
+        try {
+            this.mC = mC;
+            buildSkillsList();
+        } catch (Exception e) {
+            throw new AllAttributeError("Error during AllSkills creation",e);
+        }
     }
 
-    private void buildSkillsList() {
+    private void buildSkillsList() throws Exception {
         allSkillsList = new ArrayList<>();
         mapIdSkill=new HashMap<>();
-        try {
             InputStream is = mC.getAssets().open("skills.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -60,9 +64,6 @@ public class AllSkills {
                 }
             }
             is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public List<Skill> getSkillsList(){
@@ -83,7 +84,7 @@ public class AllSkills {
             Node node = nodeList.item(0);
             return node.getNodeValue();
         } catch (Exception e){
-            return "";
+            return ""; //certain skil don't have all atribute for example
         }
     }
 
@@ -93,7 +94,7 @@ public class AllSkills {
         }
     }
 
-    public void reset() {
+    public void reset() throws Exception {
         buildSkillsList();
     }
 }

@@ -17,17 +17,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.Perso;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.Tools;
 
-public class BuildMetaList {
+public class BuildMetaList extends SelfCustomLog {
 
     private static BuildMetaList instance = null;
     private MetaList metaList;
-    private Tools tools=Tools.getTools();
+    private Tools tools = Tools.getTools();
     private Perso yfa = MainActivity.yfa;
 
-    public static BuildMetaList getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
-        if (instance==null){
+    public static BuildMetaList getInstance(Context mC) throws Exception {  //pour eviter de relire le xml à chaque fois
+        if (instance == null) {
             instance = new BuildMetaList(mC);
         }
         return instance;
@@ -41,46 +42,42 @@ public class BuildMetaList {
         instance = null;
     }
 
-    private BuildMetaList(Context mC){
-        metaList=new MetaList();
+    private BuildMetaList(Context mC) throws Exception {
+        metaList = new MetaList();
         //construire la liste complete regarder xml parser
-        try {
-            InputStream is = mC.getAssets().open("metamagic.xml");
+        InputStream is = mC.getAssets().open("metamagic.xml");
 
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(is);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(is);
 
-            Element element=doc.getDocumentElement();
-            element.normalize();
+        Element element = doc.getDocumentElement();
+        element.normalize();
 
-            NodeList nList = doc.getElementsByTagName("metamagic");
+        NodeList nList = doc.getElementsByTagName("metamagic");
 
-            for (int i=0; i<nList.getLength(); i++) {
+        for (int i = 0; i < nList.getLength(); i++) {
 
-                Node node = nList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element2 = (Element) node;
-                    metaList.add(new Metamagic(getValue("id",element2),
-                            getValue("name",element2),
-                            getValue("descr",element2),
-                            tools.toInt(getValue("uprank",element2)),
-                            tools.toBool(getValue("multicast",element2))
-                    ));
-                }
+            Node node = nList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element2 = (Element) node;
+                metaList.add(new Metamagic(getValue("id", element2),
+                        getValue("name", element2),
+                        getValue("descr", element2),
+                        tools.toInt(getValue("uprank", element2)),
+                        tools.toBool(getValue("multicast", element2))
+                ));
             }
-            removeUnavailableMetas(mC);
-            testForGeneralReduction();
-        } catch (Exception e) {e.printStackTrace();}
-
-
+        }
+        removeUnavailableMetas(mC);
+        testForGeneralReduction();
     }
 
     private void testForGeneralReduction() {
-        boolean featActive = yfa.featIsActive("feat_improved_metamagic");
-        if(featActive) {
+        boolean featActive = yfa!=null && yfa.featIsActive("feat_improved_metamagic");
+        if (featActive) {
             for (Metamagic metamagic : metaList.asList()) {
-                if (metamagic.getUprank() > 1 ) {
+                if (metamagic.getUprank() > 1) {
                     metamagic.reducCost(1);
                 }
             }
@@ -89,15 +86,15 @@ public class BuildMetaList {
 
     private void removeUnavailableMetas(Context mC) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        MetaList allowedList=new MetaList();
-        for(Metamagic meta : metaList.asList()) {
+        MetaList allowedList = new MetaList();
+        for (Metamagic meta : metaList.asList()) {
             int defResId = mC.getResources().getIdentifier(meta.getId().toLowerCase() + "_switch_def", "bool", mC.getPackageName());
             boolean active = settings.getBoolean(meta.getId().toLowerCase() + "_switch", mC.getResources().getBoolean(defResId));
             if (active) {
                 allowedList.add(meta);
             }
         }
-        metaList=allowedList;
+        metaList = allowedList;
     }
 
     private String getValue(String tag, Element element) {
@@ -105,8 +102,8 @@ public class BuildMetaList {
             NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
             Node node = nodeList.item(0);
             return node.getNodeValue();
-        } catch (Exception e){
-            return "";
+        } catch (Exception e) {
+            return ""; //all meta dont have all field (for example multicast etc)
         }
     }
 
@@ -114,13 +111,12 @@ public class BuildMetaList {
         MetaList metaList = new MetaList(this.metaList); //pour que chaque sort ai sa version de la métalist
         try {
             Buff parangon = yfa.getAllBuffs().getBuffByID("parangon_tempfeat");
-            if(parangon!=null && parangon.isActive() && parangon.getTempFeat().equalsIgnoreCase("tempfeat_magic_echo")){
-                metaList.add(0,new Metamagic("meta_echo","Écho magique","Peut le lancer le sort une seconde fois dans la même journée. Aucun effet permettant au personnage de préparer à nouveau ou de relancer un sort n'est utilisable avec Écho magique. La seconde incantation ne nécessite pas de dépenser un emplacement de sort utilisable. Un écho magique utilise un emplacement de sort de trois niveaux de plus que le niveau réel du sort.",3,true));
+            if (parangon != null && parangon.isActive() && parangon.getTempFeat().equalsIgnoreCase("tempfeat_magic_echo")) {
+                metaList.add(0, new Metamagic("meta_echo", "Écho magique", "Peut le lancer le sort une seconde fois dans la même journée. Aucun effet permettant au personnage de préparer à nouveau ou de relancer un sort n'est utilisable avec Écho magique. La seconde incantation ne nécessite pas de dépenser un emplacement de sort utilisable. Un écho magique utilise un emplacement de sort de trois niveaux de plus que le niveau réel du sort.", 3, true));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Could not getMetaList",e);
         }
-
         return metaList;
     }
 }

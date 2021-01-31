@@ -19,7 +19,7 @@ import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CustomAlertDialog;
 import stellarnear.yfa_companion.R;
 
-public class DisplayEquipmentManager {
+public class DisplayEquipmentManager extends SelfCustomLog {
     private Activity mA;
     private boolean editable;
     private Context mC;
@@ -113,7 +113,9 @@ public class DisplayEquipmentManager {
             try {
                 String nameUp = entry.getKey().contains("skill_")? yfa.getAllSkills().getSkill(entry.getKey()).getName(): yfa.getAllAbilities().getAbi(entry.getKey()).getName();
                 line+="\n+"+entry.getValue()+" "+nameUp;
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                log.warn("Error while makeStringLineFromMap "+entry.getKey()+":"+entry.getValue(),e);
+            }
         }
         return line;
     }

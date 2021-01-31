@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
+import stellarnear.yfa_companion.Log.CustomLog;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Spells.BuildMetaList;
 import stellarnear.yfa_companion.Spells.MetaList;
@@ -48,9 +49,11 @@ public class ConvertView extends AppCompatActivity {
     private Tools tools=Tools.getTools();
     private Calculation calculation=new Calculation();
 
+    private CustomLog log = new CustomLog(ConvertView.class);
+
     private OnValidationEventListener mListener;
 
-    public ConvertView(View mainView, Spell spell, Context mC,Activity mA) {
+    public ConvertView(View mainView, Spell spell, Context mC,Activity mA) throws Exception {
         this.spell=spell;
         this.mC=mC;
         this.mA=mA;
@@ -119,7 +122,9 @@ public class ConvertView extends AppCompatActivity {
         for(int i=0;i<=6;i++){
             try{
                 if (yfa.getAllResources().checkConvertibleAvailable(i)) {max_tier=i;}
-            }catch (Exception e){ }
+            }catch (Exception e){
+                log.warn("Could not check available convertible for rank : "+i);
+            }
         }
         if (max_tier==0) {return;}
 

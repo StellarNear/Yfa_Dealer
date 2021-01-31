@@ -11,42 +11,48 @@ import stellarnear.yfa_companion.R;
  * Created by jchatron on 04/01/2018.
  */
 
-public class Resource {
+public class Resource extends SelfCustomLog {
     private String name;
     private String shortname;
     private String id;
     private int max = 0;
     private int current;
-    private int shield=0;//pour les hps
+    private int shield = 0;//pour les hps
     private boolean testable;
     private boolean hide;
-    private boolean fromCapacity=false;
-    private boolean fromSpell=false;
-    private boolean infinite=false;
-    private Capacity cap=null;
+    private boolean fromCapacity = false;
+    private boolean fromSpell = false;
+    private boolean infinite = false;
+    private Capacity cap = null;
     private int imgId;
     private SharedPreferences settings;
-    private String capaDescr="";
+    private String capaDescr = "";
     private Context mC;
 
     public Resource(String name, String shortname, Boolean testable, Boolean hide, String id, Context mC) {
-        this.name = name;
-        this.shortname = shortname;
-        if(shortname.equalsIgnoreCase("")){this.shortname=name;}
-        this.testable = testable;
-        this.hide = hide;
-        this.id = id;
-        this.settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        int imgId = mC.getResources().getIdentifier(id, "drawable", mC.getPackageName());
-        int imgIdCapa =mC.getResources().getIdentifier(id.replace("resource_","capacity_"), "drawable", mC.getPackageName()); // pour les resoruces issue de capa
-        if (imgId != 0) {
-            this.imgId =imgId;
-        } else if( imgIdCapa!= 0) {
-            this.imgId = imgIdCapa;
-        } else {
-            this.imgId = 0;
+        try {
+            this.name = name;
+            this.shortname = shortname;
+            if (shortname.equalsIgnoreCase("")) {
+                this.shortname = name;
+            }
+            this.testable = testable;
+            this.hide = hide;
+            this.id = id;
+            this.settings = PreferenceManager.getDefaultSharedPreferences(mC);
+            int imgId = mC.getResources().getIdentifier(id, "drawable", mC.getPackageName());
+            int imgIdCapa = mC.getResources().getIdentifier(id.replace("resource_", "capacity_"), "drawable", mC.getPackageName()); // pour les resoruces issue de capa
+            if (imgId != 0) {
+                this.imgId = imgId;
+            } else if (imgIdCapa != 0) {
+                this.imgId = imgIdCapa;
+            } else {
+                this.imgId = 0;
+            }
+            this.mC = mC;
+        } catch (Exception e) {
+            log.err("Error on Resource init : " + this.name, e);
         }
-        this.mC=mC;
     }
 
     public String getName() {
@@ -59,28 +65,31 @@ public class Resource {
     }
 
     public void setMax(int max) {
-        if(this.id.equalsIgnoreCase("resource_hp")&&this.max !=0 && max>this.max){
-            this.current+=max-this.max;
+        if (this.id.equalsIgnoreCase("resource_hp") && this.max != 0 && max > this.max) {
+            this.current += max - this.max;
             saveCurrentToSettings();
         }
 
         this.max = max;
-        if(this.current>this.max){this.current=this.max;saveCurrentToSettings();}
+        if (this.current > this.max) {
+            this.current = this.max;
+            saveCurrentToSettings();
+        }
     }
 
-    public void setFromCapacity(Capacity cap){
-        this.fromCapacity=true;
-        this.cap=cap;
-        this.capaDescr=cap.getDescr();
-        if(cap.isInfinite()){
-            this.infinite=true;
+    public void setFromCapacity(Capacity cap) {
+        this.fromCapacity = true;
+        this.cap = cap;
+        this.capaDescr = cap.getDescr();
+        if (cap.isInfinite()) {
+            this.infinite = true;
         } else {
             setMax(cap.getDailyUse());
         }
     }
 
-    public void refreshFromCapacity(){
-        if(!cap.isInfinite()){
+    public void refreshFromCapacity() {
+        if (!cap.isInfinite()) {
             setMax(cap.getDailyUse());
         }
     }
@@ -90,7 +99,7 @@ public class Resource {
     }
 
     public void setFromSpell() {
-        this.fromSpell=true;
+        this.fromSpell = true;
     }
 
     public boolean isSpellResource() {
@@ -98,9 +107,9 @@ public class Resource {
     }
 
     public String getCapaDescr() {
-        String res=capaDescr;
-        if(this.cap.getValue()>0){
-            res+="\n\nValeur : "+this.cap.getValue();
+        String res = capaDescr;
+        if (this.cap.getValue() > 0) {
+            res += "\n\nValeur : " + this.cap.getValue();
         }
         return res;
     }
@@ -125,7 +134,7 @@ public class Resource {
             } else {
                 this.shield -= cost;
             }
-        } else{
+        } else {
             if (this.current - cost <= 0) {
                 this.current = 0;
             } else {
@@ -135,31 +144,31 @@ public class Resource {
         saveCurrentToSettings();
     }
 
-    public void earn(Integer gain){
-        if(this.current+gain >= this.max){
-            this.current=this.max;
+    public void earn(Integer gain) {
+        if (this.current + gain >= this.max) {
+            this.current = this.max;
         } else {
-            this.current+=gain;
+            this.current += gain;
         }
         saveCurrentToSettings();
     }
 
-    public void shield(int amount){
-        if (this.id.equalsIgnoreCase("resource_hp")){
-            this.shield+=amount;
+    public void shield(int amount) {
+        if (this.id.equalsIgnoreCase("resource_hp")) {
+            this.shield += amount;
         }
     }
 
-    public int getShield(){
+    public int getShield() {
         int val = 0;
-        if (this.id.equalsIgnoreCase("resource_hp")){
-            val=this.shield;
+        if (this.id.equalsIgnoreCase("resource_hp")) {
+            val = this.shield;
         }
         return val;
     }
 
     public void resetCurrent() {
-        if(!this.id.equalsIgnoreCase("resource_hp")){
+        if (!this.id.equalsIgnoreCase("resource_hp")) {
             this.current = this.max;
         }
         saveCurrentToSettings();
@@ -201,13 +210,13 @@ public class Resource {
     }
 
     public void setCurrent(int val) {
-        this.current=val;
+        this.current = val;
         saveCurrentToSettings();
     }
 
     public void fullHeal() {
         if (this.id.equalsIgnoreCase("resource_hp")) {
-            this.current=this.max;
+            this.current = this.max;
             saveCurrentToSettings();
         }
     }

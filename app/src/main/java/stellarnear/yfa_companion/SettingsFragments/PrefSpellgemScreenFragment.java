@@ -42,7 +42,7 @@ public class PrefSpellgemScreenFragment {
         this.mC = mC;
     }
 
-    private void createSpellgemPopup() {
+    private void createSpellgemPopup() throws Exception {
         LayoutInflater inflater = LayoutInflater.from(mC);
         mainView = inflater.inflate(R.layout.custom_spellgem, null);
 
@@ -85,7 +85,7 @@ public class PrefSpellgemScreenFragment {
     }
 
 
-    private void buildAllTierCards() {
+    private void buildAllTierCards() throws Exception {
         LinearLayout mainLin = mainView.findViewById(R.id.custom_mainlin);
         mainLin.removeAllViews();
         allTiers=new HashSet<>();
@@ -137,7 +137,7 @@ public class PrefSpellgemScreenFragment {
         }
     }
 
-    public void showSpellgem() {
+    public void showSpellgem() throws Exception {
         createSpellgemPopup();
         this.spellgemPopup.showAlert();
         this.spellgemPopup.getConfirmButton().setVisibility(View.GONE); //on l'afiche que si on a pick tout les rank

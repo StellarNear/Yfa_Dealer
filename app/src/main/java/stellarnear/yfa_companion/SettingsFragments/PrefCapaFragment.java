@@ -22,7 +22,7 @@ public class PrefCapaFragment {
     public void addCapaList(PreferenceCategory sorc) {
         for (Capacity capacity : yfa.getAllCapacities().getAllCapacitiesList()) {
             SwitchPreference switch_feat = new SwitchPreference(mC);
-            switch_feat.setKey("switch_" + capacity.getId());
+            switch_feat.setKey("switch_" + (capacity.getId().equalsIgnoreCase("")?capacity.getName():capacity.getId()));
             switch_feat.setTitle(capacity.getName());
             String descr="";
             if(capacity.getDailyUse()!=0){

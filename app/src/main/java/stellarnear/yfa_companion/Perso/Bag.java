@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ import stellarnear.yfa_companion.TinyDB;
 import stellarnear.yfa_companion.Tools;
 
 
-public class Bag {
+public class Bag extends SelfCustomLog {
     private List<Equipment> listBag = new ArrayList<>();
     private List<String> listTags = new ArrayList<>();
     private SharedPreferences settings;
@@ -44,14 +43,13 @@ public class Bag {
     private Tools tools=Tools.getTools();
     private TinyDB tinyDB;
 
-    public Bag(Context mC){
+    public Bag(Context mC) throws Exception {
         this.mC = mC;
         settings = PreferenceManager.getDefaultSharedPreferences(mC);
         try {
             refreshBag();
         } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("Load_BAG","Error loading bag"+e.getMessage());
+            log.err("Error loading Bag",e);
             reset();
         }
     }
@@ -60,7 +58,7 @@ public class Bag {
         tinyDB.putListEquipments("localSaveListBag", listBag);
     }  //on save avec le pjID pour avoir une database differente pour halda
 
-    private void refreshBag(){
+    private void refreshBag() throws Exception {
         tinyDB = new TinyDB(mC);
         List<Equipment> listDB = tinyDB.getListEquipments("localSaveListBag"); //on save avec le pjID pour avoir une database differente pour halda
         if (listDB.size() == 0) {
@@ -74,7 +72,7 @@ public class Bag {
 
 
 
-    private void buildBag() {
+    private void buildBag() throws Exception {
         listBag = new ArrayList<>();
         listTags = new ArrayList<>();
         String rawToParse = readXMLBag();
@@ -87,13 +85,13 @@ public class Bag {
                 descr = lineTrim.substring(lineTrim.indexOf("(") + 1, lineTrim.indexOf(")"));
                 indexFirstKeyDescr = lineTrim.indexOf("(");
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error while parsing description for "+line);
             }
             try {
                 value = lineTrim.substring(lineTrim.indexOf("[") + 1, lineTrim.indexOf("]"));
                 indexFirstKeyVal = lineTrim.indexOf("[");
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error while parsing value for "+line);
             }
 
             try {
@@ -105,7 +103,7 @@ public class Bag {
                 }
                 indexFirstKeyTag = lineTrim.indexOf("{");
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Error while parsing tag for "+line);
             }
 
             int indexFirstKey = Collections.min(Arrays.asList(indexFirstKeyDescr, indexFirstKeyVal, indexFirstKeyTag));
@@ -120,9 +118,8 @@ public class Bag {
         }
     }
 
-    private String readXMLBag() {
+    private String readXMLBag() throws Exception {
         String rawBagXML = "";
-        try {
             InputStream is = mC.getAssets().open("equipment.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -131,9 +128,6 @@ public class Bag {
             element.normalize();
             rawBagXML = doc.getElementsByTagName("bag").item(0).getFirstChild().getNodeValue();
             is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return rawBagXML;
     }
 
@@ -154,7 +148,7 @@ public class Bag {
         try {
             money_def_val = mC.getResources().getInteger(money_defID);
         } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
+            log.warn("Could not find money for ID "+money_defID);
         }
         long money = tools.toLong(settings.getString(key,String.valueOf(money_def_val)));
         String moneyTxt=getAppedix(money);
@@ -220,7 +214,7 @@ public class Bag {
                 po = 10 * tools.toInt(numberTxt.trim().replace(" ",""));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           log.warn("Error while converting gold",e);
         }
         return po;
     }
@@ -247,7 +241,7 @@ public class Bag {
         saveLocalBag();
     }
 
-    public void showBag(Activity mA,Boolean removable){
+    public void showBag(Activity mA,Boolean removable) throws Exception {
         refreshBag();
         this.mA=mA;
         this.removable=removable;
@@ -325,12 +319,12 @@ public class Bag {
         });
     }
 
-    public void reset() {
+    public void reset() throws Exception {
         buildBag();
         saveLocalBag();
     }
 
-    public void loadFromSave() {
+    public void loadFromSave() throws Exception {
         refreshBag();
     }
 }

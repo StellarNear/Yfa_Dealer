@@ -5,12 +5,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
@@ -27,22 +24,14 @@ import stellarnear.yfa_companion.Tools;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragmentSkill extends Fragment {
+public class MainActivityFragmentSkill extends CustomFragment {
     private Perso yfa= MainActivity.yfa;
     private LinearLayout linearSkillScroll;
     private View returnFragView;
     private Tools tools=Tools.getTools();
-    public MainActivityFragmentSkill() {
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (container != null) {
-            container.removeAllViews();
-        }
-
+    public View returnFragView() {
         returnFragView = inflater.inflate(R.layout.fragment_main_skill, container, false);
 
         linearSkillScroll = returnFragView.findViewById(R.id.skillscrollLayout);
@@ -68,8 +57,6 @@ public class MainActivityFragmentSkill extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
-
         return returnFragView;
     }
 
@@ -93,7 +80,7 @@ public class MainActivityFragmentSkill extends Fragment {
         try {
             imgId = getResources().getIdentifier(skill.getId(), "drawable", getContext().getPackageName());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("No image for : "+skill.getId());
         }
         icon.setImageDrawable(getContext().getDrawable(imgId));
         tools.resize(icon,(int) (getResources().getDimensionPixelSize(R.dimen.icon_skills_list_height) * 0.8));

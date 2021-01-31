@@ -1,14 +1,14 @@
 package stellarnear.yfa_companion;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.Stats.Stat;
 
-public class HallOfFame {
+public class HallOfFame extends SelfCustomLog {
     private List<FameEntry> hallOfFameList = new ArrayList<>();
     private TinyDB tinyDB;
 
@@ -17,8 +17,7 @@ public class HallOfFame {
         try {
             refreshAllOfFame();
         } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("Load_HALL","Error loading hall of fame"+e.getMessage());
+            log.err(mC,"Erreur durant le chargement du HallOfFame",e);
             reset();
         }
     }

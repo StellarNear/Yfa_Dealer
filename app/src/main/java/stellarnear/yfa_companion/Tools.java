@@ -20,11 +20,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
+
 /**
  * Created by jchatron on 16/02/2018.
  */
 
-public class Tools {
+public class Tools extends SelfCustomLog {
 
     private static Tools instance;
 
@@ -42,6 +44,7 @@ public class Tools {
         try {
             value = Integer.parseInt(key);
         } catch (Exception e) {
+            //some value are tested and if abscent we return default value
         }
         return value;
     }
@@ -59,6 +62,7 @@ public class Tools {
         try {
             value = Long.parseLong(key);
         } catch (Exception e) {
+            //some value are tested and if abscent we return default value
         }
         return value;
     }
@@ -68,6 +72,18 @@ public class Tools {
         try {
             value = new BigInteger(key);
         } catch (Exception e) {
+            //some value are tested and if abscent we return default value
+        }
+        return value;
+    }
+
+    public Double toDouble(String key) {
+        Double value;
+        try {
+            value = Double.parseDouble(key);
+        } catch (Exception e){
+            value=0.0;
+            //some value are tested and if abscent we return default value
         }
         return value;
     }
@@ -77,6 +93,7 @@ public class Tools {
         try {
             value = Boolean.valueOf(key);
         } catch (Exception e) {
+            //some value are tested and if abscent we return default value
         }
         return value;
     }
@@ -128,16 +145,5 @@ public class Tools {
         });
         video.start();
         customVideo.showAlert();
-    }
-
-
-    public Double toDouble(String key) {
-        Double value;
-        try {
-            value = Double.parseDouble(key);
-        } catch (Exception e){
-            value=0.0;
-        }
-        return value;
     }
 }

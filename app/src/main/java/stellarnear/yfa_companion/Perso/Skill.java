@@ -10,7 +10,7 @@ import stellarnear.yfa_companion.Tools;
  * Created by jchatron on 10/01/2018.
  */
 
-public class Skill {
+public class Skill extends SelfCustomLog {
     private String name;
     private String abilityDependence;
     private String descr;
@@ -18,15 +18,19 @@ public class Skill {
     private int rank;
     private int bonus;
     private Context mC;
-    private Tools tools=Tools.getTools();
+    private Tools tools = Tools.getTools();
 
-    public Skill(String name, String abilityDependence, String descr, String id, Context mC){
-        this.name=name;
-        this.abilityDependence = abilityDependence;
-        this.descr=descr;
-        this.id=id;
-        this.mC=mC;
-        refreshVals();
+    public Skill(String name, String abilityDependence, String descr, String id, Context mC) {
+        try {
+            this.name = name;
+            this.abilityDependence = abilityDependence;
+            this.descr = descr;
+            this.id = id;
+            this.mC = mC;
+            refreshVals();
+        } catch (Exception e) {
+            log.err("Error on Skill init : " + this.name, e);
+        }
     }
 
     public String getName() {
@@ -50,7 +54,6 @@ public class Skill {
     }
 
 
-
     public String getAbilityDependence() {
         return this.abilityDependence;
     }
@@ -61,32 +64,36 @@ public class Skill {
     }
 
     private void refreshRank() {
-        int valTemp=0;
+        int valTemp = 0;
         try {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-            int valDefId = mC.getResources().getIdentifier(this.id+"_rankDEF", "integer", mC.getPackageName());
+            int valDefId = mC.getResources().getIdentifier(this.id + "_rankDEF", "integer", mC.getPackageName());
             int valDef = mC.getResources().getInteger(valDefId);
-            valTemp = tools.toInt(settings.getString(this.id+"_rank", String.valueOf(valDef)));
-        } catch ( Exception e) {}
+            valTemp = tools.toInt(settings.getString(this.id + "_rank", String.valueOf(valDef)));
+        } catch (Exception e) {
+            log.warn("Could not find val def for " + this.id);
+        }
         this.rank = valTemp;
     }
 
-    public int getRank(){
+    public int getRank() {
         return this.rank;
     }
 
     private void refreshBonus() {
-        int bonusTemp=0;
+        int bonusTemp = 0;
         try {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-            int bonusDefId = mC.getResources().getIdentifier(this.id+"_bonusDEF", "integer", mC.getPackageName());
+            int bonusDefId = mC.getResources().getIdentifier(this.id + "_bonusDEF", "integer", mC.getPackageName());
             int bonusDef = mC.getResources().getInteger(bonusDefId);
-            bonusTemp = tools.toInt(settings.getString(this.id+"_bonus", String.valueOf(bonusDef)));
-        } catch ( Exception e) {}
-        this.bonus= bonusTemp;
+            bonusTemp = tools.toInt(settings.getString(this.id + "_bonus", String.valueOf(bonusDef)));
+        } catch (Exception e) {
+            log.warn("Could not find bonus def for " + this.id);
+        }
+        this.bonus = bonusTemp;
     }
 
-    public int getBonus(){
+    public int getBonus() {
         return this.bonus;
     }
 }

@@ -9,10 +9,11 @@ import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.EditTextPreference;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Perso.Resource;
+import stellarnear.yfa_companion.Perso.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.SpellsRanksManager;
 import stellarnear.yfa_companion.Tools;
 
-public class PrefSpellRankFragment {
+public class PrefSpellRankFragment extends SelfCustomLog {
     private Perso yfa = MainActivity.yfa;
     private Activity mA;
     private Context mC;
@@ -27,13 +28,13 @@ public class PrefSpellRankFragment {
     }
 
 
-    public void addSpellRanks(PreferenceCategory spell, PreferenceCategory spellConv) {
+    public void addSpellRanks(PreferenceCategory spell, PreferenceCategory spellConv) throws Exception {
         this.spell=spell;
         this.spellConv=spellConv;
         refreshList();
     }
 
-    private void refreshList() {
+    private void refreshList() throws Exception {
         rankManager.refreshRanks();
         spell.removeAll();
         spellConv.removeAll();
@@ -62,12 +63,12 @@ public class PrefSpellRankFragment {
             int defId = mC.getResources().getIdentifier(key.toLowerCase() + "_def", "integer", mC.getPackageName());
             val=tools.toInt(String.valueOf(mC.getResources().getInteger(defId)));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Could not find resource def for "+key);
         }
         return val;
     }
 
-    public void refresh() {
+    public void refresh() throws Exception {
         if(spell!=null){refreshList();}
     }
 }

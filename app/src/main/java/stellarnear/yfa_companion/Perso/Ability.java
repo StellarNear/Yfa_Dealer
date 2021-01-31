@@ -10,7 +10,7 @@ import stellarnear.yfa_companion.R;
  * Created by jchatron on 04/01/2018.
  */
 
-public class Ability {
+public class Ability extends SelfCustomLog {
     private String name;
     private String type;
     private String descr;
@@ -21,13 +21,15 @@ public class Ability {
     private int value=0;
     private boolean testable;
     private boolean focusable;
+    private boolean calculated;
 
-    public Ability(String name, String shortname, String type, String descr,Boolean testable,Boolean focusable, String id, Context mC) {
+    public Ability(String name, String shortname, String type, String descr, Boolean testable, Boolean focusable,Boolean calculated, String id, Context mC) {
         this.name = name;
         this.type = type;
         this.descr = descr;
         this.testable=testable;
         this.focusable=focusable;
+        this.calculated=calculated;
         this.id = id;
         this.shortname = shortname;
         this.mC = mC;
@@ -36,7 +38,7 @@ public class Ability {
             this.img = mC.getDrawable(imgId);
         } catch (Exception e) {
             this.img = mC.getDrawable(R.drawable.mire_test);
-            e.printStackTrace();
+            log.warn("No image resource for Ability : "+this.name);
         }
     }
 
@@ -101,5 +103,8 @@ public class Ability {
         return this.focusable;
     } //c'est pour les jet à+10 et 20 en réussite passive quand les test peuvent etre fait au calme
 
+    public boolean isCalculated() {
+        return calculated;
+    }
 }
 

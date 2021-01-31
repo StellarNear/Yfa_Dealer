@@ -9,13 +9,11 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -40,7 +38,7 @@ import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.Targets;
 import stellarnear.yfa_companion.Tools;
 
-public class MainActivityFragmentSpellFree extends Fragment {
+public class MainActivityFragmentSpellFree extends CustomFragment {
     private SpellList selectedSpells=new SpellList();
     private Targets targets;
     private Perso yfa=MainActivity.yfa;
@@ -48,17 +46,8 @@ public class MainActivityFragmentSpellFree extends Fragment {
     private SpellList listAllSpell=null;
     private Tools tools=Tools.getTools();
 
-    public MainActivityFragmentSpellFree() {
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (container != null) {
-            container.removeAllViews();
-        }
-
+    public View returnFragView() throws Exception {
         returnFragView= inflater.inflate(R.layout.fragment_main_cast_free, container, false);
         targets = Targets.getInstance();
 
@@ -113,7 +102,7 @@ public class MainActivityFragmentSpellFree extends Fragment {
     }
 
 
-    private void buildPage1() {
+    private void buildPage1() throws Exception {
 
         listAllSpell= BuildFreeSpellList.getInstance(getContext()).getSpellList();
 

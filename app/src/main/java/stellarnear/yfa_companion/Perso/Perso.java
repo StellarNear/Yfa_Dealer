@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import stellarnear.yfa_companion.Calculation;
+import stellarnear.yfa_companion.Errors.PersoError;
 import stellarnear.yfa_companion.HallOfFame;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
@@ -22,7 +23,7 @@ import stellarnear.yfa_companion.Tools;
  * Created by jchatron on 26/12/2017.
  */
 
-public class Perso {
+public class Perso extends SelfCustomLog {
 
     private Inventory inventory;
     private AllResources allResources;
@@ -37,29 +38,32 @@ public class Perso {
     private AllMythicCapacities allMythicCapacities;
     private AllBuffs allBuffs;
 
-    private Tools tools=Tools.getTools();
+    private Tools tools = Tools.getTools();
     private Context mC;
     private SharedPreferences prefs;
 
-    public Perso(Context mC) {
-        this.mC=mC;
-
-        this.prefs= PreferenceManager.getDefaultSharedPreferences(mC);
-        inventory = new Inventory(mC);
-        stats = new Stats(mC);
-        hallOfFame=new HallOfFame(mC);
-        allFeats = new AllFeats(mC);
-        allCapacities = new AllCapacities(mC);
-        allMythicFeats = new AllMythicFeats(mC);
-        allMythicCapacities = new AllMythicCapacities(mC);
-        allSkills = new AllSkills(mC);
-        allAbilities = new AllAbilities(mC,inventory);
-        computeCapacities(); // on a besoin de skill et abi pour les usages et valeur des capas
-        allBuffs = new AllBuffs(mC,allCapacities);
-        allResources = new AllResources(mC,allAbilities,allCapacities);
+    public Perso(Context mC) throws PersoError {
+        try {
+            this.mC = mC;
+            this.prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+            inventory = new Inventory(mC);
+            stats = new Stats(mC);
+            hallOfFame = new HallOfFame(mC);
+            allFeats = new AllFeats(mC);
+            allCapacities = new AllCapacities(mC);
+            allMythicFeats = new AllMythicFeats(mC);
+            allMythicCapacities = new AllMythicCapacities(mC);
+            allSkills = new AllSkills(mC);
+            allAbilities = new AllAbilities(mC, inventory);
+            computeCapacities(); // on a besoin de skill et abi pour les usages et valeur des capas
+            allBuffs = new AllBuffs(mC, allCapacities);
+            allResources = new AllResources(mC, allAbilities, allCapacities);
+        } catch (Exception e) {
+            throw new PersoError("Error on Perso creation", e);
+        }
     }
 
-    public void refresh() {
+    public void refresh() throws Exception {
         allSkills.refreshAllVals();
         allAbilities.refreshAllAbilities(); //abi d'abord car resource depend de abi mais apres allskills car en depends
         computeCapacities(); //capa avant resource car certaine resource sont issue de capa apres abilities car on en a besoin
@@ -91,11 +95,11 @@ public class Perso {
         return allBuffs;
     }
 
-    public Integer getResourceValue(String resId){
+    public Integer getResourceValue(String resId) {
         Resource res = allResources.getResource(resId);
-        Integer value=0;
-        if(res!=null){
-            value=res.getCurrent();
+        Integer value = 0;
+        if (res != null) {
+            value = res.getCurrent();
         }
         return value;
     }
@@ -107,8 +111,8 @@ public class Perso {
     // calculs
 
     private void computeCapacities() {
-        for(Capacity cap : allCapacities.getAllCapacitiesList()){
-            if(!cap.isInfinite()){
+        for (Capacity cap : allCapacities.getAllCapacitiesList()) {
+            if (!cap.isInfinite()) {
                 calculDailyUsage(cap);
             }
             calculValue(cap);
@@ -116,37 +120,37 @@ public class Perso {
     }
 
     private void calculDailyUsage(Capacity cap) {
-        if(!cap.getDailyUseString().equalsIgnoreCase("")){
-            int dailyUse=0;
-            if(tools.toInt(cap.getDailyUseString())==0){
+        if (!cap.getDailyUseString().equalsIgnoreCase("")) {
+            int dailyUse = 0;
+            if (tools.toInt(cap.getDailyUseString()) == 0) {
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-                int mainPJlvl=getAbilityScore("ability_lvl");
-                switch (cap.getDailyUseString()){
+                int mainPJlvl = getAbilityScore("ability_lvl");
+                switch (cap.getDailyUseString()) {
                     case "ability_charisme":
-                        dailyUse =getAbilityMod("ability_charisme");
+                        dailyUse = getAbilityMod("ability_charisme");
                         break;
                     case "3+ability_charisme":
-                        dailyUse =3+getAbilityMod("ability_charisme");
+                        dailyUse = 3 + getAbilityMod("ability_charisme");
                         break;
                 }
             } else {
-                dailyUse=tools.toInt(cap.getDailyUseString());
+                dailyUse = tools.toInt(cap.getDailyUseString());
             }
             cap.setDailyUse(dailyUse);
         }
     }
 
     private void calculValue(Capacity cap) {
-        if(!cap.getValueString().equalsIgnoreCase("")) {
-            int value=0;
+        if (!cap.getValueString().equalsIgnoreCase("")) {
+            int value = 0;
             if (tools.toInt(cap.getValueString()) == 0) {
                 int mainPJlvl = getAbilityScore("ability_lvl");
                 switch (cap.getValueString()) {
                     case "(lvl-18)/2":
-                        value = (int)(( mainPJlvl-18)/2);
+                        value = (int) ((mainPJlvl - 18) / 2);
                         break;
                     case "lvl/2":
-                        value=(int) (mainPJlvl/2);
+                        value = (int) (mainPJlvl / 2);
                         break;
                 }
             } else {
@@ -161,20 +165,21 @@ public class Perso {
     public void castConvSpell(Integer selected_rank) {
         allResources.castConvSpell(selected_rank);
     }
+
     public void castSpell(Integer selected_rank) {
         allResources.castSpell(selected_rank);
     }
 
     public void castSpell(Spell spell, Context contextCast) {
-        if (!spell.isCast()){
+        if (!spell.isCast()) {
             spell.cast();
 
             int currentRankSpell = new Calculation().currentRank(spell);
             //Check de toutes les dépenses relative à un sort
-            if(currentRankSpell>0 && !spell.isFree()) {
+            if (currentRankSpell > 0 && !spell.isFree()) {
                 allResources.castSpell(currentRankSpell);
-            } else if (spell.isFree()){
-                new PostData(mC,new PostDataElement("Lancement sort arcane libre","-1pt mythique"));
+            } else if (spell.isFree()) {
+                new PostData(mC, new PostDataElement("Lancement sort arcane libre", "-1pt mythique"));
                 allResources.getResource("resource_mythic_points").spend(1);
                 tools.customToast(mC, "Sort Arcane libre\nIl te reste " + getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
@@ -183,30 +188,29 @@ public class Perso {
             }
             if (spell.isMyth()) {
                 allResources.getResource("resource_mythic_points").spend(1);
-                new PostData(mC,new PostDataElement("Lancement sort mythique","-1pt mythique"));
+                new PostData(mC, new PostDataElement("Lancement sort mythique", "-1pt mythique"));
                 tools.customToast(mC, "Sort Mythique\nIl te reste " + getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
             if (spell.elementIsConverted()) {
                 allResources.getResource("resource_mythic_points").spend(1);
-                new PostData(mC,new PostDataElement("Conversiont d'élément mythique","-1pt mythique"));
+                new PostData(mC, new PostDataElement("Conversiont d'élément mythique", "-1pt mythique"));
                 tools.customToast(mC, "Conversion d'élément\nIl te reste " + getResourceValue("resource_mythic_points") + " point(s) mythique(s)", "center");
             }
-            if(allBuffs.buffByIDIsActive("true_strike") && !spell.getContact().equalsIgnoreCase("")){
+            if (allBuffs.buffByIDIsActive("true_strike") && !spell.getContact().equalsIgnoreCase("")) {
                 allBuffs.getBuffByID("true_strike").cancel();
             }
 
-            new PostData(mC,new PostDataElement(spell));
+            new PostData(mC, new PostDataElement(spell));
 
-            if(spell.getRange().equalsIgnoreCase("personnelle")){
+            if (spell.getRange().equalsIgnoreCase("personnelle")) {
                 Buff matchingBuff = allBuffs.getBuffByID(spell.getID());
-                if(matchingBuff!=null){
-                    if(spell.getMetaList().metaIdIsActive("meta_duration")){
-                        matchingBuff.extendCast(contextCast,getCasterLevel(),spell.getMetaList().getMetaByID("meta_duration").getnCast());
+                if (matchingBuff != null) {
+                    if (spell.getMetaList().metaIdIsActive("meta_duration")) {
+                        matchingBuff.extendCast(contextCast, getCasterLevel(), spell.getMetaList().getMetaByID("meta_duration").getnCast());
+                    } else {
+                        matchingBuff.normalCast(contextCast, getCasterLevel());
                     }
-                    else {
-                        matchingBuff.normalCast(contextCast,getCasterLevel());
-                    }
-                    if(matchingBuff.getName().equalsIgnoreCase("Parangon soudain")){
+                    if (matchingBuff.getName().equalsIgnoreCase("Parangon soudain")) {
                         matchingBuff.setAddFeatEventListener(new Buff.OnAddFeatEventListener() {
                             @Override
                             public void onEvent() {
@@ -217,44 +221,44 @@ public class Perso {
                 }
             }
 
-            if(spell.getMetaList().metaIdIsActive("meta_echo")){
+            if (spell.getMetaList().metaIdIsActive("meta_echo")) {
                 EchoList.getInstance(mC).addEcho(spell);
             }
         }
     }
 
     public int getCasterLevel() {
-        int val= getAbilityScore("ability_lvl");
-        if (prefs.getBoolean("karma_switch",false)){
-            val+=4;
+        int val = getAbilityScore("ability_lvl");
+        if (prefs.getBoolean("karma_switch", false)) {
+            val += 4;
         }
-        if (prefs.getBoolean("ioun_stone",true)){
-            val+=1;
+        if (prefs.getBoolean("ioun_stone", true)) {
+            val += 1;
         }
-        val+=tools.toInt(prefs.getString("NLS_bonus",String.valueOf(0)));
+        val += tools.toInt(prefs.getString("NLS_bonus", String.valueOf(0)));
         return val;
     }
 
 
     public int getBaseAtk() {
-        int val =tools.toInt(prefs.getString("base_atk",String.valueOf(mC.getResources().getInteger(R.integer.base_atk_def))));
+        int val = tools.toInt(prefs.getString("base_atk", String.valueOf(mC.getResources().getInteger(R.integer.base_atk_def))));
         return val;
     }
 
     public int getBonusAtk() {
-        int val=0;
-        int epic= tools.toInt(prefs.getString("epic_atk_bonus",String.valueOf(mC.getResources().getInteger(R.integer.epic_atk_bonus_def))));
-        int bonus = tools.toInt(prefs.getString("bonus_atk",String.valueOf(mC.getResources().getInteger(R.integer.bonus_atk_def))));
-        int bonusTemp= tools.toInt(prefs.getString("bonus_atk_temp",String.valueOf(0)));
-        val+=epic+bonus+bonusTemp;
-        if(allBuffs!=null && allBuffs.getBuffByID("capacity_destiny_touch")!=null && allBuffs.getBuffByID("capacity_destiny_touch").isActive()){
-            val+=allCapacities.getCapacity("capacity_destiny_touch").getValue();
+        int val = 0;
+        int epic = tools.toInt(prefs.getString("epic_atk_bonus", String.valueOf(mC.getResources().getInteger(R.integer.epic_atk_bonus_def))));
+        int bonus = tools.toInt(prefs.getString("bonus_atk", String.valueOf(mC.getResources().getInteger(R.integer.bonus_atk_def))));
+        int bonusTemp = tools.toInt(prefs.getString("bonus_atk_temp", String.valueOf(0)));
+        val += epic + bonus + bonusTemp;
+        if (allBuffs != null && allBuffs.getBuffByID("capacity_destiny_touch") != null && allBuffs.getBuffByID("capacity_destiny_touch").isActive()) {
+            val += allCapacities.getCapacity("capacity_destiny_touch").getValue();
         }
         return val;
     }
 
     public void resetTemp() {
-        List<String> allTempList = Arrays.asList("NLS_bonus","bonus_atk_temp","bonus_temp_ca","bonus_temp_save","bonus_temp_rm");
+        List<String> allTempList = Arrays.asList("NLS_bonus", "bonus_atk_temp", "bonus_temp_ca", "bonus_temp_save", "bonus_temp_rm");
         for (String temp : allTempList) {
             prefs.edit().putString(temp, "0").apply();
         }
@@ -276,10 +280,10 @@ public class Perso {
 
     public Integer getSkillBonus(String skillId) {
         int bonusTemp = allSkills.getSkill(skillId).getBonus();
-        bonusTemp+= inventory.getAllEquipments().getSkillBonus(skillId);
+        bonusTemp += inventory.getAllEquipments().getSkillBonus(skillId);
 
-        if(inventory.getAllEquipments().testIfNameItemIsEquipped("Pierre porte bonheur")){
-            bonusTemp+=1;
+        if (inventory.getAllEquipments().testIfNameItemIsEquipped("Pierre porte bonheur")) {
+            bonusTemp += 1;
         }
 
         return bonusTemp;
@@ -292,10 +296,10 @@ public class Perso {
         if (allAbilities.getAbi(abiId) != null) {
             abiScore = allAbilities.getAbi(abiId).getValue();
             if (abiId.equalsIgnoreCase("ability_ca")) {
-                abiScore=10;
-                abiScore += tools.toInt(prefs.getString("bonus_temp_ca",String.valueOf(0)));
-                int abiMod=0;
-                if(allCapacities.capacityIsActive("capacity_revelation_prophetic_armor")){
+                abiScore = 10;
+                abiScore += tools.toInt(prefs.getString("bonus_temp_ca", String.valueOf(0)));
+                int abiMod = 0;
+                if (allCapacities.capacityIsActive("capacity_revelation_prophetic_armor")) {
                     abiMod = getAbilityMod("ability_charisme");
                 } else {
                     abiMod = getAbilityMod("ability_dexterite");
@@ -305,71 +309,73 @@ public class Perso {
                 } else {
                     abiScore += abiMod;
                 }
-                abiScore+=inventory.getAllEquipments().getArmorBonus();
+                abiScore += inventory.getAllEquipments().getArmorBonus();
 
-                if(allBuffs.buffByIDIsActive("shield")){
-                    abiScore +=4;
+                if (allBuffs.buffByIDIsActive("shield")) {
+                    abiScore += 4;
                 }
-                if(allBuffs.buffByIDIsActive("premonition")){
-                    abiScore +=2;
+                if (allBuffs.buffByIDIsActive("premonition")) {
+                    abiScore += 2;
                 }
             }
 
             if (abiId.equalsIgnoreCase("ability_equipment")) {
-                abiScore= inventory.getAllItemsCount();
+                abiScore = inventory.getAllItemsCount();
             }
 
             if (abiId.equalsIgnoreCase("ability_rm")) {
                 int bonusRm = tools.toInt(settings.getString("bonus_temp_rm", String.valueOf(0)));
-                if (bonusRm>abiScore) { abiScore = bonusRm; }
+                if (bonusRm > abiScore) {
+                    abiScore = bonusRm;
+                }
             }
 
             if (abiId.equalsIgnoreCase("ability_init")) {
-                abiScore= getAbilityMod("ability_dexterite");
-                if(getAllMythicCapacities().getMythiccapacity("mythiccapacity_init").isActive()) {
+                abiScore = getAbilityMod("ability_dexterite");
+                if (getAllMythicCapacities().getMythiccapacity("mythiccapacity_init").isActive()) {
                     int currentTier = tools.toInt(settings.getString("mythic_tier", String.valueOf(mC.getResources().getInteger(R.integer.mythic_tier_def))));
-                    if(getAllMythicFeats().getMythicFeat("mythicfeat_parangon").isActive()){
-                        currentTier+=2;
+                    if (getAllMythicFeats().getMythicFeat("mythicfeat_parangon").isActive()) {
+                        currentTier += 2;
                     }
                     abiScore += currentTier;
                 }
             }
 
-            if (abiId.equalsIgnoreCase("ability_ref")||abiId.equalsIgnoreCase("ability_vig")||abiId.equalsIgnoreCase("ability_vol")) {
-                abiScore += tools.toInt(settings.getString("bonus_temp_save",String.valueOf(0)));
-                abiScore += tools.toInt(settings.getString("epic_save",String.valueOf(mC.getResources().getInteger(R.integer.epic_save_def))));
+            if (abiId.equalsIgnoreCase("ability_ref") || abiId.equalsIgnoreCase("ability_vig") || abiId.equalsIgnoreCase("ability_vol")) {
+                abiScore += tools.toInt(settings.getString("bonus_temp_save", String.valueOf(0)));
+                abiScore += tools.toInt(settings.getString("epic_save", String.valueOf(mC.getResources().getInteger(R.integer.epic_save_def))));
 
-                if (settings.getBoolean("ioun_stone_luck",true)) {
-                    abiScore+=1;
+                if (settings.getBoolean("ioun_stone_luck", true)) {
+                    abiScore += 1;
                 }
-                if((inventory.getAllEquipments().getAbiBonus(abiId) == 0)  && allBuffs.buffByIDIsActive("resistance")){
-                    abiScore +=1;
+                if ((inventory.getAllEquipments().getAbiBonus(abiId) == 0) && allBuffs.buffByIDIsActive("resistance")) {
+                    abiScore += 1;
                 }
-                if (abiId.equalsIgnoreCase("ability_ref")){
-                    abiScore+=getAbilityMod("ability_dexterite");
-                    if(allBuffs.buffByIDIsActive("premonition")){
-                        abiScore +=2;
+                if (abiId.equalsIgnoreCase("ability_ref")) {
+                    abiScore += getAbilityMod("ability_dexterite");
+                    if (allBuffs.buffByIDIsActive("premonition")) {
+                        abiScore += 2;
                     }
-                    if(featIsActive("feat_inhuman_reflexes")){
-                        abiScore+=2;
+                    if (featIsActive("feat_inhuman_reflexes")) {
+                        abiScore += 2;
                     }
                 }
-                if (abiId.equalsIgnoreCase("ability_vig")){
-                    abiScore+=getAbilityMod("ability_constitution");
+                if (abiId.equalsIgnoreCase("ability_vig")) {
+                    abiScore += getAbilityMod("ability_constitution");
 
                 }
-                if (abiId.equalsIgnoreCase("ability_vol")){
-                    abiScore+=getAbilityMod("ability_sagesse");
-                    if(getAllCapacities().capacityIsActive("capacity_dual_spirit")){
-                        abiScore+=2;
+                if (abiId.equalsIgnoreCase("ability_vol")) {
+                    abiScore += getAbilityMod("ability_sagesse");
+                    if (getAllCapacities().capacityIsActive("capacity_dual_spirit")) {
+                        abiScore += 2;
                     }
                 }
             }
-            if(abiId.equalsIgnoreCase("ability_bmo")||abiId.equalsIgnoreCase("ability_dmd")){
-                abiScore=getBaseAtk()+getBonusAtk()+getAbilityMod("ability_force");
-                if(abiId.equalsIgnoreCase("ability_dmd")){
-                    abiScore+=getAbilityMod("ability_dexterite");
-                    abiScore+=10;
+            if (abiId.equalsIgnoreCase("ability_bmo") || abiId.equalsIgnoreCase("ability_dmd")) {
+                abiScore = getBaseAtk() + getBonusAtk() + getAbilityMod("ability_force");
+                if (abiId.equalsIgnoreCase("ability_dmd")) {
+                    abiScore += getAbilityMod("ability_dexterite");
+                    abiScore += 10;
                 }
             }
         }
@@ -398,30 +404,31 @@ public class Perso {
 
     public boolean featIsActive(String featId) {
         Feat feat = allFeats.getFeat(featId);
-        return feat!=null && feat.isActive();
+        return feat != null && feat.isActive();
     }
 
-    public void sleep() {
+    public void sleep() throws Exception {
         EchoList.resetEcho();
         allResources.resetCurrent();
         commonSleep();
-        new PostData(mC,new RemoveDataElementAllSpellArrow());
+        new PostData(mC, new RemoveDataElementAllSpellArrow());
     }
-    public void halfSleep(){
+
+    public void halfSleep() throws Exception {
         allResources.halfSleepReset();
         commonSleep();
     }
 
-    private void commonSleep() {
+    private void commonSleep() throws Exception {
         resetTemp();
         allBuffs.spendSleepTime();
-        if(allMythicCapacities!=null && allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()){
+        if (allMythicCapacities != null && allMythicCapacities.getMythiccapacity("mythiccapacity_recover").isActive()) {
             allResources.getResource("resource_hp").fullHeal();
         }
         refresh();
     }
 
-    public void reset() {
+    public void reset() throws Exception {
         EchoList.resetEcho();
         this.inventory.reset();
         this.allFeats.reset();
@@ -439,7 +446,7 @@ public class Perso {
         sleep();
     }
 
-    public void loadFromSave() {
+    public void loadFromSave() throws Exception {
         inventory.loadFromSave();
         stats.loadFromSave();
         hallOfFame.loadFromSave();
