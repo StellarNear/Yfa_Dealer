@@ -6,8 +6,8 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray
 
 <string name="patch_list">"----------------------------------------------------------------------------------
 Patch note V3.5
--systeme de récolte de bugs et erreurs en place dans totues les activités et fragments
--possibilité d'envoyer un rapport depuis le menu d'applciation ou lors d'un crash fatal
+-systeme de récolte de bugs et erreurs en place dans toutes les activités et fragments
+-possibilité d'envoyer un rapport depuis le menu d'application ou lors d'un crash fatal
 ----------------------------------------------------------------------------------
 Patch note V3.4.1
 -correction de quelques typos dans le patchnote
