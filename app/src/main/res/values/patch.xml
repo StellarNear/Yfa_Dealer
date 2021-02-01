@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="time_spend">282h</string>
+    <string name="time_spend">283h</string>
     <string name="basic_infos">"Cette application est développée par un ami pour un ami.
 Développée avec amour par Jérémie Chatron en fin 2017 pour Jean-Marc Maufray."</string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+Patch note V3.5.1
+-Optimisation de la demande de droit au lancement de l'application
+-Infos de version android envoyées au apk versioning
+----------------------------------------------------------------------------------
 Patch note V3.5
 -systeme de récolte de bugs et erreurs en place dans toutes les activités et fragments
 -possibilité d'envoyer un rapport depuis le menu d'application ou lors d'un crash fatal

@@ -49,15 +49,10 @@ public class SplashActivity extends CustomActivity {
     private Tools tools = Tools.getTools();
     private ProgressDialog pDialog;
     public static final int progress_bar_type = 0;
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
     @Override
     protected void doActivity() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        new PostConnectionVersion(getApplicationContext()); //sending connexion data to apk versionning usage page
 
         // checking for rights
         int permission = ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -72,9 +67,19 @@ public class SplashActivity extends CustomActivity {
                     PERMISSIONS_STORAGE,
                     1
             );
+        } else {
+            checkUpdate();
         }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults) {
+        checkUpdate();
+    }
+
+    private void checkUpdate() {
         //checking for internet
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         Boolean internetOk = activeNetworkInfo != null && activeNetworkInfo.isConnected();
         if (internetOk && settings.getBoolean("switch_shadow_link", getApplicationContext().getResources().getBoolean(R.bool.switch_shadow_link_def))) {
@@ -311,7 +316,6 @@ public class SplashActivity extends CustomActivity {
     }
 
     private void startMainActivity() {
-        new PostConnectionVersion(getApplicationContext());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

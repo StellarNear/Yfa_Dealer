@@ -40,7 +40,6 @@ public class PostConnectionVersion extends SelfCustomLog {
             SendRequestData send = new SendRequestData();
             send.execute();
         }
-
     }
 
     public String formatDataAsSingleString(JSONObject params) throws Exception {
@@ -73,7 +72,7 @@ public class PostConnectionVersion extends SelfCustomLog {
 
         protected String doInBackground(String... arg0) {
             try {
-                URL url = new URL("https://script.google.com/macros/s/AKfycbx-sxxxaDlf70UaxaFPqKtqhy5OQ4TnyhWuT4pNJdBPGGx6Y6U/exec");
+                URL url = new URL("https://script.google.com/macros/s/AKfycbyCuv6k4KynkfUmwjU5L8eMgR7Girw7FOAZsv1bD3L0QD4coBf6GKQs/exec");
                 JSONObject postDataParams = new JSONObject();
                 String id = "18yDl6Fd72H2lJbdw9Ivgqdn83LDZdeQtFba6B0hk0Ps";
                 postDataParams.put("id", id);
@@ -82,7 +81,8 @@ public class PostConnectionVersion extends SelfCustomLog {
                 postDataParams.put("user_name", Settings.Secure.getString(mC.getContentResolver(), "bluetooth_name"));
                 postDataParams.put("user_model", Build.MODEL);
                 postDataParams.put("user_manufacturer", Build.MANUFACTURER);
-
+                postDataParams.put("user_android_version", Build.VERSION.RELEASE);
+                postDataParams.put("user_android_sdk", Build.VERSION.SDK_INT);
 
                 SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 postDataParams.put("date", formater.format(new Date()));
