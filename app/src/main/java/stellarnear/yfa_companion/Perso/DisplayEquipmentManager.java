@@ -17,6 +17,7 @@ import java.util.Map;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CustomAlertDialog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 
 public class DisplayEquipmentManager extends SelfCustomLog {

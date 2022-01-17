@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import stellarnear.yfa_companion.Log.SelfCustomLog;
+
 /**
  * Created by jchatron on 26/12/2017.
  */
 
-public class Capacity extends SelfCustomLog{
+public class Capacity extends SelfCustomLog {
     private String name;
     private String shortname;
     private String type;

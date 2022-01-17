@@ -16,13 +16,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import stellarnear.yfa_companion.Errors.AllAttributeError;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.BuildSpellList;
 import stellarnear.yfa_companion.Spells.Spell;
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.TinyDB;
 import stellarnear.yfa_companion.Tools;
 
-public class AllBuffs extends SelfCustomLog{
+public class AllBuffs extends SelfCustomLog {
 
     private ArrayList<Buff> listBuffs = null;
     private AllCapacities allCapacities;

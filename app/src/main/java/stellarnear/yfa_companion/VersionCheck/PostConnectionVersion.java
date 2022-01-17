@@ -28,7 +28,7 @@ import java.util.Locale;
 import javax.net.ssl.HttpsURLConnection;
 
 import stellarnear.yfa_companion.BuildConfig;
-import stellarnear.yfa_companion.Perso.SelfCustomLog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 
 public class PostConnectionVersion extends SelfCustomLog {

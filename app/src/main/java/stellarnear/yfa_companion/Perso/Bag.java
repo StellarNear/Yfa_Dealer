@@ -28,6 +28,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import stellarnear.yfa_companion.CustomAlertDialog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.TinyDB;
 import stellarnear.yfa_companion.Tools;

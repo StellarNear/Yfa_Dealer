@@ -18,11 +18,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import stellarnear.yfa_companion.Errors.AllAttributeError;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 
 /**
  * Created by jchatron on 26/12/2017.
  */
-public class AllMythicFeats extends SelfCustomLog{
+public class AllMythicFeats extends SelfCustomLog {
     private Context mC;
     private List<MythicFeat> allMythicFeatsList = new ArrayList<>();
     private Map<String, MythicFeat> mapIdMythicFeat = new HashMap<>();

@@ -9,7 +9,7 @@ import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.EditTextPreference;
 import stellarnear.yfa_companion.Perso.Perso;
 import stellarnear.yfa_companion.Perso.Resource;
-import stellarnear.yfa_companion.Perso.SelfCustomLog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.SpellsRanksManager;
 import stellarnear.yfa_companion.Tools;
 

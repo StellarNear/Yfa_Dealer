@@ -19,6 +19,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import stellarnear.yfa_companion.Errors.AllAttributeError;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.SpellsRanksManager;
 import stellarnear.yfa_companion.Tools;
 

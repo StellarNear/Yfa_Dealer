@@ -85,7 +85,6 @@ public class SettingsFragment extends CustomPreferenceFragment {
 
     @Override
     protected void onCreateFragment() {
-        this.settings = PreferenceManager.getDefaultSharedPreferences(getContext());
         settings.registerOnSharedPreferenceChangeListener(listener);
         this.mA = getActivity();
         this.mC = getContext();

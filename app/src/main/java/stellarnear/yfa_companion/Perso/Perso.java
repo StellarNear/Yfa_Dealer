@@ -10,6 +10,7 @@ import java.util.List;
 import stellarnear.yfa_companion.Calculation;
 import stellarnear.yfa_companion.Errors.PersoError;
 import stellarnear.yfa_companion.HallOfFame;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.R;

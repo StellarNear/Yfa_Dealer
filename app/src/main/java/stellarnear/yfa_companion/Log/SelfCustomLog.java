@@ -1,4 +1,4 @@
-package stellarnear.yfa_companion.Perso;
+package stellarnear.yfa_companion.Log;
 
 import stellarnear.yfa_companion.Log.CustomLog;
 

@@ -3,6 +3,7 @@ package stellarnear.yfa_companion.Perso;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 
 

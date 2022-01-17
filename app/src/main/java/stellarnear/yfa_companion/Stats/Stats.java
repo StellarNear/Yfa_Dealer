@@ -2,7 +2,7 @@ package stellarnear.yfa_companion.Stats;
 
 import android.content.Context;
 
-import stellarnear.yfa_companion.Perso.SelfCustomLog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.Spells.SpellList;
 import stellarnear.yfa_companion.TinyDB;
 

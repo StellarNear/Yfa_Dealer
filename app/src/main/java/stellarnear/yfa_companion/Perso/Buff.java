@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.PostData;
 import stellarnear.yfa_companion.PostDataElement;
 import stellarnear.yfa_companion.Spells.BuildSpellList;

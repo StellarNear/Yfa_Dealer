@@ -17,7 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.Perso.Buff;
 import stellarnear.yfa_companion.Perso.Perso;
-import stellarnear.yfa_companion.Perso.SelfCustomLog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.Tools;
 
 public class BuildMetaList extends SelfCustomLog {

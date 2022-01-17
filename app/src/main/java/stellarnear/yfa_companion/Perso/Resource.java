@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 
 /**

@@ -42,7 +42,7 @@ import stellarnear.yfa_companion.VersionCheck.VersionData;
 
 
 /**
- * Created by jchatron on 26/12/2017. updated with check download on 09/04/2020
+ * Created by jchatron on 26/12/2017. updated with check download on 09/04/2020 and automatic download and install in 01/02/2021
  */
 
 public class SplashActivity extends CustomActivity {

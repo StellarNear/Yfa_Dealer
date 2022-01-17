@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stellarnear.yfa_companion.BuildConfig;
-import stellarnear.yfa_companion.Perso.SelfCustomLog;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 
 
 public class GetVersionData extends SelfCustomLog {

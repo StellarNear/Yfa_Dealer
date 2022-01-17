@@ -27,10 +27,14 @@ import stellarnear.yfa_companion.Tools;
 public class SaveSharedPreferencesActivity extends Activity {
 
     private Tools tools = Tools.getTools();
+    private String saveNamePath;
     private CustomLog log = new CustomLog(SaveSharedPreferencesActivity.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        saveNamePath = BuildConfig.APPLICATION_ID+ "_save";
+
         String action = getIntent().getExtras().getString("ACTION_TYPE");
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         tools.customToast(getApplicationContext(), "Selection du dossier cible");
@@ -52,7 +56,7 @@ public class SaveSharedPreferencesActivity extends Activity {
 
             DocumentFile pickedDir = DocumentFile.fromTreeUri(this, treeUri);
 
-            DocumentFile previousSave = pickedDir.findFile(BuildConfig.APPLICATION_ID+ ".sav");
+            DocumentFile previousSave = pickedDir.findFile(saveNamePath+".json");
             if (previousSave == null) {
                 writeFile(pickedDir);
             } else {
@@ -64,7 +68,7 @@ public class SaveSharedPreferencesActivity extends Activity {
 
             DocumentFile pickedDir = DocumentFile.fromTreeUri(this, treeUri);
 
-            DocumentFile previousSave = pickedDir.findFile(BuildConfig.APPLICATION_ID + ".sav");
+            DocumentFile previousSave = pickedDir.findFile(saveNamePath + ".json");
             if (previousSave == null) {
                 tools.customToast(getApplicationContext(), "Aucune Sauvegarde présente ...");
             } else {
@@ -78,7 +82,7 @@ public class SaveSharedPreferencesActivity extends Activity {
 
     private void writeFile(DocumentFile pickedDir) {
         try {
-            DocumentFile newFile = pickedDir.createFile("application/json", BuildConfig.APPLICATION_ID + ".sav");
+            DocumentFile newFile = pickedDir.createFile("application/json", saveNamePath);
             OutputStream out = this.getContentResolver().openOutputStream(newFile.getUri());
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -92,8 +96,8 @@ public class SaveSharedPreferencesActivity extends Activity {
 
             tools.customToast(getApplicationContext(), "Sauvegarde crée");
         } catch (Exception e) {
-            log.err(getApplicationContext(),"Erreur durant l'ecriture de la sauvegarde",e);
-            DocumentFile previousSave = pickedDir.findFile(BuildConfig.APPLICATION_ID+ ".sav");
+            log.err(getApplicationContext(),"Erreur lors de l'écriture de la sauvegarde",e);
+            DocumentFile previousSave = pickedDir.findFile(saveNamePath+ ".json");
             if (previousSave != null) {
                 previousSave.delete();
             }
@@ -127,7 +131,7 @@ public class SaveSharedPreferencesActivity extends Activity {
             MainActivity.yfa.loadFromSave();
             tools.customToast(getApplicationContext(), "Sauvegarde chargée");
         } catch (Exception e) {
-            log.err(getApplicationContext(),"Erreur durant le chargement de la sauvegarde",e);
+            log.err(getApplicationContext(),"Erreur lors de la lecture de la sauvegarde",e);
         }
     }
 

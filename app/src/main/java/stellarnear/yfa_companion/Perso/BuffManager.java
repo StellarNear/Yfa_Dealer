@@ -3,6 +3,7 @@ package stellarnear.yfa_companion.Perso;
 import android.app.Activity;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.Tools;
 
 public class BuffManager extends SelfCustomLog {

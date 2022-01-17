@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import stellarnear.yfa_companion.Log.SelfCustomLog;
+
 /**
  * Created by jchatron on 04/01/2018.
  */

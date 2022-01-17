@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import stellarnear.yfa_companion.Activities.MainActivity;
 import stellarnear.yfa_companion.CircularProgressBar;
+import stellarnear.yfa_companion.Log.SelfCustomLog;
 import stellarnear.yfa_companion.R;
 import stellarnear.yfa_companion.Tools;
 
